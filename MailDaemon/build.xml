@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="MailDaemon" default="sar" basedir=".">
+	<property environment="env" />
+	<property name="jboss.home" value="${env.JBOSS_HOME}" />
+	<property name="app.name" value="${ant.project.name}" />
+	<property name="web.dir" value="WebContent" />
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="build" />
+	<property name="lib.dir" value="lib" />
+	<property name="deploy.dir" location="${jboss.home}/server/default/deploy" />
+	<property name="resources.dir" value="src" />
+
+
+	<path id="classpath">
+		<pathelement location="../ScriptumModel/bin" />
+		<pathelement location="../eProtocolServices/build/classes" />
+		<fileset dir="${jboss.home}/client">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${jboss.home}/server/default/lib">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${jboss.home}/lib">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement path="${build.dir}" />
+	</path>
+
+	<target name="usage">
+		<echo message="+-----------------------------------------------------------------------+" />
+		<echo message="| ${webapp.name} build file - available targets are:                    |" />
+		<echo message="+-----------------------------------------------------------------------+" />
+		<echo message="| build     --> Build the application                                   |" />
+		<echo message="| deploy    --> Build and Deploy application as directory               |" />
+		<echo message="| reload    --> Reload Tomcat application                               |" />
+		<echo message="| start     --> Start Tomcat application after deploying                |" />
+		<echo message="| stop      --> Stop Tomcat application                                 |" />
+		<echo message="| list      --> List Tomcat applications                                |" />
+		<echo message="| clean     --> Clean deploy and build directories                      |" />
+		<echo message="+-----------------------------------------------------------------------+" />
+		<echo message="| Deploy will only copy files to Tomcat. Check 'ant list' to see if the |" />
+		<echo message="| application is running. If not, use 'ant start' to start the applica- |" />
+		<echo message="| tion manually. Before 'ant clean' make sure to use 'ant stop' if 'ant |" />
+		<echo message="| list' shows the application running. Thank you and have fun!          |" />
+		<echo message="+-----------------------------------------------------------------------+" />
+	</target>
+
+	<target name="clean">
+
+		<delete includeEmptyDirs="true">
+			<fileset dir="${build.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="build" depends="clean">
+		<mkdir dir="${build.dir}" />
+		<javac destdir="${build.dir}" debug="true" deprecation="false" optimize="false" failonerror="true">
+			<src path="${src.dir}" />
+			<classpath refid="classpath" />
+		</javac>
+		<copy todir="${build.dir}" preservelastmodified="true">
+			<fileset dir="${src.dir}">
+				<include name="**/*.xml" />
+				<exclude name="hibernate.cfg.xml" />
+			</fileset>
+		</copy>
+
+		<copy todir="${build.dir}">
+			<fileset dir="${web.dir}">
+				<include name="**/*.xml" />
+				<exclude name="hibernate.cfg.xml" />
+			</fileset>
+		</copy>
+	</target>
+
+
+	<target name="sar" depends="build">
+		<jar destfile="maildaemon.sar">
+			<fileset dir="${build.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</jar>
+	</target>
+
+
+	<target name="deploy" depends="sar">
+		<copy file="${app.name}.sar" todir="${deploy.dir}" />
+	</target>
+
+	<target name="undeploy">
+		<delete file="${deploy.dir}/${app.name}.sar" />
+	</target>
+
+
+</project>

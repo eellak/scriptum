@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="Scriptum">
+        <wb-resource deploy-path="/" source-path="/EarContent"/>
+        <dependent-module archiveName="eProtocol.war" deploy-path="/" handle="module:/resource/eProtocol/eProtocol">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="hibservice.har" deploy-path="/" handle="module:/classpath/lib/ELLAKModel/hibservice.har">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="maildaemon.sar" deploy-path="/" handle="module:/classpath/lib/MailDaemon/maildaemon.sar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="eProtocolWebService.war" deploy-path="/" handle="module:/resource/eProtocolWebService/eProtocolWebService">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ELLAKModel.har" deploy-path="/" handle="module:/classpath/lib/ELLAKModel/ELLAKModel.har">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>

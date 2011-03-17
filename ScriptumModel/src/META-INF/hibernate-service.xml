@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE server>
+<server>
+	<mbean code="org.jboss.hibernate.jmx.Hibernate" name="jboss.har:service=ScriptumSessionFactory">
+		<!--
+			<depends>jboss:service=Naming</depends>
+			<depends>jboss:service=TransactionManager</depends>
+			<depends>jboss.jca:service=DataSourceBinding,name=EllakDS</depends>
+		-->
+		<attribute name="DatasourceName">java:/ScriptumDS</attribute>
+		<attribute name="Dialect">org.hibernate.dialect.MySQL5InnoDBDialect
+		</attribute>
+		<attribute name="SessionFactoryName">hibernate/ScriptumSessionFactory</attribute>
+		<!--
+		<attribute name="CacheProviderClass">net.sf.hibernate.cache.HashtableCacheProvider
+		</attribute>
+		-->
+		<attribute name="ShowSqlEnabled">true</attribute>
+	</mbean>
+</server>

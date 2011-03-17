@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<server>
+
+<mbean name="mailclients.uit.gr:service=MailDaemon"
+       code="gr.scriptum.eprotocol.mailclients.MailDaemon"
+       description="SMTP Mail Daemon for SCRIPTUM eProtocol">    
+</mbean>
+
+
+</server>

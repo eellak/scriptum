@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 29, 2011 10:16:30 AM by Hibernate Tools 3.4.0.Beta1 -->
+<hibernate-mapping>
+    <class name="gr.scriptum.domain.Company" table="company" catalog="ellak">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="companyType" class="gr.scriptum.domain.CompanyType" fetch="select">
+            <column name="company_type_id" not-null="true" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" length="256" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="512" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" length="512" />
+        </property>
+        <property name="isGoverment" type="java.lang.Boolean">
+            <column name="is_goverment" />
+        </property>
+        <property name="createUser" type="string">
+            <column name="create_user" length="16" />
+        </property>
+        <property name="updateUser" type="java.lang.Integer">
+            <column name="update_user" />
+        </property>
+        <property name="createDt" type="timestamp">
+            <column name="create_dt" length="19" />
+        </property>
+        <property name="updateTs" type="timestamp">
+            <column name="update_ts" length="19" />
+        </property>
+        <property name="street" type="string">
+            <column name="street" length="100" />
+        </property>
+        <property name="streetNo" type="string">
+            <column name="streetNo" length="45" />
+        </property>
+        <property name="city" type="string">
+            <column name="city" length="100" />
+        </property>
+        <property name="prefecture" type="string">
+            <column name="prefecture" length="100" />
+        </property>
+        <property name="postcode" type="string">
+            <column name="postcode" length="16" />
+        </property>
+        <property name="vatNo" type="string">
+            <column name="vatNo" length="9" />
+        </property>
+        <property name="irs" type="string">
+            <column name="irs" length="45" />
+        </property>
+        <property name="telephone" type="string">
+            <column name="telephone" length="32" />
+        </property>
+        <property name="mobile" type="string">
+            <column name="mobile" length="32" />
+        </property>
+        <property name="fax" type="string">
+            <column name="fax" length="32" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="256" />
+        </property>
+        <property name="web" type="string">
+            <column name="web" length="256" />
+        </property>
+        <property name="webService" type="string">
+            <column name="web_service" length="256" />
+        </property>
+        <set name="contacts" table="contact" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="company_id" not-null="true" />
+            </key>
+            <one-to-many class="gr.scriptum.domain.Contact" />
+        </set>
+    </class>
+</hibernate-mapping>

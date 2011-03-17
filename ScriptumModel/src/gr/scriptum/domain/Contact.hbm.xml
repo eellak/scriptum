@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	<!-- Generated Jan 27, 2011 1:23:43 PM by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+	<class name="gr.scriptum.domain.Contact" table="contact"
+		catalog="ellak">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+		<many-to-one name="company" class="gr.scriptum.domain.Company"
+			fetch="select">
+			<column name="company_id" not-null="true" />
+		</many-to-one>
+		<property name="name" type="string">
+			<column name="name" length="256" />
+		</property>
+		<property name="surname" type="string">
+			<column name="surname" length="256" />
+		</property>
+		<property name="organization" type="string">
+			<column name="organization" length="256" />
+		</property>
+		<property name="department" type="string">
+			<column name="department" length="256" />
+		</property>
+		<property name="job" type="string">
+			<column name="job" length="256" />
+		</property>
+		<property name="address" type="string">
+			<column name="address" length="256" />
+		</property>
+		<property name="postcode" type="string">
+			<column name="postcode" length="16" />
+		</property>
+		<property name="city" type="string">
+			<column name="city" length="32" />
+		</property>
+		<property name="country" type="string">
+			<column name="country" length="32" />
+		</property>
+		<property name="email" type="string">
+			<column name="email" length="256" />
+		</property>
+		<property name="telephone" type="string">
+			<column name="telephone" length="32" />
+		</property>
+		<property name="fax" type="string">
+			<column name="fax" length="32" />
+		</property>
+		<property name="mobile" type="string">
+			<column name="mobile" length="32" />
+		</property>
+		<property name="createUser" type="string">
+			<column name="create_user" length="16" />
+		</property>
+		<property name="updateUser" type="string">
+			<column name="update_user" length="16" />
+		</property>
+		<property name="createDt" type="timestamp">
+			<column name="create_dt" length="19" />
+		</property>
+		<property name="updateTs" type="timestamp">
+			<column name="update_ts" length="19" />
+		</property>
+		<property name="middlename" type="string">
+			<column name="middlename" length="100" />
+		</property>
+		<property name="street" type="string">
+			<column name="street" length="100" />
+		</property>
+		<property name="streetNo" type="string">
+			<column name="streetNo" length="45" />
+		</property>
+		<property name="prefecture" type="string">
+			<column name="prefecture" length="100" />
+		</property>
+		<property name="web" type="string">
+			<column name="web" length="256" />
+		</property>
+		<set name="projectTasks" table="project_task" inverse="true" lazy="true"
+			fetch="select">
+			<key>
+				<column name="contact_id" not-null="true" />
+			</key>
+			<one-to-many class="gr.scriptum.domain.ProjectTask" />
+		</set>
+		<set name="outgoingRecipients" table="outgoing_recipient" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="contact_id" not-null="true" />
+			</key>
+			<one-to-many class="gr.scriptum.domain.OutgoingRecipient" />
+		</set>
+		<set name="incomingProtocols" table="incoming_protocol" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="contact_sender_id" not-null="true" />
+			</key>
+			<one-to-many class="gr.scriptum.domain.IncomingProtocol" />
+		</set>
+	</class>
+</hibernate-mapping>

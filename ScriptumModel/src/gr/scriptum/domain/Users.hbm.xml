@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 5, 2011 11:21:55 AM by Hibernate Tools 3.4.0.Beta1 -->
+<hibernate-mapping>
+    <class name="gr.scriptum.domain.Users" table="users" catalog="ellak">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="users" class="gr.scriptum.domain.Users" fetch="select">
+            <column name="users_manager_id"/>
+        </many-to-one>
+        <property name="username" type="string">
+            <column name="username" length="16" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="45" not-null="true" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" length="32" />
+        </property>
+        <property name="surname" type="string">
+            <column name="surname" length="32" />
+        </property>
+        <property name="isDisabled" type="java.lang.Boolean">
+            <column name="is_disabled" />
+        </property>
+        <property name="createUser" type="string">
+            <column name="create_user" length="16" />
+        </property>
+        <property name="updateUser" type="string">
+            <column name="update_user" length="16" />
+        </property>
+        <property name="createDt" type="timestamp">
+            <column name="create_dt" length="19" />
+        </property>
+        <property name="updateTs" type="timestamp">
+            <column name="update_ts" length="19" />
+        </property>
+        <set name="projects" table="project" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_creator_id" not-null="true" />
+            </key>
+            <one-to-many class="gr.scriptum.domain.Project" />
+        </set>
+        <set name="taskMessagesForUserReceiverId" table="task_message" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_receiver_id" not-null="true" />
+            </key>
+            <one-to-many class="gr.scriptum.domain.TaskMessage" />
+        </set>
+        <set name="roles" table="user_to_role" inverse="false" lazy="true" fetch="select" cascade="all">
+            <key>
+                <column name="users_id" not-null="true" />
+            </key>
+            <many-to-many entity-name="gr.scriptum.domain.Role">
+                <column name="role_id" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="userses" table="users" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="users_manager_id" not-null="true" />
+            </key>
+            <one-to-many class="gr.scriptum.domain.Users" />
+        </set>
+        <set name="projectUsers" table="project_user" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="users_id" not-null="true" />
+            </key>
+            <one-to-many class="gr.scriptum.domain.ProjectUser" />
+        </set>
+        <set name="projectTasksForUserCreatorId" table="project_task" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_creator_id" not-null="true" />
+            </key>
+            <one-to-many class="gr.scriptum.domain.ProjectTask" />
+        </set>
+        <set name="projectTasksForUserDispatcherId" table="project_task" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_dispatcher_id" not-null="true" />
+            </key>
+            <one-to-many class="gr.scriptum.domain.ProjectTask" />
+        </set>
+        <set name="taskMessagesForUserSenderId" table="task_message" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_sender_id" not-null="true" />
+            </key>
+            <one-to-many class="gr.scriptum.domain.TaskMessage" />
+        </set>
+    </class>
+</hibernate-mapping>

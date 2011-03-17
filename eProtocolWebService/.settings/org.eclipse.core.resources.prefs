@@ -1,0 +1,21 @@
+#Wed Mar 16 11:59:29 EET 2011
+eclipse.preferences.version=1
+encoding//src/gr/scriptum/eprotocol/ws/endpoint/ProtocolInfo.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/ws/endpoint/ProtocolMessage.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/ws/endpoint/ProtocolQuery.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/ws/endpoint/ProtocolReceipt.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/ws/endpoint/ProtocolWebService.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/ws/endpoint/ProtocolWebServiceBindingStub.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/ws/endpoint/ProtocolWebServiceService.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/ws/endpoint/ProtocolWebServiceServiceLocator.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/ws/endpoint/WsDocument.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/ws/endpoint/WsRequest.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/ws/endpoint/WsResponse.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/wserver/ProtocolInfo.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/wserver/ProtocolMessage.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/wserver/ProtocolQuery.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/wserver/ProtocolReceipt.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/wserver/ProtocolWebService.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/wserver/WsDocument.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/wserver/WsRequest.java=UTF-8
+encoding//src/gr/scriptum/eprotocol/wserver/WsResponse.java=UTF-8

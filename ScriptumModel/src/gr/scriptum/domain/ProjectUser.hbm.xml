@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 19, 2011 4:36:37 PM by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="gr.scriptum.domain.ProjectUser" table="project_user" catalog="ellak">
+        <composite-id name="id" class="gr.scriptum.domain.ProjectUserId">
+            <key-many-to-one name="project" class="gr.scriptum.domain.Project">
+                <column name="project_id" />
+            </key-many-to-one>
+            <key-many-to-one name="users" class="gr.scriptum.domain.Users">
+                <column name="users_id" />
+            </key-many-to-one>
+        </composite-id>
+        <property name="createUser" type="string">
+            <column name="create_user" length="16" />
+        </property>
+        <property name="updateUser" type="string">
+            <column name="update_user" length="16" />
+        </property>
+        <property name="createDt" type="timestamp">
+            <column name="create_dt" length="19" />
+        </property>
+        <property name="updateTs" type="timestamp">
+            <column name="update_ts" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>

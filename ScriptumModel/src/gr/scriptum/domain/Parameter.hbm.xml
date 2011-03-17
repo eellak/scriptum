@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 31, 2011 9:51:40 AM by Hibernate Tools 3.4.0.Beta1 -->
+<hibernate-mapping>
+    <class name="gr.scriptum.domain.Parameter" table="parameter" catalog="ellak">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="area" type="string">
+            <column name="area" length="45" />
+        </property>
+        <property name="type" type="string">
+            <column name="type" length="45" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" length="256" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="256" />
+        </property>
+        <property name="initialValue" type="string">
+            <column name="initial_value" length="256" />
+        </property>
+        <property name="value" type="string">
+            <column name="value" length="256" />
+        </property>
+        <property name="createUser" type="string">
+            <column name="create_user" length="16" />
+        </property>
+        <property name="updateUser" type="string">
+            <column name="update_user" length="16" />
+        </property>
+        <property name="createDt" type="timestamp">
+            <column name="create_dt" length="19" />
+        </property>
+        <property name="updateTs" type="timestamp">
+            <column name="update_ts" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>

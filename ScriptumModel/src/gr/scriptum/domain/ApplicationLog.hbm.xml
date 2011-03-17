@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 19, 2011 4:36:37 PM by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="gr.scriptum.domain.ApplicationLog" table="application_log" catalog="ellak">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="appuser" type="string">
+            <column name="appuser" length="16" />
+        </property>
+        <property name="system" type="string">
+            <column name="system" length="32" />
+        </property>
+        <property name="class_" type="string">
+            <column name="class" length="64" />
+        </property>
+        <property name="level" type="string">
+            <column name="level" length="32" />
+        </property>
+        <property name="message" type="string">
+            <column name="message" length="256" />
+        </property>
+        <property name="msgData" type="string">
+            <column name="msg_data" length="512" />
+        </property>
+        <property name="created" type="timestamp">
+            <column name="created" length="19" unique="true" />
+        </property>
+    </class>
+</hibernate-mapping>

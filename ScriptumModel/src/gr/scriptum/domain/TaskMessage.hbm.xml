@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 19, 2011 4:36:37 PM by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="gr.scriptum.domain.TaskMessage" table="task_message" catalog="ellak">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="projectTask" class="gr.scriptum.domain.ProjectTask" fetch="select">
+            <column name="project_task_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usersByUserReceiverId" class="gr.scriptum.domain.Users" fetch="select">
+            <column name="user_receiver_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usersByUserSenderId" class="gr.scriptum.domain.Users" fetch="select">
+            <column name="user_sender_id" not-null="true" />
+        </many-to-one>
+        <property name="subject" type="string">
+            <column name="subject" length="256" />
+        </property>
+        <property name="message" type="string">
+            <column name="message" length="1024" />
+        </property>
+        <property name="createdTs" type="timestamp">
+            <column name="created_ts" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>
