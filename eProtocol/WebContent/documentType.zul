@@ -1,0 +1,54 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
+<?page title="${c:l('documentTypePage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul"
+		 width="1024px" />
+	<window id="win" title="${c:l('documentTypePage.title')}"
+		border="normal" width="1024px"
+		apply="gr.scriptum.eprotocol.controller.DocumentTypeController">
+
+		<grid width="99%">
+			<columns></columns>
+			<rows>
+				<row
+					visible="@{DocumentTypeController.isEntityCreated}">
+					${c:l('documentType.id')}
+					<label id="idLbl"
+						value="@{DocumentTypeController.entity.id}" />
+				</row>
+				<row>
+					${c:l('documentType.name')}
+					<textbox id="nameTxb"
+						value="@{DocumentTypeController.entity.name}" width="99%"
+						constraint="no empty" />
+				</row>
+				<row>
+					${c:l('documentType.description')}
+					<textbox id="descriptionTxb"
+						value="@{DocumentTypeController.entity.description}" width="99%" />
+				</row>
+				<row>
+					${c:l('documentType.days')}
+					<intbox id="daysTxb"
+						value="@{DocumentTypeController.entity.days}" width="99%"
+						constraint="no negative,no zero" />
+				</row>
+				<row
+					visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}">
+					${c:l('functions')}
+					<hbox width="99%">
+						<button id="newBtn" label="${c:l('new')}" />
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@{DocumentTypeController.isLocked}" />
+						<button id="deleteBtn" label="${c:l('delete')}"
+							disabled="true" />
+					</hbox>
+				</row>
+
+			</rows>
+		</grid>
+	</window>
+</zk>

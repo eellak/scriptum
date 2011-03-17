@@ -1,0 +1,17 @@
+<?page title="Σχετικά με την Εφαρμογή" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul"
+		width="1024px" />
+	<window title="Σχετικά με την Εφαρμογή" border="normal"
+		width="1024px">
+		<vbox width="99%">
+			<label
+				value="Η εφαρμογή του Ηλεκτρονικού Πρωτοκόλλου κατασκευάστηκε από την" />
+			<image src="img/uit_logo.png" />
+			<label
+				value="Σε συνεργασία με την Εταιρεία Ελεύθερου Λογισμικού " />
+			<image src="img/ellak_logo.png" />
+		</vbox>
+	</window>
+</zk>

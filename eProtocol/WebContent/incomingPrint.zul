@@ -1,0 +1,110 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./printWin"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
+<?page title="${c:l('incomingPrintPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<window id="printWin" title="${c:l('incomingPrintPage.title')}"
+		border="normal" width="1024px"
+		apply="gr.scriptum.eprotocol.controller.IncomingController">
+		<grid width="99%">
+			<columns></columns>
+			<rows>
+				<row visible="false">
+					${c:l('incomingProtocol.id')}
+					<label id="idLbl"
+						value="@{IncomingController.protocol.id}" />
+				</row>
+				<row
+					visible="@{IncomingController.isProtocolSubmitted}">
+					${c:l('incomingProtocol.protocolNumber')}
+					<label id="protocolNumberLbl"
+						value="@{IncomingController.protocol.fullNumber}" />
+				</row>
+				<row>
+					${c:l('incomingProtocol.subject')}
+					<label id="subjectTxb"
+						value="@{IncomingController.protocol.subject}" width="99%" />
+				</row>
+				<row>
+					${c:l('incomingProtocol.protocolDate')}
+					<label
+						value="@{IncomingController.protocol.protocolDate, converter='gr.scriptum.eprotocol.util.DateCustom' }">
+						<custom-attributes format="dd/MM/yyyy" />
+					</label>
+				</row>
+				<row>
+					${c:l('incomingProtocol.contact')}
+					<vbox width="99%">
+						<label id="contactLbl"
+							value="@{IncomingController.protocol.contact.fullName}"
+							width="99%" />
+						<bandbox id="contactBndbx" autodrop="true"
+							constraint="no empty" visible="false">
+						</bandbox>
+					</vbox>
+				</row>
+				<row>
+					${c:l('incomingProtocol.incomingProtocolNumber')}
+					<label id="incomingProtocolNumberTxb"
+						value="@{IncomingController.protocol.incomingProtocolNumber}"
+						width="99%" />
+				</row>
+				<row>
+					${c:l('incomingProtocol.incomingDate')}
+					<label
+						value="@{IncomingController.protocol.incomingDate, converter='gr.scriptum.eprotocol.util.DateCustom' }">
+						<custom-attributes format="dd/MM/yyyy" />
+					</label>
+				</row>
+				<row>
+					${c:l('incomingPage.documents')}
+					<vbox width="99%">
+						<grid id="documentsGrd" width="100%"
+							model="@{IncomingController.protocolDocuments}">
+							<columns>
+								<column
+									label="${c:l('protocolDocument.documentNumber')}" width="5%" />
+								<column
+									label="${c:l('protocolDocument.documentName')}" width="40%" />
+								<column
+									label="${c:l('protocolDocument.documentSize')}" width="15%" />
+								<column label="${c:l('documentType')}"
+									width="40%" />
+							</columns>
+							<rows>
+								<row self="@{each='documentRow'}">
+									<label
+										value="@{documentRow.documentNumber}" />
+									<label
+										value="@{documentRow.documentName}" />
+									<label
+										value="@{documentRow.documentSize}" />
+									<label
+										value="@{documentRow.documentType.name}" />
+								</row>
+							</rows>
+						</grid>
+					</vbox>
+				</row>
+				<row>
+					${c:l('incomingProtocol.incomingPlace')}
+					<label id="incomingPlaceTxb"
+						value="@{IncomingController.protocol.incomingPlace}" width="99%" />
+				</row>
+
+				<row>
+					${c:l('distributionMethod')}
+					<label id="distributionMethodLbl"
+						value="@{IncomingController.protocol.distributionMethod.description}"
+						width="99%" />
+				</row>
+				<row>
+					${c:l('incomingProtocol.comments')}
+					<label id="commentsTxb"
+						value="@{IncomingController.protocol.comments}" width="99%" />
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,51 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('companiesPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" width="1024px" />
+	<window id="win" title="${c:l('companiesPage.title')}"
+		border="normal" width="1024px"
+		apply="gr.scriptum.eprotocol.controller.CompaniesController">
+
+		<listbox id="entitiesLstbx" rows="10" width="99%"
+			model="@{CompaniesController.entities}"
+			selectedItem="@{CompaniesController.selected}">
+			<listhead>
+				<listheader label="${c:l('company.id')}" width="5%" />
+				<listheader label="${c:l('company.name')}" width="20%" />
+			</listhead>
+			<listitem self="@{each='companyRow'}">
+				<listcell label="@{companyRow.id}" />
+				<listcell label="@{companyRow.name}" />
+			</listitem>
+		</listbox>
+		<paging id="pgng" pageSize="10" />
+		<separator bar="true" />
+
+		<grid width="99%">
+			<columns></columns>
+			<rows>
+				<row>
+					${c:l('company.name')}
+					<textbox width="99%"
+						value="@{CompaniesController.entity.name}" />
+				</row>
+				<row>
+					<label value="${c:l('functions')}" />
+					<hbox>
+						<button id="searchBtn" label="${c:l('search')}" />
+						<button id="clearBtn" label="${c:l('clear')}" />
+						<button id="newBtn" label="${c:l('new')}" />
+						<button id="importBtn"
+							label="${c:l('importFile')}" upload="true" />
+						<button id="exportBtn"
+							label="${c:l('exportFile')}" />
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+
+	</window>
+
+</zk>

@@ -1,0 +1,49 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./uploadWin"?>
+<window id="uploadWin" title="${c:l('incomingPage.upload.title')}"
+	border="normal" width="600px" closable="true"
+	apply="gr.scriptum.eprotocol.controller.UploadController">
+
+	<grid width="99%">
+		<columns></columns>
+		<rows>
+			<!-- <row>
+				${c:l('protocolDocument.documentNumber')}
+				<label id="documentNumberLbl"
+					value="@{UploadController.protocolDocument.documentNumber}" />
+			</row>
+			-->
+			<row>
+				${c:l('protocolDocument.documentName')}
+				<label id="documentNameLbl"
+					value="@{UploadController.protocolDocument.documentName}" />
+			</row>
+			<row>
+				${c:l('documentType')}
+				<combobox id="documentTypeCbx" width="97%"
+					model="@{UploadController.documentTypes}"
+					selectedItem="@{UploadController.protocolDocument.documentType}" constraint="no empty">
+					<comboitem self="@{each='documentTypeRow'}"
+						label="@{documentTypeRow.name}" />
+				</combobox>
+			</row>
+			<row>
+				${c:l('protocolDocument.documentKeywords')}
+				<textbox rows="2" width="100%" id="documentKeywordsTxb"
+					value="@{UploadController.protocolDocument.documentKeywords}" />
+			</row>
+			<row>
+				${c:l('protocolDocument.documentSize')}
+				<label id="documentSizeLbl"
+					value="@{UploadController.protocolDocument.documentSize}" />
+			</row>
+			<row>
+				${c:l('functions')}
+				<hbox width="99%">
+					<button id="uploadBtn" label="${c:l('upload')}"
+						upload="true,maxsize=1024" />
+					<button id="confirmBtn" label="${c:l('confirm')}" />
+				</hbox>
+			</row>
+		</rows>
+	</grid>
+</window>

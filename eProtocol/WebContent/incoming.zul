@@ -1,0 +1,186 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./incomingWin"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
+<?page title="${c:l('incomingPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="incomingPh" sclass="header" src="header.zul"
+		width="1024px" />
+		
+	<window id="incomingWin" title="${c:l('incomingPage.title')}"
+		border="normal" width="1024px"
+		apply="gr.scriptum.eprotocol.controller.IncomingController">
+		<grid width="99%">
+			<columns ></columns>
+			<rows>
+				<row visible="@{IncomingController.isProtocolPending}">
+					${c:l('incomingProtocol.id')}
+					<label id="idLbl"
+						value="@{IncomingController.protocol.id}" />
+				</row>
+				<row
+					visible="@{IncomingController.isProtocolSubmitted}">
+					${c:l('incomingProtocol.protocolNumber')}
+					<label id="protocolNumberLbl"
+						value="@{IncomingController.protocol.fullNumber}" />
+				</row>
+				<row>
+					${c:l('incomingProtocol.subject')}
+					<textbox id="subjectTxb"
+						value="@{IncomingController.protocol.subject}" width="99%"
+						constraint="no empty" />
+				</row>
+				<row>
+					${c:l('incomingProtocol.protocolDate')}
+					<datebox id="protocolDateDtbx" compact="true"
+						width="40%" lenient="false" format="dd/MM/yyyy"
+						constraint="no empty"
+						value="@{IncomingController.protocol.protocolDate }" />
+				</row>
+				<row>
+					${c:l('incomingProtocol.contact')}
+					<vbox width="99%">
+						<bandbox id="contactBndbx" autodrop="true"
+							constraint="no empty" value="@{IncomingController.protocol.contact.fullName }">
+							<bandpopup>
+								<listbox id="contactsLstbx"
+									width="400px" model="@{IncomingController.contacts}"
+									selectedItem="@{IncomingController.protocol.contact}">
+									<listhead>
+										<listheader
+											label="${c:l('contact.id')}" width="5%" />
+										<listheader
+											label="${c:l('contact.name')}" width="20%" />
+										<listheader
+											label="${c:l('contact.surname')}" width="30%" />
+										<listheader
+											label="${c:l('contact.organization')}" width="20%" />
+										<listheader
+											label="${c:l('contact.email')}" width="15%" />
+										<listheader
+											label="${c:l('contact.telephone')}" width="10%" />
+									</listhead>
+									<listitem
+										self="@{each='contactRow'}">
+										<listcell
+											label="@{contactRow.id}" />
+										<listcell
+											label="@{contactRow.name}" />
+										<listcell
+											label="@{contactRow.surname}" />
+										<listcell
+											label="@{contactRow.organization}" />
+										<listcell
+											label="@{contactRow.email}" />
+										<listcell
+											label="@{contactRow.telephone}" />
+									</listitem>
+								</listbox>
+							</bandpopup>
+						</bandbox>
+						<button id="newContactBtn" label="${c:l('new')}"
+							disabled="@{IncomingController.isProtocolSubmitted}" />
+					</vbox>
+				</row>
+				<row>
+					${c:l('incomingProtocol.incomingProtocolNumber')}
+					<textbox id="incomingProtocolNumberTxb"
+						value="@{IncomingController.protocol.incomingProtocolNumber}"
+						width="99%" constraint="no empty" />
+				</row>
+				<row>
+					${c:l('incomingProtocol.incomingDate')}
+					<datebox id="incomingDateDtbx" compact="true"
+						width="40%" lenient="false" format="dd/MM/yyyy"
+						constraint="no empty"
+						value="@{IncomingController.protocol.incomingDate }" />
+				</row>
+				<row>
+					${c:l('incomingPage.documents')}
+					<vbox width="99%">
+						${c:l('incomingPage.documents.prompt')}
+						<listbox id="documentsLstbx" rows="4"
+							width="99%" model="@{IncomingController.protocolDocuments}"
+							selectedItem="@{IncomingController.protocolDocument}">
+							<listhead>
+								<listheader
+									label="${c:l('protocolDocument.documentNumber')}" width="5%" />
+								<listheader
+									label="${c:l('protocolDocument.documentName')}" width="40%" />
+								<listheader
+									label="${c:l('protocolDocument.documentSize')}" width="15%" />
+								<listheader
+									label="${c:l('documentType')}" width="40%" />
+							</listhead>
+							<listitem self="@{each='documentRow'}">
+								<listcell
+									label="@{documentRow.documentNumber}" />
+								<listcell
+									label="@{documentRow.documentName}" />
+								<listcell
+									label="@{documentRow.documentSize}" />
+								<listcell
+									label="@{documentRow.documentType.name}" />
+							</listitem>
+							<!-- <listfoot>
+								<listfooter label="" />
+								<listfooter
+								label="Ανεβάσατε 0 Αρχεία 0 ΜΒ" />
+								</listfoot>-->
+						</listbox>
+						<hbox>
+							<button id="addFileBtn"
+								label="${c:l('add')}"
+								disabled="@{IncomingController.isProtocolSubmitted}" />
+							<button id="removeFileBtn"
+								label="${c:l('remove')}"
+								disabled="@{IncomingController.isRemoveFileBtnDisabled}" />
+							<button id="downloadFileBtn"
+								label="${c:l('download')}"
+								disabled="@{IncomingController.isDownloadFileBtnDisabled}" />
+						</hbox>
+					</vbox>
+				</row>
+				<row>
+					${c:l('incomingProtocol.incomingPlace')}
+					<textbox id="incomingPlaceTxb"
+						value="@{IncomingController.protocol.incomingPlace}" width="99%"
+						constraint="no empty" />
+				</row>
+
+				<row>
+					${c:l('distributionMethod')}
+					<combobox id="distributionMethodCbx" width="97%"
+						model="@{IncomingController.distributionMethods}"
+						selectedItem="@{IncomingController.protocol.distributionMethod}"
+						autodrop="true" constraint="no empty">
+						<comboitem
+							self="@{each='distributionMethodRow'}"
+							label="@{distributionMethodRow.description}" />
+					</combobox>
+				</row>
+
+				<row>
+					${c:l('incomingProtocol.comments')}
+					<textbox id="commentsTxb" rows="5"
+						value="@{IncomingController.protocol.comments}" width="99%" />
+				</row>
+
+				<row
+					visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}">
+					${c:l('functions')}
+					<hbox width="99%">
+						<button id="newBtn" label="${c:l('new')}" />
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@{IncomingController.isProtocolSubmitted}">
+						</button>
+						<button id="insertBtn" label="${c:l('insert')}"
+							disabled="@{IncomingController.isProtocolSubmitted}" />
+						<button id="printBtn" label="${c:l('print')}"
+							disabled="@{IncomingController.isPrintButtonDisabled}" />
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

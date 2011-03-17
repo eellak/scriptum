@@ -1,0 +1,428 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./indexWin"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
+<?page title="${c:l('indexPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul"
+		width="1024px" />
+		
+	<window id="indexWin" title="${c:l('indexPage.title')}"
+		border="normal" width="1024px"
+		apply="gr.scriptum.eprotocol.controller.IndexController">
+
+		<tabbox id="indexTbx" width="100%">
+			<tabs>
+				<tab label="${c:l('indexPage.incoming') }"
+					id="incomingTb"
+					visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
+				<tab label="${c:l('indexPage.outgoing') }"
+					id="outgoingTb"
+					visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
+				<tab label="${c:l('indexPage.search') }" id="searchTb"
+					visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER,ROLE_READER')}"
+					selected="${sec:isAllGranted('ROLE_READER')}" />
+			</tabs>
+
+			<tabpanels>
+				<tabpanel id="incomingTbPnl">
+
+					<listbox id="incomingLstbx" rows="10"
+						model="@{IndexController.incomingProtocols}"
+						selectedItem="@{IndexController.selectedIncomingProtocol}">
+						<listhead>
+							<listheader id="incomingIdLsthdr"
+								label="${c:l('incomingProtocol.id')}" width="10%" sort="auto"
+								value="id" forward="onSort=onSort" />
+							<listheader id="incomingUpdateTsLsthdr"
+								label="${c:l('incomingProtocol.updateTs')}" width="20%"
+								sort="auto" value="updateTs" forward="onSort=onSort"
+								sortDirection="descending" />
+							<listheader
+								label="${c:l('incomingProtocol.subject')}" width="30%"
+								sort="auto" value="subject" forward="onSort=onSort" />
+							<listheader
+								label="${c:l('incomingProtocol.contact')}" width="30%" />
+							<listheader
+								label="${c:l('distributionMethod')}" width="30%" />
+							<listheader
+								label="${c:l('incomingProtocol.protocolDocuments')}" />
+						</listhead>
+						<listitem self="@{each='incomingRow'}">
+							<listcell label="@{incomingRow.id}" />
+							<listcell label="@{incomingRow.updateTs}" />
+							<listcell label="@{incomingRow.subject}" />
+							<listcell>
+								<label
+									value="@{incomingRow.contact.name }" />
+								<label
+									value="@{incomingRow.contact.surname }" />
+							</listcell>
+							<listcell
+								label="@{incomingRow.distributionMethod.description}" />
+							<listcell label="0" />
+						</listitem>
+					</listbox>
+					<paging id="incomingPgng" pageSize="10" />
+
+					<separator bar="true" />
+
+					<grid width="99%">
+						<columns></columns>
+						<rows>
+							<row>
+								${c:l('incomingProtocol.updateTs')}
+								(${c:l('from')})
+								<datebox compact="true" width="40%"
+									lenient="false" format="dd/MM/yyyy"
+									value="@{IndexController.incomingDateFrom }" />
+							</row>
+							<row>
+								${c:l('incomingProtocol.updateTs')}
+								(${c:l('to')})
+								<datebox compact="true" width="40%"
+									lenient="false" format="dd/MM/yyyy"
+									value="@{IndexController.incomingDateTo }" />
+							</row>
+							<row>
+								${c:l('incomingProtocol.subject')}
+								<textbox width="100%"
+									value="@{IndexController.incomingProtocol.subject}" />
+							</row>
+							<row>
+								<label value="${c:l('functions')}" />
+								<hbox>
+									<button
+										id="searchIncomingPendingBtn" label="${c:l('search')}" />
+									<button id="clearIncomingPendingBtn"
+										label="${c:l('clear')}" />
+									<button id="newIncomingBtn"
+										label="${c:l('new')}" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+
+				</tabpanel>
+
+				<tabpanel id="outgoingTbPnl">
+
+					<listbox id="outgoingLstbx" rows="10"
+						model="@{IndexController.outgoingProtocols}"
+						selectedItem="@{IndexController.selectedOutgoingProtocol}">
+						<listhead>
+							<listheader
+								label="${c:l('outgoingProtocol.id')}" width="10%" sort="auto"
+								value="id" forward="onSort=onSort" />
+							<listheader
+								label="${c:l('outgoingProtocol.updateTs')}" width="20%"
+								sort="auto" value="updateTs" forward="onSort=onSort"
+								sortDirection="descending" />
+							<listheader
+								label="${c:l('outgoingProtocol.subject')}" width="30%"
+								sort="auto" value="subject" forward="onSort=onSort" />
+							<listheader
+								label="${c:l('distributionMethod')}" width="30%" />
+							<!--<listheader
+								label="${c:l('outgoingProtocol.protocolDocuments')}" />
+						--></listhead>
+						<listitem self="@{each='outgoingRow'}">
+							<listcell label="@{outgoingRow.id}" />
+							<listcell label="@{outgoingRow.updateTs}" />
+							<listcell label="@{outgoingRow.subject}" />
+							<listcell
+								label="@{outgoingRow.distributionMethod.description}" /><!--
+							<listcell label="0" />
+						--></listitem>
+					</listbox>
+					<paging id="outgoingPgng" pageSize="10" />
+
+					<separator bar="true" />
+
+					<grid width="99%">
+						<columns></columns>
+						<rows>
+							<row>
+								${c:l('outgoingProtocol.updateTs')}
+								(${c:l('from')})
+								<datebox compact="true" width="40%"
+									lenient="false" format="dd/MM/yyyy"
+									value="@{IndexController.outgoingDateFrom }" />
+							</row>
+							<row>
+								${c:l('outgoingProtocol.updateTs')}
+								(${c:l('to')})
+								<datebox compact="true" width="40%"
+									lenient="false" format="dd/MM/yyyy"
+									value="@{IndexController.outgoingDateTo }" />
+							</row>
+							<row>
+								${c:l('outgoingProtocol.subject')}
+								<textbox width="100%"
+									value="@{IndexController.outgoingProtocol.subject}" />
+							</row>
+							<row>
+								<label value="${c:l('functions')}" />
+								<hbox>
+									<button
+										id="searchOutgoingPendingBtn" label="${c:l('search')}" />
+									<button id="clearOutgoingPendingBtn"
+										label="${c:l('clear')}" />
+									<button id="newOutgoingBtn"
+										label="${c:l('new')}" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+
+				</tabpanel>
+
+				<tabpanel id="searchTbPnl">
+
+
+					<listbox id="searchIncomingLstbx" rows="10"
+						model="@{IndexController.searchIncomingProtocols}"
+						selectedItem="@{IndexController.searchSelectedIncomingProtocol}"
+						visible="@{IndexController.isDirectionIncoming}">
+						<listhead>
+							<listheader
+								label="${c:l('incomingProtocol.protocolNumber')}" width="10%"
+								sort="auto" value="protocolNumber,protocolSeries,protocolYear"
+								forward="onSort=onSort" sortDirection="descending" />
+							<listheader
+								label="${c:l('incomingProtocol.protocolDate')}" width="20%"
+								sort="auto" value="protocolDate" forward="onSort=onSort" />
+							<listheader
+								label="${c:l('incomingProtocol.subject')}" width="30%"
+								sort="auto" value="subject" forward="onSort=onSort" />
+							<listheader
+								label="${c:l('incomingProtocol.contact')}" width="30%" />
+							<listheader
+								label="${c:l('distributionMethod')}" width="30%" /><!--
+							<listheader
+								label="${c:l('incomingProtocol.protocolDocuments')}" />
+						--></listhead>
+						<listitem self="@{each='searchIncomingRow'}">
+							<listcell
+								label="@{searchIncomingRow.fullNumber}" />
+							<listcell
+								label="@{searchIncomingRow.protocolDate}" />
+							<listcell
+								label="@{searchIncomingRow.subject}" />
+							<listcell>
+								<label
+									value="@{searchIncomingRow.contact.name }" />
+								<label
+									value="@{searchIncomingRow.contact.surname }" />
+							</listcell>
+							<listcell
+								label="@{searchIncomingRow.distributionMethod.description}" /><!--
+							<listcell label="0" />
+						--></listitem>
+					</listbox>
+					<paging id="searchIncomingPgng" pageSize="10"
+						visible="@{IndexController.isDirectionIncoming}" />
+
+					<listbox id="searchOutgoingLstbx" rows="10"
+						model="@{IndexController.searchOutgoingProtocols}"
+						selectedItem="@{IndexController.searchSelectedOutgoingProtocol}"
+						visible="@{IndexController.isDirectionOutgoing}">
+						<listhead>
+							<listheader
+								label="${c:l('outgoingProtocol.protocolNumber')}" width="10%"
+								sort="auto" value="protocolNumber,protocolSeries,protocolYear"
+								forward="onSort=onSort" sortDirection="descending" />
+							<listheader
+								label="${c:l('outgoingProtocol.protocolDate')}" width="20%"
+								sort="auto" value="updateTs" forward="onSort=onSort" />
+							<listheader
+								label="${c:l('outgoingProtocol.subject')}" width="30%"
+								sort="auto" value="subject" forward="onSort=onSort" />
+							<listheader
+								label="${c:l('distributionMethod')}" width="30%" />
+							<listheader
+								label="${c:l('outgoingProtocol.protocolDocuments')}" />
+						</listhead>
+						<listitem self="@{each='searchOutgoingRow'}">
+							<listcell
+								label="@{searchOutgoingRow.fullNumber}" />
+							<listcell
+								label="@{searchOutgoingRow.protocolDate}" />
+							<listcell
+								label="@{searchOutgoingRow.subject}" />
+							<listcell
+								label="@{searchOutgoingRow.distributionMethod.description}" />
+							<listcell label="0" />
+						</listitem>
+					</listbox>
+					<paging id="searchOutgoingPgng" pageSize="10"
+						visible="@{IndexController.isDirectionOutgoing}" />
+
+					<separator bar="true" />
+
+					<grid width="100%">
+						<columns></columns>
+						<rows>
+							<row>
+								${c:l('indexPage.search.direction') }
+								<groupbox width="97%">
+									<caption
+										label="${c:l('indexPage.search.direction') }" />
+									<radiogroup id="directionRdgrp">
+										<radio
+											label="${c:l('indexPage.search.incoming') }" value="0"
+											selected="true" />
+										<radio
+											label="${c:l('indexPage.search.outgoing') }" value="1" />
+									</radiogroup>
+								</groupbox>
+							</row>
+							<row>
+								${c:l('indexPage.search.protocolNumber')}
+								<textbox width="100%"
+									value="@{IndexController.protocolNumber}" />
+							</row>
+							<row>
+								${c:l('indexPage.search.dates')}
+								<groupbox width="97%">
+									<caption
+										label="${c:l('indexPage.search.dates')}" />
+									(${c:l('from')})
+									<datebox compact="true" width="40%"
+										lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.searchDateFrom }" />
+									(${c:l('to')})
+									<datebox compact="true" width="40%"
+										lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.searchDateTo }" />
+								</groupbox>
+							</row>
+							<row>
+								${c:l('indexPage.search.subject')}
+								<textbox width="100%"
+									value="@{IndexController.subject}" />
+							</row>
+							<row>
+								${c:l('incomingProtocol.contact') }
+								<bandbox id="contactBndbx"
+									autodrop="true"
+									disabled="@{IndexController.isDirectionOutgoing}">
+									<bandpopup>
+										<listbox id="contactsLstbx"
+											width="400px" model="@{IndexController.contacts}"
+											selectedItem="@{IndexController.contact}">
+											<listhead>
+												<listheader
+													label="${c:l('contact.id')}" width="5%" />
+												<listheader
+													label="${c:l('contact.name')}" width="20%" />
+												<listheader
+													label="${c:l('contact.surname')}" width="30%" />
+												<listheader
+													label="${c:l('contact.organization')}" width="20%" />
+												<listheader
+													label="${c:l('contact.email')}" width="15%" />
+												<listheader
+													label="${c:l('contact.telephone')}" width="10%" />
+											</listhead>
+											<listitem
+												self="@{each='contactRow'}">
+												<listcell
+													label="@{contactRow.id}" />
+												<listcell
+													label="@{contactRow.name}" />
+												<listcell
+													label="@{contactRow.surname}" />
+												<listcell
+													label="@{contactRow.organization}" />
+												<listcell
+													label="@{contactRow.email}" />
+												<listcell
+													label="@{contactRow.telephone}" />
+											</listitem>
+										</listbox>
+									</bandpopup>
+								</bandbox>
+							</row>
+							<row>
+								${c:l('outgoingRecipient') }
+								<bandbox id="toContactBndbx"
+									autodrop="true"
+									disabled="@{IndexController.isDirectionIncoming}">
+									<bandpopup>
+										<listbox id="toContactsLstbx"
+											width="400px" model="@{IndexController.toContacts}"
+											selectedItem="@{IndexController.toContact}">
+											<listhead>
+												<listheader
+													label="${c:l('contact.id')}" width="5%" />
+												<listheader
+													label="${c:l('contact.name')}" width="20%" />
+												<listheader
+													label="${c:l('contact.surname')}" width="30%" />
+												<listheader
+													label="${c:l('contact.organization')}" width="20%" />
+												<listheader
+													label="${c:l('contact.email')}" width="15%" />
+												<listheader
+													label="${c:l('contact.telephone')}" width="10%" />
+											</listhead>
+											<listitem
+												self="@{each='toContactRow'}">
+												<listcell
+													label="@{toContactRow.id}" />
+												<listcell
+													label="@{toContactRow.name}" />
+												<listcell
+													label="@{toContactRow.surname}" />
+												<listcell
+													label="@{toContactRow.organization}" />
+												<listcell
+													label="@{toContactRow.email}" />
+												<listcell
+													label="@{toContactRow.telephone}" />
+											</listitem>
+										</listbox>
+									</bandpopup>
+								</bandbox>
+							</row>
+							<row>
+								${c:l('distributionMethod')}
+								<combobox id="distributionMethodCbx"
+									width="97%" model="@{IndexController.distributionMethods}"
+									selectedItem="@{IndexController.distributionMethod}"
+									autodrop="true">
+									<comboitem
+										self="@{each='distributionMethodRow'}"
+										label="@{distributionMethodRow.description}" />
+								</combobox>
+							</row>
+							<row>
+								${c:l('indexPage.search.keywords')}
+								<textbox width="100%"
+									value="@{IndexController.keywords}" />
+							</row>
+							<row>
+								<label value="${c:l('functions')}" />
+								<hbox>
+									<button id="searchBtn"
+										label="${c:l('search')}" />
+									<button id="clearBtn"
+										label="${c:l('clear')}" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+
+				</tabpanel>
+
+
+			</tabpanels>
+		</tabbox>
+
+
+
+
+	</window>
+
+</zk>

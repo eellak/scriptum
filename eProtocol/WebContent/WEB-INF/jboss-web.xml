@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jboss-web>
+ <!--<class-loading java2ClassLoadingCompliance="false">
+      <loader-repository>
+         org.hibernate:archive=eProtocol.war
+         <loader-repository-config>java2ParentDelegation=false</loader-repository-config>
+      </loader-repository>
+   </class-loading>
+--></jboss-web>

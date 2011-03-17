@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:zksp="http://www.zkoss.org/2008/zkspring/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
+                        http://www.zkoss.org/2008/zkspring/security http://www.zkoss.org/2008/zkspring/security/zkspring-security.xsd"
+	default-lazy-init="true">
+
+	<!-- <global-method-security pre-post-annotations="enabled"> AspectJ pointcut 
+		expression that locates our "post" method and applies security that way <protect-pointcut 
+		expression="execution(* bigbank.*Service.post*(..))" access="ROLE_TELLER" 
+		/> </global-method-security> -->
+	<beans:bean id="scriptumUserDetailsService"
+		class="gr.scriptum.eprotocol.security.ScriptumUserDetailsService"
+		lazy-init="true" />
+
+	<beans:bean id="sriptumLogoutSuccessHandler"
+		class="gr.scriptum.eprotocol.security.ScriptumLogoutSuccessHandler"
+		lazy-init="true" />
+
+	<http auto-config="true" use-expressions="false">
+
+		<intercept-url pattern="/login.zul" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+
+		<intercept-url pattern="/index.zul"
+			access="ROLE_READER,ROLE_WRITER,ROLE_ADMIN" />
+		<intercept-url pattern="/incoming.zul"
+			access="ROLE_READER,ROLE_WRITER,ROLE_ADMIN" />
+		<intercept-url pattern="/incomingPrint.zul"
+			access="ROLE_READER,ROLE_WRITER,ROLE_ADMIN" />
+		<intercept-url pattern="/outgoing.zul"
+			access="ROLE_READER,ROLE_WRITER,ROLE_ADMIN" />
+		<intercept-url pattern="/outgoingPrint.zul"
+			access="ROLE_READER,ROLE_WRITER,ROLE_ADMIN" />
+		<intercept-url pattern="/contacts.zul"
+			access="ROLE_READER,ROLE_WRITER,ROLE_ADMIN" />
+		<intercept-url pattern="/contact.zul"
+			access="ROLE_READER,ROLE_WRITER,ROLE_ADMIN" />
+		<intercept-url pattern="/contact_win.zul"
+			access="ROLE_READER,ROLE_WRITER,ROLE_ADMIN" />
+		<intercept-url pattern="/documentTypes.zul"
+			access="ROLE_READER,ROLE_WRITER,ROLE_ADMIN" />
+		<intercept-url pattern="/documentType.zul"
+			access="ROLE_READER,ROLE_WRITER,ROLE_ADMIN" />
+
+		<intercept-url pattern="/upload.zul" access="ROLE_WRITER,ROLE_ADMIN" />
+
+		<intercept-url pattern="/companies.zul" access="ROLE_ADMIN" />
+		<intercept-url pattern="/company.zul" access="ROLE_ADMIN" />
+		<intercept-url pattern="/companyTypes.zul" access="ROLE_ADMIN" />
+		<intercept-url pattern="/companyType.zul" access="ROLE_ADMIN" />
+		<intercept-url pattern="/distributionMethods.zul"
+			access="ROLE_ADMIN" />
+		<intercept-url pattern="/distributionMethod.zul" access="ROLE_ADMIN" />
+		<intercept-url pattern="/parameters.zul" access="ROLE_ADMIN" />
+		<intercept-url pattern="/parameter.zul" access="ROLE_ADMIN" />
+		<intercept-url pattern="/users.zul" access="ROLE_ADMIN" />
+		<intercept-url pattern="/user.zul" access="ROLE_ADMIN" />
+		<intercept-url pattern="/protocolBook.zul" access="ROLE_ADMIN" />
+
+		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+
+		<form-login login-page="/login.zul" default-target-url="/index.zul"
+			authentication-failure-url="/login.zul?login_error=1" />
+		<logout success-handler-ref="sriptumLogoutSuccessHandler" />
+
+		<!-- Following is list of ZK Spring Security custom filters. They needs 
+			to be exactly in the same order as shown below in order to work. -->
+		<custom-filter ref="zkDesktopReuseFilter" position="FIRST" />
+		<custom-filter ref="zkDisableSessionInvalidateFilter"
+			before="FORM_LOGIN_FILTER" />
+		<custom-filter ref="zkEnableSessionInvalidateFilter"
+			before="FILTER_SECURITY_INTERCEPTOR" />
+		<custom-filter ref="zkLoginOKFilter" after="FILTER_SECURITY_INTERCEPTOR" />
+		<custom-filter ref="zkError403Filter" after="LOGOUT_FILTER" />
+
+	</http>
+
+	<authentication-manager>
+		<authentication-provider user-service-ref="scriptumUserDetailsService" />
+	</authentication-manager>
+
+	<zksp:zk-event login-template-close-delay="0">
+		<!--<zksp:intercept-event event="onClick" path="//incoming.zul/incomingWin/testBtn" 
+			access="ROLE_WRITER,ROLE_ADMIN"/> --><!-- <zksp:intercept-event path="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" 
+			/> -->
+	</zksp:zk-event>
+
+</beans:beans>

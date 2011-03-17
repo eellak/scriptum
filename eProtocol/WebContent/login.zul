@@ -1,0 +1,40 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('loginPage.title')}"?>
+<window id="loginWin" border="normal" width="300px"
+	title="${c:l('loginPage.title') }" mode="overlapped"
+	position="center,center">
+	<h:form id="f" name="f" action="j_spring_security_check"
+		method="POST" xmlns:h="http://www.w3.org/1999/xhtml">
+		<grid>
+			<rows>
+				<row>
+					${c:l('users.username')}
+					<textbox id="u" name="j_username" />
+				</row>
+				<row>
+					${c:l('users.password')}
+					<textbox id="p" type="password" name="j_password" />
+				</row>
+				<!--
+					<row>
+					<checkbox id="r"
+					name="_spring_security_remember_me" />
+					Don't ask for my password for two weeks
+					</row>
+				-->
+				<row spans="2" align="center">
+					<hbox>
+						<h:input type="submit" value="${c:l('login') }" />
+					</hbox>
+				</row>
+				<row spans="2" align="center"
+					if="${not empty param.login_error}">
+					<html style="color:red;">
+						${c:l('loginPage.error')}
+						<!-- ${SPRING_SECURITY_LAST_EXCEPTION.message} -->
+					</html>
+				</row>
+			</rows>
+		</grid>
+	</h:form>
+</window>

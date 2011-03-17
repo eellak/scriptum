@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faceted-project>
+  <runtime name="JBoss v4.2"/>
+  <fixed facet="jst.java"/>
+  <fixed facet="org.zkoss.eclipse.project.zksupports"/>
+  <fixed facet="jst.web"/>
+  <installed facet="jst.java" version="6.0"/>
+  <installed facet="jst.web" version="2.5"/>
+  <installed facet="org.zkoss.eclipse.project.zksupports" version="1.0"/>
+  <installed facet="wst.jsdt.web" version="1.0"/>
+</faceted-project>

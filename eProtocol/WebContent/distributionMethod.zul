@@ -1,0 +1,43 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('distributionMethodPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul"
+		width="1024px" />
+	<window id="win" title="${c:l('distributionMethodPage.title')}"
+		border="normal" width="1024px"
+		apply="gr.scriptum.eprotocol.controller.DistributionMethodController">
+
+		<grid width="99%">
+			<columns></columns>
+			<rows>
+				<row
+					visible="@{DistributionMethodController.isEntityCreated}">
+					${c:l('distributionMethod.id')}
+					<label id="idLbl"
+						value="@{DistributionMethodController.entity.id}" />
+				</row>
+				<row>
+					${c:l('distributionMethod.description')}
+					<textbox id="descriptionTxb"
+						value="@{DistributionMethodController.entity.description}"
+						width="99%" constraint="no empty" />
+				</row>
+				<row>
+					${c:l('functions')}
+					<hbox width="99%">
+						<button id="newBtn" label="${c:l('new')}" />
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@{ParameterController.isLocked}" />
+						<button id="deleteBtn" label="${c:l('delete')}"
+							disabled="true" />
+					</hbox>
+				</row>
+
+			</rows>
+		</grid>
+
+
+	</window>
+</zk>

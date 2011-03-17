@@ -1,0 +1,93 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
+<?page title="${c:l('contactsPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" width="1024px" />
+
+	<window id="win" title="${c:l('contactsPage.title')}"
+		border="normal" width="1024px"
+		apply="gr.scriptum.eprotocol.controller.ContactsController">
+
+		<listbox id="entitiesLstbx" rows="10" width="99%"
+			model="@{ContactsController.entities}"
+			selectedItem="@{ContactsController.selected}">
+			<listhead>
+				<listheader label="${c:l('contact.id')}" width="5%"
+					sort="auto" value="id" forward="onSort=onSort"
+					sortDirection="ascending" />
+				<listheader label="${c:l('contact.name')}" width="20%"
+					sort="auto" value="name" forward="onSort=onSort" />
+				<listheader label="${c:l('contact.surname')}"
+					width="30%" sort="auto" value="surname" forward="onSort=onSort" />
+				<listheader label="${c:l('contact.organization')}"
+					width="20%" sort="auto" value="organization"
+					forward="onSort=onSort" />
+				<listheader label="${c:l('contact.email')}" width="15%"
+					sort="auto" value="email" forward="onSort=onSort" />
+				<listheader label="${c:l('contact.telephone')}"
+					width="10%" />
+			</listhead>
+			<listitem self="@{each='contactRow'}">
+				<listcell label="@{contactRow.id}" />
+				<listcell label="@{contactRow.name}" />
+				<listcell label="@{contactRow.surname}" />
+				<listcell label="@{contactRow.organization}" />
+				<listcell label="@{contactRow.email}" />
+				<listcell label="@{contactRow.telephone}" />
+			</listitem>
+		</listbox>
+		<paging id="pgng" pageSize="10" />
+
+		<separator bar="true" />
+
+		<grid width="99%">
+			<columns></columns>
+			<rows>
+				<row>
+					${c:l('contact.name')}
+					<textbox width="99%"
+						value="@{ContactsController.entity.name}" />
+				</row>
+				<row>
+					${c:l('contact.surname')}
+					<textbox width="99%"
+						value="@{ContactsController.entity.surname}" />
+				</row>
+				<row>
+					${c:l('contact.organization')}
+					<textbox width="99%"
+						value="@{ContactsController.entity.organization}" />
+				</row>
+				<row>
+					${c:l('contact.email')}
+					<textbox width="99%"
+						value="@{ContactsController.entity.email}" />
+				</row>
+				<row>
+					${c:l('contact.telephone')}
+					<textbox width="99%"
+						value="@{ContactsController.entity.telephone}" />
+				</row>
+				<row>
+					<label value="${c:l('functions')}" />
+					<hbox>
+						<button id="searchBtn" label="${c:l('search')}" />
+						<button id="clearBtn" label="${c:l('clear')}" />
+						<button id="newBtn" label="${c:l('new')}"
+							visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
+						<button id="importBtn"
+							label="${c:l('importFile')}"
+							visible="${sec:isAnyGranted('ROLE_ADMIN')}" upload="true" />
+						<button id="exportBtn"
+							label="${c:l('exportFile')}"
+							visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+
+	</window>
+
+</zk>

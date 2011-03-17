@@ -1,0 +1,102 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win" ?>
+<window id="win" title="${c:l('contactPage.title')}" border="normal"
+	width="1024px" apply="gr.scriptum.eprotocol.controller.ContactController">
+
+	<grid width="100%">
+		<columns></columns>
+		<rows>
+			<row visible="@{ContactController.isEntityCreated}">
+				${c:l('contact.id')}
+				<label id="idLbl"
+					value="@{ContactController.entity.id}" />
+			</row>
+			<row>
+				${c:l('contact.surname')}
+				<textbox id="surnameTxb"
+					value="@{ContactController.entity.surname}" width="99%"
+					constraint="no empty" />
+			</row>
+			<row>
+				${c:l('contact.name')}
+				<textbox id="nameTxb"
+					value="@{ContactController.entity.name}" width="99%"
+					constraint="no empty" />
+			</row>
+			<row>
+				${c:l('contact.middlename')}
+				<textbox value="@{ContactController.entity.middlename}"
+					width="99%" />
+			</row>
+			<row>
+				${c:l('company')}
+				<combobox id="companyCbx" width="97%"
+					model="@{ContactController.companies}"
+					selectedItem="@{ContactController.entity.company}"
+					constraint="no empty">
+					<comboitem self="@{each='companyRow'}"
+						label="@{companyRow.name}" />
+				</combobox>
+			</row>
+			<row>
+				${c:l('contactPage.address')}
+				<groupbox width="97%">
+					<caption
+						label="${c:l('contactPage.addressDetails')}" />
+					${c:l('contact.street')}
+					<textbox value="@{ContactController.entity.street}"
+						width="99%" />
+					${c:l('contact.streetNo')}
+					<textbox
+						value="@{ContactController.entity.streetNo}" width="99%" />
+					${c:l('contact.city')}
+					<combobox id="cityCbx"
+						value="@{ContactController.entity.city}" width="99%">
+						<comboitem label="Αθήνα" />
+					</combobox>
+					${c:l('contact.prefecture')}
+					<textbox
+						value="@{ContactController.entity.prefecture}" width="99%" />
+					${c:l('contact.postcode')}
+					<textbox id="postcodeTxb"
+						value="@{ContactController.entity.postcode}" width="99%" />
+				</groupbox>
+			</row>
+			<row>
+				<vbox width="20%">
+					<label value="${c:l('contactPage.phones')}" />
+					<label value="${c:l('contactPage.comms')}" />
+				</vbox>
+				<groupbox width="97%">
+					<caption label="${c:l('contactPage.commInfo')}" />
+					${c:l('contact.telephone')}
+					<textbox id="telephoneTxb"
+						value="@{ContactController.entity.telephone}" width="99%" />
+					${c:l('contact.mobile')}
+					<textbox id="mobileTxb"
+						value="@{ContactController.entity.mobile}" width="99%" />
+					${c:l('contact.fax')}
+					<textbox id="faxTxb"
+						value="@{ContactController.entity.fax}" width="99%" />
+					${c:l('contact.email')}
+					<textbox id="emailTxb"
+						value="@{ContactController.entity.email}" width="99%" />
+					${c:l('contact.web')}
+					<textbox value="@{ContactController.entity.web}"
+						width="99%" />
+				</groupbox>
+			</row>
+
+			<row visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}">
+				${c:l('functions')}
+				<hbox width="99%">
+					<button id="newBtn" label="${c:l('new')}"/>
+					<button id="saveBtn" label="${c:l('save')}"
+						disabled="@{ContactController.isLocked}"/>
+					<button id="deleteBtn" label="${c:l('delete')}"
+						disabled="true"/>
+				</hbox>
+			</row>
+
+		</rows>
+	</grid>
+</window>

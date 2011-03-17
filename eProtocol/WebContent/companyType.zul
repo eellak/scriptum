@@ -1,0 +1,46 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('companyTypePage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul"
+		width="1024px" />
+	<window id="win" title="${c:l('companyTypePage.title')}"
+		border="normal" width="1024px"
+		apply="gr.scriptum.eprotocol.controller.CompanyTypeController">
+
+		<grid width="99%">
+			<columns></columns>
+			<rows>
+				<row
+					visible="@{CompanyTypeController.isEntityCreated}">
+					${c:l('companyType.id')}
+					<label id="idLbl"
+						value="@{CompanyTypeController.entity.id}" />
+				</row>
+				<row>
+					${c:l('companyType.name')}
+					<textbox id="nameTxb"
+						value="@{CompanyTypeController.entity.name}" width="99%"
+						constraint="no empty" />
+				</row>
+				<row>
+					${c:l('companyType.description')}
+					<textbox id="descriptionTxb"
+						value="@{CompanyTypeController.entity.description}" width="99%" />
+				</row>
+				<row>
+					${c:l('functions')}
+					<hbox width="99%">
+						<button id="newBtn" label="${c:l('new')}" />
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@{CompanyTypeController.isLocked}" />
+						<button id="deleteBtn" label="${c:l('delete')}"
+							disabled="true" />
+					</hbox>
+				</row>
+
+			</rows>
+		</grid>
+	</window>
+</zk>

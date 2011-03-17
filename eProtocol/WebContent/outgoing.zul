@@ -1,0 +1,303 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./outgoingWin"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
+<?page title="${c:l('outgoingPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="outgoingPh" sclass="header" src="header.zul"
+		width="1024px" />
+
+	<window id="outgoingWin" title="${c:l('outgoingPage.title')}"
+		border="normal" width="1024px"
+		apply="gr.scriptum.eprotocol.controller.OutgoingController">
+		<grid width="99%">
+			<columns></columns>
+			<rows>
+				<row visible="@{OutgoingController.isProtocolPending}">
+					${c:l('outgoingProtocol.id')}
+					<label id="idLbl"
+						value="@{OutgoingController.protocol.id}" />
+				</row>
+				<row
+					visible="@{OutgoingController.isProtocolSubmitted}">
+					${c:l('outgoingProtocol.protocolNumber')}
+					<label id="protocolNumberLbl"
+						value="@{OutgoingController.protocol.fullNumber}" />
+				</row>
+				<row>
+					${c:l('outgoingProtocol.subject')}
+					<textbox id="subjectTxb"
+						value="@{OutgoingController.protocol.subject}" width="99%"
+						constraint="no empty" />
+				</row>
+				<row>
+					${c:l('outgoingProtocol.protocolDate')}
+					<datebox id="protocolDateDtbx" compact="true"
+						width="40%" lenient="false" format="dd/MM/yyyy"
+						constraint="no empty"
+						value="@{OutgoingController.protocol.protocolDate }" />
+				</row>
+				<row>
+					${c:l('outgoingPage.recipients')}
+					<vbox width="99%">
+						${c:l('outgoingPage.recipients.prompt')}
+						<bandbox id="toBndbx" autodrop="true">
+							<bandpopup>
+								<listbox id="toContactsLstbx"
+									width="400px" model="@{OutgoingController.toContacts}"
+									selectedItem="@{OutgoingController.toContact}">
+									<listhead>
+										<listheader
+											label="${c:l('contact.id')}" width="5%" />
+										<listheader
+											label="${c:l('contact.name')}" width="20%" />
+										<listheader
+											label="${c:l('contact.surname')}" width="30%" />
+										<listheader
+											label="${c:l('contact.organization')}" width="20%" />
+										<listheader
+											label="${c:l('contact.email')}" width="15%" />
+										<listheader
+											label="${c:l('contact.telephone')}" width="10%" />
+									</listhead>
+									<listitem
+										self="@{each='toContactRow'}">
+										<listcell
+											label="@{toContactRow.id}" />
+										<listcell
+											label="@{toContactRow.name}" />
+										<listcell
+											label="@{toContactRow.surname}" />
+										<listcell
+											label="@{toContactRow.organization}" />
+										<listcell
+											label="@{toContactRow.email}" />
+										<listcell
+											label="@{toContactRow.telephone}" />
+									</listitem>
+								</listbox>
+							</bandpopup>
+						</bandbox>
+						<listbox id="toLstbx" rows="4" width="99%"
+							model="@{OutgoingController.toList}"
+							selectedItem="@{OutgoingController.toOutgoingRecipient}">
+							<listhead>
+								<listheader label="${c:l('contact.id')}"
+									width="10%" />
+								<listheader
+									label="${c:l('contact.name')}" width="30%" />
+								<listheader
+									label="${c:l('contact.surname')}" width="30%" />
+								<listheader
+									label="${c:l('contact.organization')}" width="30%" />
+								<listheader
+									label="${c:l('contact.email')}" width="30%" />
+							</listhead>
+							<listitem self="@{each='toRecipientRow'}">
+								<listcell
+									label="@{toRecipientRow.id.contact.id}" />
+								<listcell
+									label="@{toRecipientRow.id.contact.name}" />
+								<listcell
+									label="@{toRecipientRow.id.contact.surname}" />
+								<listcell
+									label="@{toRecipientRow.id.contact.organization}" />
+								<listcell
+									label="@{toRecipientRow.id.contact.email}" />
+							</listitem>
+							<!-- <listfoot>
+								<listfooter label="" width="20%" />
+								<listfooter label="Παραλήπτες 0" />
+								</listfoot>-->
+						</listbox>
+						<hbox>
+							<button id="newToBtn" label="${c:l('new')}"
+								disabled="@{OutgoingController.isProtocolSubmitted}" />
+							<button id="removeToBtn"
+								label="${c:l('remove')}"
+								disabled="@{OutgoingController.isRemoveFileBtnDisabled}" />
+						</hbox>
+					</vbox>
+				</row>
+				<row>
+					${c:l('outgoingPage.cc')}
+					<vbox width="99%">
+						${c:l('outgoingPage.recipients.prompt')}
+						<bandbox id="ccBndbx" autodrop="true">
+							<bandpopup>
+								<listbox id="ccContactsLstbx"
+									width="400px" model="@{OutgoingController.ccContacts}"
+									selectedItem="@{OutgoingController.ccContact}">
+									<listhead>
+										<listheader
+											label="${c:l('contact.id')}" width="5%" />
+										<listheader
+											label="${c:l('contact.name')}" width="20%" />
+										<listheader
+											label="${c:l('contact.surname')}" width="30%" />
+										<listheader
+											label="${c:l('contact.organization')}" width="20%" />
+										<listheader
+											label="${c:l('contact.email')}" width="15%" />
+										<listheader
+											label="${c:l('contact.telephone')}" width="10%" />
+									</listhead>
+									<listitem
+										self="@{each='ccContactRow'}">
+										<listcell
+											label="@{ccContactRow.id}" />
+										<listcell
+											label="@{ccContactRow.name}" />
+										<listcell
+											label="@{ccContactRow.surname}" />
+										<listcell
+											label="@{ccContactRow.organization}" />
+										<listcell
+											label="@{ccContactRow.email}" />
+										<listcell
+											label="@{ccContactRow.telephone}" />
+									</listitem>
+								</listbox>
+							</bandpopup>
+						</bandbox>
+						<listbox id="ccLstbx" rows="4" width="99%"
+							model="@{OutgoingController.ccList}"
+							selectedItem="@{OutgoingController.ccOutgoingRecipient}">
+							<listhead>
+								<listheader label="${c:l('contact.id')}"
+									width="10%" />
+								<listheader
+									label="${c:l('contact.name')}" width="30%" />
+								<listheader
+									label="${c:l('contact.surname')}" width="30%" />
+								<listheader
+									label="${c:l('contact.organization')}" width="30%" />
+								<listheader
+									label="${c:l('contact.email')}" width="30%" />
+							</listhead>
+							<listitem self="@{each='ccRecipientRow'}">
+								<listcell
+									label="@{ccRecipientRow.id.contact.id}" />
+								<listcell
+									label="@{ccRecipientRow.id.contact.name}" />
+								<listcell
+									label="@{ccRecipientRow.id.contact.surname}" />
+								<listcell
+									label="@{ccRecipientRow.id.contact.organization}" />
+								<listcell
+									label="@{ccRecipientRow.id.contact.email}" />
+							</listitem>
+							<!-- <listfoot>
+								<listfooter label="" width="20%" />
+								<listfooter label="Παραλήπτες 0" />
+								</listfoot>-->
+						</listbox>
+						<hbox>
+							<button id="newCcBtn" label="${c:l('new')}"
+								disabled="@{OutgoingController.isProtocolSubmitted}" />
+							<button id="removeCcBtn"
+								label="${c:l('remove')}"
+								disabled="@{OutgoingController.isRemoveFileBtnDisabled}" />
+						</hbox>
+					</vbox>
+				</row>
+				<row>
+					${c:l('outgoingProtocol.outgoingDate')}
+					<datebox id="outgoingDateDtbx" compact="true"
+						width="40%" lenient="false" format="dd/MM/yyyy"
+						constraint="no empty"
+						value="@{OutgoingController.protocol.outgoingDate }" />
+				</row>
+				<!-- <row>
+					Ημερομηνία Διεκπαιραίωσης
+					<datebox compact="true" width="97%" />
+					</row>-->
+				<row>
+					${c:l('outgoingPage.documents')}
+					<vbox width="99%">
+						${c:l('outgoingPage.documents.prompt')}
+						<listbox id="documentsLstbx" rows="4"
+							width="99%" model="@{OutgoingController.protocolDocuments}"
+							selectedItem="@{OutgoingController.protocolDocument}">
+							<listhead>
+								<listheader
+									label="${c:l('protocolDocument.documentNumber')}" width="5%" />
+								<listheader
+									label="${c:l('protocolDocument.documentName')}" width="40%" />
+								<listheader
+									label="${c:l('protocolDocument.documentSize')}" width="15%" />
+								<listheader
+									label="${c:l('documentType')}" width="40%" />
+							</listhead>
+							<listitem self="@{each='documentRow'}">
+								<listcell
+									label="@{documentRow.documentNumber}" />
+								<listcell
+									label="@{documentRow.documentName}" />
+								<listcell
+									label="@{documentRow.documentSize}" />
+								<listcell
+									label="@{documentRow.documentType.name}" />
+							</listitem>
+							<!-- <listfoot>
+								<listfooter label="" />
+								<listfooter
+								label="Ανεβάσατε 0 Αρχεία 0 ΜΒ" />
+								</listfoot>-->
+						</listbox>
+						<hbox>
+							<button id="addFileBtn"
+								label="${c:l('add')}"
+								disabled="@{OutgoingController.isProtocolSubmitted}" />
+							<button id="removeFileBtn"
+								label="${c:l('remove')}"
+								disabled="@{OutgoingController.isRemoveFileBtnDisabled}" />
+							<button id="downloadFileBtn"
+								label="${c:l('download')}"
+								disabled="@{OutgoingController.isDownloadFileBtnDisabled}" />
+						</hbox>
+					</vbox>
+				</row>
+				<row>
+					${c:l('outgoingProtocol.author')}
+					<textbox id="authorTxb"
+						value="@{OutgoingController.protocol.author}" width="99%" />
+				</row>
+				<row>
+					${c:l('distributionMethod')}
+					<combobox id="distributionMethodCbx" width="97%"
+						model="@{OutgoingController.distributionMethods}"
+						selectedItem="@{OutgoingController.protocol.distributionMethod}"
+						autodrop="true" constraint="no empty">
+						<comboitem
+							self="@{each='distributionMethodRow'}"
+							label="@{distributionMethodRow.description}" />
+					</combobox>
+				</row>
+				<row>
+					Αποστολή στη Διάυγεια
+					<checkbox />
+				</row>
+				<row>
+					${c:l('outgoingProtocol.comments')}
+					<textbox id="commentsTxb" rows="5"
+						value="@{OutgoingController.protocol.comments}" width="99%" />
+				</row>
+
+				<row
+					visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}">
+					${c:l('functions')}
+					<hbox width="99%">
+						<button id="newBtn" label="${c:l('new')}" />
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@{OutgoingController.isProtocolSubmitted}" />
+						<button id="insertBtn" label="${c:l('insert')}"
+							disabled="@{OutgoingController.isProtocolSubmitted}" />
+						<button id="printBtn" label="${c:l('print')}"
+							disabled="@{OutgoingController.isPrintButtonDisabled}" />
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

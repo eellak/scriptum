@@ -1,0 +1,18 @@
+<?page title="Σύνδεσμοι" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+    <include id="ph" sclass="header" src="header.zul" width="1024px" />
+	<window title="Σύνδεσμοι" border="normal" width="1024px">
+		<listbox rows="10" width="99%" disabled="true">
+			<listhead>
+				<listheader label="Σύνδεσμος" width="20%" />
+				<listheader label="Περιγραφή"  width="80%" />
+			</listhead>
+			<listitem value="">
+				<listcell label="" />
+				<listcell label="" />
+			</listitem>
+		</listbox>
+	</window>
+
+</zk>

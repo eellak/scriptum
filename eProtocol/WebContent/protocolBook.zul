@@ -1,0 +1,40 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('protocolBookPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" width="1024px" />
+	<window id="win" title="${c:l('protocolBookPage.title')}"
+		border="normal" width="1024px"
+		apply="gr.scriptum.eprotocol.controller.ProtocolBookController">
+
+		<grid width="100%">
+			<columns></columns>
+			<rows>
+				<row>
+					${c:l('protocolBookPage.dates')}
+					<groupbox width="97%">
+						<caption
+							label="${c:l('protocolBookPage.dates')}" />
+						(${c:l('from')})
+						<datebox compact="true" width="40%"
+							lenient="false" format="dd/MM/yyyy"
+							value="@{ProtocolBookController.from }" constraint="no empty"/>
+						(${c:l('to')})
+						<datebox compact="true" width="40%"
+							lenient="false" format="dd/MM/yyyy"
+							value="@{ProtocolBookController.to }" constraint="no empty"/>
+					</groupbox>
+				</row>
+				<row>
+					<label value="${c:l('functions')}" />
+					<hbox>
+						<button id="exportBtn" label="${c:l('exportFile')}" />
+						<button id="clearBtn" label="${c:l('clear')}" />
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+
+	</window>
+</zk>

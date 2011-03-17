@@ -1,0 +1,294 @@
+#############
+#general labels
+new=Νέα Εγγραφή
+clear=Καθαρισμός
+insert=Εισαγωγή
+save=Αποθήκευση
+delete=Διαγραφή
+functions=Διαθέσιμες Λειτουργίες
+result=Αποτέλεσμα
+search=Αναζήτηση
+selectAll=Επιλογή Όλων
+upload=Μεταφόρτωση...
+add=Προσθήκη
+remove=Αφαίρεση
+importFile=Εισαγωγή Αρχείου
+exportFile=Εξαγωγή Αρχείου
+confirm=Επιβεβαίωση
+login=Είσοδος
+from=Από
+to=Εώς
+download=Κατέβασμα
+print=Εκτύπωση
+
+#############
+#general messages
+success.title=Επιτυχής Ενέργεια
+success=Η ενέργεια ολοκληρώθηκε επιτυχώς.
+error.title=Σφάλμα
+error=Παρουσιάστηκε σφάλμα κατά τη συγκεκριμένη ενέργεια.
+save.title=Αποτέλεσμα Αποθήκευσης
+save.OK=Η εγγραφή αποθηκεύθηκε επιτυχώς.
+search.title=Αποτελέσματα Αναζήτησης
+search.notFound=Δε βρέθηκαν εγγραφές που να πληρούν τα συγκεκριμένα κριτήρια.
+search.import.invalidFile=Το αρχείο που προσπαθείτε να εισάγετε δεν είναι έγκυρης μορφής.
+search.import.success=Η εισαγωγή πραγματοποιήθηκε επιτυχώς. Εισήχθησαν {0} εγγραφές.
+fetch.title=Αποτέλεσμα Ανάκτησης
+fetch.notFound=Η συγκεκριμένη εγγραφή δε βρέθηκε.
+
+#############
+#entities
+
+##contact
+contact.id=Α/Α
+contact.name=Όνομα
+contact.middlename=Πατρώνυμο
+contact.surname=Επώνυμο
+contact.organization=Επωνυμία
+contact.postcode=T.K.
+contact.city=Πόλη
+contact.telephone=Τηλέφωνο
+contact.mobile=Κινητό
+contact.fax=Fax
+contact.email=Email
+contact.street=Οδός
+contact.streetNo=Αριθμός
+contact.prefecture=Νομός
+contact.web=Ιστοσελίδα
+
+##company
+company=Εταιρεία/Οργανισμός
+company.id=Α/Α
+company.name=Επωνυμία
+company.description=Περιγραφή
+company.isGoverment=Κρατικός Φορέας
+company.vatNo=ΑΦΜ
+company.irs=ΔΟΥ
+company.postcode=T.K.
+company.city=Πόλη
+company.telephone=Τηλέφωνο
+company.mobile=Κινητό
+company.fax=Fax
+company.email=Email
+company.street=Οδός
+company.streetNo=Αριθμός
+company.prefecture=Νομός
+company.web=Ιστοσελίδα
+company.webService=Web Service
+
+##company Type
+companyType=Τύπος Εταιρείας/Οργανισμού
+companyType.id=Α/Α
+companyType.name=Τύπος
+companyType.description=Περιγραφή
+
+##document Type
+documentType=Τύπος Εγγράφου
+documentType.id=Α/Α
+documentType.name=Τύπος
+documentType.description=Περιγραφή
+documentType.isPeriodic=Περιοδικό
+documentType.days=Περιοδικότητα (ημέρες)
+
+##parameter
+parameter=Παράμετρος
+parameter.id=Α/Α
+parameter.area=Περιοχή
+parameter.type=Τύπος
+parameter.name=Όνομα
+parameter.description=Περιγραφή
+parameter.initialValue=Αρχική Τιμή
+parameter.value=Τιμή
+
+##distribution Method
+distributionMethod=Τρόπος Διακίνησης
+distributionMethod.id=Α/Α
+distributionMethod.description=Περιγραφή
+
+##users
+users=Χρήστης
+users.id=Α/Α
+users.username=Όνομα Χρήστη
+users.password=Συνθηματικό
+users.name=Όνομα
+users.surname=Επώνυμο
+users.isDisabled=Απενεργοποιημένος
+
+##role
+role=Ρόλος
+role.id=Α/Α
+role.name=Όνομα
+role.description=Περιγραφή
+
+##incoming Protocol
+incomingProtocol=Εισερχόμενο Πρωτόκολλο
+incomingProtocol.id=Α/Α (Εσωτ.)
+incomingProtocol.protocolNumber=Αριθμός
+incomingProtocol.subject=Θέμα
+incomingProtocol.protocolDate=Ημ/νία Πρωτοκόλλησης
+incomingProtocol.contact=Αποστολέας
+incomingProtocol.incomingProtocolNumber=Αριθμός Πρωτοκόλλου Εγγράφου
+incomingProtocol.incomingDate=Ημ/νία Εγγράφου
+incomingProtocol.incomingPlace=Τόπος Έκδοσης
+incomingProtocol.comments=Παρατηρήσεις
+incmoingProtocol.createTs=Ημ/νία Δημιουργίας
+incomingProtocol.updateTs=Ημ/νία Τροποποίησης
+incomingProtocol.protocolDocuments=Έγγραφα
+
+##outoing Protocol
+outgoingProtocol=Εξερχόμενο Πρωτόκολλο
+outgoingProtocol.id=Α/Α (Εσωτ.)
+outgoingProtocol.protocolNumber=Αριθμός
+outgoingProtocol.subject=Θέμα
+outgoingProtocol.protocolDate=Ημ/νία Πρωτοκόλλησης
+outgoingProtocol.outgoingProtocolNumber=Αριθμός Πρωτοκόλλου Εγγράφου
+outgoingProtocol.outgoingDate=Ημ/νία Εγγράφου
+outgoingProtocol.outgoingPlace=Τόπος Έκδοσης
+outgoingProtocol.author=Συντάκτης Εγγράφου
+outgoingProtocol.comments=Παρατηρήσεις
+incmoingProtocol.createTs=Ημ/νία Δημιουργίας
+outgoingProtocol.updateTs=Ημ/νία Τροποποίησης
+outgoingProtocol.protocolDocuments=Έγγραφα
+
+##protocol Document
+protocolDocument=Έγγραφο Πρωτ/λου
+protocolDocument.documentNumber=Αριθμός
+protocolDocument.documentName=Όνομα
+protocolDocument.documentSize=Μέγεθος
+protocolDocument.documentKeywords=Λέξεις Κλειδιά
+
+outgoingRecipient=Παραλήπτης
+outgoingRecipient.isCc=Κοινοποίηση
+
+#############
+#pages
+
+##header
+headerPage.title=Σύστημα Ηλεκτρονικού Πρωτοκόλλου
+
+##menu
+menu.index=Αρχική
+
+menu.administration=Διαχείριση
+menu.administration.users=Χρήστες
+menu.administration.documentTypes=Τύποι Εγγράφων
+menu.administration.distributionMethods=Μέθοδοι Διανομής
+menu.administration.parameters=Παράμετροι Συστήματος
+menu.administration.protocolBook=Βιβλίο Πρωτοκόλλου
+
+menu.contacts=Επαφές-Οργανισμοί
+menu.contacts.contacts=Επαφές
+menu.contacts.companies=Εταιρείες/Οργανισμοί
+menu.contacts.companyTypes=Τυποι Εταιρειών/Οργανισμών
+
+menu.help=Βοήθεια
+menu.help.community=Κοινότητα Χρηστών
+menu.help.links=Χρήσιμοι Σύνδεσμοι
+menu.help.about=Σχετικά
+
+
+menu.exit=Έξοδος
+
+
+
+##loginPage
+loginPage.title=Είσοδος Χρήστη 
+loginPage.error=Εσφαλμένη προσπάθεια εισόδου
+
+##indexPage
+indexPage.title=Σύστημα Ηλεκτρονικού Πρωτοκόλλου
+indexPage.incoming=Εισερχόμενα (Εκκρεμή)
+indexPage.outgoing=Εξερχόμενα (Εκκρεμή)
+indexPage.search=Αναζήτηση
+indexPage.search.direction=Κατεύθυνση
+indexPage.search.incoming=Εισερχόμενο
+indexPage.search.outgoing=Εξερχόμενο
+indexPage.search.protocolNumber=Αριθμός
+indexPage.search.dates=Ημερομηνίες Πρωτοκόλλησης
+indexPage.search.subject=Θέμα
+indexPage.search.keywords=Λέξεις Κλειδιά (χωρισμένες με κόμμα)
+
+
+##contactPage
+contactPage.title=Διαχείριση Επαφής
+contactPage.phones=Τηλέφωνα
+contactPage.comms=Ηλεκτρονική Επικοινωνία
+contactPage.commInfo=Στοιχεία Επικοινωνίας
+contactPage.address=Διεύθυνση
+contactPage.addressDetails=Στοιχεία Διεύθυνσης
+
+##contactsPage
+contactsPage.title=Διαχείριση Επαφών
+
+##companyPage
+companyPage.title=Διαχείριση Εταιρείας Πρωτοκόλλου
+contactPage.address=Διεύθυνση
+companyPage.addressDetails=Στοιχεία Διεύθυνσης
+companyPage.phones=Τηλέφωνα
+companyPage.comms=Ηλεκτρονική Επικοινωνία
+companyPage.commInfo=Στοιχεία Επικοινωνίας
+
+##companiesPage
+companiesPage.title=Διαχείριση Εταιριών
+
+##companyTypePage
+companyTypePage.title=Διαχείριση Τύπου Εταιρείας/Οργανισμού
+
+##companyTypesPage
+companyTypesPage.title=Διαχείριση Τύπων Εταιριών/Οργανισμών
+
+##documentTypePage
+documentTypePage.title=Διαχείριση Τύπου Εγγράφου
+
+##documentTypesPage
+documentTypesPage.title=Διαχείριση Τύπων Εγγράφων
+
+##parameterPage
+parameterPage.title=Διαχείριση Παραμέτρου
+
+##parametersPage
+parametersPage.title=Διαχείριση Παραμέτρων
+
+##distributionMethodPage
+distributionMethodPage.title=Διαχείριση Μεθόδου Διανομής
+
+##distributionMethodsPage
+distributionMethodsPage.title=Διαχείριση Μεθόδων Διανομής
+
+##userPage
+userPage.title=Διαχείριση Χρήστη
+
+##usersPage.title=Διαχείριση Χρηστών
+
+##incomingPage
+incomingPage.title=Εισαγωγή Εισερχομένου Πρωτοκόλλου
+incomingPage.documents=Έγγραφα
+incomingPage.documents.prompt=Επιλέξτε τα αρχεία, αρχίζοντας από το κύριο έγγραφο.
+incomingPage.upload.title=Μεταφόρτωση Αρχείου
+incomingPage.upload.noFileUploaded=Πρέπει να μεταφορτώσετε ένα αρχείο προτού επιβεβαιώσετε την ενέργεια. 
+incomingPage.noDocumentsAdded=Πρέπει να προσθέσετε τουλάχιστον ένα αρχείο, προτού εισάγετε το Πρωτόκολλο.
+incomingPage.protocolAlreadySubmitted=Το συγκεκριμένο πρωτόκολλο έχει ήδη λάβει αριθμό και δεν επιδέχεται περαιτέρω τροποποιήσεις. 
+incomingPage.protocolSubmitted=Το πρωτόκολλο εισήχθη επιτυχώς με Αριθμό Πρωτ/λου {0} . Επιθυμείτε εκτύπωση;
+incomingPage.errorSaving=Παρουσιάστηκε σφάλμα κατά την αποθήκευση του Πρωτ/λου.
+incomingPage.errorSubmitting=Παρουσιάστηκε σφάλμα κατά την εισαγωγή του Πρωτ/λου.
+
+##outgoingPage
+outgoingPage.title=Εισαγωγή Εξερχομένου Πρωτοκόλλου
+outgoingPage.recipients=Παραλήπτες
+outgoingPage.recipients.prompt=Επιλέξτε τους Παραλήπτες
+outgoingPage.cc=Κοινοποίηση προς
+outgoingPage.cc.prompt=Επιλέξτε τους Παραλήπτες Κοινοποίησης
+outgoingPage.noToAdded=Πρέπει να προσθέσετε τουλάχιστον ένα Παραλήπτη, προτού εισάγετε το Πρωτόκολλο.
+outgoingPage.errorSendingEmail=Το πρωτόκολλο εισήχθη επιτυχώς με Αριθμό Πρωτ/λου {0} . Παρ' όλα αυτά, παρουσιάστηκε σφάλμα κατά την αποστολή του Email.
+outgoingPage.errorSendingWebService=Το πρωτόκολλο εισήχθη επιτυχώς με Αριθμό Πρωτ/λου {0} . Παρ' όλα αυτά, παρουσιάστηκε σφάλμα κατά την αποστολή του στο Web Service.
+##incomingPrint
+incomingPrintPage.title=Εκτύπωση Εισερχομένου Πρωτοκόλλου
+
+##outgoingPrint
+outgoingPrintPage.title=Εκτύπωση Εξερχομένου Πρωτοκόλλου
+
+##protocolBook
+protocolBookPage.title=Βιβλίο Πρωτοκόλλου
+protocolBookPage.dates=Ημερομηνίες
+protocolBookPage.exportError=Παρουσιάστηκε σφάλμα κατά την εξαγωγή του Βιβλίου Πρωτοκόλλου
+protocolBookPage.exportSuccess=Η εξαγωγή του Βιβλίου Πρωτοκόλλου ολοκληρώθηκε επιτυχώς

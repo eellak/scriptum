@@ -1,0 +1,164 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./printWin"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
+<?page title="${c:l('outgoingPrintPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<window id="printWin" title="${c:l('outgoingPrintPage.title')}"
+		border="normal" width="1024px"
+		apply="gr.scriptum.eprotocol.controller.OutgoingController">
+		<grid width="99%">
+			<columns></columns>
+			<rows>
+				<row visible="false">
+					${c:l('outgoingProtocol.id')}
+					<label id="idLbl"
+						value="@{OutgoingController.protocol.id}" />
+				</row>
+				<row
+					visible="@{OutgoingController.isProtocolSubmitted}">
+					${c:l('outgoingProtocol.protocolNumber')}
+					<label id="protocolNumberLbl"
+						value="@{OutgoingController.protocol.fullNumber}" />
+				</row>
+				<row>
+					${c:l('outgoingProtocol.subject')}
+					<label id="subjectTxb"
+						value="@{OutgoingController.protocol.subject}" width="99%" />
+				</row>
+				<row>
+					${c:l('outgoingProtocol.protocolDate')}
+					<label
+						value="@{OutgoingController.protocol.protocolDate, converter='gr.scriptum.eprotocol.util.DateCustom' }">
+						<custom-attributes format="dd/MM/yyyy" />
+					</label>
+				</row>
+				<row>
+					${c:l('outgoingPage.recipients')}
+					<vbox width="99%">
+						<grid id="toGrd" width="99%"
+							model="@{OutgoingController.toList}">
+							<columns>
+								<column label="${c:l('contact.id')}"
+									width="10%" />
+								<column label="${c:l('contact.name')}"
+									width="30%" />
+								<column
+									label="${c:l('contact.surname')}" width="30%" />
+								<column
+									label="${c:l('contact.organization')}" width="30%" />
+								<column label="${c:l('contact.email')}"
+									width="30%" />
+							</columns>
+							<rows>
+								<row self="@{each='toRecipientRow'}">
+									<label
+										value="@{toRecipientRow.id.contact.id}" />
+									<label
+										value="@{toRecipientRow.id.contact.name}" />
+									<label
+										value="@{toRecipientRow.id.contact.surname}" />
+									<label
+										value="@{toRecipientRow.id.contact.organization}" />
+									<label
+										value="@{toRecipientRow.id.contact.email}" />
+								</row>
+							</rows>
+						</grid>
+					</vbox>
+				</row>
+				<row>
+					${c:l('outgoingPage.cc')}
+					<vbox width="99%">
+						<grid id="ccGrd" width="99%"
+							model="@{OutgoingController.ccList}">
+							<columns>
+								<column label="${c:l('contact.id')}"
+									width="10%" />
+								<column label="${c:l('contact.name')}"
+									width="30%" />
+								<column
+									label="${c:l('contact.surname')}" width="30%" />
+								<column
+									label="${c:l('contact.organization')}" width="30%" />
+								<column label="${c:l('contact.email')}"
+									width="30%" />
+							</columns>
+							<rows>
+								<row self="@{each='ccRecipientRow'}">
+									<label
+										value="@{ccRecipientRow.id.contact.id}" />
+									<label
+										value="@{ccRecipientRow.id.contact.name}" />
+									<label
+										value="@{ccRecipientRow.id.contact.surname}" />
+									<label
+										value="@{ccRecipientRow.id.contact.organization}" />
+									<label
+										value="@{ccRecipientRow.id.contact.email}" />
+								</row>
+							</rows>
+						</grid>
+					</vbox>
+				</row>
+				<row>
+					${c:l('outgoingProtocol.outgoingDate')}
+					<label
+						value="@{OutgoingController.protocol.outgoingDate, converter='gr.scriptum.eprotocol.util.DateCustom' }">
+						<custom-attributes format="dd/MM/yyyy" />
+					</label>
+				</row>
+				<!-- <row>
+					Ημερομηνία Διεκπαιραίωσης
+					<datebox compact="true" width="97%" />
+					</row>-->
+				<row>
+					${c:l('outgoingPage.documents')}
+					<vbox width="99%">
+						<grid id="documentsGrd" width="100%"
+							model="@{OutgoingController.protocolDocuments}">
+							<columns>
+								<column
+									label="${c:l('protocolDocument.documentNumber')}" width="5%" />
+								<column
+									label="${c:l('protocolDocument.documentName')}" width="40%" />
+								<column
+									label="${c:l('protocolDocument.documentSize')}" width="15%" />
+								<column label="${c:l('documentType')}"
+									width="40%" />
+							</columns>
+							<rows>
+								<row self="@{each='documentRow'}">
+									<label
+										value="@{documentRow.documentNumber}" />
+									<label
+										value="@{documentRow.documentName}" />
+									<label
+										value="@{documentRow.documentSize}" />
+									<label
+										value="@{documentRow.documentType.name}" />
+								</row>
+							</rows>
+						</grid>
+					</vbox>
+				</row>
+				<row>
+					${c:l('outgoingProtocol.author')}
+					<label id="authorTxb"
+						value="@{OutgoingController.protocol.author}" width="99%" />
+				</row>
+				<row>
+					${c:l('distributionMethod')}
+					<label id="distributionMethodLbl"
+						value="@{OutgoingController.protocol.distributionMethod.description}"
+						width="99%" />
+				</row>
+				<row>
+					${c:l('outgoingProtocol.comments')}
+					<label id="commentsTxb"
+						value="@{OutgoingController.protocol.comments}" width="99%" />
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>
