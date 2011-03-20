@@ -143,7 +143,8 @@ public class FetchIncomingMailsWork implements MWork {
 				if (contacts.isEmpty()) {
 					// create new contact
 					contact.setCompany(company);
-
+					contact.setName("N/A");
+					contact.setSurname("N/A");
 					contactDAO.makePersistent(contact);
 
 				} else {// use existing contact
@@ -152,7 +153,8 @@ public class FetchIncomingMailsWork implements MWork {
 				incomingProtocol.setContact(contact);
 				incomingProtocol.setDistributionMethod(distributionMethod);
 				incomingProtocol.setCreateDt(now);
-				incomingProtocol.setUpdateTs(now);
+				incomingProtocol.setCreateUserId(MailDaemon.MAIL_UID);
+//				incomingProtocol.setUpdateTs(now);
 				incomingProtocolDAO.makePersistent(incomingProtocol);
 
 				for (ProtocolDocument protocolDocument : incomingProtocol
