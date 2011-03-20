@@ -12,9 +12,13 @@
 		expression that locates our "post" method and applies security that way <protect-pointcut 
 		expression="execution(* bigbank.*Service.post*(..))" access="ROLE_TELLER" 
 		/> </global-method-security> -->
+
 	<beans:bean id="scriptumUserDetailsService"
 		class="gr.scriptum.eprotocol.security.ScriptumUserDetailsService"
 		lazy-init="true" />
+
+	<!-- <beans:bean id="scriptumUserDetailsService" class="gr.scriptum.eprotocol.security.ScriptumOfflineUserDetailsService" 
+		lazy-init="true" /> -->
 
 	<beans:bean id="sriptumLogoutSuccessHandler"
 		class="gr.scriptum.eprotocol.security.ScriptumLogoutSuccessHandler"

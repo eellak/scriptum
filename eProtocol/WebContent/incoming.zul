@@ -4,16 +4,18 @@
 <?page title="${c:l('incomingPage.title')}" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <zk>
-	<include id="incomingPh" sclass="header" src="header.zul"
-		width="1024px" />
-		
+	<include id="incomingPh" sclass="header" src="header.zul"/>
+
 	<window id="incomingWin" title="${c:l('incomingPage.title')}"
-		border="normal" width="1024px"
+		border="normal" width="100%"
 		apply="gr.scriptum.eprotocol.controller.IncomingController">
-		<grid width="99%">
-			<columns ></columns>
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
 			<rows>
-				<row visible="@{IncomingController.isProtocolPending}">
+				<row
+					visible="@{IncomingController.isProtocolPending}">
 					${c:l('incomingProtocol.id')}
 					<label id="idLbl"
 						value="@{IncomingController.protocol.id}" />
@@ -21,44 +23,55 @@
 				<row
 					visible="@{IncomingController.isProtocolSubmitted}">
 					${c:l('incomingProtocol.protocolNumber')}
-					<label id="protocolNumberLbl"
-						value="@{IncomingController.protocol.fullNumber}" />
+					<hbox>
+						<label id="protocolNumberLbl"
+							value="@{IncomingController.protocol.fullNumber}" />
+						<label
+							value="${c:l('incomingProtocol.isDeleted')}" style="color:red"
+							visible="@{IncomingController.isProtocolDeleted}" />
+					</hbox>
 				</row>
 				<row>
 					${c:l('incomingProtocol.subject')}
 					<textbox id="subjectTxb"
-						value="@{IncomingController.protocol.subject}" width="99%"
+						value="@{IncomingController.protocol.subject}" width="400px"
 						constraint="no empty" />
 				</row>
-				<row>
+				<row
+					visible="@{IncomingController.isProtocolSubmitted}">
 					${c:l('incomingProtocol.protocolDate')}
-					<datebox id="protocolDateDtbx" compact="true"
+					<label
+						value="@{IncomingController.protocol.protocolDate, converter='gr.scriptum.eprotocol.util.DateCustom' }">
+						<custom-attributes format="dd/MM/yyyy HH:mm:ss" />
+					</label>
+					<!-- <datebox id="protocolDateDtbx" compact="true"
 						width="40%" lenient="false" format="dd/MM/yyyy"
 						constraint="no empty"
-						value="@{IncomingController.protocol.protocolDate }" />
+						value="@{IncomingController.protocol.protocolDate }" />-->
 				</row>
 				<row>
 					${c:l('incomingProtocol.contact')}
-					<vbox width="99%">
+					<vbox>
 						<bandbox id="contactBndbx" autodrop="true"
-							constraint="no empty" value="@{IncomingController.protocol.contact.fullName }">
+							constraint="no empty"
+							value="@{IncomingController.contactFullName }" width="300px">
 							<bandpopup>
 								<listbox id="contactsLstbx"
-									width="400px" model="@{IncomingController.contacts}"
+									model="@{IncomingController.contacts}"
 									selectedItem="@{IncomingController.protocol.contact}">
 									<listhead>
 										<listheader
-											label="${c:l('contact.id')}" width="5%" />
+											label="${c:l('contact.id')}" />
 										<listheader
-											label="${c:l('contact.name')}" width="20%" />
+											label="${c:l('contact.name')}" />
 										<listheader
-											label="${c:l('contact.surname')}" width="30%" />
+											label="${c:l('contact.surname')}" />
 										<listheader
-											label="${c:l('contact.organization')}" width="20%" />
+											label="${c:l('company.name')}" />
 										<listheader
-											label="${c:l('contact.email')}" width="15%" />
+											label="${c:l('contact.email')}" />
 										<listheader
-											label="${c:l('contact.telephone')}" width="10%" />
+											label="${c:l('contact.telephone')}" />
 									</listhead>
 									<listitem
 										self="@{each='contactRow'}">
@@ -69,13 +82,14 @@
 										<listcell
 											label="@{contactRow.surname}" />
 										<listcell
-											label="@{contactRow.organization}" />
+											label="@{contactRow.company.name}" />
 										<listcell
 											label="@{contactRow.email}" />
 										<listcell
 											label="@{contactRow.telephone}" />
 									</listitem>
 								</listbox>
+								<paging id="contactsPgng" pageSize="10" />
 							</bandpopup>
 						</bandbox>
 						<button id="newContactBtn" label="${c:l('new')}"
@@ -86,18 +100,18 @@
 					${c:l('incomingProtocol.incomingProtocolNumber')}
 					<textbox id="incomingProtocolNumberTxb"
 						value="@{IncomingController.protocol.incomingProtocolNumber}"
-						width="99%" constraint="no empty" />
+						width="300px" constraint="no empty" />
 				</row>
 				<row>
 					${c:l('incomingProtocol.incomingDate')}
 					<datebox id="incomingDateDtbx" compact="true"
-						width="40%" lenient="false" format="dd/MM/yyyy"
+						width="200px" lenient="false" format="dd/MM/yyyy"
 						constraint="no empty"
 						value="@{IncomingController.protocol.incomingDate }" />
 				</row>
 				<row>
 					${c:l('incomingPage.documents')}
-					<vbox width="99%">
+					<vbox width="100%">
 						${c:l('incomingPage.documents.prompt')}
 						<listbox id="documentsLstbx" rows="4"
 							width="99%" model="@{IncomingController.protocolDocuments}"
@@ -144,13 +158,13 @@
 				<row>
 					${c:l('incomingProtocol.incomingPlace')}
 					<textbox id="incomingPlaceTxb"
-						value="@{IncomingController.protocol.incomingPlace}" width="99%"
+						value="@{IncomingController.protocol.incomingPlace}" width="300px"
 						constraint="no empty" />
 				</row>
 
 				<row>
 					${c:l('distributionMethod')}
-					<combobox id="distributionMethodCbx" width="97%"
+					<combobox id="distributionMethodCbx" width="300px"
 						model="@{IncomingController.distributionMethods}"
 						selectedItem="@{IncomingController.protocol.distributionMethod}"
 						autodrop="true" constraint="no empty">
@@ -162,22 +176,27 @@
 
 				<row>
 					${c:l('incomingProtocol.comments')}
-					<textbox id="commentsTxb" rows="5"
-						value="@{IncomingController.protocol.comments}" width="99%" />
+					<textbox id="commentsTxb" rows="3"
+						value="@{IncomingController.protocol.comments}" width="400px" />
 				</row>
 
-				<row
-					visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}">
+				<row>
 					${c:l('functions')}
-					<hbox width="99%">
-						<button id="newBtn" label="${c:l('new')}" />
+					<hbox>
+						<button id="newBtn" label="${c:l('new')}"
+							visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
 						<button id="saveBtn" label="${c:l('save')}"
-							disabled="@{IncomingController.isProtocolSubmitted}">
+							disabled="@{IncomingController.isProtocolSubmitted}"
+							visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}">
 						</button>
 						<button id="insertBtn" label="${c:l('insert')}"
-							disabled="@{IncomingController.isProtocolSubmitted}" />
+							disabled="@{IncomingController.isProtocolSubmitted}"
+							visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
 						<button id="printBtn" label="${c:l('print')}"
 							disabled="@{IncomingController.isPrintButtonDisabled}" />
+						<button id="deleteBtn" label="${c:l('delete')}"
+							disabled="@{IncomingController.isDeleteButtonDisabled}"
+							visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
 					</hbox>
 				</row>
 			</rows>

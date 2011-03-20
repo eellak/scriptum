@@ -4,14 +4,13 @@
 <?page title="${c:l('indexPage.title')}" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <zk>
-	<include id="ph" sclass="header" src="header.zul"
-		width="1024px" />
-		
+	<include id="ph" sclass="header" src="header.zul"/>
+
 	<window id="indexWin" title="${c:l('indexPage.title')}"
-		border="normal" width="1024px"
+		border="normal" width="100%"
 		apply="gr.scriptum.eprotocol.controller.IndexController">
 
-		<tabbox id="indexTbx" width="100%">
+		<tabbox id="indexTbx">
 			<tabs>
 				<tab label="${c:l('indexPage.incoming') }"
 					id="incomingTb"
@@ -67,26 +66,28 @@
 
 					<separator bar="true" />
 
-					<grid width="99%">
-						<columns></columns>
+					<grid>
+						<columns>
+						<column width="30%"/>
+						</columns>
 						<rows>
 							<row>
 								${c:l('incomingProtocol.updateTs')}
 								(${c:l('from')})
-								<datebox compact="true" width="40%"
+								<datebox compact="true" width="200px"
 									lenient="false" format="dd/MM/yyyy"
 									value="@{IndexController.incomingDateFrom }" />
 							</row>
 							<row>
 								${c:l('incomingProtocol.updateTs')}
 								(${c:l('to')})
-								<datebox compact="true" width="40%"
+								<datebox compact="true" width="200px"
 									lenient="false" format="dd/MM/yyyy"
 									value="@{IndexController.incomingDateTo }" />
 							</row>
 							<row>
 								${c:l('incomingProtocol.subject')}
-								<textbox width="100%"
+								<textbox width="300px"
 									value="@{IndexController.incomingProtocol.subject}" />
 							</row>
 							<row>
@@ -125,40 +126,44 @@
 								label="${c:l('distributionMethod')}" width="30%" />
 							<!--<listheader
 								label="${c:l('outgoingProtocol.protocolDocuments')}" />
-						--></listhead>
+							-->
+						</listhead>
 						<listitem self="@{each='outgoingRow'}">
 							<listcell label="@{outgoingRow.id}" />
 							<listcell label="@{outgoingRow.updateTs}" />
 							<listcell label="@{outgoingRow.subject}" />
 							<listcell
 								label="@{outgoingRow.distributionMethod.description}" /><!--
-							<listcell label="0" />
-						--></listitem>
+								<listcell label="0" />
+							-->
+						</listitem>
 					</listbox>
 					<paging id="outgoingPgng" pageSize="10" />
 
 					<separator bar="true" />
 
-					<grid width="99%">
-						<columns></columns>
+					<grid>
+						<columns>
+						<column width="30%"/>
+						</columns>
 						<rows>
 							<row>
 								${c:l('outgoingProtocol.updateTs')}
 								(${c:l('from')})
-								<datebox compact="true" width="40%"
+								<datebox compact="true" width="200px"
 									lenient="false" format="dd/MM/yyyy"
 									value="@{IndexController.outgoingDateFrom }" />
 							</row>
 							<row>
 								${c:l('outgoingProtocol.updateTs')}
 								(${c:l('to')})
-								<datebox compact="true" width="40%"
+								<datebox compact="true" width="200px"
 									lenient="false" format="dd/MM/yyyy"
 									value="@{IndexController.outgoingDateTo }" />
 							</row>
 							<row>
 								${c:l('outgoingProtocol.subject')}
-								<textbox width="100%"
+								<textbox width="300px"
 									value="@{IndexController.outgoingProtocol.subject}" />
 							</row>
 							<row>
@@ -180,7 +185,7 @@
 				<tabpanel id="searchTbPnl">
 
 
-					<listbox id="searchIncomingLstbx" rows="10"
+					<listbox id="searchIncomingLstbx" rows="8"
 						model="@{IndexController.searchIncomingProtocols}"
 						selectedItem="@{IndexController.searchSelectedIncomingProtocol}"
 						visible="@{IndexController.isDirectionIncoming}">
@@ -198,13 +203,16 @@
 							<listheader
 								label="${c:l('incomingProtocol.contact')}" width="30%" />
 							<listheader
-								label="${c:l('distributionMethod')}" width="30%" /><!--
-							<listheader
-								label="${c:l('incomingProtocol.protocolDocuments')}" />
-						--></listhead>
+								label="${c:l('distributionMethod')}" width="30%" />
+						</listhead>
 						<listitem self="@{each='searchIncomingRow'}">
-							<listcell
-								label="@{searchIncomingRow.fullNumber}" />
+							<listcell>
+								<label
+									value="@{searchIncomingRow.fullNumber}" />
+								<label
+									value="${c:l('incomingProtocol.isDeleted')}"
+									visible="@{searchIncomingRow.isDeleted }" style="color:red;" />
+							</listcell>
 							<listcell
 								label="@{searchIncomingRow.protocolDate}" />
 							<listcell
@@ -216,14 +224,13 @@
 									value="@{searchIncomingRow.contact.surname }" />
 							</listcell>
 							<listcell
-								label="@{searchIncomingRow.distributionMethod.description}" /><!--
-							<listcell label="0" />
-						--></listitem>
+								label="@{searchIncomingRow.distributionMethod.description}" />
+						</listitem>
 					</listbox>
-					<paging id="searchIncomingPgng" pageSize="10"
+					<paging id="searchIncomingPgng" pageSize="8"
 						visible="@{IndexController.isDirectionIncoming}" />
 
-					<listbox id="searchOutgoingLstbx" rows="10"
+					<listbox id="searchOutgoingLstbx" rows="8"
 						model="@{IndexController.searchOutgoingProtocols}"
 						selectedItem="@{IndexController.searchSelectedOutgoingProtocol}"
 						visible="@{IndexController.isDirectionOutgoing}">
@@ -240,34 +247,36 @@
 								sort="auto" value="subject" forward="onSort=onSort" />
 							<listheader
 								label="${c:l('distributionMethod')}" width="30%" />
-							<listheader
-								label="${c:l('outgoingProtocol.protocolDocuments')}" />
 						</listhead>
 						<listitem self="@{each='searchOutgoingRow'}">
-							<listcell
-								label="@{searchOutgoingRow.fullNumber}" />
+							<listcell>
+								<label
+									value="@{searchOutgoingRow.fullNumber}" />
+								<label
+									value="${c:l('outgoingProtocol.isDeleted')}"
+									visible="@{searchOutgoingRow.isDeleted }" style="color:red;" />
+							</listcell>
 							<listcell
 								label="@{searchOutgoingRow.protocolDate}" />
 							<listcell
 								label="@{searchOutgoingRow.subject}" />
 							<listcell
 								label="@{searchOutgoingRow.distributionMethod.description}" />
-							<listcell label="0" />
 						</listitem>
 					</listbox>
-					<paging id="searchOutgoingPgng" pageSize="10"
+					<paging id="searchOutgoingPgng" pageSize="8"
 						visible="@{IndexController.isDirectionOutgoing}" />
 
 					<separator bar="true" />
 
-					<grid width="100%">
-						<columns></columns>
+					<grid >
+						<columns>
+						<column width="30%"/>
+						</columns>
 						<rows>
 							<row>
 								${c:l('indexPage.search.direction') }
-								<groupbox width="97%">
-									<caption
-										label="${c:l('indexPage.search.direction') }" />
+								<hbox>
 									<radiogroup id="directionRdgrp">
 										<radio
 											label="${c:l('indexPage.search.incoming') }" value="0"
@@ -275,38 +284,36 @@
 										<radio
 											label="${c:l('indexPage.search.outgoing') }" value="1" />
 									</radiogroup>
-								</groupbox>
+								</hbox>
 							</row>
 							<row>
 								${c:l('indexPage.search.protocolNumber')}
-								<textbox width="100%"
+								<textbox width="300px"
 									value="@{IndexController.protocolNumber}" />
 							</row>
 							<row>
 								${c:l('indexPage.search.dates')}
-								<groupbox width="97%">
-									<caption
-										label="${c:l('indexPage.search.dates')}" />
+								<hbox>
 									(${c:l('from')})
-									<datebox compact="true" width="40%"
+									<datebox compact="true" width="200px"
 										lenient="false" format="dd/MM/yyyy"
 										value="@{IndexController.searchDateFrom }" />
 									(${c:l('to')})
-									<datebox compact="true" width="40%"
+									<datebox compact="true" width="200px"
 										lenient="false" format="dd/MM/yyyy"
 										value="@{IndexController.searchDateTo }" />
-								</groupbox>
+								</hbox>
 							</row>
 							<row>
 								${c:l('indexPage.search.subject')}
-								<textbox width="100%"
+								<textbox width="300px"
 									value="@{IndexController.subject}" />
 							</row>
-							<row>
+							<row visible="@{IndexController.isDirectionIncoming}">
 								${c:l('incomingProtocol.contact') }
 								<bandbox id="contactBndbx"
 									autodrop="true"
-									disabled="@{IndexController.isDirectionOutgoing}">
+									disabled="@{IndexController.isDirectionOutgoing}" width="300px" value="@{IndexController.contactFullName}">
 									<bandpopup>
 										<listbox id="contactsLstbx"
 											width="400px" model="@{IndexController.contacts}"
@@ -319,7 +326,7 @@
 												<listheader
 													label="${c:l('contact.surname')}" width="30%" />
 												<listheader
-													label="${c:l('contact.organization')}" width="20%" />
+													label="${c:l('company.name')}" width="20%" />
 												<listheader
 													label="${c:l('contact.email')}" width="15%" />
 												<listheader
@@ -334,7 +341,7 @@
 												<listcell
 													label="@{contactRow.surname}" />
 												<listcell
-													label="@{contactRow.organization}" />
+													label="@{contactRow.company.name}" />
 												<listcell
 													label="@{contactRow.email}" />
 												<listcell
@@ -344,11 +351,11 @@
 									</bandpopup>
 								</bandbox>
 							</row>
-							<row>
+							<row visible="@{IndexController.isDirectionOutgoing}">
 								${c:l('outgoingRecipient') }
 								<bandbox id="toContactBndbx"
 									autodrop="true"
-									disabled="@{IndexController.isDirectionIncoming}">
+									disabled="@{IndexController.isDirectionIncoming}" width="300px" value="@{IndexController.toContactFullName}">
 									<bandpopup>
 										<listbox id="toContactsLstbx"
 											width="400px" model="@{IndexController.toContacts}"
@@ -361,7 +368,7 @@
 												<listheader
 													label="${c:l('contact.surname')}" width="30%" />
 												<listheader
-													label="${c:l('contact.organization')}" width="20%" />
+													label="${c:l('company.name')}" width="20%" />
 												<listheader
 													label="${c:l('contact.email')}" width="15%" />
 												<listheader
@@ -376,7 +383,7 @@
 												<listcell
 													label="@{toContactRow.surname}" />
 												<listcell
-													label="@{toContactRow.organization}" />
+													label="@{toContactRow.company.name}" />
 												<listcell
 													label="@{toContactRow.email}" />
 												<listcell
@@ -389,7 +396,7 @@
 							<row>
 								${c:l('distributionMethod')}
 								<combobox id="distributionMethodCbx"
-									width="97%" model="@{IndexController.distributionMethods}"
+									width="300px" model="@{IndexController.distributionMethods}"
 									selectedItem="@{IndexController.distributionMethod}"
 									autodrop="true">
 									<comboitem
@@ -399,7 +406,7 @@
 							</row>
 							<row>
 								${c:l('indexPage.search.keywords')}
-								<textbox width="100%"
+								<textbox width="300px"
 									value="@{IndexController.keywords}" />
 							</row>
 							<row>
@@ -419,9 +426,6 @@
 
 			</tabpanels>
 		</tabbox>
-
-
-
 
 	</window>
 

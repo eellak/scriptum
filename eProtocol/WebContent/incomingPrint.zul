@@ -7,8 +7,10 @@
 	<window id="printWin" title="${c:l('incomingPrintPage.title')}"
 		border="normal" width="1024px"
 		apply="gr.scriptum.eprotocol.controller.IncomingController">
-		<grid width="99%">
-			<columns></columns>
+		<grid width="100%">
+			<columns>
+				<column width="30%" />
+			</columns>
 			<rows>
 				<row visible="false">
 					${c:l('incomingProtocol.id')}
@@ -18,27 +20,31 @@
 				<row
 					visible="@{IncomingController.isProtocolSubmitted}">
 					${c:l('incomingProtocol.protocolNumber')}
-					<label id="protocolNumberLbl"
-						value="@{IncomingController.protocol.fullNumber}" />
+					<hbox>
+						<label id="protocolNumberLbl"
+							value="@{IncomingController.protocol.fullNumber}" />
+						<label
+							value="${c:l('incomingProtocol.isDeleted')}" style="color:red"
+							visible="@{IncomingController.isProtocolDeleted}" />
+					</hbox>
 				</row>
 				<row>
 					${c:l('incomingProtocol.subject')}
 					<label id="subjectTxb"
-						value="@{IncomingController.protocol.subject}" width="99%" />
+						value="@{IncomingController.protocol.subject}"/>
 				</row>
 				<row>
 					${c:l('incomingProtocol.protocolDate')}
 					<label
 						value="@{IncomingController.protocol.protocolDate, converter='gr.scriptum.eprotocol.util.DateCustom' }">
-						<custom-attributes format="dd/MM/yyyy" />
+						<custom-attributes format="dd/MM/yyyy HH:mm:ss" />
 					</label>
 				</row>
 				<row>
 					${c:l('incomingProtocol.contact')}
-					<vbox width="99%">
+					<vbox width="100%">
 						<label id="contactLbl"
-							value="@{IncomingController.protocol.contact.fullName}"
-							width="99%" />
+							value="@{IncomingController.contactFullName}"/>
 						<bandbox id="contactBndbx" autodrop="true"
 							constraint="no empty" visible="false">
 						</bandbox>
@@ -47,8 +53,7 @@
 				<row>
 					${c:l('incomingProtocol.incomingProtocolNumber')}
 					<label id="incomingProtocolNumberTxb"
-						value="@{IncomingController.protocol.incomingProtocolNumber}"
-						width="99%" />
+						value="@{IncomingController.protocol.incomingProtocolNumber}"/>
 				</row>
 				<row>
 					${c:l('incomingProtocol.incomingDate')}
@@ -64,13 +69,12 @@
 							model="@{IncomingController.protocolDocuments}">
 							<columns>
 								<column
-									label="${c:l('protocolDocument.documentNumber')}" width="5%" />
+									label="${c:l('protocolDocument.documentNumber')}"/>
 								<column
-									label="${c:l('protocolDocument.documentName')}" width="40%" />
+									label="${c:l('protocolDocument.documentName')}"/>
 								<column
-									label="${c:l('protocolDocument.documentSize')}" width="15%" />
-								<column label="${c:l('documentType')}"
-									width="40%" />
+									label="${c:l('protocolDocument.documentSize')}"/>
+								<column label="${c:l('documentType')}"/>
 							</columns>
 							<rows>
 								<row self="@{each='documentRow'}">
@@ -90,19 +94,18 @@
 				<row>
 					${c:l('incomingProtocol.incomingPlace')}
 					<label id="incomingPlaceTxb"
-						value="@{IncomingController.protocol.incomingPlace}" width="99%" />
+						value="@{IncomingController.protocol.incomingPlace}"/>
 				</row>
 
 				<row>
 					${c:l('distributionMethod')}
 					<label id="distributionMethodLbl"
-						value="@{IncomingController.protocol.distributionMethod.description}"
-						width="99%" />
+						value="@{IncomingController.protocol.distributionMethod.description}"/>
 				</row>
 				<row>
 					${c:l('incomingProtocol.comments')}
 					<label id="commentsTxb"
-						value="@{IncomingController.protocol.comments}" width="99%" />
+						value="@{IncomingController.protocol.comments}"/>
 				</row>
 			</rows>
 		</grid>

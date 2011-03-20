@@ -66,7 +66,9 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
+import org.zkoss.zul.event.PagingEvent;
 
 /**
  * @author aanagnostopoulos
@@ -130,6 +132,10 @@ public class OutgoingController extends ProtocolController {
 
 	private String okmNodeOutgoing = null;
 
+	private String toTerm = null;
+
+	private String ccTerm = null;
+
 	/* components */
 	Window outgoingWin;
 
@@ -153,6 +159,10 @@ public class OutgoingController extends ProtocolController {
 
 	Bandbox ccBndbx;
 
+	Paging toContactsPgng;
+
+	Paging ccContactsPgng;
+
 	Combobox distributionMethodCbx;
 
 	private void initData() {
@@ -170,6 +180,8 @@ public class OutgoingController extends ProtocolController {
 		protocolDocuments = new LinkedList<ProtocolDocument>();
 		protocolDocumentsToBeDeleted = new ArrayList<ProtocolDocument>();
 		protocolDocument = null;
+		toTerm = "";
+		ccTerm = "";
 	}
 
 	private void renumberProtocolDocuments() {
@@ -195,6 +207,8 @@ public class OutgoingController extends ProtocolController {
 			throw e;
 		}
 
+		Date now = new Date();
+
 		try {
 
 			if (isSubmission) {
@@ -217,6 +231,7 @@ public class OutgoingController extends ProtocolController {
 						.intValue());
 				protocol.setProtocolSeries(protocolNumber.getSeries());
 				protocol.setProtocolYear(protocolNumber.getYear());
+				protocol.setProtocolDate(now);
 
 			}
 
@@ -228,12 +243,10 @@ public class OutgoingController extends ProtocolController {
 			OutgoingRecipientDAO outgoingRecipientDAO = new OutgoingRecipientDAO();
 			OkmProtocolDispatcherImpl okmDispatcher = getOkmDispatcher();
 
-			Date now = new Date();
-			protocol.setUpdateTs(now);
-
 			if (protocol.getId() == null) { // new protocol, create
 
 				protocol.setCreateDt(now);
+				protocol.setCreateUserId(getUserInSession().getId());
 
 				/* local database actions */
 				outgoingProtocolDAO.makePersistent(protocol);
@@ -300,6 +313,8 @@ public class OutgoingController extends ProtocolController {
 			} else { // existing (ie. pending) protocol
 
 				/* local database actions */
+				protocol.setUpdateTs(now);
+				protocol.setUpdateUserId(getUserInSession().getId());
 
 				outgoingProtocolDAO.update(protocol);
 
@@ -490,6 +505,12 @@ public class OutgoingController extends ProtocolController {
 
 	}
 
+	private void delete() {
+		OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
+		protocol.setIsDeleted(true);
+		outgoingProtocolDAO.update(protocol);
+	}
+
 	private void emailProtocol() throws Exception {
 
 		// fetch document content from OpenKM
@@ -520,6 +541,31 @@ public class OutgoingController extends ProtocolController {
 		// TODO: implement
 	}
 
+	private void searchToContacts(Integer startIndex) {
+		ContactDAO contactDAO = new ContactDAO();
+
+		// set up paging by counting records first
+		Integer totalSize = contactDAO.countByTerm(toTerm);
+		toContactsPgng.setTotalSize(totalSize);
+		int pageSize = toContactsPgng.getPageSize();
+
+		toContacts = contactDAO.findByTerm(toTerm, startIndex, pageSize);
+
+	}
+
+	private void searchCcContacts(Integer startIndex) {
+		ContactDAO contactDAO = new ContactDAO();
+
+		// set up paging by counting records first
+		Integer totalSize = contactDAO.countByTerm(ccTerm);
+		ccContactsPgng.setTotalSize(totalSize);
+		int pageSize = ccContactsPgng.getPageSize();
+
+		ccContacts = contactDAO.findByTerm(ccTerm, startIndex, pageSize);
+
+	}
+
+	
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
@@ -579,9 +625,8 @@ public class OutgoingController extends ProtocolController {
 	}
 
 	public void onChanging$toBndbx(InputEvent event) {
-		String term = StringUtils.trimToNull(event.getValue());
-		ContactDAO contactDAO = new ContactDAO();
-		toContacts = contactDAO.findByTerm(term, null, null);
+		toTerm = StringUtils.trimToNull(event.getValue());
+		searchToContacts(0);
 		getBinder(outgoingWin).loadAll();
 	}
 
@@ -589,11 +634,18 @@ public class OutgoingController extends ProtocolController {
 		if (!toContacts.isEmpty()) {
 			return;
 		}
-		ContactDAO contactDAO = new ContactDAO();
-		toContacts = contactDAO.findAll();
+		toTerm = "";
+		searchToContacts(0);
 		getBinder(outgoingWin).loadAll();
 	}
 
+	public void onPaging$toContactsPgng(PagingEvent event) {
+		int activePage = event.getActivePage();
+		int startIndex = activePage * toContactsPgng.getPageSize();
+		searchToContacts(startIndex);
+		getBinder(outgoingWin).loadAll();
+	}
+	
 	public void onSelect$toContactsLstbx(SelectEvent event) {
 		toBndbx.setText("");
 		toBndbx.close();
@@ -670,9 +722,8 @@ public class OutgoingController extends ProtocolController {
 	}
 
 	public void onChanging$ccBndbx(InputEvent event) {
-		String term = StringUtils.trimToNull(event.getValue());
-		ContactDAO contactDAO = new ContactDAO();
-		ccContacts = contactDAO.findByTerm(term, null, null);
+		ccTerm = StringUtils.trimToNull(event.getValue());
+		searchCcContacts(0);
 		getBinder(outgoingWin).loadAll();
 	}
 
@@ -680,11 +731,18 @@ public class OutgoingController extends ProtocolController {
 		if (!ccContacts.isEmpty()) {
 			return;
 		}
-		ContactDAO contactDAO = new ContactDAO();
-		ccContacts = contactDAO.findAll();
+		ccTerm ="";
+		searchCcContacts(0);
 		getBinder(outgoingWin).loadAll();
 	}
 
+	public void onPaging$ccContactsPgng(PagingEvent event) {
+		int activePage = event.getActivePage();
+		int startIndex = activePage * ccContactsPgng.getPageSize();
+		searchCcContacts(startIndex);
+		getBinder(outgoingWin).loadAll();
+	}
+	
 	public void onSelect$ccContactsLstbx(SelectEvent event) {
 		ccBndbx.setText("");
 		ccBndbx.close();
@@ -945,6 +1003,34 @@ public class OutgoingController extends ProtocolController {
 						+ protocol.getId(), "_blank");
 	}
 
+	public void onClick$deleteBtn() {
+
+		try {
+			Messagebox.show(Labels.getLabel("incomingPage.deleteProtocol"),
+					Labels.getLabel("confirm.title"), Messagebox.YES
+							| Messagebox.NO, Messagebox.QUESTION,
+					new EventListener() {
+						@Override
+						public void onEvent(Event event) throws Exception {
+							if (((Integer) event.getData()).intValue() == Messagebox.YES) {
+
+								delete();
+
+								Messagebox.show(
+										Labels.getLabel("incomingPage.deleteProtocol.success"),
+										Labels.getLabel("success.title"),
+										Messagebox.OK, Messagebox.INFORMATION);
+								getBinder(outgoingWin).loadAll();
+
+							}
+						}
+					});
+		} catch (InterruptedException e) {
+			// swallow
+		}
+
+	}
+
 	public boolean isProtocolSubmitted() {
 
 		if (protocol.getProtocolNumber() != null) {
@@ -955,9 +1041,16 @@ public class OutgoingController extends ProtocolController {
 
 	}
 
+	public boolean isProtocolDeleted() {
+		if (protocol.getIsDeleted() != null && protocol.getIsDeleted() == true) {
+			return true;
+		}
+		return false;
+	}
+
 	public boolean isProtocolPending() {
 
-		if (protocol.getProtocolNumber() != null) {
+		if (protocol.getProtocolNumber() == null) {
 			return true;
 		}
 
@@ -980,6 +1073,10 @@ public class OutgoingController extends ProtocolController {
 
 	public boolean isPrintButtonDisabled() {
 		return !isProtocolSubmitted();
+	}
+
+	public boolean isDeleteButtonDisabled() {
+		return isProtocolPending() | isProtocolDeleted();
 	}
 
 	public OutgoingProtocol getProtocol() {

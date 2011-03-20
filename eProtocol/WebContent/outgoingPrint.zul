@@ -7,8 +7,11 @@
 	<window id="printWin" title="${c:l('outgoingPrintPage.title')}"
 		border="normal" width="1024px"
 		apply="gr.scriptum.eprotocol.controller.OutgoingController">
-		<grid width="99%">
-			<columns></columns>
+		<grid width="100%">
+			<columns>
+				<column width="30%" />
+			</columns>
+
 			<rows>
 				<row visible="false">
 					${c:l('outgoingProtocol.id')}
@@ -18,37 +21,38 @@
 				<row
 					visible="@{OutgoingController.isProtocolSubmitted}">
 					${c:l('outgoingProtocol.protocolNumber')}
-					<label id="protocolNumberLbl"
-						value="@{OutgoingController.protocol.fullNumber}" />
+					<hbox>
+						<label id="protocolNumberLbl"
+							value="@{OutgoingController.protocol.fullNumber}" />
+						<label
+							value="${c:l('outgoingProtocol.isDeleted')}" style="color:red"
+							visible="@{OutgoingController.isProtocolDeleted}" />
+					</hbox>
 				</row>
 				<row>
 					${c:l('outgoingProtocol.subject')}
 					<label id="subjectTxb"
-						value="@{OutgoingController.protocol.subject}" width="99%" />
+						value="@{OutgoingController.protocol.subject}" />
 				</row>
 				<row>
 					${c:l('outgoingProtocol.protocolDate')}
 					<label
 						value="@{OutgoingController.protocol.protocolDate, converter='gr.scriptum.eprotocol.util.DateCustom' }">
-						<custom-attributes format="dd/MM/yyyy" />
+						<custom-attributes format="dd/MM/yyyy HH:mm:ss" />
 					</label>
 				</row>
 				<row>
 					${c:l('outgoingPage.recipients')}
-					<vbox width="99%">
-						<grid id="toGrd" width="99%"
+					<vbox width="100%">
+						<grid id="toGrd" width="100%"
 							model="@{OutgoingController.toList}">
 							<columns>
-								<column label="${c:l('contact.id')}"
-									width="10%" />
-								<column label="${c:l('contact.name')}"
-									width="30%" />
+								<column label="${c:l('contact.id')}" />
+								<column label="${c:l('contact.name')}" />
 								<column
-									label="${c:l('contact.surname')}" width="30%" />
-								<column
-									label="${c:l('contact.organization')}" width="30%" />
-								<column label="${c:l('contact.email')}"
-									width="30%" />
+									label="${c:l('contact.surname')}" />
+								<column label="${c:l('company.name')}" />
+								<column label="${c:l('contact.email')}" />
 							</columns>
 							<rows>
 								<row self="@{each='toRecipientRow'}">
@@ -59,7 +63,7 @@
 									<label
 										value="@{toRecipientRow.id.contact.surname}" />
 									<label
-										value="@{toRecipientRow.id.contact.organization}" />
+										value="@{toRecipientRow.id.contact.company.name}" />
 									<label
 										value="@{toRecipientRow.id.contact.email}" />
 								</row>
@@ -69,20 +73,16 @@
 				</row>
 				<row>
 					${c:l('outgoingPage.cc')}
-					<vbox width="99%">
-						<grid id="ccGrd" width="99%"
+					<vbox width="100%">
+						<grid id="ccGrd" width="100%"
 							model="@{OutgoingController.ccList}">
 							<columns>
-								<column label="${c:l('contact.id')}"
-									width="10%" />
-								<column label="${c:l('contact.name')}"
-									width="30%" />
+								<column label="${c:l('contact.id')}" />
+								<column label="${c:l('contact.name')}" />
 								<column
-									label="${c:l('contact.surname')}" width="30%" />
-								<column
-									label="${c:l('contact.organization')}" width="30%" />
-								<column label="${c:l('contact.email')}"
-									width="30%" />
+									label="${c:l('contact.surname')}" />
+								<column label="${c:l('company.name')}" />
+								<column label="${c:l('contact.email')}" />
 							</columns>
 							<rows>
 								<row self="@{each='ccRecipientRow'}">
@@ -93,7 +93,7 @@
 									<label
 										value="@{ccRecipientRow.id.contact.surname}" />
 									<label
-										value="@{ccRecipientRow.id.contact.organization}" />
+										value="@{ccRecipientRow.id.contact.company.name}" />
 									<label
 										value="@{ccRecipientRow.id.contact.email}" />
 								</row>
@@ -114,18 +114,17 @@
 					</row>-->
 				<row>
 					${c:l('outgoingPage.documents')}
-					<vbox width="99%">
+					<vbox width="100%">
 						<grid id="documentsGrd" width="100%"
 							model="@{OutgoingController.protocolDocuments}">
 							<columns>
 								<column
-									label="${c:l('protocolDocument.documentNumber')}" width="5%" />
+									label="${c:l('protocolDocument.documentNumber')}" />
 								<column
-									label="${c:l('protocolDocument.documentName')}" width="40%" />
+									label="${c:l('protocolDocument.documentName')}" />
 								<column
-									label="${c:l('protocolDocument.documentSize')}" width="15%" />
-								<column label="${c:l('documentType')}"
-									width="40%" />
+									label="${c:l('protocolDocument.documentSize')}" />
+								<column label="${c:l('documentType')}" />
 							</columns>
 							<rows>
 								<row self="@{each='documentRow'}">
@@ -145,18 +144,17 @@
 				<row>
 					${c:l('outgoingProtocol.author')}
 					<label id="authorTxb"
-						value="@{OutgoingController.protocol.author}" width="99%" />
+						value="@{OutgoingController.protocol.author}" />
 				</row>
 				<row>
 					${c:l('distributionMethod')}
 					<label id="distributionMethodLbl"
-						value="@{OutgoingController.protocol.distributionMethod.description}"
-						width="99%" />
+						value="@{OutgoingController.protocol.distributionMethod.description}" />
 				</row>
 				<row>
 					${c:l('outgoingProtocol.comments')}
 					<label id="commentsTxb"
-						value="@{OutgoingController.protocol.comments}" width="99%" />
+						value="@{OutgoingController.protocol.comments}" />
 				</row>
 			</rows>
 		</grid>

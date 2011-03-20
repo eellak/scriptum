@@ -26,6 +26,7 @@ print=Εκτύπωση
 success.title=Επιτυχής Ενέργεια
 success=Η ενέργεια ολοκληρώθηκε επιτυχώς.
 error.title=Σφάλμα
+confirm.title=Επιβεβαίωση
 error=Παρουσιάστηκε σφάλμα κατά τη συγκεκριμένη ενέργεια.
 save.title=Αποτέλεσμα Αποθήκευσης
 save.OK=Η εγγραφή αποθηκεύθηκε επιτυχώς.
@@ -134,6 +135,7 @@ incomingProtocol.comments=Παρατηρήσεις
 incmoingProtocol.createTs=Ημ/νία Δημιουργίας
 incomingProtocol.updateTs=Ημ/νία Τροποποίησης
 incomingProtocol.protocolDocuments=Έγγραφα
+incomingProtocol.isDeleted=Διαγεγραμμένο
 
 ##outoing Protocol
 outgoingProtocol=Εξερχόμενο Πρωτόκολλο
@@ -149,6 +151,7 @@ outgoingProtocol.comments=Παρατηρήσεις
 incmoingProtocol.createTs=Ημ/νία Δημιουργίας
 outgoingProtocol.updateTs=Ημ/νία Τροποποίησης
 outgoingProtocol.protocolDocuments=Έγγραφα
+outgoingProtocol.isDeleted=Διαγεγραμμένο
 
 ##protocol Document
 protocolDocument=Έγγραφο Πρωτ/λου
@@ -271,7 +274,9 @@ incomingPage.protocolAlreadySubmitted=Το συγκεκριμένο πρωτόκ
 incomingPage.protocolSubmitted=Το πρωτόκολλο εισήχθη επιτυχώς με Αριθμό Πρωτ/λου {0} . Επιθυμείτε εκτύπωση;
 incomingPage.errorSaving=Παρουσιάστηκε σφάλμα κατά την αποθήκευση του Πρωτ/λου.
 incomingPage.errorSubmitting=Παρουσιάστηκε σφάλμα κατά την εισαγωγή του Πρωτ/λου.
-
+incomingPage.deleteProtocol=Μετά τη διαγραφή του, το πρωτόκολλο δε θα μπορεί να μεταβεί στην αρχική του κατάσταση. Είστε σίγουρος/η πως επιθυμείτε την οριστική διαγραφή του πρωτοκόλλου; 
+incomingPage.deleteProtocol.success=Η διαγραφή πραγματοποιήθηκε επιτυχώς.
+ 
 ##outgoingPage
 outgoingPage.title=Εισαγωγή Εξερχομένου Πρωτοκόλλου
 outgoingPage.recipients=Παραλήπτες
@@ -290,5 +295,11 @@ outgoingPrintPage.title=Εκτύπωση Εξερχομένου Πρωτοκόλ
 ##protocolBook
 protocolBookPage.title=Βιβλίο Πρωτοκόλλου
 protocolBookPage.dates=Ημερομηνίες
+protocolBookPage.sort=Ταξινόμηση
+protocolBookPage.sort.protocolDate=Ημ/νία Πρωτοκόλλου
+protocolBookPage.sort.protocolNumber=Αριθμός Πρωτοκόλλου
+protocolBookPage.sort.order=Σειρά
+protocolBookPage.sort.order.asc=Αύξουσα
+protocolBookPage.sort.order.desc=Φθίνουσα
 protocolBookPage.exportError=Παρουσιάστηκε σφάλμα κατά την εξαγωγή του Βιβλίου Πρωτοκόλλου
 protocolBookPage.exportSuccess=Η εξαγωγή του Βιβλίου Πρωτοκόλλου ολοκληρώθηκε επιτυχώς

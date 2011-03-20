@@ -56,7 +56,9 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
+import org.zkoss.zul.event.PagingEvent;
 
 public class IncomingController extends ProtocolController {
 
@@ -90,6 +92,8 @@ public class IncomingController extends ProtocolController {
 
 	private String okmNodeIncoming = null;
 
+	private String term = null;
+
 	/* components */
 	Window incomingWin;
 
@@ -105,12 +109,15 @@ public class IncomingController extends ProtocolController {
 
 	Button removeFileBtn;
 
+	Paging contactsPgng;
+
 	private void initData() {
 		protocol = new IncomingProtocol();
 		contacts = new ArrayList<Contact>();
 		protocolDocuments = new LinkedList<ProtocolDocument>();
 		protocolDocument = null;
 		protocolDocumentsToBeDeleted = new ArrayList<ProtocolDocument>();
+		term = null;
 	}
 
 	private void populateContactBndbx() {
@@ -142,6 +149,8 @@ public class IncomingController extends ProtocolController {
 			throw e;
 		}
 
+		Date now = new Date();
+
 		try {
 
 			if (isSubmission) {
@@ -164,6 +173,7 @@ public class IncomingController extends ProtocolController {
 						.intValue());
 				protocol.setProtocolSeries(protocolNumber.getSeries());
 				protocol.setProtocolYear(protocolNumber.getYear());
+				protocol.setProtocolDate(now);
 
 			}
 
@@ -174,12 +184,10 @@ public class IncomingController extends ProtocolController {
 			ProtocolDocumentDAO protocolDocumentDAO = new ProtocolDocumentDAO();
 			OkmProtocolDispatcherImpl okmDispatcher = getOkmDispatcher();
 
-			Date now = new Date();
-			protocol.setUpdateTs(now);
-
 			if (protocol.getId() == null) { // new protocol, create
 
 				protocol.setCreateDt(now);
+				protocol.setCreateUserId(getUserInSession().getId());
 
 				/* local database actions */
 				incomingProtocolDAO.makePersistent(protocol);
@@ -209,10 +217,9 @@ public class IncomingController extends ProtocolController {
 							+ protocol.getProtocolYear());
 
 				} else {// pending protocol being stored
-					requestNewNode
-							.setFolderPath(okmNodePendingIncoming
-									+ IConstants.OKM_FOLDER_DELIMITER
-									+ protocol.getId());
+					requestNewNode.setFolderPath(okmNodePendingIncoming
+							+ IConstants.OKM_FOLDER_DELIMITER
+							+ protocol.getId());
 				}
 
 				for (ProtocolDocument document : protocolDocuments) {
@@ -234,6 +241,8 @@ public class IncomingController extends ProtocolController {
 			} else { // existing (ie. pending) protocol
 
 				/* local database actions */
+				protocol.setUpdateTs(now);
+				protocol.setUpdateUserId(getUserInSession().getId());
 
 				incomingProtocolDAO.update(protocol);
 
@@ -307,10 +316,9 @@ public class IncomingController extends ProtocolController {
 							getUserInSession().getUsername(),
 							getUserInSession().getId(), getIp(),
 							IConstants.SYSTEM_NAME, getOkmToken());
-					requestMoveNode
-							.setOldPath(okmNodePendingIncoming
-									+ IConstants.OKM_FOLDER_DELIMITER
-									+ protocol.getId());
+					requestMoveNode.setOldPath(okmNodePendingIncoming
+							+ IConstants.OKM_FOLDER_DELIMITER
+							+ protocol.getId());
 					requestMoveNode.setNewPath(okmNodeIncoming);
 
 					Response responseMoveNode = okmDispatcher
@@ -381,6 +389,27 @@ public class IncomingController extends ProtocolController {
 
 	}
 
+	private void delete() {
+		IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
+		Date now = new Date();
+		protocol.setUpdateTs(now);
+		protocol.setUpdateUserId(getUserInSession().getId());
+		protocol.setIsDeleted(true);
+		incomingProtocolDAO.update(protocol);
+	}
+
+	private void searchContacts(Integer startIndex) {
+		ContactDAO contactDAO = new ContactDAO();
+
+		// set up paging by counting records first
+		Integer totalSize = contactDAO.countByTerm(term);
+		contactsPgng.setTotalSize(totalSize);
+		int pageSize = contactsPgng.getPageSize();
+
+		contacts = contactDAO.findByTerm(term, startIndex, pageSize);
+
+	}
+
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
@@ -428,9 +457,9 @@ public class IncomingController extends ProtocolController {
 	}
 
 	public void onChanging$contactBndbx(InputEvent event) {
-		String term = StringUtils.trimToNull(event.getValue());
-		ContactDAO contactDAO = new ContactDAO();
-		contacts = contactDAO.findByTerm(term, null, null);
+		term = StringUtils.trimToNull(event.getValue());
+
+		searchContacts(0);
 		getBinder(incomingWin).loadAll();
 	}
 
@@ -438,8 +467,16 @@ public class IncomingController extends ProtocolController {
 		if (!contacts.isEmpty()) {
 			return;
 		}
-		ContactDAO contactDAO = new ContactDAO();
-		contacts = contactDAO.findAll();
+		term = "";
+		searchContacts(0);
+
+		getBinder(incomingWin).loadAll();
+	}
+
+	public void onPaging$contactsPgng(PagingEvent event) {
+		int activePage = event.getActivePage();
+		int startIndex = activePage * contactsPgng.getPageSize();
+		searchContacts(startIndex);
 		getBinder(incomingWin).loadAll();
 	}
 
@@ -619,6 +656,34 @@ public class IncomingController extends ProtocolController {
 						+ protocol.getId(), "_blank");
 	}
 
+	public void onClick$deleteBtn() {
+
+		try {
+			Messagebox.show(Labels.getLabel("incomingPage.deleteProtocol"),
+					Labels.getLabel("confirm.title"), Messagebox.YES
+							| Messagebox.NO, Messagebox.QUESTION,
+					new EventListener() {
+						@Override
+						public void onEvent(Event event) throws Exception {
+							if (((Integer) event.getData()).intValue() == Messagebox.YES) {
+
+								delete();
+
+								Messagebox.show(
+										Labels.getLabel("incomingPage.deleteProtocol.success"),
+										Labels.getLabel("success.title"),
+										Messagebox.OK, Messagebox.INFORMATION);
+								getBinder(incomingWin).loadAll();
+
+							}
+						}
+					});
+		} catch (InterruptedException e) {
+			// swallow
+		}
+
+	}
+
 	public boolean isLocked() {
 		if (protocol == null) {
 			return true;
@@ -652,6 +717,13 @@ public class IncomingController extends ProtocolController {
 
 	}
 
+	public boolean isProtocolDeleted() {
+		if (protocol.getIsDeleted() != null && protocol.getIsDeleted() == true) {
+			return true;
+		}
+		return false;
+	}
+
 	public boolean isRemoveFileBtnDisabled() {
 		if (protocol.getProtocolNumber() != null) {
 			return true;
@@ -667,6 +739,27 @@ public class IncomingController extends ProtocolController {
 
 	public boolean isPrintButtonDisabled() {
 		return !isProtocolSubmitted();
+	}
+
+	public boolean isDeleteButtonDisabled() {
+		return isProtocolPending() | isProtocolDeleted();
+	}
+
+	public String getContactFullName() {
+		if (protocol.getContact() == null) {
+			return "";
+		}
+		return (protocol.getContact().getName() != null ? protocol.getContact()
+				.getName() : "")
+				+ " "
+				+ (protocol.getContact().getSurname() != null ? protocol
+						.getContact().getSurname() : "")
+				+ " ("
+				+ protocol.getContact().getCompany().getName() + ")";
+	}
+	
+	public void setContactFullName(String contactFullName) {
+		
 	}
 
 	public IncomingProtocol getProtocol() {

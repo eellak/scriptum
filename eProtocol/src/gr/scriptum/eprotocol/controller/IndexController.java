@@ -446,7 +446,8 @@ public class IndexController extends BaseController {
 	}
 
 	public void onSelect$contactsLstbx(SelectEvent event) {
-		contactBndbx.setText(contact.getName() + " " + contact.getSurname());
+//		contactBndbx.setText(contact.getName() + " " + contact.getSurname());
+//		contactBndbx.setText(getContactFullName());
 		contactBndbx.close();
 		getBinder(indexWin).loadAll();
 	}
@@ -468,8 +469,7 @@ public class IndexController extends BaseController {
 	}
 
 	public void onSelect$toContactsLstbx(SelectEvent event) {
-		toContactBndbx.setText(toContact.getName() + " "
-				+ toContact.getSurname());
+//		toContactBndbx.setText(getToContactFullName());
 		toContactBndbx.close();
 		getBinder(indexWin).loadAll();
 	}
@@ -498,6 +498,10 @@ public class IndexController extends BaseController {
 
 	public void onClick$clearBtn(Event event) {
 		initSearch();
+		searchIncomingProtocols = null;
+		searchIncomingPgng.setTotalSize(0);
+		searchOutgoingProtocols = null;
+		searchOutgoingPgng.setTotalSize(0);
 		getBinder(indexWin).loadAll();
 	}
 
@@ -515,6 +519,40 @@ public class IndexController extends BaseController {
 		return false;
 	}
 
+	public String getContactFullName() {
+		if (contact == null) {
+			return "";
+		}
+		return (contact.getName() != null ? contact.getName()
+				 : "")
+				+ " "
+				+ (contact.getSurname() != null ? contact.getSurname() : "")
+				+ " ("
+				+ contact.getCompany().getName() + ")";
+	}
+	
+	public void setContactFullName(String contactFullName) {
+		
+	}
+
+	
+	public String getToContactFullName() {
+		if (toContact == null) {
+			return "";
+		}
+		return (toContact.getName() != null ? toContact.getName()
+				 : "")
+				+ " "
+				+ (toContact.getSurname() != null ? toContact.getSurname() : "")
+				+ " ("
+				+ toContact.getCompany().getName() + ")";
+	}
+
+	public void setToContactFullName(String contactFullName) {
+		
+	}
+
+	
 	public List<IncomingProtocol> getIncomingProtocols() {
 		return incomingProtocols;
 	}

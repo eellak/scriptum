@@ -13,7 +13,7 @@
 	<style>
 		.z-menubar-hor, .z-menubar-ver { border: 1px solid #D8D8D8; }
 	</style>
-	<menubar width="1022px;">
+	<menubar width="100%">
 
 		<menuitem label="${c:l('menu.index') }" href="index.zul" />
 

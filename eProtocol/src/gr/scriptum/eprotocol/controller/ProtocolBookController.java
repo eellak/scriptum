@@ -27,6 +27,7 @@ import org.hibernate.criterion.Order;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
@@ -67,6 +68,8 @@ public class ProtocolBookController extends BaseController {
 
 	/* components */
 	Window win;
+	Combobox sortCbx;
+	Combobox sortOrderCbx;
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
@@ -92,25 +95,42 @@ public class ProtocolBookController extends BaseController {
 		fontFolder = parameterDAO
 				.getAsString(IConstants.PARAM_PROTOCOL_BOOK_FONT_FOLDER);
 
+		sortCbx.setSelectedIndex(0);
+		sortOrderCbx.setSelectedIndex(0);
+
 	}
 
 	public void onClick$exportBtn(Event event) throws InterruptedException {
 
 		validateFields(win);
 
+		String[] tokens = sortCbx.getSelectedItem().getValue().toString()
+				.split(IConstants.SORTING_DELIMITER);
+		List<Order> sortBy = new LinkedList<Order>();
+		for (String token : tokens) {
+			Order order = null;
+			String sortOrder = sortOrderCbx.getSelectedItem().getValue().toString();
+			if (sortOrder.equals("ascending")) {
+				order = Order.asc(token);
+			} else {
+				order = Order.desc(token);
+			}
+			sortBy.add(order);
+		}
+
 		List<ProtocolNode> protocols = new LinkedList<ProtocolNode>();
 
 		IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
 		List<IncomingProtocol> results = incomingProtocolDAO.search(null, from,
 				to, null, null, null, null, null, null,
-				Order.asc("protocolDate"));
+				sortBy.toArray(new Order[0]));
 
 		protocols.addAll(results);
 
 		OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
 		List<OutgoingProtocol> outgoingResults = outgoingProtocolDAO.search(
 				null, from, to, null, null, null, null, null, null,
-				Order.asc("protocolDate"));
+				sortBy.toArray(new Order[0]));
 
 		protocols.addAll(outgoingResults);
 
@@ -149,9 +169,14 @@ public class ProtocolBookController extends BaseController {
 	public void onClick$clearBtn(Event event) {
 		from = null;
 		to = null;
+
 		getBinder(win).loadAll();
+		
+		sortCbx.setSelectedIndex(0);
+		sortOrderCbx.setSelectedIndex(0);
+
 	}
-	
+
 	public Date getFrom() {
 		return from;
 	}
@@ -167,4 +192,5 @@ public class ProtocolBookController extends BaseController {
 	public void setTo(Date to) {
 		this.to = to;
 	}
+
 }

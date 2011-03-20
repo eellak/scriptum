@@ -94,12 +94,12 @@ public class EProtocolPdfPrinter extends AProtocolPrinter {
 		p = new Phrase("Τόπος", fontGreek9);
 		PdfPCell ci5 = new PdfPCell(p);
 
-//		p = new Phrase("Χρεώθηκε σε", fontGreek9);
-//		PdfPCell ci6 = new PdfPCell(p);
+		// p = new Phrase("Χρεώθηκε σε", fontGreek9);
+		// PdfPCell ci6 = new PdfPCell(p);
 
 		p = new Phrase("Σχόλια", fontGreek9);
 		PdfPCell ci6 = new PdfPCell(p);
-		
+
 		inTable.addCell(ci1);
 		inTable.addCell(ci2);
 		inTable.addCell(ci3);
@@ -128,8 +128,8 @@ public class EProtocolPdfPrinter extends AProtocolPrinter {
 		p = new Phrase("Ημ. Διεκπαιραίωσης", fontGreek9);
 		PdfPCell co5 = new PdfPCell(p);
 
-//		p = new Phrase("Σχετικό", fontGreek9);
-//		PdfPCell co6 = new PdfPCell(p);
+		// p = new Phrase("Σχετικό", fontGreek9);
+		// PdfPCell co6 = new PdfPCell(p);
 
 		p = new Phrase("Σχόλια", fontGreek9);
 		PdfPCell co7 = new PdfPCell(p);
@@ -139,7 +139,7 @@ public class EProtocolPdfPrinter extends AProtocolPrinter {
 		outTable.addCell(co3);
 		outTable.addCell(co4);
 		outTable.addCell(co5);
-//		outTable.addCell(co6);
+		// outTable.addCell(co6);
 		outTable.addCell(co7);
 		outTable.setHeaderRows(1);
 	}
@@ -153,36 +153,43 @@ public class EProtocolPdfPrinter extends AProtocolPrinter {
 				IncomingProtocol inProto = (IncomingProtocol) node;
 				// incomingProtocolToTableRow( inProto );
 
-				String s1 = inProto.getProtocolNumber()+"/"+inProto.getProtocolSeries()+"/"+inProto.getProtocolYear();
+				String s1 = inProto.getProtocolNumber() + "/"
+						+ inProto.getProtocolSeries() + "/"
+						+ inProto.getProtocolYear();
 				String s2 = formatDate(inProto.getProtocolDate());
 				String s3 = inProto.getSubject();
-				String s4 = inProto.getIncomingPlace();
-//				String s5 = "Υπουργείο Ανάπτυξης"; // inProto.getContact().getSurname()
-													// + " " +
-													// inProto.getContact().getName();
-				String s5 = inProto.getContact().getFullName();
-//				String s6 = "Μιχάλης Μουντράκης";// inProto.getCreateUserId().getName();
+				String s4 = inProto.getContact().getFullName() + " ("
+						+ inProto.getContact().getCompany().getName() + ")";
+				String s5 = inProto.getIncomingPlace();
+				String s6 = inProto.getComments();
 
 				inTable.addCell(new Phrase(s1, fontGreek9));
 				inTable.addCell(new Phrase(s2, fontGreek9));
 				inTable.addCell(new Phrase(s3, fontGreek9));
-				inTable.addCell(new Phrase(s5, fontGreek9));
 				inTable.addCell(new Phrase(s4, fontGreek9));
-//				inTable.addCell(new Phrase(s6, fontGreek9));
+				inTable.addCell(new Phrase(s5, fontGreek9));
+				inTable.addCell(new Phrase(s6, fontGreek9));
 			} else {
 				OutgoingProtocol outProto = (OutgoingProtocol) node;
 				// outgoingProtocolToTableRow( outProto );
-				String s1= outProto.getProtocolNumber()+"/"+outProto.getProtocolSeries()+"/"+outProto.getProtocolYear();
+				String s1 = outProto.getProtocolNumber() + "/"
+						+ outProto.getProtocolSeries() + "/"
+						+ outProto.getProtocolYear();
 				String s2 = formatDate(outProto.getProtocolDate());
 				String s3 = outProto.getSubject();
-				
+
 				StringBuffer sb = new StringBuffer();
-				for(OutgoingRecipient outgoingRecipient: outProto.getOutgoingRecipients()) {
-					sb.append(outgoingRecipient.getId().getContact().getFullName()+",");
+				for (OutgoingRecipient outgoingRecipient : outProto
+						.getOutgoingRecipients()) {
+					sb.append(outgoingRecipient.getId().getContact()
+							.getFullName()
+							+ " ("
+							+ outgoingRecipient.getId().getContact()
+									.getCompany().getName() + ")" + ",");
 				}
-				String s4 = sb.substring(0, sb.length()-2);
+				String s4 = sb.substring(0, sb.length() - 1);
 				String s5 = formatDate(outProto.getOutgoingDate());
-//				String s6 = outProto.getRelativeProtocol();
+				// String s6 = outProto.getRelativeProtocol();
 				String s7 = outProto.getComments();
 
 				outTable.addCell(new Phrase(s1, fontGreek9));
@@ -190,7 +197,7 @@ public class EProtocolPdfPrinter extends AProtocolPrinter {
 				outTable.addCell(new Phrase(s3, fontGreek9));
 				outTable.addCell(new Phrase(s4, fontGreek9));
 				outTable.addCell(new Phrase(s5, fontGreek9));
-//				outTable.addCell(new Phrase(s6, fontGreek9));
+				// outTable.addCell(new Phrase(s6, fontGreek9));
 				outTable.addCell(new Phrase(s7, fontGreek9));
 			}
 		}

@@ -19,17 +19,40 @@
 						(${c:l('from')})
 						<datebox compact="true" width="40%"
 							lenient="false" format="dd/MM/yyyy"
-							value="@{ProtocolBookController.from }" constraint="no empty"/>
+							value="@{ProtocolBookController.from }" constraint="no empty" />
 						(${c:l('to')})
 						<datebox compact="true" width="40%"
 							lenient="false" format="dd/MM/yyyy"
-							value="@{ProtocolBookController.to }" constraint="no empty"/>
+							value="@{ProtocolBookController.to }" constraint="no empty" />
 					</groupbox>
+				</row>
+				<row>
+					${c:l('protocolBookPage.sort')}
+					<combobox id="sortCbx">
+						<comboitem
+							label="${c:l('protocolBookPage.sort.protocolDate')}"
+							value="protocolDate" />
+						<comboitem
+							label="${c:l('protocolBookPage.sort.protocolNumber')}"
+							value="protocolNumber,protocolSeries,protocolYear" />
+					</combobox>
+				</row>
+				<row>
+					${c:l('protocolBookPage.sort.order')}
+					<combobox id="sortOrderCbx">
+						<comboitem
+							label="${c:l('protocolBookPage.sort.order.asc')}"
+							value="ascending" />
+						<comboitem
+							label="${c:l('protocolBookPage.sort.order.desc')}"
+							value="descending" />
+					</combobox>
 				</row>
 				<row>
 					<label value="${c:l('functions')}" />
 					<hbox>
-						<button id="exportBtn" label="${c:l('exportFile')}" />
+						<button id="exportBtn"
+							label="${c:l('exportFile')}" />
 						<button id="clearBtn" label="${c:l('clear')}" />
 					</hbox>
 				</row>
