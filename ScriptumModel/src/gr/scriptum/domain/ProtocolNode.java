@@ -40,6 +40,8 @@ public abstract class ProtocolNode implements java.io.Serializable {
 	Date createDt;
 	Date updateTs;
 
+	Boolean isDeleted = null;
+	
 	// -----------
 	// Constructors
 	// -----------
@@ -210,6 +212,12 @@ public abstract class ProtocolNode implements java.io.Serializable {
 				+ updateTs + "]";
 	}
 
-	
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 	
 }

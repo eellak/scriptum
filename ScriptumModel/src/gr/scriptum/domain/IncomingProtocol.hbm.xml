@@ -57,6 +57,9 @@
         <property name="updateTs" type="timestamp">
             <column name="update_ts" length="19" />
         </property>
+        <property name="isDeleted" type="java.lang.Boolean">
+            <column name="is_deleted" />
+        </property>
         <set name="protocolDocuments" table="protocol_document" inverse="true" lazy="true" fetch="select" order-by="document_number">
             <key>
                 <column name="incoming_protocol_id" />
