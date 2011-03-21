@@ -3,13 +3,15 @@
 <?page title="${c:l('protocolBookPage.title')}" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <zk>
-	<include id="ph" sclass="header" src="header.zul" width="1024px" />
+	<include id="ph" sclass="header" src="header.zul" />
 	<window id="win" title="${c:l('protocolBookPage.title')}"
-		border="normal" width="1024px"
+		border="normal" width="100%"
 		apply="gr.scriptum.eprotocol.controller.ProtocolBookController">
 
-		<grid width="100%">
-			<columns></columns>
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
 			<rows>
 				<row>
 					${c:l('protocolBookPage.dates')}

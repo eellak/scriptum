@@ -4,30 +4,27 @@
 <?page title="${c:l('contactsPage.title')}" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <zk>
-	<include id="ph" sclass="header" src="header.zul" width="1024px" />
+	<include id="ph" sclass="header" src="header.zul" />
 
 	<window id="win" title="${c:l('contactsPage.title')}"
-		border="normal" width="1024px"
+		border="normal" width="100%"
 		apply="gr.scriptum.eprotocol.controller.ContactsController">
 
-		<listbox id="entitiesLstbx" rows="10" width="99%"
+		<listbox id="entitiesLstbx" rows="10"
 			model="@{ContactsController.entities}"
 			selectedItem="@{ContactsController.selected}">
 			<listhead>
-				<listheader label="${c:l('contact.id')}" width="5%"
-					sort="auto" value="id" forward="onSort=onSort"
-					sortDirection="ascending" />
-				<listheader label="${c:l('contact.name')}" width="20%"
-					sort="auto" value="name" forward="onSort=onSort" />
+				<listheader label="${c:l('contact.id')}" sort="auto"
+					value="id" forward="onSort=onSort" sortDirection="ascending" />
+				<listheader label="${c:l('contact.name')}" sort="auto"
+					value="name" forward="onSort=onSort" />
 				<listheader label="${c:l('contact.surname')}"
-					width="30%" sort="auto" value="surname" forward="onSort=onSort" />
+					sort="auto" value="surname" forward="onSort=onSort" />
 				<listheader label="${c:l('contact.organization')}"
-					width="20%" sort="auto" value="organization"
-					forward="onSort=onSort" />
-				<listheader label="${c:l('contact.email')}" width="15%"
-					sort="auto" value="email" forward="onSort=onSort" />
-				<listheader label="${c:l('contact.telephone')}"
-					width="10%" />
+					sort="auto" value="organization" forward="onSort=onSort" />
+				<listheader label="${c:l('contact.email')}" sort="auto"
+					value="email" forward="onSort=onSort" />
+				<listheader label="${c:l('contact.telephone')}" />
 			</listhead>
 			<listitem self="@{each='contactRow'}">
 				<listcell label="@{contactRow.id}" />
@@ -42,32 +39,34 @@
 
 		<separator bar="true" />
 
-		<grid width="99%">
-			<columns></columns>
+		<grid>
+			<columns>
+			<column width="30%"/>
+			</columns>
 			<rows>
 				<row>
 					${c:l('contact.name')}
-					<textbox width="99%"
+					<textbox width="300px"
 						value="@{ContactsController.entity.name}" />
 				</row>
 				<row>
 					${c:l('contact.surname')}
-					<textbox width="99%"
+					<textbox width="300px"
 						value="@{ContactsController.entity.surname}" />
 				</row>
 				<row>
 					${c:l('contact.organization')}
-					<textbox width="99%"
+					<textbox width="300px"
 						value="@{ContactsController.entity.organization}" />
 				</row>
 				<row>
 					${c:l('contact.email')}
-					<textbox width="99%"
+					<textbox width="300px"
 						value="@{ContactsController.entity.email}" />
 				</row>
 				<row>
 					${c:l('contact.telephone')}
-					<textbox width="99%"
+					<textbox width="300px"
 						value="@{ContactsController.entity.telephone}" />
 				</row>
 				<row>

@@ -225,7 +225,7 @@ contactsPage.title=Διαχείριση Επαφών
 
 ##companyPage
 companyPage.title=Διαχείριση Εταιρείας Πρωτοκόλλου
-contactPage.address=Διεύθυνση
+companyPage.address=Διεύθυνση
 companyPage.addressDetails=Στοιχεία Διεύθυνσης
 companyPage.phones=Τηλέφωνα
 companyPage.comms=Ηλεκτρονική Επικοινωνία

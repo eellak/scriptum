@@ -3,44 +3,47 @@
 <?page title="${c:l('companyTypesPage.title')}" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <zk>
-	<include id="ph" sclass="header" src="header.zul"
-		width="1024px" />
-	<window id="win" title="${c:l('companyTypesPage.title')}" border="normal"
-		width="1024px"
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('companyTypesPage.title')}"
+		border="normal" width="100%"
 		apply="gr.scriptum.eprotocol.controller.CompanyTypesController">
 
-		<listbox id="entitiesLstbx" rows="10" width="99%"
+		<listbox id="entitiesLstbx" rows="10"
 			model="@{CompanyTypesController.entities}"
 			selectedItem="@{CompanyTypesController.selected}">
 			<listhead>
-				<listheader label="${c:l('companyType.id')}" width="5%" />
-				<listheader label="${c:l('companyType.name')}" width="20%" />
+				<listheader label="${c:l('companyType.id')}" />
+				<listheader label="${c:l('companyType.name')}" />
 			</listhead>
 			<listitem self="@{each='companyTypeRow'}">
 				<listcell label="@{companyTypeRow.id}" />
 				<listcell label="@{companyTypeRow.name}" />
 			</listitem>
 		</listbox>
-		<paging id="pgng" pageSize="10"/>
+		<paging id="pgng" pageSize="10" />
 		<separator bar="true" />
 
-		<grid width="99%">
-			<columns></columns>
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
 			<rows>
 				<row>
 					${c:l('companyType.name')}
-					<textbox width="99%" value="@{CompanyTypesController.entity.name}" />
+					<textbox width="300px"
+						value="@{CompanyTypesController.entity.name}" />
 				</row>
 				<row>
 					<label value="${c:l('functions')}" />
 					<hbox>
 						<button id="searchBtn" label="${c:l('search')}" />
 						<button id="clearBtn" label="${c:l('clear')}" />
-						<button id="newBtn" label="${c:l('new')}"/><!--
-						<button id="uploadBtn" label="${c:l('importFile')}" />
-						<button id="downloadBtn"
+						<button id="newBtn" label="${c:l('new')}" /><!--
+							<button id="uploadBtn" label="${c:l('importFile')}" />
+							<button id="downloadBtn"
 							label="${c:l('exportFile')}" />
-					--></hbox>
+						-->
+					</hbox>
 				</row>
 			</rows>
 		</grid>

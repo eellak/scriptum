@@ -3,13 +3,15 @@
 <?page title="${c:l('userPage.title')}" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <zk>
-	<include id="ph" sclass="header" src="header.zul"
-		width="1024px" />
+	<include id="ph" sclass="header" src="header.zul" />
 	<window id="win" title="${c:l('userPage.title')}" border="normal"
-		width="1024px" apply="gr.scriptum.eprotocol.controller.UserController">
+		width="100%"
+		apply="gr.scriptum.eprotocol.controller.UserController">
 
-		<grid width="99%">
-			<columns></columns>
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
 			<rows>
 				<row visible="@{UserController.isEntityCreated}">
 					${c:l('users.id')}
@@ -19,30 +21,30 @@
 				<row>
 					${c:l('users.username')}
 					<textbox id="usernameTxb"
-						value="@{UserController.entity.username}" width="99%"
+						value="@{UserController.entity.username}" width="300px"
 						constraint="no empty" />
 				</row>
 				<row>
 					${c:l('users.password')}
 					<textbox id="passwordTxb"
-						value="@{UserController.entity.password}" width="99%"
+						value="@{UserController.entity.password}" width="300px"
 						constraint="no empty" type="password" />
 				</row>
 				<row>
 					${c:l('users.name')}
 					<textbox id="nameTxb"
-						value="@{UserController.entity.name}" width="99%"
+						value="@{UserController.entity.name}" width="300px"
 						constraint="no empty" />
 				</row>
 				<row>
 					${c:l('users.surname')}
 					<textbox id="surnameTxb"
-						value="@{UserController.entity.surname}" width="99%"
+						value="@{UserController.entity.surname}" width="300px"
 						constraint="no empty" />
 				</row>
 				<row>
 					${c:l('role')}
-					<combobox id="roleCbx" width="97%"
+					<combobox id="roleCbx" width="300px"
 						model="@{UserController.roles}"
 						selectedItem="@{UserController.role}" constraint="no empty">
 						<comboitem self="@{each='roleRow'}"
@@ -55,7 +57,7 @@
 				</row>
 				<row>
 					${c:l('functions')}
-					<hbox width="99%">
+					<hbox>
 						<button id="newBtn" label="${c:l('new')}" />
 						<button id="saveBtn" label="${c:l('save')}"
 							disabled="@{UserController.isLocked}" />

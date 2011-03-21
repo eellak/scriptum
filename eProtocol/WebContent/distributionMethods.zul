@@ -3,33 +3,35 @@
 <?page title="${c:l('distributionMethodsPage.title')}" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <zk>
-	<include id="ph" sclass="header" src="header.zul"
-		width="1024px" />
-	<window id="win" title="${c:l('distributionMethodsPage.title')}" border="normal"
-		width="1024px" apply="gr.scriptum.eprotocol.controller.DistributionMethodsController">
-		<listbox id="entitiesLstbx" rows="10" width="99%"
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('distributionMethodsPage.title')}"
+		border="normal" width="100%"
+		apply="gr.scriptum.eprotocol.controller.DistributionMethodsController">
+		<listbox id="entitiesLstbx" rows="10"
 			model="@{DistributionMethodsController.entities}"
 			selectedItem="@{DistributionMethodsController.selected}">
 
 			<listhead>
-				<listheader label="${c:l('distributionMethod.id')}" width="5%" />
-				<listheader label="${c:l('distributionMethod.description')}"
-					width="20%" />
+				<listheader label="${c:l('distributionMethod.id')}" />
+				<listheader
+					label="${c:l('distributionMethod.description')}" />
 			</listhead>
 			<listitem self="@{each='distributionMethodRow'}">
 				<listcell label="@{distributionMethodRow.id}" />
 				<listcell label="@{distributionMethodRow.description}" />
 			</listitem>
 		</listbox>
-		<paging id="pgng" pageSize="10"/>
+		<paging id="pgng" pageSize="10" />
 		<separator bar="true" />
 
-		<grid width="99%">
-			<columns></columns>
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
 			<rows>
 				<row>
 					${c:l('distributionMethod.description')}
-					<textbox width="99%"
+					<textbox width="300px"
 						value="@{DistributionMethodsController.entity.description}" />
 				</row>
 				<row>
@@ -38,11 +40,12 @@
 						<button id="searchBtn" label="${c:l('search')}" />
 						<button id="clearBtn" label="${c:l('clear')}" />
 						<button id="newBtn" label="${c:l('new')}" /><!--
-						<button id="uploadBtn"
+							<button id="uploadBtn"
 							label="${c:l('importFile')}" />
-						<button id="downloadBtn"
+							<button id="downloadBtn"
 							label="${c:l('exportFile')}" />
-					--></hbox>
+						-->
+					</hbox>
 				</row>
 			</rows>
 		</grid>

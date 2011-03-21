@@ -3,13 +3,14 @@
 <?page title="${c:l('parameterPage.title')}" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <zk>
-	<include id="ph" sclass="header" src="header.zul"
-		 width="1024px" />
+	<include id="ph" sclass="header" src="header.zul"/>
 	<window id="win" title="${c:l('parameterPage.title')}" border="normal"
-		width="1024px" apply="gr.scriptum.eprotocol.controller.ParameterController">
+		width="100%" apply="gr.scriptum.eprotocol.controller.ParameterController">
 
-		<grid width="99%">
-			<columns></columns>
+		<grid>
+			<columns>
+			<column width="30%"/>
+			</columns>
 			<rows>
 				<row
 					visible="@{ParameterController.isEntityCreated}">
@@ -20,33 +21,33 @@
 				<row>
 					${c:l('parameter.name')}
 					<textbox id="nameTxb"
-						value="@{ParameterController.entity.name}" width="99%"
+						value="@{ParameterController.entity.name}" width="300px"
 						constraint="no empty" />
 				</row>
 				<row>
 					${c:l('parameter.description')}
 					<textbox id="descriptionTxb"
-						value="@{ParameterController.entity.description}" width="99%"/>
+						value="@{ParameterController.entity.description}" width="300px"/>
 				</row>
 				<row>
 					${c:l('parameter.area')}
-					<textbox value="@{ParameterController.entity.area}" width="99%" />
+					<textbox value="@{ParameterController.entity.area}" width="300px" />
 				</row>
 				<row>
 					${c:l('parameter.type')}
-					<textbox value="@{ParameterController.entity.type}" width="99%" />
+					<textbox value="@{ParameterController.entity.type}" width="300px" />
 				</row>
 				<row>
 					${c:l('parameter.initialValue')}
-					<textbox value="@{ParameterController.entity.initialValue}" width="99%" />
+					<textbox value="@{ParameterController.entity.initialValue}" width="300px" />
 				</row>
 				<row>
 					${c:l('parameter.value')}
-					<textbox value="@{ParameterController.entity.value}" width="99%" constraint="no empty"/>
+					<textbox value="@{ParameterController.entity.value}" width="300px" constraint="no empty"/>
 				</row>
 				<row>
 					${c:l('functions')}
-					<hbox width="99%">
+					<hbox>
 						<button id="newBtn" label="${c:l('new')}" />
 						<button id="saveBtn" label="${c:l('save')}"
 							disabled="@{ParameterController.isLocked}" />

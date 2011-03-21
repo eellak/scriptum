@@ -3,14 +3,15 @@
 <?page title="${c:l('distributionMethodPage.title')}" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <zk>
-	<include id="ph" sclass="header" src="header.zul"
-		width="1024px" />
+	<include id="ph" sclass="header" src="header.zul" />
 	<window id="win" title="${c:l('distributionMethodPage.title')}"
-		border="normal" width="1024px"
+		border="normal" width="100%"
 		apply="gr.scriptum.eprotocol.controller.DistributionMethodController">
 
-		<grid width="99%">
-			<columns></columns>
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
 			<rows>
 				<row
 					visible="@{DistributionMethodController.isEntityCreated}">
@@ -22,11 +23,11 @@
 					${c:l('distributionMethod.description')}
 					<textbox id="descriptionTxb"
 						value="@{DistributionMethodController.entity.description}"
-						width="99%" constraint="no empty" />
+						width="300px" constraint="no empty" />
 				</row>
 				<row>
 					${c:l('functions')}
-					<hbox width="99%">
+					<hbox>
 						<button id="newBtn" label="${c:l('new')}" />
 						<button id="saveBtn" label="${c:l('save')}"
 							disabled="@{ParameterController.isLocked}" />

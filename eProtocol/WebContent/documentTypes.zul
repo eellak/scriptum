@@ -3,17 +3,16 @@
 <?page title="${c:l('documentTypesPage.title')}" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <zk>
-	<include id="ph" sclass="header" src="header.zul" width="1024px" />
+	<include id="ph" sclass="header" src="header.zul" />
 	<window id="win" title="${c:l('documentTypesPage.title')}"
-		border="normal" width="1024px"
+		border="normal" width="100%"
 		apply="gr.scriptum.eprotocol.controller.DocumentTypesController">
 
-		<listbox id="entitiesLstbx" rows="10" width="99%"
+		<listbox id="entitiesLstbx" rows="10"
 			model="@{DocumentTypesController.entities}"
 			selectedItem="@{DocumentTypesController.selected}">
 			<listhead>
-				<listheader label="${c:l('documentType.id')}"
-					width="5%" />
+				<listheader label="${c:l('documentType.id')}" />
 				<listheader label="${c:l('documentType.name')}" />
 				<listheader label="${c:l('documentType.description')}" />
 				<listheader label="${c:l('documentType.days')}" />
@@ -28,22 +27,24 @@
 		<paging id="pgng" pageSize="10" />
 		<separator bar="true" />
 
-		<grid width="99%">
-			<columns></columns>
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
 			<rows>
 				<row>
 					${c:l('documentType.name')}
-					<textbox width="99%"
+					<textbox width="300px"
 						value="@{DocumentTypesController.entity.name}" />
 				</row>
 				<row>
 					${c:l('documentType.description')}
-					<textbox width="99%"
+					<textbox width="300px"
 						value="@{DocumentTypesController.entity.description}" />
 				</row>
 				<row>
 					${c:l('documentType.days')}
-					<intbox width="99%"
+					<intbox width="300px"
 						value="@{DocumentTypesController.entity.days}" />
 				</row>
 				<row>

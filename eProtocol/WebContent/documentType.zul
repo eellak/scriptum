@@ -4,14 +4,15 @@
 <?page title="${c:l('documentTypePage.title')}" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <zk>
-	<include id="ph" sclass="header" src="header.zul"
-		 width="1024px" />
+	<include id="ph" sclass="header" src="header.zul" />
 	<window id="win" title="${c:l('documentTypePage.title')}"
-		border="normal" width="1024px"
+		border="normal" width="100%"
 		apply="gr.scriptum.eprotocol.controller.DocumentTypeController">
 
-		<grid width="99%">
-			<columns></columns>
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
 			<rows>
 				<row
 					visible="@{DocumentTypeController.isEntityCreated}">
@@ -22,24 +23,25 @@
 				<row>
 					${c:l('documentType.name')}
 					<textbox id="nameTxb"
-						value="@{DocumentTypeController.entity.name}" width="99%"
+						value="@{DocumentTypeController.entity.name}" width="300px"
 						constraint="no empty" />
 				</row>
 				<row>
 					${c:l('documentType.description')}
 					<textbox id="descriptionTxb"
-						value="@{DocumentTypeController.entity.description}" width="99%" />
+						value="@{DocumentTypeController.entity.description}"
+						width="300px" />
 				</row>
 				<row>
 					${c:l('documentType.days')}
 					<intbox id="daysTxb"
-						value="@{DocumentTypeController.entity.days}" width="99%"
+						value="@{DocumentTypeController.entity.days}" width="100px"
 						constraint="no negative,no zero" />
 				</row>
 				<row
 					visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}">
 					${c:l('functions')}
-					<hbox width="99%">
+					<hbox>
 						<button id="newBtn" label="${c:l('new')}" />
 						<button id="saveBtn" label="${c:l('save')}"
 							disabled="@{DocumentTypeController.isLocked}" />

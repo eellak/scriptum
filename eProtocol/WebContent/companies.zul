@@ -3,32 +3,40 @@
 <?page title="${c:l('companiesPage.title')}" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <zk>
-	<include id="ph" sclass="header" src="header.zul" width="1024px" />
+	<include id="ph" sclass="header" src="header.zul" />
 	<window id="win" title="${c:l('companiesPage.title')}"
-		border="normal" width="1024px"
+		border="normal" width="100%"
 		apply="gr.scriptum.eprotocol.controller.CompaniesController">
 
-		<listbox id="entitiesLstbx" rows="10" width="99%"
+		<listbox id="entitiesLstbx" rows="10"
 			model="@{CompaniesController.entities}"
 			selectedItem="@{CompaniesController.selected}">
 			<listhead>
-				<listheader label="${c:l('company.id')}" width="5%" />
-				<listheader label="${c:l('company.name')}" width="20%" />
+				<listheader label="${c:l('company.id')}" />
+				<listheader label="${c:l('company.name')}" />
+				<listheader label="${c:l('companyType.name')}" />
+				<listheader label="${c:l('company.isGoverment')}" />
 			</listhead>
 			<listitem self="@{each='companyRow'}">
 				<listcell label="@{companyRow.id}" />
 				<listcell label="@{companyRow.name}" />
+				<listcell label="@{companyRow.companyType.name}" />
+				<listcell>
+					<checkbox checked="@{companyRow.isGovernment}" disabled="true"/>
+				</listcell>
 			</listitem>
 		</listbox>
 		<paging id="pgng" pageSize="10" />
 		<separator bar="true" />
 
-		<grid width="99%">
-			<columns></columns>
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
 			<rows>
 				<row>
 					${c:l('company.name')}
-					<textbox width="99%"
+					<textbox width="300px"
 						value="@{CompaniesController.entity.name}" />
 				</row>
 				<row>

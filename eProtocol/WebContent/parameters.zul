@@ -3,22 +3,22 @@
 <?page title="${c:l('parametersPage.title')}" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <zk>
-	<include id="ph" sclass="header" src="header.zul"
-		width="1024px" />
-	<window id="win" title="${c:l('parametersPage.title')}" border="normal"
-		width="1024px" apply="gr.scriptum.eprotocol.controller.ParametersController">
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('parametersPage.title')}"
+		border="normal" width="100%"
+		apply="gr.scriptum.eprotocol.controller.ParametersController">
 
-		<listbox id="entitiesLstbx" rows="10" width="99%"
+		<listbox id="entitiesLstbx" rows="10"
 			model="@{ParametersController.entities}"
 			selectedItem="@{ParametersController.selected}">
 
 			<listhead>
-				<listheader label="${c:l('parameter.id')}" width="5%" />
-				<listheader label="${c:l('parameter.name')}"/>
-				<listheader label="${c:l('parameter.area')}"/>
-				<listheader label="${c:l('parameter.type')}"/>
-				<listheader label="${c:l('parameter.initialValue')}"/>
-				<listheader label="${c:l('parameter.value')}"/>
+				<listheader label="${c:l('parameter.id')}" />
+				<listheader label="${c:l('parameter.name')}" />
+				<listheader label="${c:l('parameter.area')}" />
+				<listheader label="${c:l('parameter.type')}" />
+				<listheader label="${c:l('parameter.initialValue')}" />
+				<listheader label="${c:l('parameter.value')}" />
 			</listhead>
 			<listitem self="@{each='parameterRow'}">
 				<listcell label="@{parameterRow.id}" />
@@ -29,35 +29,37 @@
 				<listcell label="@{parameterRow.value}" />
 			</listitem>
 		</listbox>
-		<paging id="pgng" pageSize="10"/>
+		<paging id="pgng" pageSize="10" />
 		<separator bar="true" />
 
-		<grid width="99%">
-			<columns></columns>
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
 			<rows>
 				<row>
 					${c:l('parameter.name')}
-					<textbox width="99%"
+					<textbox width="300px"
 						value="@{ParametersController.entity.name}" />
 				</row>
 				<row>
 					${c:l('parameter.area')}
-					<textbox width="99%"
+					<textbox width="300px"
 						value="@{ParametersController.entity.area}" />
 				</row>
 				<row>
 					${c:l('parameter.type')}
-					<textbox width="99%"
+					<textbox width="300px"
 						value="@{ParametersController.entity.type}" />
 				</row>
 				<row>
 					${c:l('parameter.initialValue')}
-					<textbox width="99%"
+					<textbox width="300px"
 						value="@{ParametersController.entity.initialValue}" />
 				</row>
 				<row>
 					${c:l('parameter.value')}
-					<textbox width="99%"
+					<textbox width="300px"
 						value="@{ParametersController.entity.value}" />
 				</row>
 				<row>
@@ -66,11 +68,12 @@
 						<button id="searchBtn" label="${c:l('search')}" />
 						<button id="clearBtn" label="${c:l('clear')}" />
 						<button id="newBtn" label="${c:l('new')}" /><!--
-						<button id="uploadBtn"
+							<button id="uploadBtn"
 							label="${c:l('importFile')}" />
-						<button id="downloadBtn"
+							<button id="downloadBtn"
 							label="${c:l('exportFile')}" />
-					--></hbox>
+						-->
+					</hbox>
 				</row>
 			</rows>
 		</grid>

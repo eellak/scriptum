@@ -3,12 +3,15 @@
 <?page title="${c:l('companyPage.title')}" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <zk>
-	<include id="ph" sclass="header" src="header.zul" width="1024px" />
+	<include id="ph" sclass="header" src="header.zul" />
 	<window id="win" title="${c:l('companyPage.title')}" border="normal"
-		width="1024px" apply="gr.scriptum.eprotocol.controller.CompanyController">
+		width="100%"
+		apply="gr.scriptum.eprotocol.controller.CompanyController">
 
-		<grid width="99%">
-			<columns></columns>
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
 			<rows>
 				<row visible="@{CompanyController.isEntityCreated}">
 					${c:l('company.id')}
@@ -18,12 +21,12 @@
 				<row>
 					${c:l('company.name')}
 					<textbox id="nameTxb"
-						value="@{CompanyController.entity.name}" width="99%"
+						value="@{CompanyController.entity.name}" width="300px"
 						constraint="no empty" />
 				</row>
 				<row>
 					${c:l('companyType')}
-					<combobox id="companyTypeCbx" width="97%"
+					<combobox id="companyTypeCbx" width="300px"
 						model="@{CompanyController.companyTypes}"
 						selectedItem="@{CompanyController.entity.companyType}"
 						constraint="no empty">
@@ -35,64 +38,69 @@
 				<row>
 					${c:l('company.vatNo')}
 					<textbox id="vatNoTxb"
-						value="@{CompanyController.entity.vatNo}" width="99%" />
+						value="@{CompanyController.entity.vatNo}" width="300px" />
 				</row>
 				<row>
 					${c:l('company.irs')}
 					<textbox id="irsTxb"
-						value="@{CompanyController.entity.irs}" width="99%" />
+						value="@{CompanyController.entity.irs}" width="300px" />
 				</row>
 				<row>
-					${c:l('companyPage.address')}
-					<groupbox width="97%">
-						<caption
-							label="${c:l('companyPage.addressDetails')}" />
-						${c:l('company.street')}
-						<textbox id="streetTxb"
-							value="@{CompanyController.entity.street}" width="99%" />
-						${c:l('company.streetNo')}
-						<textbox id="streetNoTxb"
-							value="@{CompanyController.entity.streetNo}" width="99%" />
-						${c:l('company.city')}
-						<combobox id="cityCbx"
-							value="@{CompanyController.entity.city}" width="99%">
-							<comboitem label="Αθήνα" />
-						</combobox>
-						${c:l('company.prefecture')}
-						<textbox id="prefectureNoTxb"
-							value="@{CompanyController.entity.prefecture}" width="99%" />
-						${c:l('company.postcode')}
-						<textbox id="postcodeTxb"
-							value="@{CompanyController.entity.postcode}" width="99%" />
-					</groupbox>
+					${c:l('company.street')}
+					<textbox id="streetTxb"
+						value="@{CompanyController.entity.street}" width="300px" />
 				</row>
-
 				<row>
-					<vbox width="20%">
-						<label value="${c:l('companyPage.phones')}" />
-						<label value="${c:l('companyPage.comms')}" />
-					</vbox>
-					<groupbox width="97%">
-						<caption label="${c:l('companyPage.commInfo')}" />
-						${c:l('company.telephone')}
-						<textbox id="telephoneTxb"
-							value="@{CompanyController.entity.telephone}" width="99%" />
-						${c:l('company.mobile')}
-						<textbox id="mobileTxb"
-							value="@{CompanyController.entity.mobile}" width="99%" />
-						${c:l('company.fax')}
-						<textbox id="faxTxb"
-							value="@{CompanyController.entity.fax}" width="99%" />
-						${c:l('company.email')}
-						<textbox id="emailTxb"
-							value="@{CompanyController.entity.email}" width="99%" />
-						${c:l('company.web')}
-						<textbox value="@{CompanyController.entity.web}"
-							width="99%" />
-						${c:l('company.webService')}
-						<textbox value="@{CompanyController.entity.webService}"
-							width="99%" />
-					</groupbox>
+					${c:l('company.streetNo')}
+					<textbox id="streetNoTxb"
+						value="@{CompanyController.entity.streetNo}" width="300px" />
+				</row>
+				<row>
+					${c:l('company.city')}
+					<combobox id="cityCbx"
+						value="@{CompanyController.entity.city}" width="300px">
+						<comboitem label="Αθήνα" />
+					</combobox>
+				</row>
+				<row>
+					${c:l('company.prefecture')}
+					<textbox id="prefectureNoTxb"
+						value="@{CompanyController.entity.prefecture}" width="300px" />
+				</row>
+				<row>
+					${c:l('company.postcode')}
+					<textbox id="postcodeTxb"
+						value="@{CompanyController.entity.postcode}" width="300px" />
+				</row>
+				<row>
+					${c:l('company.telephone')}
+					<textbox id="telephoneTxb"
+						value="@{CompanyController.entity.telephone}" width="300px" />
+				</row>
+				<row>
+					${c:l('company.mobile')}
+					<textbox id="mobileTxb"
+						value="@{CompanyController.entity.mobile}" width="300px" />
+				</row>
+				<row>
+					${c:l('company.fax')}
+					<textbox id="faxTxb"
+						value="@{CompanyController.entity.fax}" width="300px" />
+				</row>
+				<row>
+					${c:l('company.email')}
+					<textbox id="emailTxb"
+						value="@{CompanyController.entity.email}" width="300px" />
+				</row>
+				<row>
+					${c:l('company.web')}
+					<textbox value="@{CompanyController.entity.web}"
+						width="300px" />
+				</row>
+				<row>
+					${c:l('company.webService')}
+					<textbox
+						value="@{CompanyController.entity.webService}" width="300px" />
 				</row>
 				<row>
 					${c:l('company.isGovernment')}
@@ -100,7 +108,7 @@
 				</row>
 				<row>
 					${c:l('functions')}
-					<hbox width="99%">
+					<hbox>
 						<button id="newBtn" label="${c:l('new')}" />
 						<button id="saveBtn" label="${c:l('save')}"
 							disabled="@{CompanyController.isLocked}" />
