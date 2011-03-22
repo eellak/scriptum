@@ -48,18 +48,20 @@ public class UserController extends GenericEntityController<Users, UsersDAO> {
 
 	@Override
 	public void onClick$newBtn() throws Exception {
-		super.onClick$newBtn();
 		isDisabledChkbx.setChecked(false);
 		role = null;
+		super.onClick$newBtn();
 	}
 	
 	@Override
 	public void onClick$saveBtn() throws Exception {
+		
+		validateFields(win);
+		
 		entity.setIsDisabled(isDisabledChkbx.isChecked());
 		entity.getRoles().clear();
 		RoleDAO roleDAO = new RoleDAO();
-		role = roleDAO.findById(role.getId(), false);
-		entity.getRoles().add(role);
+		entity.getRoles().add(roleDAO.findById(role.getId(), false));
 		super.onClick$saveBtn();
 	}
 
