@@ -5,7 +5,9 @@ import gr.scriptum.dao.UsersDAO;
 import gr.scriptum.domain.Company;
 import gr.scriptum.domain.Role;
 import gr.scriptum.domain.Users;
+import gr.scriptum.eprotocol.util.IConstants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.zkoss.zk.ui.Component;
@@ -59,7 +61,13 @@ public class UserController extends GenericEntityController<Users, UsersDAO> {
 		validateFields(win);
 		
 		entity.setIsDisabled(isDisabledChkbx.isChecked());
-		entity.getRoles().clear();
+		List<Role> rolesToBeRemoved = new ArrayList<Role>();
+		for(Role role: entity.getRoles()) {
+			if(role.getIsProtocol().equals(RoleDAO.ROLE_IS_PROTOCOL)) {
+				rolesToBeRemoved.add(role);
+			}
+		}
+		entity.getRoles().removeAll(rolesToBeRemoved);
 		RoleDAO roleDAO = new RoleDAO();
 		entity.getRoles().add(roleDAO.findById(role.getId(), false));
 		super.onClick$saveBtn();
