@@ -15,7 +15,7 @@ import gr.scriptum.domain.Users;
  */
 public class RoleDAO extends GenericDAO<Role, Integer> {
 
-	private static final int ROLE_IS_PROTOCOL = 1;
+	public static final int ROLE_IS_PROTOCOL = 1;
 
 	public List<Role> findProtocolRoles() {
 		Role example = new Role();
