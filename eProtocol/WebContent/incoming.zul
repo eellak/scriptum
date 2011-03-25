@@ -4,7 +4,7 @@
 <?page title="${c:l('incomingPage.title')}" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <zk>
-	<include id="incomingPh" sclass="header" src="header.zul"/>
+	<include id="incomingPh" sclass="header" src="header.zul" />
 
 	<window id="incomingWin" title="${c:l('incomingPage.title')}"
 		border="normal" width="100%"
@@ -182,22 +182,26 @@
 
 				<row>
 					${c:l('functions')}
-					<hbox>
-						<button id="newBtn" label="${c:l('new')}"
-							visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
-						<button id="saveBtn" label="${c:l('save')}"
-							disabled="@{IncomingController.isProtocolSubmitted}"
-							visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}">
-						</button>
+					<vbox>
 						<button id="insertBtn" label="${c:l('insert')}"
 							disabled="@{IncomingController.isProtocolSubmitted}"
-							visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
-						<button id="printBtn" label="${c:l('print')}"
-							disabled="@{IncomingController.isPrintButtonDisabled}" />
-						<button id="deleteBtn" label="${c:l('delete')}"
-							disabled="@{IncomingController.isDeleteButtonDisabled}"
-							visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
-					</hbox>
+							visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" height="50px" width="100px"/>
+						<hbox>
+							<button id="newBtn" label="${c:l('new')}"
+								visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
+							<button id="saveBtn" label="${c:l('save')}"
+								disabled="@{IncomingController.isProtocolSubmitted}"
+								visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}">
+							</button>
+							<button id="printBtn"
+								label="${c:l('print')}"
+								disabled="@{IncomingController.isPrintButtonDisabled}" />
+							<button id="deleteBtn"
+								label="${c:l('delete')}"
+								disabled="@{IncomingController.isDeleteButtonDisabled}"
+								visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
+						</hbox>
+					</vbox>
 				</row>
 			</rows>
 		</grid>

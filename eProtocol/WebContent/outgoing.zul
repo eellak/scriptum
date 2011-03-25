@@ -56,7 +56,8 @@
 					<vbox width="100%">
 						${c:l('outgoingPage.recipients.prompt')}
 						<bandbox id="toBndbx" autodrop="true"
-							visible="@{OutgoingController.isProtocolPending}" width="300px">
+							visible="@{OutgoingController.isProtocolPending}"
+							width="300px">
 							<bandpopup>
 								<listbox id="toContactsLstbx"
 									model="@{OutgoingController.toContacts}"
@@ -141,7 +142,8 @@
 					<vbox width="100%">
 						${c:l('outgoingPage.recipients.prompt')}
 						<bandbox id="ccBndbx" autodrop="true"
-							visible="@{OutgoingController.isProtocolPending}" width="300px">
+							visible="@{OutgoingController.isProtocolPending}"
+							width="300px">
 							<bandpopup>
 								<listbox id="ccContactsLstbx"
 									model="@{OutgoingController.ccContacts}"
@@ -297,7 +299,7 @@
 				<!--<row>
 					Αποστολή στη Διάυγεια
 					<checkbox />
-				</row>
+					</row>
 				-->
 				<row>
 					${c:l('outgoingProtocol.comments')}
@@ -307,21 +309,27 @@
 
 				<row>
 					${c:l('functions')}
-					<hbox>
-						<button id="newBtn" label="${c:l('new')}"
-							visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
-						<button id="saveBtn" label="${c:l('save')}"
-							disabled="@{OutgoingController.isProtocolSubmitted}"
-							visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
+					<vbox>
 						<button id="insertBtn" label="${c:l('insert')}"
 							disabled="@{OutgoingController.isProtocolSubmitted}"
-							visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
-						<button id="printBtn" label="${c:l('print')}"
-							disabled="@{OutgoingController.isPrintButtonDisabled}" />
-						<button id="deleteBtn" label="${c:l('delete')}"
-							disabled="@{OutgoingController.isDeleteButtonDisabled}"
-							visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
-					</hbox>
+							visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}"
+							height="50px" width="100px" />
+						<hbox>
+							<button id="newBtn" label="${c:l('new')}"
+								visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
+							<button id="saveBtn" label="${c:l('save')}"
+								disabled="@{OutgoingController.isProtocolSubmitted}"
+								visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
+
+							<button id="printBtn"
+								label="${c:l('print')}"
+								disabled="@{OutgoingController.isPrintButtonDisabled}" />
+							<button id="deleteBtn"
+								label="${c:l('delete')}"
+								disabled="@{OutgoingController.isDeleteButtonDisabled}"
+								visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
+						</hbox>
+					</vbox>
 				</row>
 			</rows>
 		</grid>
