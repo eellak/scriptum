@@ -35,6 +35,8 @@ public interface IConstants {
 	public static final String PARAM_DISTRIBUTION_METHOD_EMAIL_ID = "DISTRIBUTION_METHOD_EMAIL_ID";
 
 	public static final String PARAM_DISTRIBUTION_METHOD_WEBSERVICE_ID = "DISTRIBUTION_METHOD_WEBSERVICE_ID";
+	
+	public static final String PARAM_DISTRIBUTION_METHOD_NA_ID = "DISTRIBUTION_METHOD_NA_ID";
 
 	public static final String PARAM_SMTP_HOST = "SMTP_HOST";
 
