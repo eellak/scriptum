@@ -92,6 +92,8 @@ public class IncomingController extends ProtocolController {
 
 	private String okmNodeIncoming = null;
 
+	private Integer defaultDistributionMethodId = null;
+
 	private String term = null;
 
 	/* components */
@@ -118,6 +120,12 @@ public class IncomingController extends ProtocolController {
 		protocolDocument = null;
 		protocolDocumentsToBeDeleted = new ArrayList<ProtocolDocument>();
 		term = null;
+		for (DistributionMethod distributionMethod : distributionMethods) {
+			if (distributionMethod.getId().equals(defaultDistributionMethodId)) {
+				protocol.setDistributionMethod(distributionMethod);
+				break;
+			}
+		}
 	}
 
 	private void populateContactBndbx() {
@@ -150,6 +158,8 @@ public class IncomingController extends ProtocolController {
 		}
 
 		Date now = new Date();
+		protocol.setUpdateTs(now);
+		protocol.setUpdateUserId(getUserInSession().getId());
 
 		try {
 
@@ -241,9 +251,6 @@ public class IncomingController extends ProtocolController {
 			} else { // existing (ie. pending) protocol
 
 				/* local database actions */
-				protocol.setUpdateTs(now);
-				protocol.setUpdateUserId(getUserInSession().getId());
-
 				incomingProtocolDAO.update(protocol);
 
 				List<ProtocolDocument> newlyAdded = new LinkedList<ProtocolDocument>();
@@ -407,6 +414,10 @@ public class IncomingController extends ProtocolController {
 		int pageSize = contactsPgng.getPageSize();
 
 		contacts = contactDAO.findByTerm(term, startIndex, pageSize);
+		for (Contact contact : contacts) {
+			contact.getCompany().getName().toString(); // force hibernate to
+														// fetch company
+		}
 
 	}
 
@@ -420,6 +431,8 @@ public class IncomingController extends ProtocolController {
 				.getAsString(IConstants.PARAM_OKM_NODE_PENDING_INCOMING);
 		okmNodeIncoming = parameterDAO
 				.getAsString(IConstants.PARAM_OKM_NODE_INCOMING);
+		defaultDistributionMethodId = parameterDAO
+				.getAsInteger(IConstants.PARAM_DISTRIBUTION_METHOD_NA_ID);
 
 		DistributionMethodDAO distributionMethodDAO = new DistributionMethodDAO();
 		distributionMethods = distributionMethodDAO.findAll();
@@ -438,6 +451,12 @@ public class IncomingController extends ProtocolController {
 						Labels.getLabel("fetch.title"), Messagebox.OK,
 						Messagebox.ERROR);
 				protocol = new IncomingProtocol();
+				for (DistributionMethod distributionMethod : distributionMethods) {
+					if (distributionMethod.getId().equals(defaultDistributionMethodId)) {
+						protocol.setDistributionMethod(distributionMethod);
+						break;
+					}
+				}
 				return;
 			}
 			// populate contacts combobox model (if necessary)
@@ -757,9 +776,9 @@ public class IncomingController extends ProtocolController {
 				+ " ("
 				+ protocol.getContact().getCompany().getName() + ")";
 	}
-	
+
 	public void setContactFullName(String contactFullName) {
-		
+
 	}
 
 	public IncomingProtocol getProtocol() {

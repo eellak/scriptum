@@ -132,6 +132,8 @@ public class OutgoingController extends ProtocolController {
 
 	private String okmNodeOutgoing = null;
 
+	private Integer defaultDistributionMethodId = null;
+
 	private String toTerm = null;
 
 	private String ccTerm = null;
@@ -182,6 +184,12 @@ public class OutgoingController extends ProtocolController {
 		protocolDocument = null;
 		toTerm = "";
 		ccTerm = "";
+		for (DistributionMethod distributionMethod : distributionMethods) {
+			if (distributionMethod.getId().equals(defaultDistributionMethodId)) {
+				protocol.setDistributionMethod(distributionMethod);
+				break;
+			}
+		}
 	}
 
 	private void renumberProtocolDocuments() {
@@ -208,6 +216,8 @@ public class OutgoingController extends ProtocolController {
 		}
 
 		Date now = new Date();
+		protocol.setUpdateTs(now);
+		protocol.setUpdateUserId(getUserInSession().getId());
 
 		try {
 
@@ -313,9 +323,6 @@ public class OutgoingController extends ProtocolController {
 			} else { // existing (ie. pending) protocol
 
 				/* local database actions */
-				protocol.setUpdateTs(now);
-				protocol.setUpdateUserId(getUserInSession().getId());
-
 				outgoingProtocolDAO.update(protocol);
 
 				// process newly added & existing documents
@@ -550,6 +557,10 @@ public class OutgoingController extends ProtocolController {
 		int pageSize = toContactsPgng.getPageSize();
 
 		toContacts = contactDAO.findByTerm(toTerm, startIndex, pageSize);
+		for (Contact toContact : toContacts) {
+			toContact.getCompany().getName().toString(); // force hibernate to
+															// fetch company
+		}
 
 	}
 
@@ -562,10 +573,13 @@ public class OutgoingController extends ProtocolController {
 		int pageSize = ccContactsPgng.getPageSize();
 
 		ccContacts = contactDAO.findByTerm(ccTerm, startIndex, pageSize);
+		for (Contact ccContact : ccContacts) {
+			ccContact.getCompany().getName().toString(); // force hibernate to
+															// fetch company
+		}
 
 	}
 
-	
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
@@ -581,6 +595,9 @@ public class OutgoingController extends ProtocolController {
 				.getAsInteger(IConstants.PARAM_DISTRIBUTION_METHOD_EMAIL_ID);
 		distributionMethodWebServiceId = parameterDAO
 				.getAsInteger(IConstants.PARAM_DISTRIBUTION_METHOD_WEBSERVICE_ID);
+		defaultDistributionMethodId = parameterDAO
+				.getAsInteger(IConstants.PARAM_DISTRIBUTION_METHOD_NA_ID);
+
 		smtpHost = parameterDAO.getAsString(IConstants.PARAM_SMTP_HOST);
 		smtpHost = parameterDAO.getAsString(IConstants.PARAM_SMTP_USER);
 		smtpPassword = parameterDAO.getAsString(IConstants.PARAM_SMTP_PASSWORD);
@@ -603,6 +620,12 @@ public class OutgoingController extends ProtocolController {
 						Labels.getLabel("fetch.title"), Messagebox.OK,
 						Messagebox.ERROR);
 				protocol = new OutgoingProtocol();
+				for (DistributionMethod distributionMethod : distributionMethods) {
+					if (distributionMethod.getId().equals(defaultDistributionMethodId)) {
+						protocol.setDistributionMethod(distributionMethod);
+						break;
+					}
+				}
 				return;
 			}
 			// populate recipients
@@ -645,7 +668,7 @@ public class OutgoingController extends ProtocolController {
 		searchToContacts(startIndex);
 		getBinder(outgoingWin).loadAll();
 	}
-	
+
 	public void onSelect$toContactsLstbx(SelectEvent event) {
 		toBndbx.setText("");
 		toBndbx.close();
@@ -731,7 +754,7 @@ public class OutgoingController extends ProtocolController {
 		if (!ccContacts.isEmpty()) {
 			return;
 		}
-		ccTerm ="";
+		ccTerm = "";
 		searchCcContacts(0);
 		getBinder(outgoingWin).loadAll();
 	}
@@ -742,7 +765,7 @@ public class OutgoingController extends ProtocolController {
 		searchCcContacts(startIndex);
 		getBinder(outgoingWin).loadAll();
 	}
-	
+
 	public void onSelect$ccContactsLstbx(SelectEvent event) {
 		ccBndbx.setText("");
 		ccBndbx.close();
