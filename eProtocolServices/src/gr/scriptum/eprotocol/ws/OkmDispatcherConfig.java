@@ -7,10 +7,10 @@ package gr.scriptum.eprotocol.ws;
  *
  */
 public class OkmDispatcherConfig {
-	private  String OKMAuthPort_address    = "http://office.uit.gr:8888/OpenKM/OKMAuth";
-	private String OKMDocumentPort_address = "http://office.uit.gr:8888/OpenKM/OKMDocument";
-	private String OKMFolderPort_address   = "http://office.uit.gr:8888/OpenKM/OKMFolder";
-	private String OKMSearchPort_address   = "http://office.uit.gr:8888/OpenKM/OKMSearch";	
+	private  String OKMAuthPort_address    = "http://localhost:8080/OpenKM/OKMAuth";
+	private String OKMDocumentPort_address = "http://localhost:8080/OpenKM/OKMDocument";
+	private String OKMFolderPort_address   = "http://localhost:8080/OpenKM/OKMFolder";
+	private String OKMSearchPort_address   = "http://localhost:8080/OpenKM/OKMSearch";	
 	
 	public String getOKMAuthPort_address() {
 		return OKMAuthPort_address;
