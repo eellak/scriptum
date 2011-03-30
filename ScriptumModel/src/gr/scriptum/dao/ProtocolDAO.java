@@ -59,14 +59,16 @@ public abstract class ProtocolDAO<T, ID extends Serializable> extends
 
 	private Criteria buildSearchCriteria(String protocolNumber, Date from,
 			Date to, String subject, String keywords,
-			DistributionMethod distributionMethod) {
+			DistributionMethod distributionMethod, boolean includePending) {
 
 		Criteria crit = getSession().createCriteria(getPersistentClass());
 
 		// TODO: tokenize protocol number
 		if (protocolNumber != null) {
 			crit.add(Restrictions.eq("protocolNumber", protocolNumber));
-		} else {
+		}
+
+		if (!includePending) {
 			// ensure search is performed in submitted protocols
 			crit.add(Restrictions.isNotNull("protocolNumber"));
 		}
@@ -125,9 +127,10 @@ public abstract class ProtocolDAO<T, ID extends Serializable> extends
 	 */
 	protected Criteria buildSearchCriteria(String protocolNumber, Date from,
 			Date to, String subject, String keywords,
-			DistributionMethod distributionMethod, Contact contact) {
+			DistributionMethod distributionMethod, Contact contact,
+			boolean includePending) {
 		return buildSearchCriteria(protocolNumber, from, to, subject, keywords,
-				distributionMethod);
+				distributionMethod, includePending);
 	}
 
 	public List<T> findPending(T example, Date from, Date to, Order sortBy,
@@ -150,10 +153,11 @@ public abstract class ProtocolDAO<T, ID extends Serializable> extends
 
 	public Integer countSearch(String protocolNumber, Date from, Date to,
 			String subject, String keywords,
-			DistributionMethod distributionMethod, Contact contact) {
+			DistributionMethod distributionMethod, Contact contact,
+			boolean includePending) {
 
 		Criteria crit = buildSearchCriteria(protocolNumber, from, to, subject,
-				keywords, distributionMethod, contact);
+				keywords, distributionMethod, contact, includePending);
 		crit.setProjection(Projections.rowCount());
 		Integer count = (Integer) crit.uniqueResult();
 		log.info("Rows counted:" + count);
@@ -164,10 +168,11 @@ public abstract class ProtocolDAO<T, ID extends Serializable> extends
 	public List<T> search(String protocolNumber, Date from, Date to,
 			String subject, String keywords,
 			DistributionMethod distributionMethod, Contact contact,
-			Integer firstResult, Integer maxResults, Order... sortBy) {
+			boolean includePending, Integer firstResult, Integer maxResults,
+			Order... sortBy) {
 
 		Criteria crit = buildSearchCriteria(protocolNumber, from, to, subject,
-				keywords, distributionMethod, contact);
+				keywords, distributionMethod, contact, includePending);
 
 		for (Order order : sortBy) {
 			crit.addOrder(order);

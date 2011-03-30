@@ -25,9 +25,10 @@ public class OutgoingProtocolDAO extends ProtocolDAO<OutgoingProtocol, Integer> 
 	@Override
 	protected Criteria buildSearchCriteria(String protocolNumber, Date from,
 			Date to, String subject, String keywords,
-			DistributionMethod distributionMethod, Contact contact) {
+			DistributionMethod distributionMethod, Contact contact,
+			boolean includePending) {
 		Criteria crit = super.buildSearchCriteria(protocolNumber, from, to,
-				subject, keywords, distributionMethod, contact);
+				subject, keywords, distributionMethod, contact, includePending);
 
 		if (contact != null) {
 			Criteria recipientCriteria = crit
