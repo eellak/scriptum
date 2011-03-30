@@ -4,7 +4,7 @@
 <?page title="${c:l('indexPage.title')}" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <zk>
-	<include id="ph" sclass="header" src="header.zul"/>
+	<include id="ph" sclass="header" src="header.zul" />
 
 	<window id="indexWin" title="${c:l('indexPage.title')}"
 		border="normal" width="100%"
@@ -31,24 +31,33 @@
 						selectedItem="@{IndexController.selectedIncomingProtocol}">
 						<listhead>
 							<listheader id="incomingIdLsthdr"
-								label="${c:l('incomingProtocol.id')}" width="10%" sort="auto"
-								value="id" forward="onSort=onSort" />
+								label="${c:l('incomingProtocol.id')}" sort="auto" value="id"
+								forward="onSort=onSort" width="10%" />
+							<listheader id="incomingNumberLsthdr"
+								label="${c:l('incomingProtocol.protocolNumber')}" sort="auto"
+								value="protocolNumber,protocolSeries,protocolYear"
+								forward="onSort=onSort" />
 							<listheader id="incomingUpdateTsLsthdr"
-								label="${c:l('incomingProtocol.updateTs')}" width="20%"
-								sort="auto" value="updateTs" forward="onSort=onSort"
+								label="${c:l('incomingProtocol.updateTs')}" sort="auto"
+								value="updateTs" forward="onSort=onSort"
 								sortDirection="descending" />
 							<listheader
-								label="${c:l('incomingProtocol.subject')}" width="30%"
-								sort="auto" value="subject" forward="onSort=onSort" />
+								label="${c:l('incomingProtocol.subject')}" sort="auto"
+								value="subject" forward="onSort=onSort" />
 							<listheader
-								label="${c:l('incomingProtocol.contact')}" width="30%" />
+								label="${c:l('incomingProtocol.contact')}" />
 							<listheader
-								label="${c:l('distributionMethod')}" width="30%" />
-							<listheader
-								label="${c:l('incomingProtocol.protocolDocuments')}" />
+								label="${c:l('distributionMethod')}" />
 						</listhead>
 						<listitem self="@{each='incomingRow'}">
 							<listcell label="@{incomingRow.id}" />
+							<listcell>
+								<label
+									value="@{incomingRow.fullNumber}" />
+								<label
+									value="${c:l('incomingProtocol.isDeleted')}"
+									visible="@{incomingRow.isDeleted }" style="color:red;" />
+							</listcell>
 							<listcell label="@{incomingRow.updateTs}" />
 							<listcell label="@{incomingRow.subject}" />
 							<listcell>
@@ -59,7 +68,6 @@
 							</listcell>
 							<listcell
 								label="@{incomingRow.distributionMethod.description}" />
-							<listcell label="0" />
 						</listitem>
 					</listbox>
 					<paging id="incomingPgng" pageSize="10" />
@@ -68,7 +76,7 @@
 
 					<grid>
 						<columns>
-						<column width="30%"/>
+							<column width="30%" />
 						</columns>
 						<rows>
 							<row>
@@ -115,27 +123,33 @@
 							<listheader
 								label="${c:l('outgoingProtocol.id')}" width="10%" sort="auto"
 								value="id" forward="onSort=onSort" />
+							<listheader id="outgoingNumberLsthdr"
+								label="${c:l('outgoingProtocol.protocolNumber')}" sort="auto"
+								value="protocolNumber,protocolSeries,protocolYear"
+								forward="onSort=onSort" />
 							<listheader
-								label="${c:l('outgoingProtocol.updateTs')}" width="20%"
-								sort="auto" value="updateTs" forward="onSort=onSort"
+								label="${c:l('outgoingProtocol.updateTs')}" sort="auto"
+								value="updateTs" forward="onSort=onSort"
 								sortDirection="descending" />
 							<listheader
-								label="${c:l('outgoingProtocol.subject')}" width="30%"
-								sort="auto" value="subject" forward="onSort=onSort" />
+								label="${c:l('outgoingProtocol.subject')}" sort="auto"
+								value="subject" forward="onSort=onSort" />
 							<listheader
-								label="${c:l('distributionMethod')}" width="30%" />
-							<!--<listheader
-								label="${c:l('outgoingProtocol.protocolDocuments')}" />
-							-->
+								label="${c:l('distributionMethod')}" />
 						</listhead>
 						<listitem self="@{each='outgoingRow'}">
 							<listcell label="@{outgoingRow.id}" />
+							<listcell>
+								<label
+									value="@{outgoingRow.fullNumber}" />
+								<label
+									value="${c:l('outgoingProtocol.isDeleted')}"
+									visible="@{outgoingRow.isDeleted }" style="color:red;" />
+							</listcell>
 							<listcell label="@{outgoingRow.updateTs}" />
 							<listcell label="@{outgoingRow.subject}" />
 							<listcell
-								label="@{outgoingRow.distributionMethod.description}" /><!--
-								<listcell label="0" />
-							-->
+								label="@{outgoingRow.distributionMethod.description}" />
 						</listitem>
 					</listbox>
 					<paging id="outgoingPgng" pageSize="10" />
@@ -144,7 +158,7 @@
 
 					<grid>
 						<columns>
-						<column width="30%"/>
+							<column width="30%" />
 						</columns>
 						<rows>
 							<row>
@@ -269,9 +283,9 @@
 
 					<separator bar="true" />
 
-					<grid >
+					<grid>
 						<columns>
-						<column width="30%"/>
+							<column width="30%" />
 						</columns>
 						<rows>
 							<row>
@@ -295,12 +309,12 @@
 								${c:l('indexPage.search.dates')}
 								<hbox>
 									(${c:l('from')})
-									<datebox compact="true" width="200px"
-										lenient="false" format="dd/MM/yyyy"
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
 										value="@{IndexController.searchDateFrom }" />
 									(${c:l('to')})
-									<datebox compact="true" width="200px"
-										lenient="false" format="dd/MM/yyyy"
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
 										value="@{IndexController.searchDateTo }" />
 								</hbox>
 							</row>
@@ -309,11 +323,13 @@
 								<textbox width="300px"
 									value="@{IndexController.subject}" />
 							</row>
-							<row visible="@{IndexController.isDirectionIncoming}">
+							<row
+								visible="@{IndexController.isDirectionIncoming}">
 								${c:l('incomingProtocol.contact') }
 								<bandbox id="contactBndbx"
 									autodrop="true"
-									disabled="@{IndexController.isDirectionOutgoing}" width="300px" value="@{IndexController.contactFullName}">
+									disabled="@{IndexController.isDirectionOutgoing}" width="300px"
+									value="@{IndexController.contactFullName}">
 									<bandpopup>
 										<listbox id="contactsLstbx"
 											width="400px" model="@{IndexController.contacts}"
@@ -351,11 +367,13 @@
 									</bandpopup>
 								</bandbox>
 							</row>
-							<row visible="@{IndexController.isDirectionOutgoing}">
+							<row
+								visible="@{IndexController.isDirectionOutgoing}">
 								${c:l('outgoingRecipient') }
 								<bandbox id="toContactBndbx"
 									autodrop="true"
-									disabled="@{IndexController.isDirectionIncoming}" width="300px" value="@{IndexController.toContactFullName}">
+									disabled="@{IndexController.isDirectionIncoming}" width="300px"
+									value="@{IndexController.toContactFullName}">
 									<bandpopup>
 										<listbox id="toContactsLstbx"
 											width="400px" model="@{IndexController.toContacts}"

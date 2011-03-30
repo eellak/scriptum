@@ -195,13 +195,13 @@ menu.exit=Έξοδος
 
 
 ##loginPage
-loginPage.title=Είσοδος Χρήστη 
+loginPage.title=Σύστημα Ηλεκτρονικού Πρωτοκόλλου 
 loginPage.error=Εσφαλμένη προσπάθεια εισόδου
 
 ##indexPage
 indexPage.title=Σύστημα Ηλεκτρονικού Πρωτοκόλλου
-indexPage.incoming=Εισερχόμενα (Εκκρεμή)
-indexPage.outgoing=Εξερχόμενα (Εκκρεμή)
+indexPage.incoming=Εισερχόμενα
+indexPage.outgoing=Εξερχόμενα
 indexPage.search=Αναζήτηση
 indexPage.search.direction=Κατεύθυνση
 indexPage.search.incoming=Εισερχόμενο

@@ -2,17 +2,20 @@ package gr.scriptum.eprotocol.controller;
 
 import gr.scriptum.domain.Users;
 import gr.scriptum.eprotocol.security.ScriptumUser;
+import gr.scriptum.eprotocol.util.IConstants;
 import gr.scriptum.eprotocol.ws.OkmDispatcherConfig;
 import gr.scriptum.eprotocol.ws.OkmProtocolDispatcherImpl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.criterion.Order;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -251,5 +254,21 @@ public class BaseController extends GenericForwardComposer {
 
 	protected String getIp() {
 		return Executions.getCurrent().getRemoteAddr();
+	}
+
+	protected List<Order> getSortBy(Listheader header) {
+		String[] tokens = header.getValue().toString()
+				.split(IConstants.SORTING_DELIMITER);
+		List<Order> sortBy = new LinkedList<Order>();
+		for (String token : tokens) {
+			Order order = null;
+			if (header.getSortDirection().equals("ascending")) {
+				order = Order.asc(token);
+			} else {
+				order = Order.desc(token);
+			}
+			sortBy.add(order);
+		}
+		return sortBy;
 	}
 }

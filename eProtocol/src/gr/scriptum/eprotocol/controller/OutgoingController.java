@@ -912,10 +912,36 @@ public class OutgoingController extends ProtocolController {
 			return;
 		}
 
-		Messagebox.show(Labels.getLabel("save.OK"),
-				Labels.getLabel("save.title"), Messagebox.OK,
-				Messagebox.INFORMATION);
-		getBinder(outgoingWin).loadAll();
+//		Messagebox.show(Labels.getLabel("save.OK"),
+//				Labels.getLabel("save.title"), Messagebox.OK,
+//				Messagebox.INFORMATION);
+//		getBinder(outgoingWin).loadAll();
+		
+		try {
+			Messagebox.show(Labels.getLabel("save.OK"),
+					Labels.getLabel("save.title"), Messagebox.OK,
+					Messagebox.INFORMATION, new EventListener() {
+						@Override
+						public void onEvent(Event event) throws Exception {
+							log.info((Integer) event.getData());
+							if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+								Executions
+										.getCurrent()
+										.sendRedirect(
+												IndexController.PAGE
+														+ "?"
+														+ IndexController.PARAM_SELECTED_TAB
+														+ "=outgoingTb");
+								return;
+							} else {
+								getBinder(outgoingWin).loadAll();
+							}
+						}
+					});
+		} catch (InterruptedException e) {
+			// swallow
+		}
+		
 	}
 
 	public void onClick$insertBtn() throws InterruptedException {

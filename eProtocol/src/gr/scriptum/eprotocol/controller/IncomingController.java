@@ -452,7 +452,8 @@ public class IncomingController extends ProtocolController {
 						Messagebox.ERROR);
 				protocol = new IncomingProtocol();
 				for (DistributionMethod distributionMethod : distributionMethods) {
-					if (distributionMethod.getId().equals(defaultDistributionMethodId)) {
+					if (distributionMethod.getId().equals(
+							defaultDistributionMethodId)) {
 						protocol.setDistributionMethod(distributionMethod);
 						break;
 					}
@@ -599,10 +600,31 @@ public class IncomingController extends ProtocolController {
 			return;
 		}
 
-		Messagebox.show(Labels.getLabel("save.OK"),
-				Labels.getLabel("save.title"), Messagebox.OK,
-				Messagebox.INFORMATION);
-		getBinder(incomingWin).loadAll();
+		try {
+			Messagebox.show(Labels.getLabel("save.OK"),
+					Labels.getLabel("save.title"), Messagebox.OK,
+					Messagebox.INFORMATION, new EventListener() {
+						@Override
+						public void onEvent(Event event) throws Exception {
+							log.info((Integer) event.getData());
+							if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+								Executions
+										.getCurrent()
+										.sendRedirect(
+												IndexController.PAGE
+														+ "?"
+														+ IndexController.PARAM_SELECTED_TAB
+														+ "=incomingTb");
+								return;
+							} else {
+								getBinder(incomingWin).loadAll();
+							}
+						}
+					});
+		} catch (InterruptedException e) {
+			// swallow
+		}
+
 	}
 
 	public void onClick$insertBtn() throws InterruptedException {
@@ -639,14 +661,6 @@ public class IncomingController extends ProtocolController {
 
 		getBinder(incomingWin).loadAll();
 
-		// int response =
-		// Messagebox.show(Labels.getLabel("incomingPage.protocolSubmitted",
-		// new String[] { protocol.getFullNumber() }), Labels
-		// .getLabel("success.title"), Messagebox.YES | Messagebox.NO,
-		// Messagebox.INFORMATION);
-		//
-		// log.info(response);
-
 		try {
 			Messagebox.show(Labels.getLabel("incomingPage.protocolSubmitted",
 					new String[] { protocol.getFullNumber() }), Labels
@@ -661,6 +675,9 @@ public class IncomingController extends ProtocolController {
 												+ IConstants.PARAM_KEY_ID + "="
 												+ protocol.getId(), "_blank");
 								return;
+							} else {
+								Executions.getCurrent().sendRedirect(
+										IndexController.PAGE);
 							}
 						}
 					});

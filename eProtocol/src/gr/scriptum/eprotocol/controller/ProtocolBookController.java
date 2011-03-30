@@ -109,7 +109,8 @@ public class ProtocolBookController extends BaseController {
 		List<Order> sortBy = new LinkedList<Order>();
 		for (String token : tokens) {
 			Order order = null;
-			String sortOrder = sortOrderCbx.getSelectedItem().getValue().toString();
+			String sortOrder = sortOrderCbx.getSelectedItem().getValue()
+					.toString();
 			if (sortOrder.equals("ascending")) {
 				order = Order.asc(token);
 			} else {
@@ -122,14 +123,14 @@ public class ProtocolBookController extends BaseController {
 
 		IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
 		List<IncomingProtocol> results = incomingProtocolDAO.search(null, from,
-				to, null, null, null, null, null, null,
+				to, null, null, null, null, false, null, null,
 				sortBy.toArray(new Order[0]));
 
 		protocols.addAll(results);
 
 		OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
 		List<OutgoingProtocol> outgoingResults = outgoingProtocolDAO.search(
-				null, from, to, null, null, null, null, null, null,
+				null, from, to, null, null, null, null, false, null, null,
 				sortBy.toArray(new Order[0]));
 
 		protocols.addAll(outgoingResults);
@@ -171,7 +172,7 @@ public class ProtocolBookController extends BaseController {
 		to = null;
 
 		getBinder(win).loadAll();
-		
+
 		sortCbx.setSelectedIndex(0);
 		sortOrderCbx.setSelectedIndex(0);
 

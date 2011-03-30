@@ -31,7 +31,8 @@
 				<menuitem
 					label="${c:l('menu.administration.parameters') }"
 					href="parameters.zul" visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
-				<menuseparator visible="${sec:isAnyGranted('ROLE_ADMIN')}"/>
+				<menuseparator
+					visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
 				<menuitem
 					label="${c:l('menu.administration.protocolBook') }"
 					href="protocolBook.zul"
@@ -52,7 +53,8 @@
 		</menu>
 		<menu label="${c:l('menu.help') }">
 			<menupopup>
-				<menuitem label="${c:l('menu.help.community') }" />
+				<!--<menuitem label="${c:l('menu.help.community') }" />
+				-->
 				<menuitem label="${c:l('menu.help.links') }"
 					href="links.zul" />
 				<menuitem label="${c:l('menu.help.about') }"
@@ -60,10 +62,16 @@
 			</menupopup>
 		</menu>
 
-		<menuitem 
+		<menuitem
 			label="${c:l('menu.exit') } (${c:l('users')}: ${authentication.principal.username})"
 			href="/j_spring_security_logout" />
+			
 	</menubar>
+	<toolbar align="end" width="100%">
+		<toolbarbutton label="Πείτε μας τη γνώμη σας" style="font-weight:bold;"
+			href="https://spreadsheets.google.com/a/eellak.gr/viewform?formkey=dE54RXdtWlNjdHRZTmZHMGtXT3AxQnc6MQ"
+			src="img/question.png"/>
+	</toolbar>
 	<div height="5px;"></div>
 
 </zk>

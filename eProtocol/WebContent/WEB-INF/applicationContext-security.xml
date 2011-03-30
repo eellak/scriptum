@@ -48,6 +48,10 @@
 			access="ROLE_READER,ROLE_WRITER,ROLE_ADMIN" />
 		<intercept-url pattern="/documentType.zul"
 			access="ROLE_READER,ROLE_WRITER,ROLE_ADMIN" />
+		<intercept-url pattern="/links.zul"
+			access="ROLE_READER,ROLE_WRITER,ROLE_ADMIN" />
+		<intercept-url pattern="/about.zul"
+			access="ROLE_READER,ROLE_WRITER,ROLE_ADMIN" />
 
 		<intercept-url pattern="/upload.zul" access="ROLE_WRITER,ROLE_ADMIN" />
 

@@ -18,7 +18,6 @@ import gr.scriptum.eprotocol.util.IConstants;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +55,10 @@ public class IndexController extends BaseController {
 
 	private static Log log = LogFactory.getLog(IndexController.class);
 
+	public static final String PAGE = "index.zul";
+
+	public static final String PARAM_SELECTED_TAB = "tab";
+
 	/* Components */
 	Window indexWin;
 	Tabbox indexTbx;
@@ -86,8 +89,6 @@ public class IndexController extends BaseController {
 	private IncomingProtocol selectedIncomingProtocol = null;
 	private Date incomingDateFrom = null;
 	private Date incomingDateTo = null;
-	private String incomingDefaultSortBy = null;
-	private String incomingDefaultSortDirection = null;
 
 	/* outgoing */
 	private OutgoingProtocol outgoingProtocol = null;
@@ -95,8 +96,6 @@ public class IndexController extends BaseController {
 	private OutgoingProtocol selectedOutgoingProtocol = null;
 	private Date outgoingDateFrom = null;
 	private Date outgoingDateTo = null;
-	private String outgoingDefaultSortBy = null;
-	private String outgoingDefaultSortDirection = null;
 
 	/* search */
 	private String protocolNumber = null;
@@ -144,22 +143,19 @@ public class IndexController extends BaseController {
 
 		IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
 		// set up paging by counting records first
-		Integer totalSize = incomingProtocolDAO.countPending(incomingProtocol,
-				incomingDateFrom, incomingDateTo);
+		Integer totalSize = incomingProtocolDAO.countSearch(null,
+				incomingDateFrom, incomingDateTo,
+				incomingProtocol.getSubject(), null, null, null, true);
 		incomingPgng.setTotalSize(totalSize);
 		int pageSize = incomingPgng.getPageSize();
 
 		// figure out which header to sort by
 		Listheader header = getSortingListheader(incomingLstbx);
-		Order order = null;
-		if (header.getSortDirection().equals("ascending")) {
-			order = Order.asc(header.getValue().toString());
-		} else {
-			order = Order.desc(header.getValue().toString());
-		}
+		List<Order> sortBy = getSortBy(header);
 
-		incomingProtocols = incomingProtocolDAO.findPending(incomingProtocol,
-				incomingDateFrom, incomingDateTo, order, startIndex, pageSize);
+		incomingProtocols = incomingProtocolDAO.search(null, incomingDateFrom,
+				incomingDateTo, incomingProtocol.getSubject(), null, null,
+				null, true, startIndex, pageSize, sortBy.toArray(new Order[0]));
 
 	}
 
@@ -167,21 +163,19 @@ public class IndexController extends BaseController {
 
 		OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
 		// set up paging by counting records first
-		Integer totalSize = outgoingProtocolDAO.countPending(outgoingProtocol,
-				outgoingDateFrom, outgoingDateTo);
+		Integer totalSize = outgoingProtocolDAO.countSearch(null,
+				outgoingDateFrom, outgoingDateTo,
+				outgoingProtocol.getSubject(), null, null, null, true);
 		outgoingPgng.setTotalSize(totalSize);
 		int pageSize = outgoingPgng.getPageSize();
 
 		// figure out which header to sort by
 		Listheader header = getSortingListheader(outgoingLstbx);
-		Order order = null;
-		if (header.getSortDirection().equals("ascending")) {
-			order = Order.asc(header.getValue().toString());
-		} else {
-			order = Order.desc(header.getValue().toString());
-		}
-		outgoingProtocols = outgoingProtocolDAO.findPending(outgoingProtocol,
-				outgoingDateFrom, outgoingDateTo, order, startIndex, pageSize);
+		List<Order> sortBy = getSortBy(header);
+
+		outgoingProtocols = outgoingProtocolDAO.search(null, outgoingDateFrom,
+				outgoingDateTo, outgoingProtocol.getSubject(), null, null,
+				null, true, startIndex, pageSize, sortBy.toArray(new Order[0]));
 	}
 
 	private void searchIncoming(Integer startIndex) {
@@ -190,28 +184,17 @@ public class IndexController extends BaseController {
 		// set up paging by counting records first
 		Integer totalSize = incomingProtocolDAO.countSearch(protocolNumber,
 				searchDateFrom, searchDateTo, subject, keywords,
-				distributionMethod, contact);
+				distributionMethod, contact, false);
 		searchIncomingPgng.setTotalSize(totalSize);
 		int pageSize = searchIncomingPgng.getPageSize();
 
 		// figure out which header to sort by
 		Listheader header = getSortingListheader(searchIncomingLstbx);
-		String[] tokens = header.getValue().toString()
-				.split(IConstants.SORTING_DELIMITER);
-		List<Order> sortBy = new LinkedList<Order>();
-		for (String token : tokens) {
-			Order order = null;
-			if (header.getSortDirection().equals("ascending")) {
-				order = Order.asc(token);
-			} else {
-				order = Order.desc(token);
-			}
-			sortBy.add(order);
-		}
+		List<Order> sortBy = getSortBy(header);
 
 		searchIncomingProtocols = incomingProtocolDAO.search(protocolNumber,
 				searchDateFrom, searchDateTo, subject, keywords,
-				distributionMethod, contact, startIndex, pageSize,
+				distributionMethod, contact, false, startIndex, pageSize,
 				sortBy.toArray(new Order[0]));
 	}
 
@@ -221,28 +204,17 @@ public class IndexController extends BaseController {
 		// set up paging by counting records first
 		Integer totalSize = outgoingProtocolDAO.countSearch(protocolNumber,
 				searchDateFrom, searchDateTo, subject, keywords,
-				distributionMethod, toContact);
+				distributionMethod, toContact, false);
 		searchOutgoingPgng.setTotalSize(totalSize);
 		int pageSize = searchOutgoingPgng.getPageSize();
 
 		// figure out which header to sort by
 		Listheader header = getSortingListheader(searchOutgoingLstbx);
-		String[] tokens = header.getValue().toString()
-				.split(IConstants.SORTING_DELIMITER);
-		List<Order> sortBy = new LinkedList<Order>();
-		for (String token : tokens) {
-			Order order = null;
-			if (header.getSortDirection().equals("ascending")) {
-				order = Order.asc(token);
-			} else {
-				order = Order.desc(token);
-			}
-			sortBy.add(order);
-		}
+		List<Order> sortBy = getSortBy(header);
 
 		searchOutgoingProtocols = outgoingProtocolDAO.search(protocolNumber,
 				searchDateFrom, searchDateTo, subject, keywords,
-				distributionMethod, toContact, startIndex, pageSize,
+				distributionMethod, toContact, false, startIndex, pageSize,
 				sortBy.toArray(new Order[0]));
 
 	}
@@ -254,18 +226,38 @@ public class IndexController extends BaseController {
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
+		page.setAttribute(this.getClass().getSimpleName(), this);
 
 		DistributionMethodDAO distributionMethodDAO = new DistributionMethodDAO();
 		distributionMethods = distributionMethodDAO.findAll();
 
-		incomingProtocol = new IncomingProtocol();
-		page.setAttribute(this.getClass().getSimpleName(), this);
+		initIncoming();
+		initOutgoing();
+		initSearch();
 
-		Listheader header = getSortingListheader(incomingLstbx);
-		incomingDefaultSortBy = header.getValue().toString();
-		incomingDefaultSortDirection = header.getSortDirection();
+		String tab = execution.getParameter(PARAM_SELECTED_TAB);
 
-		searchIncomingPending(0);
+		if (tab != null) {
+			if (tab.equals(incomingTb.getId())) {
+				Listheader header = getSortingListheader(incomingLstbx);
+				searchIncomingPending(0);
+				indexTbx.setSelectedTab(incomingTb);
+			} else if (tab.equals(outgoingTb.getId())) {
+				Listheader header = getSortingListheader(outgoingLstbx);
+				searchOutgoingPending(0);
+				indexTbx.setSelectedTab(outgoingTb);
+			} else if (tab.equals(searchTb.getId())) {
+				initSearch();
+				indexTbx.setSelectedTab(searchTb);
+			}else {
+				Listheader header = getSortingListheader(incomingLstbx);
+				searchIncomingPending(0);
+			}
+		} else {
+			Listheader header = getSortingListheader(incomingLstbx);
+			searchIncomingPending(0);
+		}
+
 	}
 
 	/**
@@ -446,8 +438,8 @@ public class IndexController extends BaseController {
 	}
 
 	public void onSelect$contactsLstbx(SelectEvent event) {
-//		contactBndbx.setText(contact.getName() + " " + contact.getSurname());
-//		contactBndbx.setText(getContactFullName());
+		// contactBndbx.setText(contact.getName() + " " + contact.getSurname());
+		// contactBndbx.setText(getContactFullName());
 		contactBndbx.close();
 		getBinder(indexWin).loadAll();
 	}
@@ -469,7 +461,7 @@ public class IndexController extends BaseController {
 	}
 
 	public void onSelect$toContactsLstbx(SelectEvent event) {
-//		toContactBndbx.setText(getToContactFullName());
+		// toContactBndbx.setText(getToContactFullName());
 		toContactBndbx.close();
 		getBinder(indexWin).loadAll();
 	}
@@ -523,36 +515,29 @@ public class IndexController extends BaseController {
 		if (contact == null) {
 			return "";
 		}
-		return (contact.getName() != null ? contact.getName()
-				 : "")
-				+ " "
+		return (contact.getName() != null ? contact.getName() : "") + " "
 				+ (contact.getSurname() != null ? contact.getSurname() : "")
-				+ " ("
-				+ contact.getCompany().getName() + ")";
-	}
-	
-	public void setContactFullName(String contactFullName) {
-		
+				+ " (" + contact.getCompany().getName() + ")";
 	}
 
-	
+	public void setContactFullName(String contactFullName) {
+
+	}
+
 	public String getToContactFullName() {
 		if (toContact == null) {
 			return "";
 		}
-		return (toContact.getName() != null ? toContact.getName()
-				 : "")
+		return (toContact.getName() != null ? toContact.getName() : "")
 				+ " "
 				+ (toContact.getSurname() != null ? toContact.getSurname() : "")
-				+ " ("
-				+ toContact.getCompany().getName() + ")";
+				+ " (" + toContact.getCompany().getName() + ")";
 	}
 
 	public void setToContactFullName(String contactFullName) {
-		
+
 	}
 
-	
 	public List<IncomingProtocol> getIncomingProtocols() {
 		return incomingProtocols;
 	}

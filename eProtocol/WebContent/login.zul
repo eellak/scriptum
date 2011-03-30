@@ -1,5 +1,6 @@
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
 <?page title="${c:l('loginPage.title')}"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
 <window id="loginWin" border="normal" width="300px"
 	title="${c:l('loginPage.title') }" mode="overlapped"
 	position="center,center">
