@@ -1,0 +1,20 @@
+<?page title="Scriptum Footer" contentType="text/html;charset=UTF-8"?>
+<zk>
+
+<vbox>
+<separator bar="true" width="1024px" />
+<html style="font-family:arial;color:#183682;font-size:11px;text-align:justify;text-valign:center"
+			content="Σύστημα Αναθέσεων" width="100%"><![CDATA[       
+   <div align="center">
+   Το Ηλεκτρονικό Πρωτόκολλο είναι μέρος του Έργου 
+           <a href="http://scriptum.gr/" target="_blank">Scriptum</a>, 
+           που είναι <a href="http://open-source.gr/" target="_blank">ΕΛ/ΛΑΚ</a> 
+           και διανέμεται με άδεια <a href="http://www.osor.eu/eupl" target="_blank">EUPL</a>. 
+           Κατασκευή <a href="http://www.uit.gr" target="_blank">UIT</a> 
+   </div>               
+]]></html>
+<separator bar="true" width="1024px" />
+</vbox>
+
+
+</zk>
