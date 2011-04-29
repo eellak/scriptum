@@ -5,4 +5,5 @@
 <zk>
 	<include id="ph" sclass="header" src="header.zul"/>
 	<include src="contact_win.zul" />
+	<include id="footer" sclass="footer" src="footer.zul"/>
 </zk>

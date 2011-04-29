@@ -44,4 +44,5 @@
 			</rows>
 		</grid>
 	</window>
+	<include id="footer" sclass="footer" src="footer.zul"/>	
 </zk>
