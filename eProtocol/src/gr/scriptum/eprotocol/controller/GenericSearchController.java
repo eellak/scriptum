@@ -5,15 +5,19 @@ import gr.scriptum.eprotocol.csv.BaseCSVConverter;
 import gr.scriptum.eprotocol.csv.ICSVConverter;
 import gr.scriptum.eprotocol.util.IConstants;
 
+import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -85,6 +89,37 @@ public class GenericSearchController<T, DAO extends GenericDAO, CONVERTER extend
 	@SuppressWarnings("unchecked")
 	private void search(Integer startIndex) throws Exception {
 		DAO dao = initDAO();
+		
+		//trim all string properties to null
+		List props = Arrays.asList(PropertyUtils
+				.getPropertyDescriptors(entity));
+		Iterator it = props.iterator();
+
+		while (it.hasNext()) {
+			PropertyDescriptor pd = (PropertyDescriptor) it.next();
+			String propertyName = pd.getName();
+			Object propertyValue;
+			try {
+				propertyValue = PropertyUtils
+						.getProperty(entity, propertyName);
+				
+			} catch (Exception e) {
+				// property was not accessible - this should be safe to swallow
+				// and continue
+				continue;
+			}
+			if(propertyValue instanceof String) {
+				try {
+				PropertyUtils.setProperty(entity, propertyName, StringUtils.trimToNull((String) propertyValue));
+				log.info("Trimmed property: "+propertyName);
+				} catch (Exception e) {
+					// property was not accessible - this should be safe to swallow
+					// and continue
+					continue;
+				}
+			}
+		}
+		
 		// set up paging by counting records first
 		Integer totalSize = dao.countByExample(entity, MatchMode.START, null);
 		pgng.setTotalSize(totalSize);
@@ -183,6 +218,7 @@ public class GenericSearchController<T, DAO extends GenericDAO, CONVERTER extend
 		setSortingListheader(header);
 
 		search(0);
+		pgng.setActivePage(0);
 		getBinder(win).loadAll();
 	}
 
