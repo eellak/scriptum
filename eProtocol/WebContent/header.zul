@@ -4,7 +4,7 @@
 <zk>
 	<hbox spacing="10px"
 		style="background:#BDE0F7;border: 1px solid grey" width="100%">
-		<image src="img/logo.png" />
+		<image src="img/scriptum_logo.png" />
 		<html
 			style="font-family:arial;color:#183682;font-size:45px;text-align:justify;text-valign:center"
 			content="${c:l('headerPage.title')}" width="100%" />
@@ -128,14 +128,14 @@
 			label="${c:l('menu.exit') } (${c:l('users')}: ${authentication.principal.username})"
 			href="/j_spring_security_logout" />
 
-	</menubar>
+	</menubar><!--
 	
-<!-- 	<toolbar align="end" width="100%">
+	<toolbar align="end" width="100%">
 		<toolbarbutton label="Πείτε μας τη γνώμη σας"
 			style="font-weight:bold;"
 			href="http://go.eellak.gr/scriptumfeedback"
 			src="img/question.png" />
-	</toolbar> -->
+	</toolbar>-->
 <div height="5px;"></div>
 
 </zk>
