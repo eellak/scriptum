@@ -281,12 +281,16 @@ public class IndexController extends BaseController {
 
 		if (parent.equals(incomingLstbx)) {
 			searchIncomingPending(0);
+			incomingPgng.setActivePage(0);
 		} else if (parent.equals(outgoingLstbx)) {
 			searchOutgoingPending(0);
+			outgoingPgng.setActivePage(0);
 		} else if (parent.equals(searchIncomingLstbx)) {
 			searchIncoming(0);
+			searchIncomingPgng.setActivePage(0);
 		} else if (parent.equals(searchOutgoingLstbx)) {
 			searchOutgoing(0);
+			searchOutgoingPgng.setActivePage(0);
 		}
 
 		getBinder(indexWin).loadAll();
