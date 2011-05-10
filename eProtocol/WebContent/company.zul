@@ -103,7 +103,7 @@
 						value="@{CompanyController.entity.webService}" width="300px" />
 				</row>
 				<row>
-					${c:l('company.isGovernment')}
+					${c:l('company.isGoverment')}
 					<checkbox id="isGovermentChkbx" />
 				</row>
 				<row>

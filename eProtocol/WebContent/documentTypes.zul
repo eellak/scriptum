@@ -12,10 +12,14 @@
 			model="@{DocumentTypesController.entities}"
 			selectedItem="@{DocumentTypesController.selected}">
 			<listhead>
-				<listheader label="${c:l('documentType.id')}" />
-				<listheader label="${c:l('documentType.name')}" />
-				<listheader label="${c:l('documentType.description')}" />
-				<listheader label="${c:l('documentType.days')}" />
+				<listheader label="${c:l('documentType.id')}" sort="auto"
+					value="id" forward="onSort=onSort" sortDirection="ascending" />
+				<listheader label="${c:l('documentType.name')}" sort="auto"
+					value="name" forward="onSort=onSort" />
+				<listheader label="${c:l('documentType.description')}" sort="auto"
+					value="description" forward="onSort=onSort" />
+				<listheader label="${c:l('documentType.days')}" sort="auto"
+					value="days" forward="onSort=onSort" />
 			</listhead>
 			<listitem self="@{each='documentTypeRow'}">
 				<listcell label="@{documentTypeRow.id}" />

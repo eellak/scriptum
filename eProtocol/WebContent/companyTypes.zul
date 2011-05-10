@@ -12,8 +12,10 @@
 			model="@{CompanyTypesController.entities}"
 			selectedItem="@{CompanyTypesController.selected}">
 			<listhead>
-				<listheader label="${c:l('companyType.id')}" />
-				<listheader label="${c:l('companyType.name')}" />
+				<listheader label="${c:l('companyType.id')}" sort="auto"
+					value="id" forward="onSort=onSort" sortDirection="ascending"/>
+				<listheader label="${c:l('companyType.name')}" sort="auto"
+					value="name" forward="onSort=onSort"/>
 			</listhead>
 			<listitem self="@{each='companyTypeRow'}">
 				<listcell label="@{companyTypeRow.id}" />

@@ -12,9 +12,11 @@
 			selectedItem="@{DistributionMethodsController.selected}">
 
 			<listhead>
-				<listheader label="${c:l('distributionMethod.id')}" />
+				<listheader label="${c:l('distributionMethod.id')}" sort="auto"
+					value="id" forward="onSort=onSort" sortDirection="ascending"/>
 				<listheader
-					label="${c:l('distributionMethod.description')}" />
+					label="${c:l('distributionMethod.description')}"  sort="auto"
+					value="description" forward="onSort=onSort"/>
 			</listhead>
 			<listitem self="@{each='distributionMethodRow'}">
 				<listcell label="@{distributionMethodRow.id}" />

@@ -13,12 +13,18 @@
 			selectedItem="@{ParametersController.selected}">
 
 			<listhead>
-				<listheader label="${c:l('parameter.id')}" />
-				<listheader label="${c:l('parameter.name')}" />
-				<listheader label="${c:l('parameter.area')}" />
-				<listheader label="${c:l('parameter.type')}" />
-				<listheader label="${c:l('parameter.initialValue')}" />
-				<listheader label="${c:l('parameter.value')}" />
+				<listheader label="${c:l('parameter.id')}" sort="auto"
+					value="id" forward="onSort=onSort" sortDirection="ascending" />
+				<listheader label="${c:l('parameter.name')}" sort="auto"
+					value="name" forward="onSort=onSort" />
+				<listheader label="${c:l('parameter.area')}" sort="auto"
+					value="area" forward="onSort=onSort" />
+				<listheader label="${c:l('parameter.type')}" sort="auto"
+					value="type" forward="onSort=onSort" />
+				<listheader label="${c:l('parameter.initialValue')}" sort="auto"
+					value="initialValue" forward="onSort=onSort" />
+				<listheader label="${c:l('parameter.value')}" sort="auto"
+					value="value" forward="onSort=onSort" />
 			</listhead>
 			<listitem self="@{each='parameterRow'}">
 				<listcell label="@{parameterRow.id}" />

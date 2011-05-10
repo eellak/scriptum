@@ -12,17 +12,20 @@
 			model="@{CompaniesController.entities}"
 			selectedItem="@{CompaniesController.selected}">
 			<listhead>
-				<listheader label="${c:l('company.id')}" />
-				<listheader label="${c:l('company.name')}" />
-				<listheader label="${c:l('companyType.name')}" />
-				<listheader label="${c:l('company.isGoverment')}" />
+				<listheader label="${c:l('company.id')}" sort="auto"
+					value="id" forward="onSort=onSort" sortDirection="ascending"/>
+				<listheader label="${c:l('company.name')}" sort="auto"
+					value="name" forward="onSort=onSort"/>
+				<listheader label="${c:l('companyType.name')}"/>
+				<listheader label="${c:l('company.isGoverment')}" sort="auto"
+					value="isGoverment" forward="onSort=onSort"/>
 			</listhead>
 			<listitem self="@{each='companyRow'}">
 				<listcell label="@{companyRow.id}" />
 				<listcell label="@{companyRow.name}" />
 				<listcell label="@{companyRow.companyType.name}" />
 				<listcell>
-					<checkbox checked="@{companyRow.isGovernment}" disabled="true"/>
+					<checkbox checked="@{companyRow.isGoverment}" disabled="true"/>
 				</listcell>
 			</listitem>
 		</listbox>

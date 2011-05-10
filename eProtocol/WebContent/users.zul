@@ -12,11 +12,16 @@
 			model="@{UsersController.entities}"
 			selectedItem="@{UsersController.selected}">
 			<listhead>
-				<listheader label="${c:l('users.id')}" />
-				<listheader label="${c:l('users.username')}" />
-				<listheader label="${c:l('users.name')}" />
-				<listheader label="${c:l('users.surname')}" />
-				<listheader label="${c:l('users.isDisabled')}" />
+				<listheader label="${c:l('users.id')}" sort="auto"
+					value="id" forward="onSort=onSort" sortDirection="ascending"/>
+				<listheader label="${c:l('users.username')}" sort="auto"
+					value="username" forward="onSort=onSort"/>
+				<listheader label="${c:l('users.name')}" sort="auto"
+					value="name" forward="onSort=onSort"/>
+				<listheader label="${c:l('users.surname')}" sort="auto"
+					value="surname" forward="onSort=onSort"/>
+				<listheader label="${c:l('users.isDisabled')}" sort="auto"
+					value="isDisabled" forward="onSort=onSort"/>
 			</listhead>
 			<listitem self="@{each='userRow'}">
 				<listcell label="@{userRow.id}" />
