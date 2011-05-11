@@ -539,7 +539,7 @@ public class IncomingController extends ProtocolController {
 		contactWin.doModal();
 	}
 
-	public void onContactAdded$contactCbx(Event event) {
+	public void onContactAdded$contactBndbx(Event event) {
 		Contact contact = (Contact) ((ForwardEvent) event).getOrigin()
 				.getData();
 		protocol.setContact(contact);
