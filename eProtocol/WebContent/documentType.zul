@@ -46,12 +46,12 @@
 						<button id="saveBtn" label="${c:l('save')}"
 							disabled="@{DocumentTypeController.isLocked}" />
 						<button id="deleteBtn" label="${c:l('delete')}"
-							disabled="true" />
+							disabled="@{DocumentTypeController.isEntityNotCreated}" />
 					</hbox>
 				</row>
 
 			</rows>
 		</grid>
 	</window>
-	<include id="footer" sclass="footer" src="footer.zul"/>	
+	<include id="footer" sclass="footer" src="footer.zul" />
 </zk>

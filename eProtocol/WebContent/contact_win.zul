@@ -101,7 +101,7 @@
 					<button id="saveBtn" label="${c:l('save')}"
 						disabled="@{ContactController.isLocked}" />
 					<button id="deleteBtn" label="${c:l('delete')}"
-						disabled="true" />
+						disabled="@{ContactController.isEntityNotCreated}" />
 				</hbox>
 			</row>
 

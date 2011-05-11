@@ -37,12 +37,12 @@
 						<button id="saveBtn" label="${c:l('save')}"
 							disabled="@{CompanyTypeController.isLocked}" />
 						<button id="deleteBtn" label="${c:l('delete')}"
-							disabled="true" />
+							disabled="@{CompanyTypeController.isEntityNotCreated}" />
 					</hbox>
 				</row>
 
 			</rows>
 		</grid>
 	</window>
-	<include id="footer" sclass="footer" src="footer.zul"/>	
+	<include id="footer" sclass="footer" src="footer.zul" />
 </zk>

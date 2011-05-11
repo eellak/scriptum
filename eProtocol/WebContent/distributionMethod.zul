@@ -30,10 +30,10 @@
 					<hbox>
 						<button id="newBtn" label="${c:l('new')}" />
 						<button id="saveBtn" label="${c:l('save')}"
-							disabled="@{ParameterController.isLocked}" />
-						<button id="deleteBtn" label="${c:l('delete')}"
-							disabled="true" />
-					</hbox>
+							disabled="@{DistributionMethodController.isLocked}" />
+							<button id="deleteBtn" label="${c:l('delete')}"
+							disabled="@{DistributionMethodController.isEntityNotCreated}" />
+				</hbox>
 				</row>
 
 			</rows>

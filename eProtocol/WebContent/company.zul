@@ -113,7 +113,7 @@
 						<button id="saveBtn" label="${c:l('save')}"
 							disabled="@{CompanyController.isLocked}" />
 						<button id="deleteBtn" label="${c:l('delete')}"
-							disabled="true" />
+							disabled="@{CompanyController.isEntityNotCreated}" />
 					</hbox>
 				</row>
 

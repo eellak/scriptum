@@ -11,6 +11,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
@@ -43,6 +45,23 @@ public class GenericEntityController<T, DAO extends GenericDAO> extends
 	@SuppressWarnings("unchecked")
 	private DAO initDAO() throws Exception {
 		return (DAO) Class.forName(daoClass.getName()).newInstance();
+	}
+
+	@SuppressWarnings("unchecked")
+	private void delete() throws Exception {
+
+		Integer id = getEntityId(entity);
+
+		DAO dao = initDAO();
+		dao.deleteById(id);
+
+		Messagebox.show(Labels.getLabel("delete.success"),
+				Labels.getLabel("success.title"), Messagebox.OK,
+				Messagebox.INFORMATION);
+
+		entity = initEntity();
+		getBinder(win).loadAll();
+		clearValidationMessages(win);
 	}
 
 	protected Integer getEntityId(T entity) throws Exception {
@@ -131,6 +150,39 @@ public class GenericEntityController<T, DAO extends GenericDAO> extends
 
 	}
 
+	public void onClick$deleteBtn() throws Exception {
+
+		Integer id = getEntityId(entity);
+
+		DAO dao = initDAO();
+		if (!dao.isDeletable(id)) {
+
+			Messagebox.show(Labels.getLabel("delete.notDeletable"),
+					Labels.getLabel("delete.title"), Messagebox.OK,
+					Messagebox.ERROR);
+			return;
+		}
+
+		log.info("Deleting");
+		try {
+			boolean delete = false;
+			Messagebox.show(Labels.getLabel("delete.confirm"),
+					Labels.getLabel("delete.title"), Messagebox.YES
+							| Messagebox.NO, Messagebox.QUESTION,
+					new EventListener() {
+						@Override
+						public void onEvent(Event event) throws Exception {
+							if (((Integer) event.getData()).intValue() == Messagebox.YES) {
+								delete();
+							}
+						}
+					});
+		} catch (InterruptedException e) {
+			// swallow
+		}
+
+	}
+
 	public boolean isLocked() {
 		if (entity == null) {
 			return true;
@@ -143,6 +195,10 @@ public class GenericEntityController<T, DAO extends GenericDAO> extends
 			return true;
 		}
 		return false;
+	}
+
+	public boolean isEntityNotCreated() throws Exception {
+		return !isEntityCreated();
 	}
 
 	/**
