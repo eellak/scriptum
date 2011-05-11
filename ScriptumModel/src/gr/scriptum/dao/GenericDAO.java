@@ -1,16 +1,19 @@
 package gr.scriptum.dao;
 
+import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.naming.InitialContext;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,7 +21,6 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 
 public class GenericDAO<T, ID extends Serializable> {
@@ -277,4 +279,48 @@ public class GenericDAO<T, ID extends Serializable> {
 		getSession().clear();
 	}
 
+	public boolean isDeletable(ID id) {
+		T ent = findById(id, false);
+		
+		//check all collections (ie relationships)
+		List props = Arrays.asList(PropertyUtils
+				.getPropertyDescriptors(ent));
+		Iterator it = props.iterator();
+
+		boolean isDeletable = true;
+		while (it.hasNext()) {
+			PropertyDescriptor pd = (PropertyDescriptor) it.next();
+			String propertyName = pd.getName();
+			Object propertyValue;
+			try {
+				propertyValue = PropertyUtils
+						.getProperty(ent, propertyName);
+				
+			} catch (Exception e) {
+				// property was not accessible - this should be safe to swallow
+				// and continue
+				continue;
+			}
+			if(propertyValue instanceof Set) {
+				try {
+					
+				log.info("Checking property: "+propertyName);
+				isDeletable = isDeletable & ((Set)propertyValue).isEmpty();
+				
+				} catch (Exception e) {
+					// property was not accessible - this should be safe to swallow
+					// and continue
+					log.warn(e);
+					continue;
+				}
+			}
+			if(!isDeletable) { //no need to check any further
+				break;
+			}
+		}
+
+		return isDeletable;
+		
+	}
+	
 }

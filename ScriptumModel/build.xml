@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="ScriptumModel" default="har" basedir=".">
+<project name="ScriptumModel" default="deploy" basedir=".">
 	<property environment="env" />
 	<property name="jboss.home" value="${env.JBOSS_HOME}" />
 	<property name="app.name" value="${ant.project.name}" />
@@ -22,6 +22,9 @@
 			<include name="*.jar" />
 		</fileset>
 		<pathelement path="${build.dir}" />
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
 	</path>
 
 	<target name="usage">
@@ -73,10 +76,9 @@
 				<include name="**/*.*" />
 				<exclude name="hibernate.cfg.xml" />
 			</fileset>
-			<!--<fileset dir="${lib.dir}">
+			<fileset dir="${lib.dir}">
 				<include name="**/*.*" />
 			</fileset>
-			-->
 			<!--<metainf dir="${resources.dir}/META-INF">
 				<include name="**/*.*" />
 			</metainf>-->
