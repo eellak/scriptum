@@ -21,6 +21,8 @@ public abstract class BaseCSVConverter{
 	public static final String COL_DELIM = ";";
 
 	public static final String LINE_DELIM = "\n";
+	
+	public static final String ENCODING = "UTF-8";
 
 	protected List<String> readFileLines(File file) throws IOException {
 

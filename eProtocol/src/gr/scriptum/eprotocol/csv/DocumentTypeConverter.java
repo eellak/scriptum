@@ -5,8 +5,10 @@ package gr.scriptum.eprotocol.csv;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,9 @@ public class DocumentTypeConverter extends BaseCSVConverter implements
 			throws IOException {
 
 		File file = new File(filename);
-		Writer out = new BufferedWriter(new FileWriter(file));
+		FileOutputStream fos = new FileOutputStream(file);
+		OutputStreamWriter out = new OutputStreamWriter(fos, ENCODING); 
+//		Writer out = new BufferedWriter(new FileWriter(file));
 		try {
 
 			for (DocumentType documentType : instances) {
