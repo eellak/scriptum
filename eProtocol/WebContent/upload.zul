@@ -40,7 +40,7 @@
 				${c:l('functions')}
 				<hbox width="99%">
 					<button id="uploadBtn" label="${c:l('upload')}"
-						upload="true,maxsize=1024" />
+						upload="true,maxsize=204800" />
 					<button id="confirmBtn" label="${c:l('confirm')}" />
 				</hbox>
 			</row>
