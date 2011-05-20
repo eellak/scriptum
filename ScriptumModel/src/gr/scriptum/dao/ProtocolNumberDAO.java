@@ -3,6 +3,8 @@
  */
 package gr.scriptum.dao;
 
+import java.util.Date;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
@@ -29,6 +31,7 @@ public class ProtocolNumberDAO extends GenericDAO<ProtocolNumber, Integer> {
 
 		Long value = number.getNumber();
 		number.setNumber(value + 1);
+		number.setUpdateTs(new Date());
 		// try {
 		// Thread.sleep(10000);
 		// } catch (InterruptedException e1) {
