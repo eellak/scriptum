@@ -140,7 +140,7 @@ public class IndexController extends BaseController {
 	}
 
 	private void searchIncomingPending(Integer startIndex) {
-
+		incomingProtocol = (IncomingProtocol) trimStringProperties(incomingProtocol);
 		IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
 		// set up paging by counting records first
 		Integer totalSize = incomingProtocolDAO.countSearch(null,
@@ -160,7 +160,7 @@ public class IndexController extends BaseController {
 	}
 
 	private void searchOutgoingPending(Integer startIndex) {
-
+		outgoingProtocol = (OutgoingProtocol) trimStringProperties(outgoingProtocol);
 		OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
 		// set up paging by counting records first
 		Integer totalSize = outgoingProtocolDAO.countSearch(null,
@@ -313,6 +313,7 @@ public class IndexController extends BaseController {
 	}
 
 	public void onSelect$incomingLstbx(SelectEvent event) {
+		log.info(event);
 		Integer id = selectedIncomingProtocol.getId();
 
 		Executions.getCurrent().sendRedirect(
@@ -629,7 +630,7 @@ public class IndexController extends BaseController {
 	}
 
 	public void setProtocolNumber(String protocolNumber) {
-		this.protocolNumber = protocolNumber;
+		this.protocolNumber = StringUtils.trimToNull(protocolNumber);
 	}
 
 	public Date getSearchDateFrom() {
@@ -653,7 +654,7 @@ public class IndexController extends BaseController {
 	}
 
 	public void setSubject(String subject) {
-		this.subject = subject;
+		this.subject = StringUtils.trimToNull(subject);
 	}
 
 	public List<DistributionMethod> getDistributionMethods() {
@@ -678,7 +679,7 @@ public class IndexController extends BaseController {
 	}
 
 	public void setKeywords(String keywords) {
-		this.keywords = keywords;
+		this.keywords = StringUtils.trimToNull(keywords);
 	}
 
 	public List<IncomingProtocol> getSearchIncomingProtocols() {

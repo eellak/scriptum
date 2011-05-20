@@ -90,35 +90,7 @@ public class GenericSearchController<T, DAO extends GenericDAO, CONVERTER extend
 	private void search(Integer startIndex) throws Exception {
 		DAO dao = initDAO();
 		
-		//trim all string properties to null
-		List props = Arrays.asList(PropertyUtils
-				.getPropertyDescriptors(entity));
-		Iterator it = props.iterator();
-
-		while (it.hasNext()) {
-			PropertyDescriptor pd = (PropertyDescriptor) it.next();
-			String propertyName = pd.getName();
-			Object propertyValue;
-			try {
-				propertyValue = PropertyUtils
-						.getProperty(entity, propertyName);
-				
-			} catch (Exception e) {
-				// property was not accessible - this should be safe to swallow
-				// and continue
-				continue;
-			}
-			if(propertyValue instanceof String) {
-				try {
-				PropertyUtils.setProperty(entity, propertyName, StringUtils.trimToNull((String) propertyValue));
-				log.info("Trimmed property: "+propertyName);
-				} catch (Exception e) {
-					// property was not accessible - this should be safe to swallow
-					// and continue
-					continue;
-				}
-			}
-		}
+		entity = (T) trimStringProperties(entity);
 		
 		// set up paging by counting records first
 		Integer totalSize = dao.countByExample(entity, MatchMode.START, null);

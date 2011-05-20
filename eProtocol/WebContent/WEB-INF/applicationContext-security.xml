@@ -19,7 +19,8 @@
 
 	<!-- <beans:bean id="scriptumUserDetailsService" class="gr.scriptum.eprotocol.security.ScriptumOfflineUserDetailsService" 
 		lazy-init="true" /> -->
-
+		
+		
 	<beans:bean id="sriptumLogoutSuccessHandler"
 		class="gr.scriptum.eprotocol.security.ScriptumLogoutSuccessHandler"
 		lazy-init="true" />
@@ -54,9 +55,9 @@
 			access="ROLE_READER,ROLE_WRITER,ROLE_ADMIN" />
 
 		<intercept-url pattern="/upload.zul" access="ROLE_WRITER,ROLE_ADMIN" />
+		<intercept-url pattern="/companies.zul" access="ROLE_WRITER,ROLE_ADMIN" />
+		<intercept-url pattern="/company.zul" access="ROLE_WRITER,ROLE_ADMIN" />
 
-		<intercept-url pattern="/companies.zul" access="ROLE_ADMIN" />
-		<intercept-url pattern="/company.zul" access="ROLE_ADMIN" />
 		<intercept-url pattern="/companyTypes.zul" access="ROLE_ADMIN" />
 		<intercept-url pattern="/companyType.zul" access="ROLE_ADMIN" />
 		<intercept-url pattern="/distributionMethods.zul"

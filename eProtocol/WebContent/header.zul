@@ -107,7 +107,7 @@
 				<menuitem label="${c:l('menu.contacts.contacts') }"
 					href="contacts.zul" />
 				<menuitem label="${c:l('menu.contacts.companies') }"
-					href="companies.zul" visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
+					href="companies.zul" visible="${sec:isAnyGranted('ROLE_WRITER,ROLE_ADMIN')}" />
 				<menuitem label="${c:l('menu.contacts.companyTypes') }"
 					href="companyTypes.zul"
 					visible="${sec:isAnyGranted('ROLE_ADMIN')}" />

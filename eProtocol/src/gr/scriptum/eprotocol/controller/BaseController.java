@@ -1,21 +1,29 @@
 package gr.scriptum.eprotocol.controller;
 
+import gr.scriptum.dao.ParameterDAO;
 import gr.scriptum.domain.Users;
 import gr.scriptum.eprotocol.security.ScriptumUser;
 import gr.scriptum.eprotocol.util.IConstants;
 import gr.scriptum.eprotocol.ws.OkmDispatcherConfig;
 import gr.scriptum.eprotocol.ws.OkmProtocolDispatcherImpl;
 
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.Order;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -198,8 +206,27 @@ public class BaseController extends GenericForwardComposer {
 	}
 
 	protected OkmProtocolDispatcherImpl getOkmDispatcher() {
-		OkmDispatcherConfig config = new OkmDispatcherConfig();
+
+		ParameterDAO parameterDAO = new ParameterDAO();
+		String okmAuthPortAddress = parameterDAO
+				.getAsString(IConstants.PARAM_OKM_AUTH_PORT_ADDRESS);
+		String okmDocumentPortAddress = parameterDAO
+				.getAsString(IConstants.PARAM_OKM_DOCUMENT_PORT_ADDRESS);
+		String okmFolderPortAddress = parameterDAO
+				.getAsString(IConstants.PARAM_OKM_FOLDER_PORT_ADDRESS);
+		String okmSearchPortAddress = parameterDAO
+				.getAsString(IConstants.PARAM_OKM_SEARCH_PORT_ADDRESS);
+
+		OkmDispatcherConfig config = new OkmDispatcherConfig(
+				okmAuthPortAddress, okmDocumentPortAddress,
+				okmFolderPortAddress, okmSearchPortAddress);
 		return new OkmProtocolDispatcherImpl(config);
+	}
+
+	protected String getUserInSessionRole() {
+		return SecurityContextHolder.getContext().getAuthentication()
+				.getAuthorities().toArray(new GrantedAuthority[0])[0]
+				.getAuthority();
 	}
 
 	protected Users getUserInSession() {
@@ -270,5 +297,39 @@ public class BaseController extends GenericForwardComposer {
 			sortBy.add(order);
 		}
 		return sortBy;
+	}
+
+	protected Object trimStringProperties(Object entity) {
+		// trim all string properties to null
+		List props = Arrays
+				.asList(PropertyUtils.getPropertyDescriptors(entity));
+		Iterator it = props.iterator();
+
+		while (it.hasNext()) {
+			PropertyDescriptor pd = (PropertyDescriptor) it.next();
+			String propertyName = pd.getName();
+			Object propertyValue;
+			try {
+				propertyValue = PropertyUtils.getProperty(entity, propertyName);
+
+			} catch (Exception e) {
+				// property was not accessible - this should be safe to swallow
+				// and continue
+				continue;
+			}
+			if (propertyValue instanceof String) {
+				try {
+					PropertyUtils.setProperty(entity, propertyName,
+							StringUtils.trimToNull((String) propertyValue));
+					log.info("Trimmed property: " + propertyName);
+				} catch (Exception e) {
+					// property was not accessible - this should be safe to
+					// swallow
+					// and continue
+					continue;
+				}
+			}
+		}
+		return entity;
 	}
 }

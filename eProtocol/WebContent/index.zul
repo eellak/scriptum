@@ -48,6 +48,8 @@
 								label="${c:l('incomingProtocol.contact')}" />
 							<listheader
 								label="${c:l('distributionMethod')}" />
+							<listheader
+								label="${c:l('incomingProtocol.relativeProtocol')}" />
 						</listhead>
 						<listitem self="@{each='incomingRow'}">
 							<listcell label="@{incomingRow.id}" />
@@ -68,6 +70,8 @@
 							</listcell>
 							<listcell
 								label="@{incomingRow.distributionMethod.description}" />
+							<listcell
+								label="@{incomingRow.relativeProtocol }" />
 						</listitem>
 					</listbox>
 					<paging id="incomingPgng" pageSize="10" />
@@ -136,6 +140,8 @@
 								value="subject" forward="onSort=onSort" />
 							<listheader
 								label="${c:l('distributionMethod')}" />
+							<listheader
+								label="${c:l('outgoingProtocol.relativeProtocol')}" />
 						</listhead>
 						<listitem self="@{each='outgoingRow'}">
 							<listcell label="@{outgoingRow.id}" />
@@ -150,6 +156,8 @@
 							<listcell label="@{outgoingRow.subject}" />
 							<listcell
 								label="@{outgoingRow.distributionMethod.description}" />
+							<listcell
+								label="@{outgoingRow.relativeProtocol}" />
 						</listitem>
 					</listbox>
 					<paging id="outgoingPgng" pageSize="10" />
@@ -205,19 +213,21 @@
 						visible="@{IndexController.isDirectionIncoming}">
 						<listhead>
 							<listheader
-								label="${c:l('incomingProtocol.protocolNumber')}" width="10%"
-								sort="auto" value="protocolNumber,protocolSeries,protocolYear"
+								label="${c:l('incomingProtocol.protocolNumber')}" sort="auto"
+								value="protocolNumber,protocolSeries,protocolYear"
 								forward="onSort=onSort" sortDirection="descending" />
 							<listheader
-								label="${c:l('incomingProtocol.protocolDate')}" width="20%"
-								sort="auto" value="protocolDate" forward="onSort=onSort" />
+								label="${c:l('incomingProtocol.protocolDate')}" sort="auto"
+								value="protocolDate" forward="onSort=onSort" />
 							<listheader
-								label="${c:l('incomingProtocol.subject')}" width="30%"
-								sort="auto" value="subject" forward="onSort=onSort" />
+								label="${c:l('incomingProtocol.subject')}" sort="auto"
+								value="subject" forward="onSort=onSort" />
 							<listheader
-								label="${c:l('incomingProtocol.contact')}" width="30%" />
+								label="${c:l('incomingProtocol.contact')}" />
 							<listheader
-								label="${c:l('distributionMethod')}" width="30%" />
+								label="${c:l('distributionMethod')}" />
+							<listheader
+								label="${c:l('incomingProtocol.relativeProtocol')}" />
 						</listhead>
 						<listitem self="@{each='searchIncomingRow'}">
 							<listcell>
@@ -239,6 +249,8 @@
 							</listcell>
 							<listcell
 								label="@{searchIncomingRow.distributionMethod.description}" />
+							<listcell
+								label="@{searchIncomingRow.relativeProtocol}" />
 						</listitem>
 					</listbox>
 					<paging id="searchIncomingPgng" pageSize="8"
@@ -250,17 +262,19 @@
 						visible="@{IndexController.isDirectionOutgoing}">
 						<listhead>
 							<listheader
-								label="${c:l('outgoingProtocol.protocolNumber')}" width="10%"
-								sort="auto" value="protocolNumber,protocolSeries,protocolYear"
+								label="${c:l('outgoingProtocol.protocolNumber')}" sort="auto"
+								value="protocolNumber,protocolSeries,protocolYear"
 								forward="onSort=onSort" sortDirection="descending" />
 							<listheader
-								label="${c:l('outgoingProtocol.protocolDate')}" width="20%"
-								sort="auto" value="updateTs" forward="onSort=onSort" />
+								label="${c:l('outgoingProtocol.protocolDate')}" sort="auto"
+								value="updateTs" forward="onSort=onSort" />
 							<listheader
-								label="${c:l('outgoingProtocol.subject')}" width="30%"
-								sort="auto" value="subject" forward="onSort=onSort" />
+								label="${c:l('outgoingProtocol.subject')}" sort="auto"
+								value="subject" forward="onSort=onSort" />
 							<listheader
-								label="${c:l('distributionMethod')}" width="30%" />
+								label="${c:l('distributionMethod')}" />
+							<listheader
+								label="${c:l('outgoingProtocol.relativeProtocol')}" />
 						</listhead>
 						<listitem self="@{each='searchOutgoingRow'}">
 							<listcell>
@@ -276,6 +290,8 @@
 								label="@{searchOutgoingRow.subject}" />
 							<listcell
 								label="@{searchOutgoingRow.distributionMethod.description}" />
+							<listcell
+								label="@{searchOutgoingRow.relativeProtocol}" />
 						</listitem>
 					</listbox>
 					<paging id="searchOutgoingPgng" pageSize="8"
@@ -446,5 +462,5 @@
 		</tabbox>
 
 	</window>
-	<include id="footer" sclass="footer" src="footer.zul"/>
+	<include id="footer" sclass="footer" src="footer.zul" />
 </zk>

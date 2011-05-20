@@ -3,9 +3,11 @@
  */
 package gr.scriptum.eprotocol.security;
 
+import gr.scriptum.dao.ParameterDAO;
 import gr.scriptum.dao.UsersDAO;
 import gr.scriptum.domain.Role;
 import gr.scriptum.domain.Users;
+import gr.scriptum.eprotocol.util.IConstants;
 import gr.scriptum.eprotocol.ws.OkmDispatcherConfig;
 import gr.scriptum.eprotocol.ws.OkmProtocolDispatcherImpl;
 import gr.scriptum.eprotocol.ws.RequestLogin;
@@ -47,7 +49,6 @@ public class ScriptumUserDetailsService implements UserDetailsService {
 			throws UsernameNotFoundException, DataAccessException {
 
 		UserTransaction tx = null;
-		;
 		try {
 			tx = (UserTransaction) new InitialContext()
 					.lookup("java:comp/UserTransaction");
@@ -82,17 +83,27 @@ public class ScriptumUserDetailsService implements UserDetailsService {
 																	// hibernate
 																	// to fetch
 																	// roles
-
 			// login to OpenKM and get token
-			OkmDispatcherConfig config = new OkmDispatcherConfig();
+			ParameterDAO parameterDAO = new ParameterDAO();
+			String okmAuthPortAddress = parameterDAO
+					.getAsString(IConstants.PARAM_OKM_AUTH_PORT_ADDRESS);
+			String okmDocumentPortAddress = parameterDAO
+					.getAsString(IConstants.PARAM_OKM_DOCUMENT_PORT_ADDRESS);
+			String okmFolderPortAddress = parameterDAO
+					.getAsString(IConstants.PARAM_OKM_FOLDER_PORT_ADDRESS);
+			String okmSearchPortAddress = parameterDAO
+					.getAsString(IConstants.PARAM_OKM_SEARCH_PORT_ADDRESS);
+
+			OkmDispatcherConfig config = new OkmDispatcherConfig(
+					okmAuthPortAddress, okmDocumentPortAddress,
+					okmFolderPortAddress, okmSearchPortAddress);
+
 			OkmProtocolDispatcherImpl service = new OkmProtocolDispatcherImpl(
 					config);
 
 			RequestLogin loginReq = new RequestLogin();
 			loginReq.setUsername(user.getUsername());
 			loginReq.setPassword(user.getPassword());
-//			loginReq.setUsername("user1");
-//			loginReq.setPassword("user1");
 
 			ResponseLogin respLogin = service.login(loginReq);
 			if (respLogin.isError()) {

@@ -136,11 +136,6 @@
 								<listcell
 									label="@{documentRow.documentType.name}" />
 							</listitem>
-							<!-- <listfoot>
-								<listfooter label="" />
-								<listfooter
-								label="Ανεβάσατε 0 Αρχεία 0 ΜΒ" />
-								</listfoot>-->
 						</listbox>
 						<hbox>
 							<button id="addFileBtn"
@@ -161,7 +156,17 @@
 						value="@{IncomingController.protocol.incomingPlace}" width="300px"
 						constraint="no empty" />
 				</row>
-
+				<row>
+					${c:l('incomingProtocol.relativeProtocol')}
+					<hbox>
+						<textbox id="relativeProtocolTxb"
+							value="@{IncomingController.protocol.relativeProtocol}"
+							width="300px" />
+						<button id="relativeBtn"
+							label="${c:l('display')}"
+							disabled="@{IncomingController.isRelativeButtonDisabled}" />
+					</hbox>
+				</row>
 				<row>
 					${c:l('distributionMethod')}
 					<combobox id="distributionMethodCbx" width="300px"
@@ -185,7 +190,8 @@
 					<vbox>
 						<button id="insertBtn" label="${c:l('insert')}"
 							disabled="@{IncomingController.isProtocolSubmitted}"
-							visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" height="50px" width="100px"/>
+							visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}"
+							height="50px" width="100px" />
 						<hbox>
 							<button id="newBtn" label="${c:l('new')}"
 								visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
@@ -199,12 +205,12 @@
 							<button id="deleteBtn"
 								label="${c:l('delete')}"
 								disabled="@{IncomingController.isDeleteButtonDisabled}"
-								visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
+								visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
 						</hbox>
 					</vbox>
 				</row>
 			</rows>
 		</grid>
 	</window>
-	<include id="footer" sclass="footer" src="footer.zul"/>
+	<include id="footer" sclass="footer" src="footer.zul" />
 </zk>

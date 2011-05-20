@@ -20,6 +20,7 @@ from=Από
 to=Εώς
 download=Κατέβασμα
 print=Εκτύπωση
+display=Προβολή
 
 #############
 #general messages
@@ -141,6 +142,7 @@ incmoingProtocol.createTs=Ημ/νία Δημιουργίας
 incomingProtocol.updateTs=Ημ/νία Τροποποίησης
 incomingProtocol.protocolDocuments=Έγγραφα
 incomingProtocol.isDeleted=Διαγεγραμμένο
+incomingProtocol.relativeProtocol=Σχετικό Πρωτ/λο
 
 ##outoing Protocol
 outgoingProtocol=Εξερχόμενο Πρωτόκολλο
@@ -157,6 +159,7 @@ incmoingProtocol.createTs=Ημ/νία Δημιουργίας
 outgoingProtocol.updateTs=Ημ/νία Τροποποίησης
 outgoingProtocol.protocolDocuments=Έγγραφα
 outgoingProtocol.isDeleted=Διαγεγραμμένο
+outgoingProtocol.relativeProtocol=Σχετικό Πρωτ/λο
 
 ##protocol Document
 protocolDocument=Έγγραφο Πρωτ/λου

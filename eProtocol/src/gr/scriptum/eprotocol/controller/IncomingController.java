@@ -3,6 +3,7 @@ package gr.scriptum.eprotocol.controller;
 import gr.scriptum.dao.ContactDAO;
 import gr.scriptum.dao.DistributionMethodDAO;
 import gr.scriptum.dao.IncomingProtocolDAO;
+import gr.scriptum.dao.OutgoingProtocolDAO;
 import gr.scriptum.dao.ParameterDAO;
 import gr.scriptum.dao.ProtocolDocumentDAO;
 import gr.scriptum.dao.ProtocolNumberDAO;
@@ -10,6 +11,7 @@ import gr.scriptum.domain.Contact;
 import gr.scriptum.domain.DistributionMethod;
 import gr.scriptum.domain.DocumentType;
 import gr.scriptum.domain.IncomingProtocol;
+import gr.scriptum.domain.OutgoingProtocol;
 import gr.scriptum.domain.ProtocolDocument;
 import gr.scriptum.domain.ProtocolNumber;
 import gr.scriptum.domain.ProtocolNumber.ProtocolNumberType;
@@ -27,6 +29,7 @@ import gr.scriptum.eprotocol.ws.ResponseNewNode;
 import gr.scriptum.eprotocol.ws.ResponseRenameNode;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -40,6 +43,9 @@ import javax.transaction.UserTransaction;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.criterion.Order;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -174,7 +180,7 @@ public class IncomingController extends ProtocolController {
 				ProtocolNumber protocolNumber = null;
 
 				protocolNumber = protocolNumberDAO
-						.getNextNumber(ProtocolNumberType.INCOMING);
+						.getNextNumber(ProtocolNumberType.COMMON);
 
 				tx.commit();
 				log.info("Got Protocol Number (Commited transaction): " + tx);
@@ -720,6 +726,39 @@ public class IncomingController extends ProtocolController {
 
 	}
 
+	public void onClick$relativeBtn() throws InterruptedException {
+
+		OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
+		List<OutgoingProtocol> outgoingProtocols = outgoingProtocolDAO.search(
+				protocol.getRelativeProtocol(), null, null, null, null, null,
+				null, false, null, null, new Order[0]);
+		if (!outgoingProtocols.isEmpty()) {
+			OutgoingProtocol relativeProtocol = outgoingProtocols.get(0);
+			Executions.getCurrent().sendRedirect(
+					OutgoingController.PAGE + "?" + IConstants.PARAM_KEY_ID
+							+ "=" + relativeProtocol.getId());
+			return;
+		}
+
+		IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
+		List<IncomingProtocol> incomingProtocols = incomingProtocolDAO.search(
+				protocol.getRelativeProtocol(), null, null, null, null, null,
+				null, false, null, null, new Order[0]);
+		if (!incomingProtocols.isEmpty()) {
+			IncomingProtocol relativeProtocol = incomingProtocols.get(0);
+			Executions.getCurrent().sendRedirect(
+					IncomingController.PAGE + "?" + IConstants.PARAM_KEY_ID
+							+ "=" + relativeProtocol.getId());
+			return;
+		}
+
+		Messagebox
+				.show(Labels.getLabel("fetch.notFound"),
+						Labels.getLabel("fetch.title"), Messagebox.OK,
+						Messagebox.ERROR);
+
+	}
+
 	public boolean isLocked() {
 		if (protocol == null) {
 			return true;
@@ -778,7 +817,25 @@ public class IncomingController extends ProtocolController {
 	}
 
 	public boolean isDeleteButtonDisabled() {
-		return isProtocolPending() | isProtocolDeleted();
+
+		if (getUserInSessionRole().equals(IConstants.ROLE_ADMIN)) {
+			return isProtocolDeleted();
+		} else
+
+		if (getUserInSessionRole().equals(IConstants.ROLE_WRITER)) {
+			return isProtocolSubmitted() | isProtocolDeleted();
+		}
+
+		return true;
+	}
+
+	public boolean isRelativeButtonDisabled() {
+
+		if (StringUtils.trimToNull(protocol.getRelativeProtocol()) == null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public String getContactFullName() {

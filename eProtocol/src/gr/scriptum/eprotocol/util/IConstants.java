@@ -53,6 +53,14 @@ public interface IConstants {
 	public static final String PARAM_OKM_NODE_PENDING_OUTGOING = "OKM_NODE_PENDING_OUTGOING";
 	
 	public static final String PARAM_OKM_NODE_OUTGOING = "OKM_NODE_OUTGOING";
+	
+	public static final String PARAM_OKM_AUTH_PORT_ADDRESS="OKM_AUTH_PORT_ADDRESS";
+	
+	public static final String PARAM_OKM_DOCUMENT_PORT_ADDRESS="OKM_DOCUMENT_PORT_ADDRESS";
+	
+	public static final String PARAM_OKM_FOLDER_PORT_ADDRESS="OKM_FOLDER_PORT_ADDRESS";
+	
+	public static final String PARAM_OKM_SEARCH_PORT_ADDRESS="OKM_SEARCH_PORT_ADDRESS";
 
 	public static final String PARAM_PROTOCOL_BOOK_COMPANY = "PROTOCOL_BOOK_COMPANY";
 	
@@ -70,4 +78,9 @@ public interface IConstants {
 
 	public static final String PARAM_PROTOCOL_BOOK_FONT_FOLDER = "PROTOCOL_BOOK_FONT_FOLDER";
 
+	public static final String ROLE_ADMIN = "ROLE_ADMIN";
+	
+	public static final String ROLE_WRITER = "ROLE_WRITER";
+	
+	public static final String ROLE_READER = "ROLE_READER";
 }
