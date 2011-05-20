@@ -41,6 +41,7 @@ public abstract class ProtocolNode implements java.io.Serializable {
 	Date updateTs;
 
 	Boolean isDeleted = null;
+	String relativeProtocol;
 	
 	// -----------
 	// Constructors
@@ -75,8 +76,9 @@ public abstract class ProtocolNode implements java.io.Serializable {
 	}
 
 	public String getFullNumber() {
-		return protocolNumber != null ? protocolNumber + NUMBER_DELIMITER
-				+ protocolSeries + NUMBER_DELIMITER + protocolYear : null;
+//		return protocolNumber != null ? protocolNumber + NUMBER_DELIMITER
+//				+ protocolSeries + NUMBER_DELIMITER + protocolYear : null;
+		return protocolNumber != null ? protocolNumber.toString() : null;
 	}
 
 	// -----------
@@ -218,6 +220,14 @@ public abstract class ProtocolNode implements java.io.Serializable {
 
 	public void setIsDeleted(Boolean isDeleted) {
 		this.isDeleted = isDeleted;
+	}
+
+	public String getRelativeProtocol() {
+		return relativeProtocol;
+	}
+
+	public void setRelativeProtocol(String relativeProtocol) {
+		this.relativeProtocol = relativeProtocol;
 	}
 	
 }

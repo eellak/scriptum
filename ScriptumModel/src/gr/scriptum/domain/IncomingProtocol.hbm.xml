@@ -60,6 +60,11 @@
         <property name="isDeleted" type="java.lang.Boolean">
             <column name="is_deleted" />
         </property>
+		<property name="relativeProtocol" type="string">
+			<column name="relative_protocol" length="64">
+				<comment>to sxetiko - otidipote</comment>
+			</column>
+		</property>
         <set name="protocolDocuments" table="protocol_document" inverse="true" lazy="true" fetch="select" order-by="document_number">
             <key>
                 <column name="incoming_protocol_id" />
