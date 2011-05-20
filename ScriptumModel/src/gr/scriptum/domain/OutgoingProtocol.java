@@ -16,7 +16,6 @@ public class OutgoingProtocol extends ProtocolNode implements
 	private Date outgoingDate;
 	private String author;
 	private Integer sentDiaygeia;
-	private String relativeProtocol;
 	private String outgoingPlace;
 	private Set<OutgoingRecipient> outgoingRecipients = new HashSet<OutgoingRecipient>(
 			0);
@@ -87,14 +86,6 @@ public class OutgoingProtocol extends ProtocolNode implements
 
 	public void setOutgoingRecipients(Set<OutgoingRecipient> outgoingRecipients) {
 		this.outgoingRecipients = outgoingRecipients;
-	}
-
-	public String getRelativeProtocol() {
-		return relativeProtocol;
-	}
-
-	public void setRelativeProtocol(String relativeProtocol) {
-		this.relativeProtocol = relativeProtocol;
 	}
 
 	public String getOutgoingPlace() {
