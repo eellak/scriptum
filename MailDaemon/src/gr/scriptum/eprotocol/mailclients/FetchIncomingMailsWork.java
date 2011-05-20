@@ -5,6 +5,7 @@ import gr.scriptum.dao.ContactDAO;
 import gr.scriptum.dao.DistributionMethodDAO;
 import gr.scriptum.dao.DocumentTypeDAO;
 import gr.scriptum.dao.IncomingProtocolDAO;
+import gr.scriptum.dao.ParameterDAO;
 import gr.scriptum.dao.ProtocolDocumentDAO;
 import gr.scriptum.domain.Company;
 import gr.scriptum.domain.Contact;
@@ -12,8 +13,6 @@ import gr.scriptum.domain.DistributionMethod;
 import gr.scriptum.domain.DocumentType;
 import gr.scriptum.domain.IncomingProtocol;
 import gr.scriptum.domain.ProtocolDocument;
-import gr.scriptum.eprotocol.mailclients.ImapProtocolDispatcherImpl;
-import gr.scriptum.eprotocol.mailclients.MailDispatcherConfig;
 import gr.scriptum.eprotocol.ws.OkmDispatcherConfig;
 import gr.scriptum.eprotocol.ws.OkmProtocolDispatcherImpl;
 import gr.scriptum.eprotocol.ws.RequestLogin;
@@ -91,9 +90,21 @@ public class FetchIncomingMailsWork implements MWork {
 		try {
 
 			// login to OpenKM and get token
-			OkmProtocolDispatcherImpl okmDispatcher = new OkmProtocolDispatcherImpl(
-					new OkmDispatcherConfig());
+			ParameterDAO parameterDAO = new ParameterDAO();
+			String okmAuthPortAddress = parameterDAO
+					.getAsString("PARAM_OKM_AUTH_PORT_ADDRESS");
+			String okmDocumentPortAddress = parameterDAO
+					.getAsString("PARAM_OKM_DOCUMENT_PORT_ADDRESS");
+			String okmFolderPortAddress = parameterDAO
+					.getAsString("PARAM_OKM_FOLDER_PORT_ADDRESS");
+			String okmSearchPortAddress = parameterDAO
+					.getAsString("PARAM_OKM_SEARCH_PORT_ADDRESS");
 
+			OkmDispatcherConfig config = new OkmDispatcherConfig(
+					okmAuthPortAddress, okmDocumentPortAddress,
+					okmFolderPortAddress, okmSearchPortAddress);
+			OkmProtocolDispatcherImpl okmDispatcher = new OkmProtocolDispatcherImpl(config);
+			
 			RequestLogin loginReq = new RequestLogin();
 			loginReq.setUsername(openKmUser);
 			loginReq.setPassword(openKmPass);
