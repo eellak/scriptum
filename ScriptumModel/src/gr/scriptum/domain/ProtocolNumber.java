@@ -10,7 +10,7 @@ import java.util.Date;
 public class ProtocolNumber implements java.io.Serializable {
 
 	public enum ProtocolNumberType {
-		INCOMING, OUTGOING
+		INCOMING, OUTGOING, COMMON;
 	};
 
 	private Integer id;
