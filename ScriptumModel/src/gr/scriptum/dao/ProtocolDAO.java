@@ -63,9 +63,28 @@ public abstract class ProtocolDAO<T, ID extends Serializable> extends
 
 		Criteria crit = getSession().createCriteria(getPersistentClass());
 
-		// TODO: tokenize protocol number
+		// exclude deleted protocols
+		Disjunction notDeletedDisjunction = Restrictions.disjunction();
+		notDeletedDisjunction.add(Restrictions.eq("isDeleted", false));
+		notDeletedDisjunction.add(Restrictions.isNull("isDeleted"));
+		crit.add(notDeletedDisjunction);
+
 		if (protocolNumber != null) {
-			crit.add(Restrictions.eq("protocolNumber", protocolNumber));
+
+			Integer protocolNumberParsed = null;
+			try {
+				protocolNumberParsed = Integer.valueOf(protocolNumber);
+			} catch (NumberFormatException e) {
+				log.warn(e);
+			}
+
+			if (protocolNumberParsed == null) {
+				// make sure no results are returned
+				crit.add(Restrictions.isNull("id"));
+			} else {
+				crit.add(Restrictions
+						.eq("protocolNumber", protocolNumberParsed));
+			}
 		}
 
 		if (!includePending) {
