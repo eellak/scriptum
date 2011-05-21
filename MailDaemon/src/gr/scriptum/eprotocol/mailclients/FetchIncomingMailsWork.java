@@ -92,13 +92,13 @@ public class FetchIncomingMailsWork implements MWork {
 			// login to OpenKM and get token
 			ParameterDAO parameterDAO = new ParameterDAO();
 			String okmAuthPortAddress = parameterDAO
-					.getAsString("PARAM_OKM_AUTH_PORT_ADDRESS");
+					.getAsString("OKM_AUTH_PORT_ADDRESS");
 			String okmDocumentPortAddress = parameterDAO
-					.getAsString("PARAM_OKM_DOCUMENT_PORT_ADDRESS");
+					.getAsString("OKM_DOCUMENT_PORT_ADDRESS");
 			String okmFolderPortAddress = parameterDAO
-					.getAsString("PARAM_OKM_FOLDER_PORT_ADDRESS");
+					.getAsString("OKM_FOLDER_PORT_ADDRESS");
 			String okmSearchPortAddress = parameterDAO
-					.getAsString("PARAM_OKM_SEARCH_PORT_ADDRESS");
+					.getAsString("OKM_SEARCH_PORT_ADDRESS");
 
 			OkmDispatcherConfig config = new OkmDispatcherConfig(
 					okmAuthPortAddress, okmDocumentPortAddress,
