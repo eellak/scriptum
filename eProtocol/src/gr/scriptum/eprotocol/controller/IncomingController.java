@@ -731,7 +731,7 @@ public class IncomingController extends ProtocolController {
 		OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
 		List<OutgoingProtocol> outgoingProtocols = outgoingProtocolDAO.search(
 				protocol.getRelativeProtocol(), null, null, null, null, null,
-				null, false, null, null, new Order[0]);
+				null, false, false, null, null, new Order[0]);
 		if (!outgoingProtocols.isEmpty()) {
 			OutgoingProtocol relativeProtocol = outgoingProtocols.get(0);
 			Executions.getCurrent().sendRedirect(
@@ -743,7 +743,7 @@ public class IncomingController extends ProtocolController {
 		IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
 		List<IncomingProtocol> incomingProtocols = incomingProtocolDAO.search(
 				protocol.getRelativeProtocol(), null, null, null, null, null,
-				null, false, null, null, new Order[0]);
+				null, false, false, null, null, new Order[0]);
 		if (!incomingProtocols.isEmpty()) {
 			IncomingProtocol relativeProtocol = incomingProtocols.get(0);
 			Executions.getCurrent().sendRedirect(

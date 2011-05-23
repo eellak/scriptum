@@ -140,12 +140,17 @@ public class IndexController extends BaseController {
 	}
 
 	private void searchIncomingPending(Integer startIndex) {
+		boolean includeDeletedProtocols = false;
+		if (getUserInSessionRole().equals(IConstants.ROLE_ADMIN)) {
+			includeDeletedProtocols = true;
+		}
 		incomingProtocol = (IncomingProtocol) trimStringProperties(incomingProtocol);
 		IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
 		// set up paging by counting records first
 		Integer totalSize = incomingProtocolDAO.countSearch(null,
 				incomingDateFrom, incomingDateTo,
-				incomingProtocol.getSubject(), null, null, null, true);
+				incomingProtocol.getSubject(), null, null, null, true,
+				includeDeletedProtocols);
 		incomingPgng.setTotalSize(totalSize);
 		int pageSize = incomingPgng.getPageSize();
 
@@ -155,17 +160,23 @@ public class IndexController extends BaseController {
 
 		incomingProtocols = incomingProtocolDAO.search(null, incomingDateFrom,
 				incomingDateTo, incomingProtocol.getSubject(), null, null,
-				null, true, startIndex, pageSize, sortBy.toArray(new Order[0]));
+				null, true, includeDeletedProtocols, startIndex, pageSize,
+				sortBy.toArray(new Order[0]));
 
 	}
 
 	private void searchOutgoingPending(Integer startIndex) {
+		boolean includeDeletedProtocols = false;
+		if (getUserInSessionRole().equals(IConstants.ROLE_ADMIN)) {
+			includeDeletedProtocols = true;
+		}
 		outgoingProtocol = (OutgoingProtocol) trimStringProperties(outgoingProtocol);
 		OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
 		// set up paging by counting records first
 		Integer totalSize = outgoingProtocolDAO.countSearch(null,
 				outgoingDateFrom, outgoingDateTo,
-				outgoingProtocol.getSubject(), null, null, null, true);
+				outgoingProtocol.getSubject(), null, null, null, true,
+				includeDeletedProtocols);
 		outgoingPgng.setTotalSize(totalSize);
 		int pageSize = outgoingPgng.getPageSize();
 
@@ -175,36 +186,44 @@ public class IndexController extends BaseController {
 
 		outgoingProtocols = outgoingProtocolDAO.search(null, outgoingDateFrom,
 				outgoingDateTo, outgoingProtocol.getSubject(), null, null,
-				null, true, startIndex, pageSize, sortBy.toArray(new Order[0]));
+				null, true, includeDeletedProtocols, startIndex, pageSize,
+				sortBy.toArray(new Order[0]));
 	}
 
 	private void searchIncoming(Integer startIndex) {
-
+		boolean includeDeletedProtocols = false;
+		if (getUserInSessionRole().equals(IConstants.ROLE_ADMIN)) {
+			includeDeletedProtocols = true;
+		}
 		IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
 		// set up paging by counting records first
-		Integer totalSize = incomingProtocolDAO.countSearch(protocolNumber,
+		Integer totalSize = null;
+		totalSize = incomingProtocolDAO.countSearch(protocolNumber,
 				searchDateFrom, searchDateTo, subject, keywords,
-				distributionMethod, contact, false);
+				distributionMethod, contact, false, includeDeletedProtocols);
 		searchIncomingPgng.setTotalSize(totalSize);
 		int pageSize = searchIncomingPgng.getPageSize();
 
 		// figure out which header to sort by
 		Listheader header = getSortingListheader(searchIncomingLstbx);
 		List<Order> sortBy = getSortBy(header);
-
 		searchIncomingProtocols = incomingProtocolDAO.search(protocolNumber,
 				searchDateFrom, searchDateTo, subject, keywords,
-				distributionMethod, contact, false, startIndex, pageSize,
-				sortBy.toArray(new Order[0]));
+				distributionMethod, contact, false, includeDeletedProtocols,
+				startIndex, pageSize, sortBy.toArray(new Order[0]));
 	}
 
 	private void searchOutgoing(Integer startIndex) {
+		boolean includeDeletedProtocols = false;
+		if (getUserInSessionRole().equals(IConstants.ROLE_ADMIN)) {
+			includeDeletedProtocols = true;
+		}
 
 		OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
 		// set up paging by counting records first
 		Integer totalSize = outgoingProtocolDAO.countSearch(protocolNumber,
 				searchDateFrom, searchDateTo, subject, keywords,
-				distributionMethod, toContact, false);
+				distributionMethod, toContact, false, includeDeletedProtocols);
 		searchOutgoingPgng.setTotalSize(totalSize);
 		int pageSize = searchOutgoingPgng.getPageSize();
 
@@ -214,8 +233,8 @@ public class IndexController extends BaseController {
 
 		searchOutgoingProtocols = outgoingProtocolDAO.search(protocolNumber,
 				searchDateFrom, searchDateTo, subject, keywords,
-				distributionMethod, toContact, false, startIndex, pageSize,
-				sortBy.toArray(new Order[0]));
+				distributionMethod, toContact, false, includeDeletedProtocols,
+				startIndex, pageSize, sortBy.toArray(new Order[0]));
 
 	}
 
@@ -249,7 +268,7 @@ public class IndexController extends BaseController {
 			} else if (tab.equals(searchTb.getId())) {
 				initSearch();
 				indexTbx.setSelectedTab(searchTb);
-			}else {
+			} else {
 				Listheader header = getSortingListheader(incomingLstbx);
 				searchIncomingPending(0);
 			}

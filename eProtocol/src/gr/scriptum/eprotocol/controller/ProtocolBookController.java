@@ -123,14 +123,14 @@ public class ProtocolBookController extends BaseController {
 
 		IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
 		List<IncomingProtocol> results = incomingProtocolDAO.search(null, from,
-				to, null, null, null, null, false, null, null,
+				to, null, null, null, null, false, false, null, null,
 				sortBy.toArray(new Order[0]));
 
 		protocols.addAll(results);
 
 		OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
 		List<OutgoingProtocol> outgoingResults = outgoingProtocolDAO.search(
-				null, from, to, null, null, null, null, false, null, null,
+				null, from, to, null, null, null, null, false, false, null, null,
 				sortBy.toArray(new Order[0]));
 
 		protocols.addAll(outgoingResults);
