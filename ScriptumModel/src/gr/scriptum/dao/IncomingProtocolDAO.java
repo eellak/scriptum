@@ -35,9 +35,9 @@ public class IncomingProtocolDAO extends ProtocolDAO<IncomingProtocol, Integer> 
 	protected Criteria buildSearchCriteria(String protocolNumber, Date from,
 			Date to, String subject, String keywords,
 			DistributionMethod distributionMethod, Contact contact,
-			boolean includePending) {
+			boolean includePending, boolean includeDeleted) {
 		Criteria crit = super.buildSearchCriteria(protocolNumber, from, to,
-				subject, keywords, distributionMethod, contact, includePending);
+				subject, keywords, distributionMethod, contact, includePending, includeDeleted);
 
 		if (contact != null) {
 			crit.add(Restrictions.eq("contact", contact));
