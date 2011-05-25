@@ -59,15 +59,17 @@ public abstract class ProtocolDAO<T, ID extends Serializable> extends
 
 	private Criteria buildSearchCriteria(String protocolNumber, Date from,
 			Date to, String subject, String keywords,
-			DistributionMethod distributionMethod, boolean includePending) {
+			DistributionMethod distributionMethod, boolean includePending, boolean includeDeleted) {
 
 		Criteria crit = getSession().createCriteria(getPersistentClass());
 
-		// exclude deleted protocols
-		Disjunction notDeletedDisjunction = Restrictions.disjunction();
-		notDeletedDisjunction.add(Restrictions.eq("isDeleted", false));
-		notDeletedDisjunction.add(Restrictions.isNull("isDeleted"));
-		crit.add(notDeletedDisjunction);
+		if(!includeDeleted) {
+			// exclude deleted protocols
+			Disjunction notDeletedDisjunction = Restrictions.disjunction();
+			notDeletedDisjunction.add(Restrictions.eq("isDeleted", false));
+			notDeletedDisjunction.add(Restrictions.isNull("isDeleted"));
+			crit.add(notDeletedDisjunction);
+		}
 
 		if (protocolNumber != null) {
 
@@ -147,9 +149,9 @@ public abstract class ProtocolDAO<T, ID extends Serializable> extends
 	protected Criteria buildSearchCriteria(String protocolNumber, Date from,
 			Date to, String subject, String keywords,
 			DistributionMethod distributionMethod, Contact contact,
-			boolean includePending) {
+			boolean includePending, boolean includeDeleted) {
 		return buildSearchCriteria(protocolNumber, from, to, subject, keywords,
-				distributionMethod, includePending);
+				distributionMethod, includePending, includeDeleted);
 	}
 
 	public List<T> findPending(T example, Date from, Date to, Order sortBy,
@@ -173,10 +175,10 @@ public abstract class ProtocolDAO<T, ID extends Serializable> extends
 	public Integer countSearch(String protocolNumber, Date from, Date to,
 			String subject, String keywords,
 			DistributionMethod distributionMethod, Contact contact,
-			boolean includePending) {
+			boolean includePending, boolean includeDeleted) {
 
 		Criteria crit = buildSearchCriteria(protocolNumber, from, to, subject,
-				keywords, distributionMethod, contact, includePending);
+				keywords, distributionMethod, contact, includePending, includeDeleted);
 		crit.setProjection(Projections.rowCount());
 		Integer count = (Integer) crit.uniqueResult();
 		log.info("Rows counted:" + count);
@@ -187,11 +189,11 @@ public abstract class ProtocolDAO<T, ID extends Serializable> extends
 	public List<T> search(String protocolNumber, Date from, Date to,
 			String subject, String keywords,
 			DistributionMethod distributionMethod, Contact contact,
-			boolean includePending, Integer firstResult, Integer maxResults,
+			boolean includePending, boolean includeDeleted, Integer firstResult, Integer maxResults,
 			Order... sortBy) {
 
 		Criteria crit = buildSearchCriteria(protocolNumber, from, to, subject,
-				keywords, distributionMethod, contact, includePending);
+				keywords, distributionMethod, contact, includePending, includeDeleted);
 
 		for (Order order : sortBy) {
 			crit.addOrder(order);
