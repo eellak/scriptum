@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 5, 2011 11:21:55 AM by Hibernate Tools 3.4.0.Beta1 -->
+<hibernate-mapping>
+	<class name="gr.scriptum.domain.ProtocolDocument" table="protocol_document"
+		catalog="ellak">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+		<many-to-one name="outgoingProtocol"
+			class="gr.scriptum.domain.OutgoingProtocol" fetch="select">
+			<column name="outgoing_protocol_id" />
+		</many-to-one>
+		<many-to-one name="incomingProtocol"
+			class="gr.scriptum.domain.IncomingProtocol" fetch="select">
+			<column name="incoming_protocol_id" />
+		</many-to-one>
+		<many-to-one name="documentType" class="gr.scriptum.domain.DocumentType"
+			fetch="select">
+			<column name="document_types_id" not-null="true" />
+		</many-to-one>
+		<property name="documentName" type="string">
+			<column name="document_name" length="256" not-null="true">
+				<comment>the filename</comment>
+			</column>
+		</property>
+		<property name="documentSize" type="java.lang.Long">
+			<column name="document_size" not-null="true">
+				<comment>the filesize OPEN KM ASSIGNS THIS!</comment>
+			</column>
+		</property>
+		<property name="documentMime" type="string">
+			<column name="document_mime" length="100" />
+		</property>
+		<property name="documentNumber" type="int">
+			<column name="document_number" not-null="true">
+				<comment>the index in protocol node</comment>
+			</column>
+		</property>
+		<property name="documentKeywords" type="string">
+			<column name="document_keywords" length="1024">
+				<comment>GUI Assigns</comment>
+			</column>
+		</property>
+		<property name="okmPath" type="string">
+			<column name="okm_path" length="1024">
+				<comment>OpenKM path for document OPEN KM ASSIGNS THIS!</comment>
+			</column>
+		</property>
+		<property name="okmUuid" type="string">
+			<column name="okm_uuid" length="256">
+				<comment>OpenKM internal id. OPEN KM ASSIGNS THIS!</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

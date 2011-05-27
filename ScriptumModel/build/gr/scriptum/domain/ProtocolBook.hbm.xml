@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 5, 2011 11:21:55 AM by Hibernate Tools 3.4.0.Beta1 -->
+<hibernate-mapping>
+    <class name="gr.scriptum.domain.ProtocolBook" table="protocol_book" catalog="ellak">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="protocolSeries" type="string">
+            <column name="protocol_series" length="45" />
+        </property>
+        <property name="isIncoming" type="java.lang.Integer">
+            <column name="is_incoming" />
+        </property>
+        <property name="protocolNumber" type="string">
+            <column name="protocol_number" length="45">
+                <comment>'o teleytaios arithmos protokolou'</comment>
+            </column>
+        </property>
+        <property name="protocolYear" type="java.lang.Integer">
+            <column name="protocol_year" />
+        </property>
+        <property name="protocolPath" type="string">
+            <column name="protocol_path" length="640" />
+        </property>
+        <property name="isActive" type="int">
+            <column name="is_active" not-null="true">
+                <comment>shows if this protocol book is active</comment>
+            </column>
+        </property>
+        <property name="createUser" type="string">
+            <column name="create_user" length="32" />
+        </property>
+        <property name="updateUser" type="string">
+            <column name="update_user" length="32" />
+        </property>
+        <property name="createDt" type="timestamp">
+            <column name="create_dt" length="19" />
+        </property>
+        <property name="updateTs" type="timestamp">
+            <column name="update_ts" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>

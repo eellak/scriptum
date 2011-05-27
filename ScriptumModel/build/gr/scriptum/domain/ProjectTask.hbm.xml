@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 19, 2011 4:36:37 PM by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="gr.scriptum.domain.ProjectTask" table="project_task" catalog="ellak">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="project" class="gr.scriptum.domain.Project" fetch="select">
+            <column name="project_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usersByUserDispatcherId" class="gr.scriptum.domain.Users" fetch="select">
+            <column name="user_dispatcher_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="taskResult" class="gr.scriptum.domain.TaskResult" fetch="select">
+            <column name="task_result_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="projectTask" class="gr.scriptum.domain.ProjectTask" fetch="select">
+            <column name="parent_task_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usersByUserCreatorId" class="gr.scriptum.domain.Users" fetch="select">
+            <column name="user_creator_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="contact" class="gr.scriptum.domain.Contact" fetch="select">
+            <column name="contact_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="taskType" class="gr.scriptum.domain.TaskType" fetch="select">
+            <column name="task_type_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="taskState" class="gr.scriptum.domain.TaskState" fetch="select">
+            <column name="task_state_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="taskPriority" class="gr.scriptum.domain.TaskPriority" fetch="select">
+            <column name="task_priority_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="taskDocument" class="gr.scriptum.domain.TaskDocument" fetch="select">
+            <column name="task_document_id" not-null="true" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" length="256" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="512" />
+        </property>
+        <property name="taskNo" type="java.lang.Integer">
+            <column name="task_no" />
+        </property>
+        <property name="startDt" type="timestamp">
+            <column name="start_dt" length="19" />
+        </property>
+        <property name="expectedDt" type="timestamp">
+            <column name="expected_dt" length="19" />
+        </property>
+        <property name="closedDt" type="timestamp">
+            <column name="closed_dt" length="19" />
+        </property>
+        <property name="comments" type="string">
+            <column name="comments" length="512" />
+        </property>
+        <property name="timesRevised" type="java.lang.Integer">
+            <column name="times_revised" />
+        </property>
+        <property name="timesContactExternal" type="java.lang.Integer">
+            <column name="times_contact_external" />
+        </property>
+        <property name="reviewerScore" type="java.lang.Integer">
+            <column name="reviewer_score" />
+        </property>
+        <property name="createDt" type="timestamp">
+            <column name="create_dt" length="19" />
+        </property>
+        <property name="updateTs" type="timestamp">
+            <column name="update_ts" length="19" />
+        </property>
+        <set name="projectTasks" table="project_task" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="parent_task_id" not-null="true" />
+            </key>
+            <one-to-many class="gr.scriptum.domain.ProjectTask" />
+        </set>
+        <set name="taskMessages" table="task_message" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="project_task_id" not-null="true" />
+            </key>
+            <one-to-many class="gr.scriptum.domain.TaskMessage" />
+        </set>
+    </class>
+</hibernate-mapping>

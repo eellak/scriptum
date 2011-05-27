@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 29, 2011 1:29:10 PM by Hibernate Tools 3.4.0.Beta1 -->
+<hibernate-mapping>
+    <class name="gr.scriptum.domain.DocumentType" table="document_type" catalog="ellak">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="256" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="512" />
+        </property>
+        <property name="isPeriodic" type="java.lang.Integer">
+            <column name="is_periodic" />
+        </property>
+        <property name="days" type="java.lang.Integer">
+            <column name="days" />
+        </property>
+        <property name="createUser" type="string">
+            <column name="create_user" length="16" />
+        </property>
+        <property name="updateUser" type="string">
+            <column name="update_user" length="16" />
+        </property>
+        <property name="createDt" type="timestamp">
+            <column name="create_dt" length="19" />
+        </property>
+        <property name="updateTs" type="timestamp">
+            <column name="update_ts" length="19" />
+        </property>
+        <set name="protocolDocuments" table="protocol_document" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="document_types_id" not-null="true" />
+            </key>
+            <one-to-many class="gr.scriptum.domain.ProtocolDocument" />
+        </set>
+    </class>
+</hibernate-mapping>

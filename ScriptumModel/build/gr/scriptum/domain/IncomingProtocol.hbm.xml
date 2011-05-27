@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 5, 2011 11:21:55 AM by Hibernate Tools 3.4.0.Beta1 -->
+<hibernate-mapping>
+    <class name="gr.scriptum.domain.IncomingProtocol" table="incoming_protocol" catalog="ellak">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="distributionMethod" class="gr.scriptum.domain.DistributionMethod" fetch="select">
+            <column name="distribution_method_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="contact" class="gr.scriptum.domain.Contact" fetch="select">
+            <column name="contact_sender_id" not-null="true" />
+        </many-to-one>
+        <property name="protocolNumber" type="java.lang.Integer">
+            <column name="protocol_number" />
+        </property>
+        <property name="protocolDate" type="timestamp">
+            <column name="protocol_date" length="19" />
+        </property>
+        <property name="protocolSeries" type="java.lang.Integer">
+            <column name="protocol_series" />
+        </property>
+        <property name="protocolYear" type="java.lang.Integer">
+            <column name="protocol_year" />
+        </property>
+        <property name="subject" type="string">
+            <column name="subject" length="512" />
+        </property>
+        <property name="comments" type="string">
+            <column name="comments" length="512" />
+        </property>
+        <property name="incomingProtocolNumber" type="string">
+            <column name="incoming_protocol_number" length="32">
+                <comment>ar. prot. eggrafou</comment>
+            </column>
+        </property>
+        <property name="incomingDate" type="date">
+            <column name="incoming_date" length="10">
+                <comment>hmerominia eggrafou</comment>
+            </column>
+        </property>
+        <property name="incomingPlace" type="string">
+            <column name="incoming_place" length="256" />
+        </property>
+        <property name="createUserId" type="java.lang.Integer">
+            <column name="create_user_id" />
+        </property>
+        <property name="updateUserId" type="java.lang.Integer">
+            <column name="update_user_id" />
+        </property>
+        <property name="createDt" type="timestamp">
+            <column name="create_dt" length="19" />
+        </property>
+        <property name="updateTs" type="timestamp">
+            <column name="update_ts" length="19" />
+        </property>
+        <property name="isDeleted" type="java.lang.Boolean">
+            <column name="is_deleted" />
+        </property>
+        <set name="protocolDocuments" table="protocol_document" inverse="true" lazy="true" fetch="select" order-by="document_number">
+            <key>
+                <column name="incoming_protocol_id" />
+            </key>
+            <one-to-many class="gr.scriptum.domain.ProtocolDocument" />
+        </set>
+    </class>
+</hibernate-mapping>
