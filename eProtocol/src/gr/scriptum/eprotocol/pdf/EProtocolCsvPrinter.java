@@ -23,7 +23,7 @@ public class EProtocolCsvPrinter extends AProtocolPrinter{
 
 		BufferedWriter out = new BufferedWriter(new FileWriter(bookInfo.file));
 		
-		out.write("Direction,ProtocolNumber,ProtocolDate,ProtocolSeries,ProtocolYear,Subject,Contact,Comments\n");
+		out.write("Direction,ProtocolNumber,ProtocolDate,Subject,Contact,Comments\n");
 	    String element = "";
 	    for(ProtocolNode node: bookData) {
 	        System.out.println( node.toString() );
@@ -63,8 +63,6 @@ public class EProtocolCsvPrinter extends AProtocolPrinter{
 		String line = DIRECTION + ","  
 		              + inProto.getProtocolNumber() + ","  
 		              + formatDate(inProto.getProtocolDate()) + ","  
-		              + inProto.getProtocolSeries() + ","
-		              + inProto.getProtocolYear() + "," 
 		              + distribution + "," 
 		              + clearString(inProto.getSubject())  + ","
 		              + clearString(contactDetails) + "," 
@@ -94,8 +92,6 @@ public class EProtocolCsvPrinter extends AProtocolPrinter{
 		String line = DIRECTION + ","  
 		              + outProto.getProtocolNumber() + ","  
 		              + formatDate(outProto.getProtocolDate()) + ","  
-		              + outProto.getProtocolSeries() + ","
-		              + outProto.getProtocolYear() + "," 
 		              + distribution + "," 
 		              + clearString(outProto.getSubject())  + ","
 		              + clearString(contactDetails) + "," 

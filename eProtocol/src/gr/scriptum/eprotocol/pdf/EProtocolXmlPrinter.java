@@ -73,9 +73,7 @@ public class EProtocolXmlPrinter extends AProtocolPrinter {
 		
 		
 		String element = "<incoming  protocolNumber= \"" + inProto.getProtocolNumber() + "\"\n" +
-		                            "protocolDate=   \"" + formatDate(inProto.getProtocolDate()) + "\"\n" + 
-			                        "protocolSeries= \"" + inProto.getProtocolSeries() + "\"\n" +
-			                        "protocolYear=   \"" + inProto.getProtocolYear()   + "\">\n";
+		                            "protocolDate=   \"" + formatDate(inProto.getProtocolDate())+ "\">\n";
 		
 		
 		String sender   = "<sender>"        + clearString(contactDetails) + "</sender>\n";
@@ -116,9 +114,7 @@ public class EProtocolXmlPrinter extends AProtocolPrinter {
 				attInfo += "<attachment>" + clearString(attachement) + "</attachment>";
 		
 		String element = "<outgoing  protocolNumber= \"" + outProto.getProtocolNumber() + "\"\n" +
-		                            "protocolDate=   \"" + formatDate(outProto.getProtocolDate()) + "\"\n" + 
-			                        "protocolSeries= \"" + outProto.getProtocolSeries() + "\"\n" +
-			                        "protocolYear=   \"" + outProto.getProtocolYear()   + "\">\n";
+		                            "protocolDate=   \"" + formatDate(outProto.getProtocolDate())+ "\">\n";
 		
 		
 		String sender   = "<recipients>"    + contactDetails + "</recipients>\n";

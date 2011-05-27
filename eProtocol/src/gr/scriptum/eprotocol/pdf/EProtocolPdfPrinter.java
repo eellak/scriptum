@@ -153,9 +153,7 @@ public class EProtocolPdfPrinter extends AProtocolPrinter {
 				IncomingProtocol inProto = (IncomingProtocol) node;
 				// incomingProtocolToTableRow( inProto );
 
-				String s1 = inProto.getProtocolNumber() + "/"
-						+ inProto.getProtocolSeries() + "/"
-						+ inProto.getProtocolYear();
+				String s1 = inProto.getProtocolNumber().toString();
 				String s2 = formatDate(inProto.getProtocolDate());
 				String s3 = inProto.getSubject();
 				String s4 = inProto.getContact().getFullName() + " ("
@@ -172,9 +170,7 @@ public class EProtocolPdfPrinter extends AProtocolPrinter {
 			} else {
 				OutgoingProtocol outProto = (OutgoingProtocol) node;
 				// outgoingProtocolToTableRow( outProto );
-				String s1 = outProto.getProtocolNumber() + "/"
-						+ outProto.getProtocolSeries() + "/"
-						+ outProto.getProtocolYear();
+				String s1 = outProto.getProtocolNumber().toString();
 				String s2 = formatDate(outProto.getProtocolDate());
 				String s3 = outProto.getSubject();
 
