@@ -189,7 +189,7 @@ CREATE TABLE `contact` (
   PRIMARY KEY (`id`),
   KEY `contact_FKIndex1` (`company_id`),
   CONSTRAINT `fk_7cc2855a-215b-11e0-9059-080027b715d2` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,8 +198,35 @@ CREATE TABLE `contact` (
 
 LOCK TABLES `contact` WRITE;
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
-INSERT INTO `contact` VALUES (2,2,'John','Smith',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'angelos@uit.gr',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'George',NULL,NULL,NULL,NULL),(3,2,'Angelos','Anagn',NULL,NULL,NULL,NULL,NULL,'Αθήνα',NULL,'angelos@uit.gr',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'G',NULL,NULL,NULL,NULL),(5,2,'test4','tester4',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos',NULL,NULL,NULL,NULL),(6,1,'tester5','test5',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos',NULL,NULL,NULL,NULL),(8,1,'tester7','test7',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos',NULL,NULL,NULL,NULL),(9,1,'tester8','test8',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos8',NULL,NULL,NULL,NULL),(10,2,'Tester9','Test9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos9',NULL,NULL,NULL,NULL),(11,1,'tester10','test10',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos',NULL,NULL,NULL,NULL),(12,2,'George','Bush',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'W',NULL,NULL,NULL,NULL),(13,3,'Γεωργία','Παπαδοπούλου',NULL,NULL,NULL,NULL,'','',NULL,'','','','',NULL,NULL,NULL,NULL,'Γεώργιος','','','',''),(14,7,'George','Bush',NULL,NULL,NULL,NULL,'','',NULL,'','','','',NULL,NULL,NULL,NULL,'Sr','','','',''),(16,2,'Jack','Smith',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'G',NULL,NULL,NULL,NULL),(18,7,'Dohn','George',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(19,7,'Bong','George',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(20,7,'Collins','Jack',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `contact` VALUES (2,2,'John','Smith',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'angelos@uit.gr',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'George',NULL,NULL,NULL,NULL),(3,2,'Angelos','Anagn',NULL,NULL,NULL,NULL,NULL,'Αθήνα',NULL,'angelos@uit.gr',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'G',NULL,NULL,NULL,NULL),(5,2,'test4','tester4',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos',NULL,NULL,NULL,NULL),(6,1,'tester5','test5',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos',NULL,NULL,NULL,NULL),(8,1,'tester7','test7',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos',NULL,NULL,NULL,NULL),(9,1,'tester8','test8',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos8',NULL,NULL,NULL,NULL),(10,2,'Tester9','Test9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos9',NULL,NULL,NULL,NULL),(11,1,'tester10','test10',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos',NULL,NULL,NULL,NULL),(12,2,'George','Bush',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'W',NULL,NULL,NULL,NULL),(13,3,'Γεωργία','Παπαδοπούλου',NULL,NULL,NULL,NULL,'','',NULL,'','','','',NULL,NULL,NULL,NULL,'Γεώργιος','','','',''),(14,7,'George','Bush',NULL,NULL,NULL,NULL,'','',NULL,'','','','',NULL,NULL,NULL,NULL,'Sr','','','',''),(16,2,'Jack','Smith',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'G',NULL,NULL,NULL,NULL),(18,7,'Dohn','George',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(19,7,'Bong','George',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(20,7,'Collins','Jack',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(23,2,'test1','﻿test4',NULL,NULL,NULL,NULL,'test','Αθήνα',NULL,'test','test','test','test',NULL,NULL,NULL,NULL,'testostest','test','tes','test','test');
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `diavgeia_decision_type`
+--
+
+DROP TABLE IF EXISTS `diavgeia_decision_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `diavgeia_decision_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `supported` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_dt` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `diavgeia_decision_type`
+--
+
+LOCK TABLES `diavgeia_decision_type` WRITE;
+/*!40000 ALTER TABLE `diavgeia_decision_type` DISABLE KEYS */;
+INSERT INTO `diavgeia_decision_type` VALUES (1,NULL,'Type1',NULL,NULL),(2,NULL,'Type2',NULL,NULL),(3,NULL,'Type3',NULL,NULL);
+/*!40000 ALTER TABLE `diavgeia_decision_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -292,7 +319,7 @@ CREATE TABLE `incoming_protocol` (
   KEY `incoming_protocol_FKIndex2` (`contact_sender_id`),
   CONSTRAINT `fk_7cbbc300-215b-11e0-9059-080027b715d2` FOREIGN KEY (`distribution_method_id`) REFERENCES `distribution_method` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cbdaecc-215b-11e0-9059-080027b715d2` FOREIGN KEY (`contact_sender_id`) REFERENCES `contact` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -301,7 +328,7 @@ CREATE TABLE `incoming_protocol` (
 
 LOCK TABLES `incoming_protocol` WRITE;
 /*!40000 ALTER TABLE `incoming_protocol` DISABLE KEYS */;
-INSERT INTO `incoming_protocol` VALUES (12,6,5,12,'2011-02-04 10:23:52',1,2011,'Test','adadfad','aadsfadsf','2011-02-04','eee',NULL,2,'2011-02-16 13:49:21','2011-05-19 07:46:21',1,NULL),(15,12,5,1,'2011-02-10 11:34:07',1,2011,'blabla','2dddccc','435','2011-02-19','thes/ki',NULL,NULL,'2011-02-22 11:34:40','2011-03-18 09:50:34',0,NULL),(16,5,4,2,'2011-02-12 11:39:10',1,2011,'test4','2adfadf','11111','2011-02-10','adsfadf',NULL,NULL,'2011-02-22 11:39:39','2011-05-20 15:40:23',NULL,'43'),(17,6,4,3,'2011-02-17 15:30:19',1,2011,'bla bla bla','asdfasdfa','222','2011-02-03','aaasss',NULL,NULL,'2011-02-22 14:55:17','2011-02-22 13:30:56',NULL,NULL),(19,3,3,6,'2011-02-09 15:48:59',1,2011,'Auto Number error test','asdfasdf','asdfadsf','2011-02-26','aaaa',NULL,NULL,'2011-02-22 15:50:49','2011-02-22 13:50:49',NULL,NULL),(20,3,6,8,'2011-02-10 15:54:22',1,2011,'another error test','3333','111','2011-02-18','adsfasdf',NULL,NULL,'2011-02-22 15:57:13','2011-02-22 13:57:13',NULL,NULL),(21,11,6,13,'2011-02-08 10:33:44',1,2011,'pending test','adsfadf','adsfadf','2011-02-04','333',NULL,NULL,'2011-02-23 10:32:43','2011-02-23 08:33:53',NULL,NULL),(22,3,2,15,'2011-02-09 10:41:45',1,2011,'incoming test','sdfadfadf','adsfadf','2011-02-10','test',NULL,NULL,'2011-02-25 10:42:25','2011-02-25 08:42:25',NULL,NULL),(23,3,4,16,'2011-03-03 11:41:25',1,2011,'Test incoming','asdfadsf','1231111','2011-03-12','test',NULL,NULL,'2011-03-08 11:41:48','2011-03-08 09:41:48',NULL,NULL),(24,3,3,17,'2011-03-02 12:13:43',1,2011,'testtest','adsfasdf','333444','2011-03-03','asdf333',NULL,NULL,'2011-03-08 12:14:18','2011-03-08 10:14:18',NULL,NULL),(25,3,3,18,'2011-03-04 12:17:28',1,2011,'test2323','dafdsfadf','33377gg','2011-03-04','adsfadsfe333',NULL,NULL,'2011-03-08 12:17:53','2011-03-08 10:17:53',1,NULL),(28,5,6,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,'2011-03-17 11:07:50','2011-05-19 08:28:17',1,NULL);
+INSERT INTO `incoming_protocol` VALUES (31,3,8,2,'2011-05-26 11:48:09',NULL,NULL,'Dokimi',NULL,'123','2011-05-11','test',2,2,'2011-05-26 11:47:32','2011-05-26 08:48:09',NULL,NULL);
 /*!40000 ALTER TABLE `incoming_protocol` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -334,7 +361,7 @@ CREATE TABLE `outgoing_protocol` (
   PRIMARY KEY (`id`),
   KEY `outgoing_protocol_FKIndex1` (`distribution_method_id`),
   CONSTRAINT `fk_7cbca1e4-215b-11e0-9059-080027b715d2` FOREIGN KEY (`distribution_method_id`) REFERENCES `distribution_method` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -343,7 +370,6 @@ CREATE TABLE `outgoing_protocol` (
 
 LOCK TABLES `outgoing_protocol` WRITE;
 /*!40000 ALTER TABLE `outgoing_protocol` DISABLE KEYS */;
-INSERT INTO `outgoing_protocol` VALUES (2,2,957200018,'2011-02-03 12:46:00',NULL,NULL,'test',NULL,'2011-02-09 12:46:04',NULL,NULL,NULL,NULL,NULL,NULL,'2011-02-16 10:50:44','2011-02-16 10:46:06',NULL),(3,5,884390021,'2011-02-03 12:48:43',NULL,NULL,'Test 2',NULL,'2011-02-03 12:48:39',NULL,NULL,NULL,NULL,NULL,NULL,'2011-02-16 12:48:05','2011-02-16 10:48:47',NULL),(4,3,13,'2011-03-03 12:22:45',1,2011,'Outgoing pending test1','ffff','2011-03-10 12:22:53',NULL,'adfadf',NULL,NULL,NULL,NULL,'2011-02-16 13:50:03','2011-03-08 10:22:55',NULL),(7,3,11,'2011-02-17 16:21:11',1,2011,'asdfasdf','fasfadsf','2011-02-10 16:21:26',NULL,'asdfasdf',NULL,NULL,NULL,NULL,'2011-02-22 16:21:38','2011-02-22 14:21:38',NULL),(8,3,1,'2011-03-17 10:44:37',1,2011,'Test Outgoing','adfadf','2011-03-11 10:44:51',NULL,'Test writer',NULL,NULL,NULL,NULL,'2011-03-06 10:45:14','2011-03-06 08:45:14',NULL),(9,3,2,'2011-03-02 11:04:29',1,2011,'Email Test2','24234adsfadsf','2011-03-11 11:04:32',NULL,'Test',NULL,NULL,NULL,NULL,'2011-03-06 11:04:45','2011-03-06 09:04:45',NULL),(10,3,3,'2011-03-10 11:35:20',1,2011,'asdfadf',NULL,'2011-03-10 11:35:44',NULL,'32adfaf',NULL,NULL,NULL,NULL,'2011-03-06 11:35:57','2011-03-06 09:35:57',NULL),(11,3,4,'2011-03-02 11:59:22',1,2011,'Test 3','dsfadsf','2011-03-06 11:59:33',NULL,'asdfadsfadf',NULL,NULL,NULL,NULL,'2011-03-06 11:59:54','2011-03-06 09:59:54',NULL),(12,3,5,'2011-03-03 12:25:30',1,2011,'test test','adsfadsf','2011-03-12 12:26:12',NULL,'John SMith',NULL,NULL,NULL,NULL,'2011-03-06 12:26:14','2011-03-06 10:26:14',NULL),(13,3,6,'2011-03-04 12:34:25',1,2011,'test test test',NULL,'2011-03-17 12:34:36',NULL,'bla bla bla',NULL,NULL,NULL,NULL,'2011-03-06 12:35:07','2011-03-06 10:35:07',NULL),(14,3,7,'2011-03-02 12:48:11',1,2011,'email test','adsfadsf','2011-03-11 12:48:22',NULL,'ccccc',NULL,NULL,NULL,NULL,'2011-03-06 12:48:36','2011-03-06 10:48:36',NULL),(15,3,8,'2011-03-04 12:54:18',1,2011,'bla bla bla','adsfasdf','2011-03-05 12:53:59',NULL,'adsfa3333',NULL,NULL,NULL,NULL,'2011-03-06 12:54:22','2011-03-06 10:54:22',NULL),(16,3,9,'2011-03-04 12:56:08',1,2011,'asdfadsf',NULL,'2011-03-04 12:56:30',NULL,'adcccc',NULL,NULL,NULL,NULL,'2011-03-06 12:56:32','2011-03-06 10:56:32',NULL),(17,7,10,'2011-03-03 11:26:46',1,2011,'yat','asdf','2011-03-18 11:27:19',NULL,'test',NULL,NULL,NULL,NULL,'2011-03-07 11:27:21','2011-03-07 09:27:21',NULL),(18,7,11,'2011-03-04 11:31:25',1,2011,'test test','asdfadsf','2011-03-10 11:31:07',NULL,'adsfadf',NULL,NULL,NULL,NULL,'2011-03-07 11:31:29','2011-03-07 09:31:29',NULL),(19,3,12,'2011-03-01 11:14:32',1,2011,'Test out','adsfadf','2011-03-05 11:15:07',NULL,'test test',NULL,NULL,NULL,NULL,'2011-03-08 11:15:11','2011-03-08 09:15:11',NULL),(20,3,14,'2011-03-02 12:25:34',1,2011,'outgoing test','asdadf','2011-03-05 12:25:44',NULL,'aaaaaa',NULL,NULL,NULL,NULL,'2011-03-08 12:26:00','2011-03-08 10:26:00',NULL),(21,3,15,'2011-03-03 12:34:10',1,2011,'test test test','asdfasdfasfd','2011-03-02 12:34:19',NULL,'sdfasdfasdf',NULL,NULL,NULL,NULL,'2011-03-08 12:34:40','2011-03-08 10:34:40',NULL),(22,3,16,'2011-03-02 12:42:26',1,2011,'bla bla bla','adsfadf','2011-03-05 12:42:49','17','dddddd',NULL,NULL,NULL,NULL,'2011-03-08 12:42:53','2011-05-20 15:52:22',NULL),(23,3,17,'2011-03-04 12:50:26',1,2011,'test test test test','adfadf','2011-03-03 12:50:34',NULL,'ddddd',NULL,NULL,NULL,NULL,'2011-03-08 12:50:47','2011-03-08 10:50:47',1),(24,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2011-03-17 11:10:50','2011-03-17 09:10:50',NULL);
 /*!40000 ALTER TABLE `outgoing_protocol` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -372,7 +398,6 @@ CREATE TABLE `outgoing_recipient` (
 
 LOCK TABLES `outgoing_recipient` WRITE;
 /*!40000 ALTER TABLE `outgoing_recipient` DISABLE KEYS */;
-INSERT INTO `outgoing_recipient` VALUES (2,8,0),(2,9,0),(2,10,0),(2,11,0),(2,12,0),(2,13,0),(2,14,0),(2,15,0),(2,16,0),(2,17,0),(2,18,0),(2,19,0),(3,2,0),(3,4,0),(3,7,0),(3,8,1),(3,9,1),(3,10,1),(3,11,1),(3,12,1),(3,13,1),(3,14,1),(3,15,1),(3,16,1),(3,18,1),(3,19,1),(3,20,0),(3,21,0),(3,22,0),(3,23,0),(5,3,0),(5,17,1),(9,7,1);
 /*!40000 ALTER TABLE `outgoing_recipient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -596,7 +621,7 @@ CREATE TABLE `protocol_document` (
   CONSTRAINT `fk_7cbf98ea-215b-11e0-9059-080027b715d2` FOREIGN KEY (`incoming_protocol_id`) REFERENCES `incoming_protocol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cc08868-215b-11e0-9059-080027b715d2` FOREIGN KEY (`outgoing_protocol_id`) REFERENCES `outgoing_protocol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_protocol_document_document_types1` FOREIGN KEY (`document_types_id`) REFERENCES `document_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -605,7 +630,7 @@ CREATE TABLE `protocol_document` (
 
 LOCK TABLES `protocol_document` WRITE;
 /*!40000 ALTER TABLE `protocol_document` DISABLE KEYS */;
-INSERT INTO `protocol_document` VALUES (24,2,NULL,2,'ellak.sql',43052,NULL,1,'test2','/okm:root/OutgoingProtocol/2/ellak.sql','02fadc19-6a95-4cd7-9dc2-46d68c34b3dc'),(26,3,NULL,2,'velocity.log',645,NULL,1,'test1','/okm:root/OutgoingProtocol/3/velocity.log','f93c1069-6f1a-4541-8053-0c756af6e88f'),(30,NULL,15,2,'velocity.log',645,NULL,1,'adfadsf','/okm:root/IncomingProtocol/15/velocity.log','46fcc74a-d138-4cf3-b76d-f8146a7cde52'),(31,NULL,16,2,'velocity.log',645,NULL,1,'2233dd','/okm:root/IncomingProtocol/16/velocity.log','736c25e9-4220-4d33-98a3-9a36dffd2035'),(32,NULL,17,1,'resources_en.xls',24064,NULL,1,'asdfad','/okm:root/IncomingProtocol/17/resources_en.xls','d4e84786-d1fd-49e8-b9c9-82b05e8be65e'),(34,NULL,19,2,'resources_en.xls',24064,NULL,1,'asdfaf','/okm:root/IncomingProtocol/19/resources_en.xls','5a3906ba-15c4-47ea-bce1-c30263bcf389'),(35,NULL,20,2,'velocity.log',645,NULL,1,'asdf','/okm:root/IncomingProtocol/20/velocity.log','b94dcd9a-9e0c-49b0-8c3c-75e5d5c9b34e'),(38,7,NULL,1,'dapple.zip',234336,NULL,1,'adsfasd','/okm:root/OutgoingProtocol/7/dapple.zip','0a8bc8e0-4e0d-4904-bda3-81ce49777b75'),(39,NULL,12,2,'ellak.sql',43052,NULL,1,'test1','/okm:root/IncomingProtocol/12-1-2011/ellak.sql','7654a7f7-4e95-4794-be10-caa5f4d88b70'),(40,NULL,21,2,'resources_en.xls',24064,NULL,1,'adsfadf','/okm:root/IncomingProtocol/13-1-2011/resources_en.xls','bf5473b8-62e4-447d-8e70-8a5355d6bc67'),(41,NULL,22,1,'help_en.zip',1405,NULL,1,'asdadsf','/okm:root/IncomingProtocol/15-1-2011/help_en.zip','8e43541a-f1f0-42a9-a17f-8394ffea07fb'),(42,8,NULL,1,'Anagnostopoulos_Symbasi_V1.1.doc',29184,'application/msword',1,'test','/okm:root/OutgoingProtocol/1-1-2011/Anagnostopoulos_Symbasi_V1.1.doc','13019e4a-a3d0-4147-9f5a-985c15c26480'),(43,9,NULL,1,'Anagnostopoulos_Symbasi_V1.1.doc',29184,'application/msword',1,'asdadf','/okm:root/OutgoingProtocol/2-1-2011/Anagnostopoulos_Symbasi_V1.1.doc','5c7089a9-dc7d-4a45-9f2e-7a1cc7a325a5'),(44,10,NULL,1,'Anagnostopoulos_Symbasi_V1.1.doc',29184,'application/msword',1,'asdfa','/okm:root/OutgoingProtocol/3-1-2011/Anagnostopoulos_Symbasi_V1.1.doc','4f2024ac-0201-4816-ada7-69fc272c88b3'),(45,11,NULL,1,'Anagnostopoulos_Symbasi_V1.1.doc',29184,'application/msword',1,'dfadsfadsf','/okm:root/OutgoingProtocol/4-1-2011/Anagnostopoulos_Symbasi_V1.1.doc','775002b1-e8d3-4a4b-aef1-1efc46d95a81'),(46,12,NULL,1,'Anagnostopoulos_Symbasi_V1.1.pdf',56142,'application/pdf',1,'sdfadfaf','/okm:root/OutgoingProtocol/5-1-2011/Anagnostopoulos_Symbasi_V1.1.pdf','909388f1-7475-430d-a736-248ae5575c4d'),(47,13,NULL,1,'Anagnostopoulos_Symbasi_V1.1.pdf',56142,'application/pdf',1,'adsfasdfadsf','/okm:root/OutgoingProtocol/6-1-2011/Anagnostopoulos_Symbasi_V1.1.pdf','f6737ef7-76fc-4694-9cda-15f0ee5df6b4'),(48,14,NULL,1,'Anagnostopoulos_Symbasi_V1.1.doc',29184,'application/msword',1,'asdf','/okm:root/OutgoingProtocol/7-1-2011/Anagnostopoulos_Symbasi_V1.1.doc','126af06f-0aa3-4050-b5de-fcbbf11f1ba4'),(49,15,NULL,1,'Anagnostopoulos_Symbasi_V1.1.pdf',56142,'application/pdf',1,'afadsf','/okm:root/OutgoingProtocol/8-1-2011/Anagnostopoulos_Symbasi_V1.1.pdf','714ee2f9-5179-4dde-be09-26463c9b907c'),(50,16,NULL,2,'Anagnostopoulos_Symbasi_V1.1.doc',29184,'application/msword',1,'fdasdfadsf','/okm:root/OutgoingProtocol/9-1-2011/Anagnostopoulos_Symbasi_V1.1.doc','2d6c0ddc-5023-4918-a4ba-a37c66dc929f'),(51,17,NULL,1,'Anagnostopoulos_Symbasi_V1.1.pdf',56142,'application/pdf',1,'2222','/okm:root/OutgoingProtocol/10-1-2011/Anagnostopoulos_Symbasi_V1.1.pdf','f10bff87-3fd5-40ff-aee3-82bdc3dacd72'),(52,18,NULL,1,'Anagnostopoulos_Symbasi_V1.1.pdf',56142,'application/pdf',1,'ads333','/okm:root/OutgoingProtocol/11-1-2011/Anagnostopoulos_Symbasi_V1.1.pdf','486952c9-743e-4ded-9f5a-008e8fae558f'),(53,19,NULL,1,'help_en.zip',1405,'application/zip',1,'adsfadf','/okm:root/OutgoingProtocol/12-1-2011/help_en.zip','7f5a2727-800e-49b9-a64f-2ba97a34fede'),(54,NULL,23,1,'dapple.zip',234336,'application/zip',1,'23434','/okm:root/IncomingProtocol/16-1-2011/dapple.zip','960c3be1-13a4-4a16-b03f-38426a8ca6d9'),(55,NULL,24,1,'dapple.zip',234336,'application/zip',1,'3333','/okm:root/IncomingProtocol/17-1-2011/dapple.zip','4a62476e-7492-479d-af48-50c65187242c'),(56,NULL,25,1,'Copy of resources_en.xls',32768,'application/vnd.ms-excel',1,'dfff','/okm:root/IncomingProtocol/18-1-2011/Copy of resources_en.xls','9b9226fa-a52d-4786-9a10-0fe3b00b8bc4'),(57,4,NULL,1,'Copy of resources_en.xls',32768,'application/vnd.ms-excel',1,'dsfadsf','/okm:root/OutgoingProtocol/13-1-2011/Copy of resources_en.xls','301abafc-ea8e-46c2-97cf-25e00bac896c'),(58,20,NULL,1,'Copy of resources_en.xls',32768,'application/vnd.ms-excel',1,'23434','/okm:root/OutgoingProtocol/14-1-2011/Copy of resources_en.xls','ea98c2d8-394f-4208-aa27-5ced55175cab'),(59,21,NULL,1,'Anagnostopoulos_Symbasi_V1.1.doc',29184,'application/msword',1,'asdfasdf','/okm:root/OutgoingProtocol/15-1-2011/Anagnostopoulos_Symbasi_V1.1.doc','bd1866a2-986d-4703-881f-65b61b922cd3'),(60,22,NULL,1,'Anagnostopoulos_Symbasi_V1.1.doc',29184,'application/msword',1,'asdfadf','/okm:root/OutgoingProtocol/16-1-2011/Anagnostopoulos_Symbasi_V1.1.doc','71bd6dfd-ba68-4f2b-a4b1-7069d66575cd'),(61,23,NULL,1,'Anagnostopoulos_Symbasi_V1.1.doc',29184,'application/msword',1,'asdfadsf','/okm:root/OutgoingProtocol/17-1-2011/Anagnostopoulos_Symbasi_V1.1.doc','ee276fd5-91e9-4e57-aa78-9dc16b7214a3'),(62,NULL,28,1,'export_Contact.csv',1378,'text/csv',1,'export','/okm:root/PendingIncoming/28/export_Contact.csv','4873ec4e-6eb5-4f94-8465-6206dc34d501');
+INSERT INTO `protocol_document` VALUES (65,NULL,31,2,'casaparts.log.1',1048644,'application/octet-stream',1,'adsfadsf','/okm:root/IncomingProtocol/2/casaparts.log.1','96b8a57d-4692-4f3d-8eea-5bccd01030ce');
 /*!40000 ALTER TABLE `protocol_document` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -626,7 +651,7 @@ CREATE TABLE `protocol_number` (
   `create_dt` datetime DEFAULT NULL,
   `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -635,7 +660,7 @@ CREATE TABLE `protocol_number` (
 
 LOCK TABLES `protocol_number` WRITE;
 /*!40000 ALTER TABLE `protocol_number` DISABLE KEYS */;
-INSERT INTO `protocol_number` VALUES (1,18,18,1,2011,2,NULL,'2011-05-20 15:47:10');
+INSERT INTO `protocol_number` VALUES (1,2,2,1,2011,2,NULL,'2011-05-26 08:48:09');
 /*!40000 ALTER TABLE `protocol_number` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -955,4 +980,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-20 18:55:22
+-- Dump completed on 2011-05-27 12:17:48

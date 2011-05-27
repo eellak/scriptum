@@ -45,5 +45,6 @@
         <mapping resource="gr/scriptum/domain/TaskDocument.hbm.xml" />
         <mapping resource="gr/scriptum/domain/CompanyType.hbm.xml" />
         <mapping resource="gr/scriptum/domain/ProtocolBook.hbm.xml" />
+        <mapping resource="gr/scriptum/domain/DiavgeiaDecisionType.hbm.xml" />
     </session-factory>
 </hibernate-configuration>
