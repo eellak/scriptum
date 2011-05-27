@@ -9,9 +9,6 @@
         <dependent-module archiveName="hibservice.har" deploy-path="/" handle="module:/classpath/lib/ELLAKModel/hibservice.har">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="maildaemon.sar" deploy-path="/" handle="module:/classpath/lib/MailDaemon/maildaemon.sar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="eProtocolWebService.war" deploy-path="/" handle="module:/resource/eProtocolWebService/eProtocolWebService">
             <dependent-object/>
             <dependency-type>uses</dependency-type>
