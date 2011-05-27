@@ -259,8 +259,8 @@ public class ProtocolWebService implements EProtocolWebService {
 			if (iprotocol != null) {
 				protocolInfo.setComments(iprotocol.getComments());
 				protocolInfo.setProtocolNumber(iprotocol.getProtocolNumber());
-				protocolInfo.setProtocolSeries(iprotocol.getProtocolSeries());
-				protocolInfo.setProtocolYear(iprotocol.getProtocolYear());
+//				protocolInfo.setProtocolSeries(iprotocol.getProtocolSeries());
+//				protocolInfo.setProtocolYear(iprotocol.getProtocolYear());
 				protocolInfo.setProtocolDate(iprotocol.getProtocolDate());
 				protocolInfo.setSubject(iprotocol.getSubject());
 			} else
