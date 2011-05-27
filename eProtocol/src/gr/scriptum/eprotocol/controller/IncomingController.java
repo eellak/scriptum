@@ -187,8 +187,8 @@ public class IncomingController extends ProtocolController {
 
 				protocol.setProtocolNumber(protocolNumber.getNumber()
 						.intValue());
-				protocol.setProtocolSeries(protocolNumber.getSeries());
-				protocol.setProtocolYear(protocolNumber.getYear());
+//				protocol.setProtocolSeries(protocolNumber.getSeries());
+//				protocol.setProtocolYear(protocolNumber.getYear());
 				protocol.setProtocolDate(now);
 
 			}
@@ -226,11 +226,7 @@ public class IncomingController extends ProtocolController {
 				if (isSubmission) { // final protocol submission
 					requestNewNode.setFolderPath(okmNodeIncoming
 							+ IConstants.OKM_FOLDER_DELIMITER
-							+ protocol.getProtocolNumber()
-							+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
-							+ protocol.getProtocolSeries()
-							+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
-							+ protocol.getProtocolYear());
+							+ protocol.getProtocolNumber());
 
 				} else {// pending protocol being stored
 					requestNewNode.setFolderPath(okmNodePendingIncoming
@@ -349,11 +345,7 @@ public class IncomingController extends ProtocolController {
 					requestRenameNode.setOldName(okmNodeIncoming
 							+ IConstants.OKM_FOLDER_DELIMITER
 							+ protocol.getId());
-					requestRenameNode.setNewName(protocol.getProtocolNumber()
-							+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
-							+ protocol.getProtocolSeries()
-							+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
-							+ protocol.getProtocolYear());
+					requestRenameNode.setNewName(protocol.getProtocolNumber().toString());
 
 					ResponseRenameNode responseRenameNode = okmDispatcher
 							.renameNode(requestRenameNode);
@@ -373,11 +365,7 @@ public class IncomingController extends ProtocolController {
 												+ protocol.getId(),
 										okmNodeIncoming
 												+ IConstants.OKM_FOLDER_DELIMITER
-												+ protocol.getProtocolNumber()
-												+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
-												+ protocol.getProtocolSeries()
-												+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
-												+ protocol.getProtocolYear());
+												+ protocol.getProtocolNumber());
 						document.setOkmPath(path);
 						protocolDocumentDAO.update(document);
 					}

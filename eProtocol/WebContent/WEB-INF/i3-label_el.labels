@@ -171,6 +171,11 @@ protocolDocument.documentKeywords=Λέξεις Κλειδιά
 outgoingRecipient=Παραλήπτης
 outgoingRecipient.isCc=Κοινοποίηση
 
+##DiavgeiaDecisionType
+diavgeiaDecisionType=Είδος Απόφασης
+diavgeiaDecisionType.id=Α/Α
+diavgeiaDecisionType.description=Περιγραφή
+
 #############
 #pages
 
@@ -186,6 +191,7 @@ menu.administration.documentTypes=Τύποι Εγγράφων
 menu.administration.distributionMethods=Μέθοδοι Διανομής
 menu.administration.parameters=Παράμετροι Συστήματος
 menu.administration.protocolBook=Βιβλίο Πρωτοκόλλου
+menu.administration.diavgeia=Ενημέρωση Διαύγειας
 
 menu.contacts=Επαφές-Οργανισμοί
 menu.contacts.contacts=Επαφές
@@ -294,6 +300,8 @@ outgoingPage.cc.prompt=Επιλέξτε τους Παραλήπτες Κοινο
 outgoingPage.noToAdded=Πρέπει να προσθέσετε τουλάχιστον ένα Παραλήπτη, προτού εισάγετε το Πρωτόκολλο.
 outgoingPage.errorSendingEmail=Το πρωτόκολλο εισήχθη επιτυχώς με Αριθμό Πρωτ/λου {0} . Παρ' όλα αυτά, παρουσιάστηκε σφάλμα κατά την αποστολή του Email.
 outgoingPage.errorSendingWebService=Το πρωτόκολλο εισήχθη επιτυχώς με Αριθμό Πρωτ/λου {0} . Παρ' όλα αυτά, παρουσιάστηκε σφάλμα κατά την αποστολή του στο Web Service.
+outgoingPage.diavgeia=Αποστολή στη Διαύγεια
+outgoingPage.diavgeiaNoDecisionType=Πρέπει να επιλέξετε Είδος Απόφασης για τη Διαύγεια.
 ##incomingPrint
 incomingPrintPage.title=Εκτύπωση Εισερχομένου Πρωτοκόλλου
 

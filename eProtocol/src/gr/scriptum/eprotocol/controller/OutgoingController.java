@@ -4,6 +4,7 @@
 package gr.scriptum.eprotocol.controller;
 
 import gr.scriptum.dao.ContactDAO;
+import gr.scriptum.dao.DiavgeiaDecisionTypeDAO;
 import gr.scriptum.dao.DistributionMethodDAO;
 import gr.scriptum.dao.IncomingProtocolDAO;
 import gr.scriptum.dao.OutgoingProtocolDAO;
@@ -12,6 +13,7 @@ import gr.scriptum.dao.ParameterDAO;
 import gr.scriptum.dao.ProtocolDocumentDAO;
 import gr.scriptum.dao.ProtocolNumberDAO;
 import gr.scriptum.domain.Contact;
+import gr.scriptum.domain.DiavgeiaDecisionType;
 import gr.scriptum.domain.DistributionMethod;
 import gr.scriptum.domain.IncomingProtocol;
 import gr.scriptum.domain.OutgoingProtocol;
@@ -57,6 +59,7 @@ import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.SuspendNotAllowedException;
+import org.zkoss.zk.ui.event.CheckEvent;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.ForwardEvent;
@@ -66,6 +69,7 @@ import org.zkoss.zk.ui.event.SelectEvent;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
@@ -127,6 +131,10 @@ public class OutgoingController extends ProtocolController {
 
 	private List<DistributionMethod> distributionMethods = null;
 
+	private List<DiavgeiaDecisionType> diavgeiaDecisionTypes = null;
+	
+	private DiavgeiaDecisionType diavgeiaDecisionType = null;
+
 	private List<ProtocolDocument> protocolDocuments = null;
 
 	private List<ProtocolDocument> protocolDocumentsToBeDeleted = null;
@@ -169,6 +177,10 @@ public class OutgoingController extends ProtocolController {
 	Paging ccContactsPgng;
 
 	Combobox distributionMethodCbx;
+	
+	Checkbox diavgeiaChkbx;
+	
+	Combobox diavgeiaDecisionTypeCbx;
 
 	private void initData() {
 		protocol = new OutgoingProtocol();
@@ -242,8 +254,8 @@ public class OutgoingController extends ProtocolController {
 
 				protocol.setProtocolNumber(protocolNumber.getNumber()
 						.intValue());
-				protocol.setProtocolSeries(protocolNumber.getSeries());
-				protocol.setProtocolYear(protocolNumber.getYear());
+//				protocol.setProtocolSeries(protocolNumber.getSeries());
+//				protocol.setProtocolYear(protocolNumber.getYear());
 				protocol.setProtocolDate(now);
 
 			}
@@ -295,11 +307,7 @@ public class OutgoingController extends ProtocolController {
 				if (isSubmission) { // final protocol submission
 					requestNewNode.setFolderPath(okmNodeOutgoing
 							+ IConstants.OKM_FOLDER_DELIMITER
-							+ protocol.getProtocolNumber()
-							+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
-							+ protocol.getProtocolSeries()
-							+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
-							+ protocol.getProtocolYear());
+							+ protocol.getProtocolNumber());
 
 				} else {// pending protocol being stored
 					requestNewNode.setFolderPath(okmNodePendingOutgoing
@@ -461,11 +469,7 @@ public class OutgoingController extends ProtocolController {
 					requestRenameNode.setOldName(okmNodeOutgoing
 							+ IConstants.OKM_FOLDER_DELIMITER
 							+ protocol.getId());
-					requestRenameNode.setNewName(protocol.getProtocolNumber()
-							+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
-							+ protocol.getProtocolSeries()
-							+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
-							+ protocol.getProtocolYear());
+					requestRenameNode.setNewName(protocol.getProtocolNumber().toString());
 
 					ResponseRenameNode responseRenameNode = okmDispatcher
 							.renameNode(requestRenameNode);
@@ -485,11 +489,7 @@ public class OutgoingController extends ProtocolController {
 												+ protocol.getId(),
 										okmNodeOutgoing
 												+ IConstants.OKM_FOLDER_DELIMITER
-												+ protocol.getProtocolNumber()
-												+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
-												+ protocol.getProtocolSeries()
-												+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
-												+ protocol.getProtocolYear());
+												+ protocol.getProtocolNumber());
 						document.setOkmPath(path);
 						protocolDocumentDAO.update(document);
 					}
@@ -609,6 +609,9 @@ public class OutgoingController extends ProtocolController {
 		DistributionMethodDAO distributionMethodDAO = new DistributionMethodDAO();
 		distributionMethods = distributionMethodDAO.findAll();
 
+		DiavgeiaDecisionTypeDAO diavgeiaDecisionTypeDAO = new DiavgeiaDecisionTypeDAO();
+		diavgeiaDecisionTypes = diavgeiaDecisionTypeDAO.findAll();
+
 		initData();
 
 		// fetch existing protocol, if any
@@ -643,6 +646,13 @@ public class OutgoingController extends ProtocolController {
 			// populate protocol documents listbox
 			protocolDocuments = new LinkedList<ProtocolDocument>(
 					protocol.getProtocolDocuments());
+			
+			//populate diavgeia checkbox
+			if(protocol.getSentDiaygeia()!=null && protocol.getSentDiaygeia()==1) {
+				diavgeiaChkbx.setChecked(true);
+			}else {
+				diavgeiaChkbx.setChecked(false);
+			}
 		}
 
 		if (page.getRequestPath().endsWith(PAGE_PRINT)) {
@@ -975,6 +985,13 @@ public class OutgoingController extends ProtocolController {
 			return;
 		}
 
+		if(diavgeiaChkbx.isChecked() && diavgeiaDecisionType==null) {
+			Messagebox.show(Labels.getLabel("outgoingPage.diavgeiaNoDecisionType"),
+					Labels.getLabel("error.title"), Messagebox.OK,
+					Messagebox.ERROR);
+			return;
+		}
+		
 		try {
 			save(true);
 
@@ -987,6 +1004,11 @@ public class OutgoingController extends ProtocolController {
 			return;
 		}
 
+		//submit to Diavgeia, if applicable
+		if(diavgeiaChkbx.isChecked()) {
+			//TODO: implement diavgeia submission
+		}
+		
 		// send any notifications to third party systems (e.g. email, web
 		// service), based on selected distribution method
 		if (protocol.getDistributionMethod().getId() == distributionMethodEmailId) {
@@ -1117,6 +1139,16 @@ public class OutgoingController extends ProtocolController {
 
 	}
 
+	public void onCheck$diavgeiaChkbx(CheckEvent event) {
+		
+		if(diavgeiaChkbx.isChecked()) {
+			diavgeiaDecisionTypeCbx.setDisabled(false);
+		}else {
+			diavgeiaDecisionTypeCbx.setDisabled(true);
+		}
+		getBinder(outgoingWin).loadAll();
+	}
+	
 	public boolean isProtocolSubmitted() {
 
 		if (protocol.getProtocolNumber() != null) {
@@ -1183,6 +1215,20 @@ public class OutgoingController extends ProtocolController {
 		return false;
 	}
 
+	
+	public boolean isDiavgeiaDecisionTypeCbxDisabled(){
+		
+		if(isProtocolSubmitted()) {
+			return true;
+		}
+		
+		if(diavgeiaChkbx.isChecked()) {
+			return false;
+		}else {
+			return true;
+		}
+	}
+	
 	public OutgoingProtocol getProtocol() {
 		return protocol;
 	}
@@ -1214,6 +1260,15 @@ public class OutgoingController extends ProtocolController {
 	public void setDistributionMethods(
 			List<DistributionMethod> distributionMethods) {
 		this.distributionMethods = distributionMethods;
+	}
+
+	public List<DiavgeiaDecisionType> getDiavgeiaDecisionTypes() {
+		return diavgeiaDecisionTypes;
+	}
+
+	public void setDiavgeiaDecisionTypes(
+			List<DiavgeiaDecisionType> diavgeiaDecisionTypes) {
+		this.diavgeiaDecisionTypes = diavgeiaDecisionTypes;
 	}
 
 	public List<ProtocolDocument> getProtocolDocuments() {
@@ -1279,6 +1334,14 @@ public class OutgoingController extends ProtocolController {
 
 	public void setCcContact(Contact ccContact) {
 		this.ccContact = ccContact;
+	}
+
+	public DiavgeiaDecisionType getDiavgeiaDecisionType() {
+		return diavgeiaDecisionType;
+	}
+
+	public void setDiavgeiaDecisionType(DiavgeiaDecisionType diavgeiaDecisionType) {
+		this.diavgeiaDecisionType = diavgeiaDecisionType;
 	}
 
 }

@@ -13,73 +13,43 @@
 	<style>
 		.z-menubar-hor, .z-menubar-ver { border: 1px solid #D8D8D8; }
 	</style>
-	
-<html><![CDATA[
-<style type="text/css">
-#feedback img {
-	border:none;
-}
 
-#feedback a  {
-	background:#FEF9CD;
-	border-top:2px double #6495ED;
-	border-right:2px double #6495ED;
-	border-bottom:2px double #6495ED;
-	display:block;
-	position:fixed;
-	right:-1px;
-	top:200px;
-}
-#feedback a:hover {
-	border-color:#0001aa;
-	background:#e0ecf8;
-}
+	<html>
+		
+		<![CDATA[ <style type="text/css"> #feedback img { border:none; }
 
-#mask {
-  position:absolute;
-  left:0;
-  top:0;
-  z-index:9000;
-  background-color:#000;
-  display:none;
-}
-  
-#boxes .window {
-  left:0;
-  top:0;
-  width:440px;
-  height:200px;
-  display:none;
-  z-index:9999;
-  padding:20px;
-  position:absolute;
-}
+		#feedback a { background:#FEF9CD; border-top:2px double #6495ED;
+		border-right:2px double #6495ED; border-bottom:2px double
+		#6495ED; display:block; position:fixed; right:-1px; top:200px; }
+		#feedback a:hover { border-color:#0001aa; background:#e0ecf8; }
 
-#boxes #dialog {
-  width:375px; 
-  height:203px;
-  padding:10px;
-  background-color:#ffffff;
-}
-</style>
+		#mask { position:absolute; left:0; top:0; z-index:9000;
+		background-color:#000; display:none; }
 
-            
+		#boxes .window { left:0; top:0; width:440px; height:200px;
+		display:none; z-index:9999; padding:20px; position:absolute; }
 
-<div id="feedback">
-        <a class="feedbacklink" href="http://go.eellak.gr/scriptumfeedback"  target="_blank">
-        	<img src="img/feedback.png">
-        </a>
-</div>
+		#boxes #dialog { width:375px; height:203px; padding:10px;
+		background-color:#ffffff; } </style>
 
-]]></html>
-	
-	
-	
+
+
+		<div id="feedback"> <a class="feedbacklink"
+		href="http://go.eellak.gr/scriptumfeedback" target="_blank">
+		<img src="img/feedback.png"> </a> </div>
+
+		]]>
+		
+	</html>
+
+
+
 	<menubar width="100%">
 
 		<menuitem label="${c:l('menu.index') }" href="index.zul" />
 
-		<menu label="${c:l('menu.administration') }">
+		<menu label="${c:l('menu.administration') }"
+			apply="gr.scriptum.eprotocol.controller.MenuController">
 			<menupopup>
 				<menuitem label="${c:l('menu.administration.users') }"
 					href="users.zul" visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
@@ -99,6 +69,9 @@
 					label="${c:l('menu.administration.protocolBook') }"
 					href="protocolBook.zul"
 					visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
+				<menuitem id="diavgeiaMnItm"
+					label="${c:l('menu.administration.diavgeia') }"
+					visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
 			</menupopup>
 		</menu>
 
@@ -107,7 +80,8 @@
 				<menuitem label="${c:l('menu.contacts.contacts') }"
 					href="contacts.zul" />
 				<menuitem label="${c:l('menu.contacts.companies') }"
-					href="companies.zul" visible="${sec:isAnyGranted('ROLE_WRITER,ROLE_ADMIN')}" />
+					href="companies.zul"
+					visible="${sec:isAnyGranted('ROLE_WRITER,ROLE_ADMIN')}" />
 				<menuitem label="${c:l('menu.contacts.companyTypes') }"
 					href="companyTypes.zul"
 					visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
@@ -128,14 +102,15 @@
 			label="${c:l('menu.exit') } (${c:l('users')}: ${authentication.principal.username})"
 			href="/j_spring_security_logout" />
 
-	</menubar><!--
-	
-	<toolbar align="end" width="100%">
+	</menubar>
+	<!--
+		
+		<toolbar align="end" width="100%">
 		<toolbarbutton label="Πείτε μας τη γνώμη σας"
-			style="font-weight:bold;"
-			href="http://go.eellak.gr/scriptumfeedback"
-			src="img/question.png" />
-	</toolbar>-->
-<div height="5px;"></div>
+		style="font-weight:bold;"
+		href="http://go.eellak.gr/scriptumfeedback"
+		src="img/question.png" />
+		</toolbar>-->
+	<div height="5px;"></div>
 
 </zk>

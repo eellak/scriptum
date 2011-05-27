@@ -302,11 +302,23 @@
 							label="@{distributionMethodRow.description}" />
 					</combobox>
 				</row>
-				<!--<row>
-					Αποστολή στη Διάυγεια
-					<checkbox />
-					</row>
-				-->
+				<row>
+					${c:l('outgoingPage.diavgeia')}
+					<hbox>
+						<checkbox id="diavgeiaChkbx"
+							disabled="@{OutgoingController.isProtocolSubmitted }" />
+						${c:l('diavgeiaDecisionType')}
+						<combobox id="diavgeiaDecisionTypeCbx"
+							width="300px" model="@{OutgoingController.diavgeiaDecisionTypes}"
+							selectedItem="@{OutgoingController.diavgeiaDecisionType}"
+							autodrop="true"
+							disabled="@{OutgoingController.isDiavgeiaDecisionTypeCbxDisabled}">
+							<comboitem
+								self="@{each='diavgeiaDecisionTypeRow'}"
+								label="@{diavgeiaDecisionTypeRow.description}" />
+						</combobox>
+					</hbox>
+				</row>
 				<row>
 					${c:l('outgoingProtocol.comments')}
 					<textbox id="commentsTxb" rows="3"
