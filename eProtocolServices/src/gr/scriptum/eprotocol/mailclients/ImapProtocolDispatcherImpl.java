@@ -571,7 +571,9 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 	//not used but keep it for reference
 	private static byte[] getBytesFromFile(File file) throws IOException {
 		InputStream is = new FileInputStream(file);
-
+		byte[] bytes = null;
+		
+		try{
 		// Get the size of the file
 		long length = file.length();
 
@@ -580,7 +582,7 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 		}
 
 		// Create the byte array to hold the data
-		byte[] bytes = new byte[(int) length];
+		bytes = new byte[(int) length];
 
 		// Read in the bytes
 		int offset = 0;
@@ -597,18 +599,29 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 		}
 
 		// Close the input stream and return bytes
-		is.close();
+		
+		}finally{
+			if( is != null){
+				try{
+					is.close();
+				}catch(Exception e ){
+					;
+				}
+			}
+		}
+		
 		return bytes;
 	}
 
 	
 	private static File getFileFromBytes(byte[] byteContent, String fileName){
 		File temp = null;
+		BufferedWriter out = null;
 		try{
 			// Create the file.
 			temp = new File(fileName);
 			// Write to the file
-			BufferedWriter out = new BufferedWriter(new FileWriter(temp));
+			out = new BufferedWriter(new FileWriter(temp));
 			out.write(new String(byteContent));
 			out.flush();
 			out.close();
@@ -616,6 +629,13 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 		}catch(Exception e ){
 			e.printStackTrace();
 			log.error(e.getMessage());
+			if( out != null ){
+				try{
+					out.close();
+				}catch(Exception w ){
+					;
+				}
+			}
 		}
 		return temp;
 	}
