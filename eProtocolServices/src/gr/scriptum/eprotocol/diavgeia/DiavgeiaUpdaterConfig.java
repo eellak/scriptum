@@ -5,7 +5,7 @@ import gr.scriptum.dao.ParameterDAO;
 
 public class DiavgeiaUpdaterConfig {
 
-	static final int TIMEOUT = 60 * 1000; // 1 min
+	static int timeout = 60 * 1000; // 1 min
 	static String urlEidosApofasis = "http://193.105.109.185/api/types.xml";
 	static String urlThematikes    = "http://193.105.109.185/api/tags.xml";
 
@@ -18,6 +18,7 @@ public class DiavgeiaUpdaterConfig {
 		ParameterDAO parameterDAO = new ParameterDAO();
 		urlEidosApofasis = parameterDAO.getAsString( "DIAVGEIA_URL_EIDOS_APOFASIS");
 		urlThematikes = parameterDAO.getAsString("DIAVGEIA_URL_EIDOS_THEMATIK");
+		timeout = parameterDAO.getAsInteger("DIAVGEIA_TIMEOUT");
 	}
 
 	public  String getUrlEidosApofasis() {

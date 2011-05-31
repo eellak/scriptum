@@ -17,31 +17,33 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import gr.scriptum.domain.DiavgeiaDecisionType;
+import gr.scriptum.domain.DiavgeiaSubjectGroup;
 import gr.scriptum.eprotocol.diavgeia.parsers.*;
 
-public class DiavgeiaUpdaterImpl extends HttpDispatcher {
+public class DiavgeiaUpdaterImpl extends HttpDispatcher implements DiavgeiaUpdater{
 	static boolean DEBUG = true;
 
 	DiavgeiaUpdaterConfig config;
 
 	HttpClient httpclient = null;
 
-	ArrayList<DiavgeiaEidosApofasis> eidiApofaseon = new ArrayList<DiavgeiaEidosApofasis>();
-	ArrayList<DiavgeiaThematikiEnotita> thematikesEnotites = new ArrayList<DiavgeiaThematikiEnotita>();
+	ArrayList<DiavgeiaDecisionType> eidiApofaseon = new ArrayList<DiavgeiaDecisionType>();
+	ArrayList<DiavgeiaSubjectGroup> thematikesEnotites = new ArrayList<DiavgeiaSubjectGroup>();
 
 	public DiavgeiaUpdaterImpl(DiavgeiaUpdaterConfig config) {
 		setDebug(DEBUG);
 		this.config = config;
 		httpclient = new HttpClient();
 		httpclient.getHttpConnectionManager().getParams()
-				.setConnectionTimeout(DiavgeiaUpdaterConfig.TIMEOUT);
+				.setConnectionTimeout(DiavgeiaUpdaterConfig.timeout);
 	}
 
-	public ArrayList<DiavgeiaEidosApofasis> getEidiApofaseon() {
+	public ArrayList<DiavgeiaDecisionType> getEidiApofaseon() {
 		return eidiApofaseon;
 	}
 
-	public ArrayList<DiavgeiaThematikiEnotita> getThematikesEnotites() {
+	public ArrayList<DiavgeiaSubjectGroup> getThematikesEnotites() {
 		return thematikesEnotites;
 	}
 
@@ -74,9 +76,10 @@ public class DiavgeiaUpdaterImpl extends HttpDispatcher {
 		debug("--------------------------------------");
 		for (DiavgeiaEntry entry : parsedEntries) {
 			debug(entry.toString());
-			DiavgeiaEidosApofasis apofasi = new DiavgeiaEidosApofasis();
-			apofasi.setuId(entry.getUid());
+			DiavgeiaDecisionType apofasi = new  DiavgeiaDecisionType();
+			apofasi.setUid(entry.getUid());
 			apofasi.setDescription(entry.getDescription());
+			eidiApofaseon.add(apofasi);
 		}
 	}
 
@@ -93,9 +96,10 @@ public class DiavgeiaUpdaterImpl extends HttpDispatcher {
 		debug("--------------------------------------");
 		for (DiavgeiaEntry entry : parsedEntries) {
 			debug(entry.toString());
-			DiavgeiaThematikiEnotita thematiki = new DiavgeiaThematikiEnotita();
-			thematiki.setuId(entry.getUid());
+			DiavgeiaSubjectGroup thematiki = new DiavgeiaSubjectGroup();
+			thematiki.setUid(entry.getUid());
 			thematiki.setDescription(entry.getDescription());
+			thematikesEnotites.add(thematiki);
 		}
 	}
 
