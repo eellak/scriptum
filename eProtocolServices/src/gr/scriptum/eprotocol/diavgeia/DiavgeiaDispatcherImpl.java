@@ -60,7 +60,11 @@ public class DiavgeiaDispatcherImpl extends HttpDispatcher implements DiavgeiaDi
 	    httpclient.getHttpConnectionManager().getParams().setConnectionTimeout(config.getTimeout());
 	}
 	
-
+/**
+ * Sends to DIAVGEIA
+ * In case of failed login, timouw while reaching DIAVGEIA, fail to ge session id, it throws an exception
+ * In case of failing sending a PDF it sets the error description and ADA code is null
+ */
 	
 	@Override
 	public List<DiavgeiaReceipt> sendOutgoingProtocol( OutgoingProtocol outProtocol, 
@@ -72,7 +76,7 @@ public class DiavgeiaDispatcherImpl extends HttpDispatcher implements DiavgeiaDi
 	        
 			String sessionId = getSessionId();
 			if( sessionId == null )
-				throw new Exception("Null session id ");
+				throw new Exception("Null session id. Could not Connect.");
 			else
 				debug("Session id is [" + sessionId + "]");
 			
@@ -89,9 +93,7 @@ public class DiavgeiaDispatcherImpl extends HttpDispatcher implements DiavgeiaDi
 			for( ProtocolDocument doc : docsList){
 				if( isEligibleFile( doc.getDocumentName() )  ){
 					
-					DiavgeiaReceipt receipt = new DiavgeiaReceipt(sessionId, 
-							                                      outProtocol.getId(), 
-							                                      outProtocol.getProtocolNumber());
+					DiavgeiaReceipt receipt = new DiavgeiaReceipt(sessionId, doc.getId());
 					
 					try{
 						DiavgeiaRequest theRequest = prepareRequest( outProtocol, doc, diavgeiaData );
@@ -127,6 +129,7 @@ public class DiavgeiaDispatcherImpl extends HttpDispatcher implements DiavgeiaDi
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 		
 		return receipts;
