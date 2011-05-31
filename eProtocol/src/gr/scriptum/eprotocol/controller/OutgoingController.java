@@ -5,6 +5,7 @@ package gr.scriptum.eprotocol.controller;
 
 import gr.scriptum.dao.ContactDAO;
 import gr.scriptum.dao.DiavgeiaDecisionTypeDAO;
+import gr.scriptum.dao.DiavgeiaSubjectGroupDAO;
 import gr.scriptum.dao.DistributionMethodDAO;
 import gr.scriptum.dao.IncomingProtocolDAO;
 import gr.scriptum.dao.OutgoingProtocolDAO;
@@ -14,15 +15,21 @@ import gr.scriptum.dao.ProtocolDocumentDAO;
 import gr.scriptum.dao.ProtocolNumberDAO;
 import gr.scriptum.domain.Contact;
 import gr.scriptum.domain.DiavgeiaDecisionType;
+import gr.scriptum.domain.DiavgeiaSubjectGroup;
 import gr.scriptum.domain.DistributionMethod;
 import gr.scriptum.domain.IncomingProtocol;
 import gr.scriptum.domain.OutgoingProtocol;
+import gr.scriptum.domain.OutgoingProtocol.DiavgeiaResult;
 import gr.scriptum.domain.OutgoingRecipient;
 import gr.scriptum.domain.OutgoingRecipient.RecipientType;
 import gr.scriptum.domain.OutgoingRecipientId;
 import gr.scriptum.domain.ProtocolDocument;
 import gr.scriptum.domain.ProtocolNumber;
 import gr.scriptum.domain.ProtocolNumber.ProtocolNumberType;
+import gr.scriptum.eprotocol.diavgeia.DiavgeiaDispatcher;
+import gr.scriptum.eprotocol.diavgeia.DiavgeiaDispatcherImpl;
+import gr.scriptum.eprotocol.diavgeia.DiavgeiaReceipt;
+import gr.scriptum.eprotocol.diavgeia.DiavgeiaReferenceData;
 import gr.scriptum.eprotocol.mailclients.ImapProtocolDispatcherImpl;
 import gr.scriptum.eprotocol.mailclients.MailDispatcherConfig;
 import gr.scriptum.eprotocol.mailclients.SendMailReceipt;
@@ -132,8 +139,12 @@ public class OutgoingController extends ProtocolController {
 	private List<DistributionMethod> distributionMethods = null;
 
 	private List<DiavgeiaDecisionType> diavgeiaDecisionTypes = null;
-	
+
 	private DiavgeiaDecisionType diavgeiaDecisionType = null;
+
+	private List<DiavgeiaSubjectGroup> diavgeiaSubjectGroups = null;
+
+	private DiavgeiaSubjectGroup diavgeiaSubjectGroup = null;
 
 	private List<ProtocolDocument> protocolDocuments = null;
 
@@ -177,10 +188,10 @@ public class OutgoingController extends ProtocolController {
 	Paging ccContactsPgng;
 
 	Combobox distributionMethodCbx;
-	
-	Checkbox diavgeiaChkbx;
-	
+
 	Combobox diavgeiaDecisionTypeCbx;
+
+	Combobox diavgeiaSubjectGroupCbx;
 
 	private void initData() {
 		protocol = new OutgoingProtocol();
@@ -212,6 +223,90 @@ public class OutgoingController extends ProtocolController {
 			ProtocolDocument document = protocolDocuments.get(i);
 			document.setDocumentNumber(i + 1);
 		}
+	}
+
+	private String submitToDiavgeia() throws Exception {
+		StringBuffer sb = new StringBuffer();
+
+		DiavgeiaDispatcher diavgeiaDispatcher = new DiavgeiaDispatcherImpl();
+		DiavgeiaReferenceData diavgeiaData = new DiavgeiaReferenceData();
+		diavgeiaData.setApofasiUid(diavgeiaDecisionType.getUid());
+		diavgeiaData.setThematikiUid(diavgeiaSubjectGroup.getUid());
+
+		List<DiavgeiaReceipt> diavgeiaReceipts = null;
+		try {
+			diavgeiaReceipts = diavgeiaDispatcher.sendOutgoingProtocol(
+					protocol, diavgeiaData);
+		} catch (Exception e) {
+			log.error(e);
+			// general failure
+			protocol.setSentDiaygeia(DiavgeiaResult.FAILED.ordinal());
+		}
+
+		List<ProtocolDocument> submittedDocuments = new ArrayList<ProtocolDocument>();
+		if (diavgeiaReceipts != null) {
+			if (diavgeiaReceipts.isEmpty()) {
+				// no eligible documents found
+				protocol.setSentDiaygeia(DiavgeiaResult.SUCCESS_NO_DOCUMENTS_SENT
+						.ordinal());
+
+			} else { // save results for each submitted document
+
+				boolean isSuccessNoErrors = true;
+
+				for (DiavgeiaReceipt diavgeiaReceipt : diavgeiaReceipts) {
+
+					Integer documentId = diavgeiaReceipt.getDocumentId();
+					ProtocolDocument submittedDocument = null;
+					for (ProtocolDocument protocolDocument : protocol
+							.getProtocolDocuments()) {
+						if (protocolDocument.getId().equals(documentId)) {
+							submittedDocument = protocolDocument;
+							break;
+						}
+					}
+					if (submittedDocument == null) { // should not happen, but
+														// check
+														// anyway
+						continue;
+					}
+					isSuccessNoErrors = isSuccessNoErrors
+							& diavgeiaReceipt.getAdaCode() != null;
+					submittedDocument.setDiavgeiaAdaCode(diavgeiaReceipt
+							.getAdaCode());
+					submittedDocuments.add(submittedDocument);
+					sb.append(Labels.getLabel("protocolDocument") + ":"
+							+ diavgeiaReceipt.getDocumentId() + ",");
+					if (diavgeiaReceipt.getAdaCode() != null) {
+						sb.append(Labels
+								.getLabel("protocolDocument.diavgeiaAdaCode")
+								+ ":" + diavgeiaReceipt.getAdaCode() + ", ");
+					} else {
+						sb.append(diavgeiaReceipt.getErrCode() + ", "
+								+ diavgeiaReceipt.getErrDescr());
+					}
+					sb.append("\n");
+				}
+
+				if (isSuccessNoErrors) {
+					protocol.setSentDiaygeia(DiavgeiaResult.SUCCESS.ordinal());
+				} else {
+					protocol.setSentDiaygeia(DiavgeiaResult.SUCCESS_WITH_ERRORS
+							.ordinal());
+				}
+			}
+		}
+
+		OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
+		protocol.setUpdateTs(new Date());
+		outgoingProtocolDAO.update(protocol);
+		ProtocolDocumentDAO protocolDocumentDAO = new ProtocolDocumentDAO();
+		for (ProtocolDocument submittedDocument : submittedDocuments) {
+			protocolDocumentDAO.update(submittedDocument);
+		}
+
+		return sb.toString();
+
 	}
 
 	private void save(boolean isSubmission) throws Exception {
@@ -254,8 +349,8 @@ public class OutgoingController extends ProtocolController {
 
 				protocol.setProtocolNumber(protocolNumber.getNumber()
 						.intValue());
-//				protocol.setProtocolSeries(protocolNumber.getSeries());
-//				protocol.setProtocolYear(protocolNumber.getYear());
+				// protocol.setProtocolSeries(protocolNumber.getSeries());
+				// protocol.setProtocolYear(protocolNumber.getYear());
 				protocol.setProtocolDate(now);
 
 			}
@@ -469,7 +564,8 @@ public class OutgoingController extends ProtocolController {
 					requestRenameNode.setOldName(okmNodeOutgoing
 							+ IConstants.OKM_FOLDER_DELIMITER
 							+ protocol.getId());
-					requestRenameNode.setNewName(protocol.getProtocolNumber().toString());
+					requestRenameNode.setNewName(protocol.getProtocolNumber()
+							.toString());
 
 					ResponseRenameNode responseRenameNode = okmDispatcher
 							.renameNode(requestRenameNode);
@@ -482,14 +578,12 @@ public class OutgoingController extends ProtocolController {
 					// update local protocol documents with new path
 					for (ProtocolDocument document : protocolDocuments) {
 						String path = document.getOkmPath();
-						path = path
-								.replaceFirst(
-										okmNodePendingOutgoing
-												+ IConstants.OKM_FOLDER_DELIMITER
-												+ protocol.getId(),
-										okmNodeOutgoing
-												+ IConstants.OKM_FOLDER_DELIMITER
-												+ protocol.getProtocolNumber());
+						path = path.replaceFirst(
+								okmNodePendingOutgoing
+										+ IConstants.OKM_FOLDER_DELIMITER
+										+ protocol.getId(), okmNodeOutgoing
+										+ IConstants.OKM_FOLDER_DELIMITER
+										+ protocol.getProtocolNumber());
 						document.setOkmPath(path);
 						protocolDocumentDAO.update(document);
 					}
@@ -612,6 +706,9 @@ public class OutgoingController extends ProtocolController {
 		DiavgeiaDecisionTypeDAO diavgeiaDecisionTypeDAO = new DiavgeiaDecisionTypeDAO();
 		diavgeiaDecisionTypes = diavgeiaDecisionTypeDAO.findAll();
 
+		DiavgeiaSubjectGroupDAO diavgeiaSubjectGroupDAO = new DiavgeiaSubjectGroupDAO();
+		diavgeiaSubjectGroups = diavgeiaSubjectGroupDAO.findAll();
+
 		initData();
 
 		// fetch existing protocol, if any
@@ -646,13 +743,7 @@ public class OutgoingController extends ProtocolController {
 			// populate protocol documents listbox
 			protocolDocuments = new LinkedList<ProtocolDocument>(
 					protocol.getProtocolDocuments());
-			
-			//populate diavgeia checkbox
-			if(protocol.getSentDiaygeia()!=null && protocol.getSentDiaygeia()==1) {
-				diavgeiaChkbx.setChecked(true);
-			}else {
-				diavgeiaChkbx.setChecked(false);
-			}
+
 		}
 
 		if (page.getRequestPath().endsWith(PAGE_PRINT)) {
@@ -985,13 +1076,6 @@ public class OutgoingController extends ProtocolController {
 			return;
 		}
 
-		if(diavgeiaChkbx.isChecked() && diavgeiaDecisionType==null) {
-			Messagebox.show(Labels.getLabel("outgoingPage.diavgeiaNoDecisionType"),
-					Labels.getLabel("error.title"), Messagebox.OK,
-					Messagebox.ERROR);
-			return;
-		}
-		
 		try {
 			save(true);
 
@@ -1004,11 +1088,6 @@ public class OutgoingController extends ProtocolController {
 			return;
 		}
 
-		//submit to Diavgeia, if applicable
-		if(diavgeiaChkbx.isChecked()) {
-			//TODO: implement diavgeia submission
-		}
-		
 		// send any notifications to third party systems (e.g. email, web
 		// service), based on selected distribution method
 		if (protocol.getDistributionMethod().getId() == distributionMethodEmailId) {
@@ -1023,8 +1102,8 @@ public class OutgoingController extends ProtocolController {
 						new String[] { protocol.getFullNumber() }), Labels
 						.getLabel("success.title"), Messagebox.OK,
 						Messagebox.EXCLAMATION);
-				getBinder(outgoingWin).loadAll();
-				return;
+				// getBinder(outgoingWin).loadAll();
+				// return;
 			}
 
 		} else if (protocol.getDistributionMethod().getId() == distributionMethodWebServiceId) {
@@ -1037,15 +1116,10 @@ public class OutgoingController extends ProtocolController {
 						new String[] { protocol.getFullNumber() }), Labels
 						.getLabel("success.title"), Messagebox.OK,
 						Messagebox.EXCLAMATION);
-				getBinder(outgoingWin).loadAll();
-				return;
+				// getBinder(outgoingWin).loadAll();
+				// return;
 			}
 		}
-
-		// Messagebox.show(Labels.getLabel("incomingPage.protocolSubmitted",
-		// new String[] { protocol.getFullNumber() }), Labels
-		// .getLabel("success.title"), Messagebox.OK,
-		// Messagebox.INFORMATION);
 
 		getBinder(outgoingWin).loadAll();
 
@@ -1069,6 +1143,70 @@ public class OutgoingController extends ProtocolController {
 		} catch (InterruptedException e) {
 			// swallow
 		}
+
+	}
+
+	public void onClick$diavgeiaBtn(Event event) throws InterruptedException {
+
+		// validate
+		if (diavgeiaDecisionType == null || diavgeiaSubjectGroup == null) {
+			Messagebox.show(
+					Labels.getLabel("outgoingPage.diavgeiaNotSelected"),
+					Labels.getLabel("error.title"), Messagebox.OK,
+					Messagebox.ERROR);
+			return;
+		}
+
+		// submit to Diavgeia
+		try {
+			String result = submitToDiavgeia();
+
+			if (protocol.getSentDiaygeia().equals(
+					DiavgeiaResult.FAILED.ordinal())) {
+				Messagebox.show(
+						Labels.getLabel("outgoingPage.diavgeiaResultFailed"),
+						Labels.getLabel("error.title"), Messagebox.OK,
+						Messagebox.ERROR);
+			}
+
+			if (protocol.getSentDiaygeia().equals(
+					DiavgeiaResult.SUCCESS_NO_DOCUMENTS_SENT.ordinal())) {
+				Messagebox
+						.show(Labels
+								.getLabel("outgoingPage.diavgeiaResultSuccessNoDocumentsSent"),
+								Labels.getLabel("success.title"),
+								Messagebox.OK, Messagebox.INFORMATION);
+			}
+
+			if (protocol.getSentDiaygeia().equals(
+					DiavgeiaResult.SUCCESS_WITH_ERRORS.ordinal())) {
+				Messagebox
+						.show(Labels
+								.getLabel("outgoingPage.diavgeiaResultSuccessWithErrors")
+								+ "\n" + result.toString(), Labels
+								.getLabel("success.title"), Messagebox.OK,
+								Messagebox.EXCLAMATION);
+			}
+
+			if (protocol.getSentDiaygeia().equals(
+					DiavgeiaResult.SUCCESS.ordinal())) {
+				Messagebox.show(
+						Labels.getLabel("outgoingPage.diavgeiaResultSuccess")
+								+ "\n" + result.toString(),
+						Labels.getLabel("success.title"), Messagebox.OK,
+						Messagebox.INFORMATION);
+			}
+
+		} catch (Exception e) {
+			log.error(e);
+			Messagebox.show(
+					Labels.getLabel("outgoingPage.errorSavingDiavgeiaResults"),
+					Labels.getLabel("error.title"), Messagebox.OK,
+					Messagebox.ERROR);
+		}
+
+		getBinder(outgoingWin).loadAll();
+		return;
 
 	}
 
@@ -1139,16 +1277,6 @@ public class OutgoingController extends ProtocolController {
 
 	}
 
-	public void onCheck$diavgeiaChkbx(CheckEvent event) {
-		
-		if(diavgeiaChkbx.isChecked()) {
-			diavgeiaDecisionTypeCbx.setDisabled(false);
-		}else {
-			diavgeiaDecisionTypeCbx.setDisabled(true);
-		}
-		getBinder(outgoingWin).loadAll();
-	}
-	
 	public boolean isProtocolSubmitted() {
 
 		if (protocol.getProtocolNumber() != null) {
@@ -1215,20 +1343,44 @@ public class OutgoingController extends ProtocolController {
 		return false;
 	}
 
-	
-	public boolean isDiavgeiaDecisionTypeCbxDisabled(){
-		
-		if(isProtocolSubmitted()) {
+	public boolean isDiavgeiaSelectionsDisabled() {
+
+		if (isProtocolPending()) {
 			return true;
 		}
-		
-		if(diavgeiaChkbx.isChecked()) {
+
+		if (protocol.getSentDiaygeia() == null) {
 			return false;
-		}else {
-			return true;
 		}
+
+		if (protocol.getSentDiaygeia().equals(DiavgeiaResult.FAILED.ordinal())) {
+			return false;
+		}
+
+		return true;
 	}
-	
+
+	public String getDiavgeiaLbl() {
+
+		if (protocol.getSentDiaygeia().equals(DiavgeiaResult.FAILED.ordinal())) {
+			return (Labels.getLabel("outgoingPage.diavgeiaLblFailed"));
+		} else if (protocol.getSentDiaygeia().equals(
+				DiavgeiaResult.SUCCESS.ordinal())) {
+			return (Labels.getLabel("outgoingPage.diavgeiaLblSuccess"));
+		} else if (protocol.getSentDiaygeia().equals(
+				DiavgeiaResult.SUCCESS_WITH_ERRORS.ordinal())) {
+			return (Labels
+					.getLabel("outgoingPage.diavgeiaLblSuccessWithErrors"));
+		} else if (protocol.getSentDiaygeia().equals(
+				DiavgeiaResult.SUCCESS_NO_DOCUMENTS_SENT.ordinal())) {
+			return (Labels
+					.getLabel("outgoingPage.diavgeiaLblSuccessNoDocumentsSent"));
+		}
+
+		return (Labels.getLabel("outgoingPage.diavgeiaLblNA"));
+
+	}
+
 	public OutgoingProtocol getProtocol() {
 		return protocol;
 	}
@@ -1340,8 +1492,27 @@ public class OutgoingController extends ProtocolController {
 		return diavgeiaDecisionType;
 	}
 
-	public void setDiavgeiaDecisionType(DiavgeiaDecisionType diavgeiaDecisionType) {
+	public void setDiavgeiaDecisionType(
+			DiavgeiaDecisionType diavgeiaDecisionType) {
 		this.diavgeiaDecisionType = diavgeiaDecisionType;
+	}
+
+	public List<DiavgeiaSubjectGroup> getDiavgeiaSubjectGroups() {
+		return diavgeiaSubjectGroups;
+	}
+
+	public void setDiavgeiaSubjectGroups(
+			List<DiavgeiaSubjectGroup> diavgeiaSubjectGroups) {
+		this.diavgeiaSubjectGroups = diavgeiaSubjectGroups;
+	}
+
+	public DiavgeiaSubjectGroup getDiavgeiaSubjectGroup() {
+		return diavgeiaSubjectGroup;
+	}
+
+	public void setDiavgeiaSubjectGroup(
+			DiavgeiaSubjectGroup diavgeiaSubjectGroup) {
+		this.diavgeiaSubjectGroup = diavgeiaSubjectGroup;
 	}
 
 }

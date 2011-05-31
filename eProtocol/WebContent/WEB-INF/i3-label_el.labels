@@ -21,6 +21,7 @@ to=Εώς
 download=Κατέβασμα
 print=Εκτύπωση
 display=Προβολή
+send=Αποστολή
 
 #############
 #general messages
@@ -167,6 +168,7 @@ protocolDocument.documentNumber=Αριθμός
 protocolDocument.documentName=Όνομα
 protocolDocument.documentSize=Μέγεθος
 protocolDocument.documentKeywords=Λέξεις Κλειδιά
+protocolDocument.diavgeiaAdaCode=Κωδικός Διαύγειας
 
 outgoingRecipient=Παραλήπτης
 outgoingRecipient.isCc=Κοινοποίηση
@@ -175,6 +177,11 @@ outgoingRecipient.isCc=Κοινοποίηση
 diavgeiaDecisionType=Είδος Απόφασης
 diavgeiaDecisionType.id=Α/Α
 diavgeiaDecisionType.description=Περιγραφή
+
+##DiavgeiaSubjectGroup
+diavgeiaSubjectGroup=Θεματική Ενότητα
+diavgeiaSubjectGroup.id=Α/Α
+diavgeiaSubjectGroup.description=Περιγραφή
 
 #############
 #pages
@@ -301,7 +308,18 @@ outgoingPage.noToAdded=Πρέπει να προσθέσετε τουλάχιστ
 outgoingPage.errorSendingEmail=Το πρωτόκολλο εισήχθη επιτυχώς με Αριθμό Πρωτ/λου {0} . Παρ' όλα αυτά, παρουσιάστηκε σφάλμα κατά την αποστολή του Email.
 outgoingPage.errorSendingWebService=Το πρωτόκολλο εισήχθη επιτυχώς με Αριθμό Πρωτ/λου {0} . Παρ' όλα αυτά, παρουσιάστηκε σφάλμα κατά την αποστολή του στο Web Service.
 outgoingPage.diavgeia=Αποστολή στη Διαύγεια
-outgoingPage.diavgeiaNoDecisionType=Πρέπει να επιλέξετε Είδος Απόφασης για τη Διαύγεια.
+outgoingPage.diavgeiaNotSelected=Πρέπει να επιλέξετε Είδος Απόφασης και Θεματική Ενότητα για τη Διαύγεια.
+outgoingPage.diavgeiaResultFailed=Παρουσιάστηκε σφάλμα κατά την αποστολή στη Διαύγεια. Παρακαλούμε προσπαθήστε πάλι αργότερα.
+outgoingPage.diavgeiaResultSuccessNoDocumentsSent=Η αποστολή στη Διαύγεια πραγματοποιήθηκε. Δεν απεστάλησαν έγγραφα, καθώς αυτά δεν πληρούσαν τις προϋποθέσεις.
+outgoingPage.diavgeiaResultSuccessWithErrors=Η αποστολή στη Διαύγεια πραγματοποιήθηκε με κάποια σφάλματα. Τα αναλυτικά αποτελέσματα είναι τα ακόλουθα.
+outgoingPage.diavgeiaResultSuccess=Η αποστολή στη Διαύγεια πραγματοποιήθηκε επιτυχώς. Τα αναλυτικά αποτελέσματα είναι τα ακόλουθα.
+outgoingPage.errorSavingDiavgeiaResults=Η αποστολή στη Διαύγεια πραγματοποιήθηκε, αλλά παρουσιάστηκε σφάλμα κατά την αποθήκευση των αποτελεσμάτων στη βάση του Πρωτοκόλλου.
+outgoingPage.diavgeiaLblNA=Δεν έχει αποσταλλεί
+outgoingPage.diavgeiaLblFailed=Μη επιτυχημένη προσπάθεια αποστολής
+outgoingPage.diavgeiaLblSuccess=Έχει αποσταλλεί επιτυχώς
+outgoingPage.diavgeiaLblSuccessWithErrors=Έχει αποσταλλεί επιτυχώς, με κάποια σφάλματα
+outgoingPage.diavgeiaLblSuccessNoDocumentsSent=Έχει αποσταλλεί επιτυχώς, χωρίς έγγραφα
+
 ##incomingPrint
 incomingPrintPage.title=Εκτύπωση Εισερχομένου Πρωτοκόλλου
 

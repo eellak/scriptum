@@ -230,10 +230,6 @@
 						constraint="no empty"
 						value="@{OutgoingController.protocol.outgoingDate }" />
 				</row>
-				<!-- <row>
-					Ημερομηνία Διεκπαιραίωσης
-					<datebox compact="true" width="97%" />
-					</row>-->
 				<row>
 					${c:l('outgoingPage.documents')}
 					<vbox width="100%">
@@ -243,13 +239,15 @@
 							selectedItem="@{OutgoingController.protocolDocument}">
 							<listhead>
 								<listheader
-									label="${c:l('protocolDocument.documentNumber')}" width="5%" />
+									label="${c:l('protocolDocument.documentNumber')}" />
 								<listheader
-									label="${c:l('protocolDocument.documentName')}" width="40%" />
+									label="${c:l('protocolDocument.documentName')}" />
 								<listheader
-									label="${c:l('protocolDocument.documentSize')}" width="15%" />
+									label="${c:l('protocolDocument.documentSize')}" />
 								<listheader
-									label="${c:l('documentType')}" width="40%" />
+									label="${c:l('documentType')}" />
+								<listheader
+									label="${c:l('protocolDocument.diavgeiaAdaCode')}" />
 							</listhead>
 							<listitem self="@{each='documentRow'}">
 								<listcell
@@ -260,6 +258,8 @@
 									label="@{documentRow.documentSize}" />
 								<listcell
 									label="@{documentRow.documentType.name}" />
+								<listcell
+									label="@{documentRow.diavgeiaAdaCode}" />
 							</listitem>
 						</listbox>
 						<hbox>
@@ -304,20 +304,34 @@
 				</row>
 				<row>
 					${c:l('outgoingPage.diavgeia')}
-					<hbox>
-						<checkbox id="diavgeiaChkbx"
-							disabled="@{OutgoingController.isProtocolSubmitted }" />
+					<vbox>
+						<label id="diavgeiaLbl"
+							value="@{OutgoingController.diavgeiaLbl}" />
+						<separator />
 						${c:l('diavgeiaDecisionType')}
 						<combobox id="diavgeiaDecisionTypeCbx"
 							width="300px" model="@{OutgoingController.diavgeiaDecisionTypes}"
 							selectedItem="@{OutgoingController.diavgeiaDecisionType}"
 							autodrop="true"
-							disabled="@{OutgoingController.isDiavgeiaDecisionTypeCbxDisabled}">
+							disabled="@{OutgoingController.isDiavgeiaSelectionsDisabled}">
 							<comboitem
 								self="@{each='diavgeiaDecisionTypeRow'}"
 								label="@{diavgeiaDecisionTypeRow.description}" />
 						</combobox>
-					</hbox>
+						${c:l('diavgeiaSubjectGroup')}
+						<combobox id="diavgeiaSubjectGroupCbx"
+							width="300px" model="@{OutgoingController.diavgeiaSubjectGroups}"
+							selectedItem="@{OutgoingController.diavgeiaSubjectGroup}"
+							autodrop="true"
+							disabled="@{OutgoingController.isDiavgeiaSelectionsDisabled}">
+							<comboitem
+								self="@{each='diavgeiaSubjectGroupRow'}"
+								label="@{diavgeiaSubjectGroupRow.description}" />
+						</combobox>
+						<button id="diavgeiaBtn" label="${c:l('send')}"
+							disabled="@{OutgoingController.isDiavgeiaSelectionsDisabled}"
+							visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
+					</vbox>
 				</row>
 				<row>
 					${c:l('outgoingProtocol.comments')}
