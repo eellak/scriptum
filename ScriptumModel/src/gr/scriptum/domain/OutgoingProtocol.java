@@ -20,6 +20,10 @@ public class OutgoingProtocol extends ProtocolNode implements
 	private Set<OutgoingRecipient> outgoingRecipients = new HashSet<OutgoingRecipient>(
 			0);
 
+	public enum DiavgeiaResult {
+		FAILED, SUCCESS, SUCCESS_WITH_ERRORS, SUCCESS_NO_DOCUMENTS_SENT;
+	}
+
 	public OutgoingProtocol() {
 		super(Direction.OUTGOING);
 	}

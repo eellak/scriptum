@@ -54,5 +54,8 @@
 				<comment>OpenKM internal id. OPEN KM ASSIGNS THIS!</comment>
 			</column>
 		</property>
+		<property name="diavgeiaAdaCode" type="string">
+			<column name="diavgeia_ada_code" length="256"/>
+		</property>
 	</class>
 </hibernate-mapping>

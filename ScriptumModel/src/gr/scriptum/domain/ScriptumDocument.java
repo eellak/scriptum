@@ -27,6 +27,11 @@ public class ScriptumDocument {
 	private String okmPath;
 	private String okmUuid;
 
+	// -------------------------------
+	// Diavgeia related fields
+	// -------------------------------
+	private String diavgeiaAdaCode;
+	
 	public ScriptumDocument() {
 	}
 
@@ -144,6 +149,14 @@ public class ScriptumDocument {
 
 	public void setDocumentMime(String documentMime) {
 		this.documentMime = documentMime;
+	}
+
+	public String getDiavgeiaAdaCode() {
+		return diavgeiaAdaCode;
+	}
+
+	public void setDiavgeiaAdaCode(String diavgeiaAdaCode) {
+		this.diavgeiaAdaCode = diavgeiaAdaCode;
 	}
 
 }
