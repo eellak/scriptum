@@ -3,34 +3,36 @@ package gr.scriptum.eprotocol.diavgeia;
 import java.util.Date;
 
 public class DiavgeiaReceipt {
-	Integer protocolId;
-	Integer protocolNumber;
-	String  confirmationId;
+	Integer documentId;
 	String  sessionId;
-	String  adaCode;
 	Date    submitted;
+	String  confirmationId = null;
+	String  adaCode = null;
+
 	
 	String errCode;
 	String errDescr;
 	
-	public DiavgeiaReceipt(String sessionId, Integer protocolId, Integer protocolNumber ){
+	public DiavgeiaReceipt(String sessionId, Integer documentId){
 		submitted = new Date();
 		this.sessionId = sessionId;
+		this.documentId = documentId;
 	}
 	
 	
-	public long getProtocolId() {
-		return protocolId;
+
+	public Integer getDocumentId() {
+		return documentId;
 	}
-	public void setProtocolId(Integer protocol_id) {
-		this.protocolId = protocol_id;
+
+
+
+	public void setDocumentId(Integer documentId) {
+		this.documentId = documentId;
 	}
-	public Integer getProtocolNumber() {
-		return protocolNumber;
-	}
-	public void setProtocolNumber(Integer protocolNumber) {
-		this.protocolNumber = protocolNumber;
-	}
+
+
+
 	public String getConfirmationId() {
 		return confirmationId;
 	}
@@ -69,11 +71,11 @@ public class DiavgeiaReceipt {
 	}
 	@Override
 	public String toString() {
-		return "DiavgeiaReceipt [protocolId=" + protocolId
-				+ ", protocolNumber=" + protocolNumber + ", confirmationId="
-				+ confirmationId + ", sessionId=" + sessionId + ", adaCode="
-				+ adaCode + ", submitted=" + submitted + ", errCode=" + errCode
-				+ ", errDescr=" + errDescr + "]";
+		return "DiavgeiaReceipt [documentId=" + documentId
+				+ ", confirmationId=" + confirmationId + ", sessionId="
+				+ sessionId + ", adaCode=" + adaCode + ", submitted="
+				+ submitted + ", errCode=" + errCode + ", errDescr=" + errDescr
+				+ "]";
 	}
 	
 	
