@@ -28,6 +28,20 @@ import javax.activation.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+class YourAuthenticator extends Authenticator {
+	private String userName = null;
+	private String password = null;
+
+	public YourAuthenticator(String user, String passwd) {
+		userName = user;
+		password = passwd;
+	}
+
+	public PasswordAuthentication getPasswordAuthentication() {
+		return new PasswordAuthentication(userName, password);
+	}
+}
+
 public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 	public static Log log = LogFactory.getLog(ImapProtocolDispatcherImpl.class);
 
@@ -299,7 +313,6 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 				+ "\t\t[" + content + "]");
 	}
 
-	
 	private static void debugIncomingNode(IncomingProtocol inode) {
 		debug("\n-------------->New Incoming node" + "Date "
 				+ inode.getIncomingDate() + "\tSubject " + inode.getSubject()
@@ -312,53 +325,12 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 	}
 
 	// ----------------------------
-	// Test Drive...
+	// Test Drive for receiving mails from gmail
 	// ----------------------------
 
-	public static void main(String[] argv) {
-		MailDispatcherConfig config = new MailDispatcherConfig();
-		config.setSmtpHost("mail.illumine.gr");
-		config.setSmtpUser("mountrakis@illumine.gr");
-		config.setSmtpPassword("XINU666+1");
-		config.setMessageFrom("protocol@illumine.gr");
-		config.setMessageBodyTxt("This is a message from the electronic protocol.");
-		// config.setDeleteOriginals(true); // If you put this, then bye bye
-		// mails...
-		// config.setPOP3(); // does not work since Illumine is IMAP
-		config.setIMAP(); // works
-		config.setDebug(true);
-
-		try {
-			log.info("STARTED");
-			ImapProtocolDispatcherImpl disp = new ImapProtocolDispatcherImpl(
-					config);
-
-			File[] attachements = new File[2];
-			attachements[0] = new File("C:\\hello.pdf");
-			attachements[1] = new File("C:\\hello1.pdf");
-			
-			String[] to = new String[1];
-			to[0] = "mountrakis@uit.gr";
-			
-			String[] cc = new String[1];
-			cc[0] = "angelos@uit.gr";
-			
-			String subject = "Test";
-
-			String text = "Apanta an sou irthe to Test";
-
-			String from = config.getMessageFrom();
-			SendMailReceipt rec = disp.sendOutgoingMail(to, cc, from, subject,
-					text, attachements);
-
-			log.info("FINISHED");
-			log.info("Receipt " + rec.getSentTimestamp());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.warn(e.toString());
-		}
-	}
+	// ----------------------------
+	// Test Drive for sending emails from illumine
+	// ----------------------------
 
 	// ------------------------------
 	// Public Outgoing
@@ -376,7 +348,7 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 	public SendMailReceipt sendOutgoingProtocol(OutgoingProtocol outProtocol) {
 
 		SendMailReceipt mailReceipt = new SendMailReceipt(outProtocol);
-		
+
 		// Add recipients
 		Set<OutgoingRecipient> recipients = outProtocol.getOutgoingRecipients();
 		List<String> addressesTo = new ArrayList<String>();
@@ -392,60 +364,63 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 				}
 			}
 		}
-		String [] addressesToArray = addressesTo.toArray(new String[addressesTo.size()]);
-		String [] addressesCcArray = addressesCc.toArray(new String[addressesCc.size()]);
-		
-		
+		String[] addressesToArray = addressesTo.toArray(new String[addressesTo
+				.size()]);
+		String[] addressesCcArray = addressesCc.toArray(new String[addressesCc
+				.size()]);
+
 		// Attachments: create temporary files
 		Set<ProtocolDocument> documents = outProtocol.getProtocolDocuments();
-		File [] attachements = new File[documents.size()];
-		int i =0;
+		File[] attachements = new File[documents.size()];
+		int i = 0;
 		for (ScriptumDocument document : documents) {
-			attachements[i++] = getFileFromBytes( document.getContent(), 
-					                              document.getDocumentName());
+			attachements[i++] = getFileFromBytes(document.getContent(),
+					document.getDocumentName());
 		}
 
-	    //send the email
-		mailReceipt = sendOutgoingMail( addressesToArray, 
-				                        addressesCcArray,
-				                        config.getMessageFrom(),
-				                        outProtocol.getSubject(),
-				                        config.getMessageBodyTxt(outProtocol.getProtocolNumber()),
-				                        attachements);
-				
-		
-		//delete all temporary files created during the operation
-		for(int j=0; i<attachements.length; j++){
-			try{
-				if( attachements[j] != null )
+		// send the email
+		mailReceipt = sendOutgoingMail(addressesToArray, addressesCcArray,
+				config.getMessageFrom(), outProtocol.getSubject(),
+				config.getMessageBodyTxt(outProtocol.getProtocolNumber()),
+				attachements);
+
+		// delete all temporary files created during the operation
+		for (int j = 0; i < attachements.length; j++) {
+			try {
+				if (attachements[j] != null)
 					attachements[j].delete();
-			}catch(Exception e ){
-				log.warn("Could not delete temporary attachment (" + 
-						  attachements[j].getName() + " reason " +  e.toString());
+			} catch (Exception e) {
+				log.warn("Could not delete temporary attachment ("
+						+ attachements[j].getName() + " reason " + e.toString());
 			}
-		}	
-		
+		}
+
 		return mailReceipt;
 	}
 
-	
-	
 	// Works! it has been tested
-	public SendMailReceipt sendOutgoingMail(String[] to, String[] cc, String from,
-			String subject, String text, File[] attachements) {
+	public SendMailReceipt sendOutgoingMail(String[] to, String[] cc,
+			String from, String subject, String text, File[] attachements) {
 
 		SendMailReceipt receipt = new SendMailReceipt();
 		Transport transport = null;
-		
+
 		try {
 
 			Properties props = new Properties();
-			props.put("mail.smtp.host", config.getSmtpHost());
+			props.setProperty("mail.smtp.host", config.getSmtpHost());
+			props.setProperty("mail.smtp.port", "" + config.getSmtpPort());
 			props.setProperty("mail.transport.protocol", "smtp");
 			props.setProperty("mail.user", config.getSmtpUser());
 			props.setProperty("mail.password", config.getSmtpPassword());
+			if(config.getEnableStarttls())
+				props.put("mail.smtp.starttls.enable","true");
+			props.put("mail.smtp.auth", "true");
+			Authenticator auth = new YourAuthenticator(config.getSmtpUser(),
+					config.getSmtpPassword());
+			Session mailSession = Session.getInstance(props, auth);
 
-			Session mailSession = Session.getDefaultInstance(props, null);
+			// Session mailSession = Session.getDefaultInstance(props, null);
 			System.out.println("sendOutgoingMail()--> Session properties set.");
 			mailSession.setDebug(true);
 
@@ -455,38 +430,37 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 			MimeMessage msg1 = new MimeMessage(mailSession);
 			msg1.setFrom(new InternetAddress(from));
 
-			
-			// AYTO 0ELEI DIEYKRINISH. PIO DATE PAEI???
-			// 1 msg.setSentDate(outProtocol.getProtocolDate());
-			// 2 msg.setSentDate( outProtocol.getOutgoingDate());
-
 			msg1.setSentDate(new Date());
 
 			InternetAddress[] toAddresses = new InternetAddress[to.length];
-			for (int i = 0; i < to.length; i++){
-				try{
+			for (int i = 0; i < to.length; i++) {
+				try {
 					toAddresses[i] = new InternetAddress(to[i]);
 					msg1.setRecipients(Message.RecipientType.TO, toAddresses);
-				}catch(Exception e ){
-					log.warn( "Problem with TO mail address : " +  e.getMessage() );
+				} catch (Exception e) {
+					log.warn("Problem with TO mail address : " + e.getMessage());
 				}
 			}
-			System.out.println("sendOutgoingMail()--> Message TO Addresses set.");
-			
+			System.out
+					.println("sendOutgoingMail()--> Message TO Addresses set.");
+
 			if (cc != null) {
 				InternetAddress[] ccAddresses = new InternetAddress[cc.length];
-				for (int i = 0; i < cc.length; i++){
-					try{
+				for (int i = 0; i < cc.length; i++) {
+					try {
 						ccAddresses[i] = new InternetAddress(cc[i]);
-						msg1.setRecipients(Message.RecipientType.CC, ccAddresses);
-					}catch(Exception e ){
-						log.warn( "Problem with CC mail address : " + e.getMessage() );
+						msg1.setRecipients(Message.RecipientType.CC,
+								ccAddresses);
+					} catch (Exception e) {
+						log.warn("Problem with CC mail address : "
+								+ e.getMessage());
 					}
 				}
 			}
-			System.out.println("sendOutgoingMail()--> Message CC Addresses set.");
-			
-			msg1.setSubject(subject);			
+			System.out
+					.println("sendOutgoingMail()--> Message CC Addresses set.");
+
+			msg1.setSubject(subject);
 
 			// create the Multipart and add its parts to it
 			Multipart multiPart = new MimeMultipart();
@@ -498,7 +472,7 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 
 			if (attachements != null) {
 				for (int i = 0; i < attachements.length; i++) {
-					if( attachements[i] != null){
+					if (attachements[i] != null) {
 						FileDataSource fds = new FileDataSource(attachements[i]);
 						MimeBodyPart attachmentPart = new MimeBodyPart();
 						attachmentPart.setDataHandler(new DataHandler(fds));
@@ -507,37 +481,41 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 					}
 				}
 			}
-			System.out.println("sendOutgoingMail()--> Message Attachements finished for all " + attachements.length  + " files.");
+			System.out
+					.println("sendOutgoingMail()--> Message Attachements finished for all "
+							+ attachements.length + " files.");
 			// add the Multipart to the message
 			msg1.setContent(multiPart);
 
 			// ---------
 			transport.connect();
 			System.out.println("sendOutgoingMail()--> Connected.");
-			transport.sendMessage(msg1, msg1.getRecipients(Message.RecipientType.TO));
-			transport.sendMessage(msg1, msg1.getRecipients(Message.RecipientType.CC));
+			transport.sendMessage(msg1,
+					msg1.getRecipients(Message.RecipientType.TO));
+			transport.sendMessage(msg1,
+					msg1.getRecipients(Message.RecipientType.CC));
 			transport.close();
 			System.out.println("sendOutgoingMail()--> Closed connection.");
-			
-			
+
 			log.info("Message was sent");
 			receipt.setSentTimestamp(new Date());
 
 		} catch (Exception mex) {
-			log.fatal("Message was NOT sent. Reason : " + mex.getMessage() );
+			log.fatal("Message was NOT sent. Reason : " + mex.getMessage());
 			mex.printStackTrace();
-			
+
 			receipt.seteMessage(mex.getMessage());
 			receipt.seteCode("ERROR");
-		}finally{
-			//avoid connection leak
-			if(transport != null){
-				if( transport.isConnected() ){
+		} finally {
+			// avoid connection leak
+			if (transport != null) {
+				if (transport.isConnected()) {
 					try {
 						transport.close();
-						System.out.println("sendOutgoingMail()--> Closed connection after error.");
+						System.out
+								.println("sendOutgoingMail()--> Closed connection after error.");
 					} catch (MessagingException e) {
-						log.warn("transport not closed. " + e.getMessage() );
+						log.warn("transport not closed. " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
@@ -548,8 +526,6 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 
 	}
 
-
-	
 	public SendMailReceipt[] sendAllOutgoingProtocols(
 			OutgoingProtocol[] outProtocol) {
 
@@ -563,61 +539,59 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 		return receipts.toArray(toReturn);
 	}
 
-	
-	//-----------------------
+	// -----------------------
 	// helpers
-	//-----------------------
+	// -----------------------
 
-	//not used but keep it for reference
+	// not used but keep it for reference
 	private static byte[] getBytesFromFile(File file) throws IOException {
 		InputStream is = new FileInputStream(file);
 		byte[] bytes = null;
-		
-		try{
-		// Get the size of the file
-		long length = file.length();
 
-		if (length > Integer.MAX_VALUE) {
-			// File is too large
-		}
+		try {
+			// Get the size of the file
+			long length = file.length();
 
-		// Create the byte array to hold the data
-		bytes = new byte[(int) length];
+			if (length > Integer.MAX_VALUE) {
+				// File is too large
+			}
 
-		// Read in the bytes
-		int offset = 0;
-		int numRead = 0;
-		while (offset < bytes.length
-				&& (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
-			offset += numRead;
-		}
+			// Create the byte array to hold the data
+			bytes = new byte[(int) length];
 
-		// Ensure all the bytes have been read in
-		if (offset < bytes.length) {
-			throw new IOException("Could not completely read file "
-					+ file.getName());
-		}
+			// Read in the bytes
+			int offset = 0;
+			int numRead = 0;
+			while (offset < bytes.length
+					&& (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+				offset += numRead;
+			}
 
-		// Close the input stream and return bytes
-		
-		}finally{
-			if( is != null){
-				try{
+			// Ensure all the bytes have been read in
+			if (offset < bytes.length) {
+				throw new IOException("Could not completely read file "
+						+ file.getName());
+			}
+
+			// Close the input stream and return bytes
+
+		} finally {
+			if (is != null) {
+				try {
 					is.close();
-				}catch(Exception e ){
+				} catch (Exception e) {
 					;
 				}
 			}
 		}
-		
+
 		return bytes;
 	}
 
-	
-	private static File getFileFromBytes(byte[] byteContent, String fileName){
+	private static File getFileFromBytes(byte[] byteContent, String fileName) {
 		File temp = null;
 		BufferedWriter out = null;
-		try{
+		try {
 			// Create the file.
 			temp = new File(fileName);
 			// Write to the file
@@ -626,13 +600,13 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 			out.flush();
 			out.close();
 			return temp;
-		}catch(Exception e ){
+		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e.getMessage());
-			if( out != null ){
-				try{
+			if (out != null) {
+				try {
 					out.close();
-				}catch(Exception w ){
+				} catch (Exception w) {
 					;
 				}
 			}
@@ -640,7 +614,7 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 		return temp;
 	}
 
-	//Example how to send attachments.
+	// Example how to send attachments.
 	private static void sendEmailWithAttachmentExample() {
 		try {
 			// Works
@@ -656,13 +630,15 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 			MimeMessage message = new MimeMessage(mailSession);
 			message.setSubject("Testing javamail plain");
 			message.setContent("This is a test", "text/plain");
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress("mountrakis@uit.gr"));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
+					"mountrakis@uit.gr"));
 			message.setFrom(new InternetAddress("mountrakis@illumine.gr"));
 
 			MimeBodyPart mbp1 = new MimeBodyPart();
 			mbp1.setText("This is the text of a Test email");
 
-			byte[] content = { 'h', 'e', 'l', 'l', 'o', ' ', '"', 'w', 'o','r', 'l', 'd', '!' };
+			byte[] content = { 'h', 'e', 'l', 'l', 'o', ' ', '"', 'w', 'o',
+					'r', 'l', 'd', '!' };
 			File file = getFileFromBytes(content, "mytest.txt");
 
 			MimeBodyPart mbp2 = new MimeBodyPart();
