@@ -96,9 +96,16 @@ public class MailDaemon  implements MailDaemonMBean{
 			configuration.setPOP3();
 		else if ( serverType.equalsIgnoreCase("imap") )
 			configuration.setIMAP();
+		else if ( serverType.equalsIgnoreCase("imaps") )
+			configuration.setIMAPS();
 		else
 			;
 	}
+	
+	public void setEnableStarttls(boolean enableStarttls){
+		configuration.setEnableStarttls(enableStarttls);
+	}
+	
 
 	public final String getFolder() {
 		return configuration.getFolder();
@@ -195,5 +202,14 @@ public class MailDaemon  implements MailDaemonMBean{
 	}	
 	
 	
-	
+	public static void main(String argv[] ){
+		MailDaemon daemon = new MailDaemon();
+		System.out.println( MailDaemon.configuration.toString() );
+		try {
+			daemon.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("Worked");
+	}
 }	
