@@ -19,7 +19,7 @@ public class MailDispatcherConfig{
 	public static final int DEFAULT_SMTP_PORT = 25;
 	public static final int DEFAULT_IMAP_PORT = 143;
 	public static final int DEFAULT_POP3_PORT = 110 ;
-	
+	public static final int DEFAULT_IMAPS_PORT = 993;
 	// To send mails we need the SMTP details
 	private String  smtpHost;
 	private int     smtpPort     = DEFAULT_SMTP_PORT;
@@ -30,13 +30,15 @@ public class MailDispatcherConfig{
 	public int rcvPort = DEFAULT_POP3_PORT;
 	public static final String POP3 = "pop3";
 	public static final String IMAP = "imap";
+	public static final String IMAPS = "imaps";
+	
 	private String serverType = POP3;	
 	
 	
 	private String   folder    = "INBOX";
 	private int      maxEmails = 20;
 	private boolean  deleteOriginals = false;
-	
+	private boolean  enableStarttls = false;
 	
 	
 	public MailDispatcherConfig(){	
@@ -50,6 +52,12 @@ public class MailDispatcherConfig{
 		serverType = POP3;
 		rcvPort = DEFAULT_POP3_PORT;
 	}
+	
+	public void setIMAPS(){
+		serverType = IMAPS;
+		rcvPort = DEFAULT_IMAPS_PORT;		
+	}
+	
 	public String getServerType(){
 		return serverType;
 	}
@@ -58,6 +66,16 @@ public class MailDispatcherConfig{
 	}
 	public boolean isPop3(){
 		return serverType.equals(POP3);
+	}
+	public boolean isImaps(){
+		return serverType.equals(IMAPS);
+	}	
+	
+	public boolean getEnableStarttls(){
+		return enableStarttls;
+	}
+	public void setEnableStarttls(boolean enableStarttls){
+		this.enableStarttls = enableStarttls;
 	}
 		
 	//For the outgoing Protocol we also need some constants that will be used
@@ -80,17 +98,21 @@ public class MailDispatcherConfig{
 			properties.setProperty("mail.pop3.port", "" + rcvPort);
 			properties.setProperty("mail.pop3.connectiontimeout", "5000");
 			properties.setProperty("mail.pop3.timeout", "5000");
-		}else{
+		}else if(isImap()){
 			properties.setProperty("mail.imap.host", smtpHost);
 			properties.setProperty("mail.imap.port", "" + rcvPort);
 			properties.setProperty("mail.imap.connectiontimeout", "5000");
 			properties.setProperty("mail.imap.timeout", "5000");
+		}else{ //imaps
+			properties.setProperty("mail.store.protocol", "imaps");
 		}
 		
 	    // If using static Transport.send(),
 	    // need to specify which host to send it to
-		properties.setProperty("mail.smtp.host", smtpHost);
 		properties.setProperty("mail.transport.protocol", "smtp");
+		properties.setProperty("mail.smtp.host", smtpHost);
+		properties.setProperty("mail.smtp.port", "" + smtpPort);
+		
 		//properties.put("mail.smtp.auth", "true");
 		//properties.setProperty("mail.user", smtpUser);
 		//properties.setProperty("mail.password", smtpPassword);	
@@ -194,5 +216,19 @@ public class MailDispatcherConfig{
 	public final void setProperties(Properties properties) {
 		this.properties = properties;
 	}
+
+	@Override
+	public String toString() {
+		return "MailDispatcherConfig [smtpHost=" + smtpHost + ", smtpPort="
+				+ smtpPort + ", smtpUser=" + smtpUser + ", smtpPassword="
+				+ smtpPassword + ", rcvPort=" + rcvPort + ", serverType="
+				+ serverType + ", folder=" + folder + ", maxEmails="
+				+ maxEmails + ", deleteOriginals=" + deleteOriginals
+				+ ", messageFrom=" + messageFrom + ", messageBodyTxt="
+				+ messageBodyTxt + ", messageSubject=" + messageSubject
+				+ ", properties=" + properties + "]";
+	}
+	
+	
 	
 }
