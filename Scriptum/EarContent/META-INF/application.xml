@@ -13,4 +13,7 @@
       <context-root>eProtocolWebService</context-root>
     </web>
   </module>
+  <module>
+    <java>maildaemon.sar</java>
+  </module>
 </application>
