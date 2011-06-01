@@ -57,6 +57,7 @@ public class DiavgeiaDispatcherImpl extends HttpDispatcher implements DiavgeiaDi
 		this.config = DiavgeiaDispatcherConfig.getInstance();
 		registerKeyStores();
 		httpclient = new HttpClient();
+		httpclient.getParams().setHttpElementCharset("UTF-8");
 	    httpclient.getHttpConnectionManager().getParams().setConnectionTimeout(config.getTimeout());
 	}
 	
@@ -92,6 +93,7 @@ public class DiavgeiaDispatcherImpl extends HttpDispatcher implements DiavgeiaDi
 			Set<ProtocolDocument> docsList =  outProtocol.getProtocolDocuments();
 			for( ProtocolDocument doc : docsList){
 				if( isEligibleFile( doc.getDocumentName() )  ){
+					log.debug("Processing document: "+doc.getId());
 					
 					DiavgeiaReceipt receipt = new DiavgeiaReceipt(sessionId, doc.getId());
 					
@@ -438,7 +440,7 @@ public class DiavgeiaDispatcherImpl extends HttpDispatcher implements DiavgeiaDi
 			
 		
 		String suffix = filename.substring( idx );
-		if( "pdf".equalsIgnoreCase(suffix) )
+		if( ".pdf".equalsIgnoreCase(suffix) )
 			return true;
 		else
 			return false;	
