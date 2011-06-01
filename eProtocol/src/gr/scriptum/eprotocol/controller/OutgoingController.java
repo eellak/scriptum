@@ -235,6 +235,11 @@ public class OutgoingController extends ProtocolController {
 
 		List<DiavgeiaReceipt> diavgeiaReceipts = null;
 		try {
+			for(ProtocolDocument protocolDocument: protocolDocuments) {
+				ResponseSendDocument responseSendDocument = fetchDocumentFromOpenKM(protocolDocument);
+				protocolDocument.setContent(responseSendDocument.getContent());
+			}
+			
 			diavgeiaReceipts = diavgeiaDispatcher.sendOutgoingProtocol(
 					protocol, diavgeiaData);
 		} catch (Exception e) {
@@ -1361,6 +1366,10 @@ public class OutgoingController extends ProtocolController {
 	}
 
 	public String getDiavgeiaLbl() {
+
+		if (protocol.getSentDiaygeia() == null) {
+			return (Labels.getLabel("outgoingPage.diavgeiaLblNA"));
+		}
 
 		if (protocol.getSentDiaygeia().equals(DiavgeiaResult.FAILED.ordinal())) {
 			return (Labels.getLabel("outgoingPage.diavgeiaLblFailed"));
