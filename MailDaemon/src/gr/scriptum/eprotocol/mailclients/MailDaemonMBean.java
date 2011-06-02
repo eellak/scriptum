@@ -47,4 +47,5 @@ public interface MailDaemonMBean{
 	public  int getSleepPeriod() ;
 	public void setSleepPeriod(int sleepPeriod);
 	public void setEnableStarttls(boolean enableStarttls);
+	public boolean getEnableStarttls();
 }
