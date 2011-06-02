@@ -96,9 +96,9 @@ public class DiavgeiaDispatcherImpl extends HttpDispatcher implements DiavgeiaDi
 					log.debug("Processing document: "+doc.getId());
 					
 					DiavgeiaReceipt receipt = new DiavgeiaReceipt(sessionId, doc.getId());
-					
+					DiavgeiaRequest theRequest = null;
 					try{
-						DiavgeiaRequest theRequest = prepareRequest( outProtocol, doc, diavgeiaData );
+						theRequest = prepareRequest( outProtocol, doc, diavgeiaData );
 	
 						String confirmationId = postProtocolFile(theRequest);
 						if(  confirmationId == null )
@@ -123,6 +123,13 @@ public class DiavgeiaDispatcherImpl extends HttpDispatcher implements DiavgeiaDi
 						debug("Finished without errors");
 					}catch(Exception e ){
 						receipt.errDescr =  e.getMessage();
+					}finally{
+						if( theRequest != null ){
+							if(theRequest.file != null){
+								if( theRequest.file.exists() )
+									theRequest.file.delete();
+							}
+						}
 					}
 					receipts.add(receipt);
 				}
