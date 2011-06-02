@@ -106,6 +106,9 @@ public class MailDaemon  implements MailDaemonMBean{
 		configuration.setEnableStarttls(enableStarttls);
 	}
 	
+	public boolean getEnableStarttls(){
+		return configuration.getEnableStarttls();
+	}
 
 	public final String getFolder() {
 		return configuration.getFolder();
