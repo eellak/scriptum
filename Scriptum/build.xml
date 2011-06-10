@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Scriptum" default="ear" basedir=".">
+	<property environment="env" />
+	<property name="openkm.home" value="${env.JBOSS_HOME}" />
+	<property name="app.name" value="${ant.project.name}" />
+	<property name="build.dir" value="build" />
+	<property name="lib.dir" value="EarContent/lib" />
+	<property name="deploy.dir" location="${openkm.home}/server/default/deploy" />
+
+	<path id="classpathOpenKM">
+		<fileset dir="${openkm.home}/client">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${openkm.home}/server/default/lib">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${openkm.home}/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="classpathScriptumModel">
+		<pathelement path="${build.dir}" />
+		<fileset dir="../ScriptumModel/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="classpatheProtocolServices">
+		<pathelement path="${build.dir}/ScriptumModel" />
+		<fileset dir="../eProtocolServices/WebContent/WEB-INF/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="classpathMailDaemon">
+		<pathelement location="${build.dir}/ScriptumModel" />
+		<pathelement location="${build.dir}/eProtocolServices" />
+	</path>
+
+	<path id="classpatheProtocolWebService">
+		<pathelement location="${build.dir}/ScriptumModel" />
+		<fileset dir="EarContent/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="classpatheProtocol">
+		<pathelement location="${build.dir}/ScriptumModel" />
+		<pathelement location="${build.dir}/eProtocolServices" />
+		<pathelement location="${build.dir}/MailDaemon" />
+		<pathelement location="${build.dir}/eProtocolWebService/WEB-INF/classes" />
+		<fileset dir="EarContent/lib">
+			<include name="*.jar" />
+			<exclude name="eProtocolServices.jar" />
+		</fileset>
+	</path>
+
+	<target name="usage">
+		<echo message="+-----------------------------------------------------------------------+" />
+		<echo message="| ${webapp.name} build file - available targets are:                    |" />
+		<echo message="+-----------------------------------------------------------------------+" />
+		<echo message="| build     --> Build the application                                   |" />
+		<echo message="| deploy    --> Build and Deploy application as directory               |" />
+		<echo message="| reload    --> Reload Tomcat application                               |" />
+		<echo message="| start     --> Start Tomcat application after deploying                |" />
+		<echo message="| stop      --> Stop Tomcat application                                 |" />
+		<echo message="| list      --> List Tomcat applications                                |" />
+		<echo message="| clean     --> Clean deploy and build directories                      |" />
+		<echo message="+-----------------------------------------------------------------------+" />
+		<echo message="| Deploy will only copy files to Tomcat. Check 'ant list' to see if the |" />
+		<echo message="| application is running. If not, use 'ant start' to start the applica- |" />
+		<echo message="| tion manually. Before 'ant clean' make sure to use 'ant stop' if 'ant |" />
+		<echo message="| list' shows the application running. Thank you and have fun!          |" />
+		<echo message="+-----------------------------------------------------------------------+" />
+	</target>
+
+	<target name="clean">
+
+		<delete includeEmptyDirs="true">
+			<fileset dir="${build.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="buildScriptumModel" depends="clean">
+		<mkdir dir="${build.dir}/ScriptumModel" />
+		<javac destdir="${build.dir}/ScriptumModel" debug="true" deprecation="false" optimize="false" failonerror="true">
+			<src path="../ScriptumModel/src" />
+			<classpath refid="classpathOpenKM" />
+			<classpath refid="classpathScriptumModel" />
+		</javac>
+		<copy todir="${build.dir}/ScriptumModel" preservelastmodified="true">
+			<fileset dir="../ScriptumModel/src">
+				<include name="**/*.xml" />
+				<exclude name="hibernate.cfg.xml" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="harScriptumModel" depends="buildScriptumModel">
+		<jar destfile="ScriptumModel.har">
+			<fileset dir="${build.dir}/ScriptumModel">
+				<include name="**/*.*" />
+				<exclude name="hibernate.cfg.xml" />
+			</fileset>
+			<fileset dir="../ScriptumModel/lib">
+				<include name="**/*.*" />
+			</fileset>
+		</jar>
+	</target>
+
+
+	<target name="buildeProtocolServices" depends="harScriptumModel">
+		<mkdir dir="${build.dir}/eProtocolServices" />
+		<javac destdir="${build.dir}/eProtocolServices" debug="true" deprecation="false" optimize="false" failonerror="true">
+			<src path="../eProtocolServices/src" />
+			<classpath refid="classpathOpenKM" />
+			<classpath refid="classpatheProtocolServices" />
+		</javac>
+	</target>
+
+	<target name="jareProtocolServices" depends="buildeProtocolServices">
+		<jar destfile="eProtocolServices.jar">
+			<fileset dir="${build.dir}/eProtocolServices">
+				<include name="**/*.*" />
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="buildMailDaemon" depends="jareProtocolServices">
+		<mkdir dir="${build.dir}/MailDaemon" />
+		<javac destdir="${build.dir}/MailDaemon" debug="true" deprecation="false" optimize="false" failonerror="true">
+			<src path="../MailDaemon/src" />
+			<classpath refid="classpathOpenKM" />
+			<classpath refid="classpathMailDaemon" />
+		</javac>
+
+		<copy todir="${build.dir}/MailDaemon">
+			<fileset dir="../MailDaemon/WebContent">
+				<include name="**/*.xml" />
+			</fileset>
+		</copy>
+
+	</target>
+
+	<target name="sarMailDaemon" depends="buildMailDaemon">
+		<jar destfile="maildaemon.sar">
+			<fileset dir="${build.dir}/MailDaemon">
+				<include name="**/*.*" />
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="buildeProtocolWebService" depends="sarMailDaemon">
+		<mkdir dir="${build.dir}/eProtocolWebService" />
+		<mkdir dir="${build.dir}/eProtocolWebService/WEB-INF" />
+		<mkdir dir="${build.dir}/eProtocolWebService/WEB-INF/classes" />
+		<javac destdir="${build.dir}/eProtocolWebService/WEB-INF/classes" debug="true" deprecation="false" optimize="false" failonerror="true">
+			<src path="../eProtocolWebService/src" />
+			<classpath refid="classpathOpenKM" />
+			<classpath refid="classpatheProtocolWebService" />
+		</javac>
+
+		<copy todir="${build.dir}/eProtocolWebService">
+			<fileset dir="../eProtocolWebService/WebContent">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="wareProtocolService" depends="buildeProtocolWebService">
+		<jar destfile="eProtocolWebService.war">
+			<fileset dir="${build.dir}/eProtocolWebService">
+				<include name="**/*.*" />
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="buildeProtocol" depends="wareProtocolService">
+		<mkdir dir="${build.dir}/eProtocol" />
+		<mkdir dir="${build.dir}/eProtocol/WEB-INF" />
+		<mkdir dir="${build.dir}/eProtocol/WEB-INF/classes" />
+		<javac destdir="${build.dir}/eProtocol/WEB-INF/classes" debug="true" deprecation="false" optimize="false" failonerror="true">
+			<src path="../eProtocol/src" />
+			<classpath refid="classpathOpenKM" />
+			<classpath refid="classpatheProtocol" />
+		</javac>
+
+		<copy todir="${build.dir}/eProtocol">
+			<fileset dir="../eProtocol/WebContent">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="wareProtocol" depends="buildeProtocol">
+		<jar destfile="eProtocol.war">
+			<fileset dir="${build.dir}/eProtocol">
+				<include name="**/*.*" />
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="ear" depends="wareProtocol">
+		<move file="eProtocolServices.jar" todir="EarContent/lib" />
+		<jar destfile="${app.name}.ear">
+			<fileset dir="EarContent">
+				<include name="**/*.*" />
+			</fileset>
+			<fileset dir=".">
+				<include name="ScriptumModel.har" />
+				<include name="maildaemon.sar" />
+				<include name="eProtocolWebService.war" />
+				<include name="eProtocol.war" />
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="deploy" depends="ear">
+		<copy file="${app.name}.ear" todir="${deploy.dir}" />
+	</target>
+
+	<target name="undeploy">
+		<delete file="${deploy.dir}/${app.name}.ear" />
+	</target>
+
+</project>
