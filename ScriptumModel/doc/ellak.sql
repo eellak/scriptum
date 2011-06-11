@@ -109,10 +109,14 @@ CREATE TABLE `company` (
   `web` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
   `web_service` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
   `company_type_id` int(10) unsigned NOT NULL,
+  `street_no` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `vat_no` varchar(9) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_company_company_type1` (`company_type_id`),
+  KEY `FK38A73C7D6DEC3633` (`company_type_id`),
+  CONSTRAINT `FK38A73C7D6DEC3633` FOREIGN KEY (`company_type_id`) REFERENCES `company_type` (`id`),
   CONSTRAINT `fk_company_company_type1` FOREIGN KEY (`company_type_id`) REFERENCES `company_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,7 +125,7 @@ CREATE TABLE `company` (
 
 LOCK TABLES `company` WRITE;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
-INSERT INTO `company` VALUES (1,'Εταιρεία 1',NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2),(2,'Εταιρεία 2',NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(3,'Εταιρεία 3',NULL,NULL,0,NULL,NULL,NULL,NULL,'','','','','','','','','','','','','',2),(7,'Εταιρεία 8',NULL,NULL,0,NULL,NULL,NULL,'2011-03-16 10:34:11',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6);
+INSERT INTO `company` VALUES (1,'???????? 1','','',0,'',NULL,'2011-06-06 00:00:00','2011-06-05 21:00:00','',NULL,'','','',NULL,'','','','','','','',2,'',''),(2,'???????? 2','','',1,'',NULL,'2011-06-06 00:00:00','2011-06-05 21:00:00','',NULL,'','','',NULL,'','','','','','','',1,'',''),(3,'Εταιρεία 3',NULL,NULL,0,NULL,NULL,NULL,NULL,'','','','','','','','','','','','','',2,NULL,NULL),(7,'Εταιρεία 8',NULL,NULL,0,NULL,NULL,NULL,'2011-03-16 10:34:11',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL),(8,'','','',0,'',NULL,'2011-06-06 00:00:00','2011-06-05 21:00:00','',NULL,'','','',NULL,'','','','','','','',1,'',''),(9,'','','',0,'',NULL,'2011-06-06 00:00:00','2011-06-05 21:00:00','',NULL,'','','',NULL,'','','','','','','',1,'',''),(12,'???????? 17','','',0,'',NULL,'2011-06-06 00:00:00','2011-06-05 21:00:00','',NULL,'','','',NULL,'','','','','','','',1,'','');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,8 +190,11 @@ CREATE TABLE `contact` (
   `streetNo` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `prefecture` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `web` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `street_no` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `contact_FKIndex1` (`company_id`),
+  KEY `FK38B72420489C29F8` (`company_id`),
+  CONSTRAINT `FK38B72420489C29F8` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `fk_7cc2855a-215b-11e0-9059-080027b715d2` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -198,7 +205,7 @@ CREATE TABLE `contact` (
 
 LOCK TABLES `contact` WRITE;
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
-INSERT INTO `contact` VALUES (2,2,'John','Smith',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'angelos@uit.gr',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'George',NULL,NULL,NULL,NULL),(3,2,'Angelos','Anagn',NULL,NULL,NULL,NULL,NULL,'Αθήνα',NULL,'angelos@uit.gr',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'G',NULL,NULL,NULL,NULL),(5,2,'test4','tester4',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos',NULL,NULL,NULL,NULL),(6,1,'tester5','test5',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos',NULL,NULL,NULL,NULL),(8,1,'tester7','test7',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos',NULL,NULL,NULL,NULL),(9,1,'tester8','test8',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos8',NULL,NULL,NULL,NULL),(10,2,'Tester9','Test9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos9',NULL,NULL,NULL,NULL),(11,1,'tester10','test10',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos',NULL,NULL,NULL,NULL),(12,2,'George','Bush',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'W',NULL,NULL,NULL,NULL),(13,3,'Γεωργία','Παπαδοπούλου',NULL,NULL,NULL,NULL,'','',NULL,'','','','',NULL,NULL,NULL,NULL,'Γεώργιος','','','',''),(14,7,'George','Bush',NULL,NULL,NULL,NULL,'','',NULL,'','','','',NULL,NULL,NULL,NULL,'Sr','','','',''),(16,2,'Jack','Smith',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'G',NULL,NULL,NULL,NULL),(18,7,'Dohn','George',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(19,7,'Bong','George',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(20,7,'Collins','Jack',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(23,2,'test1','﻿test4',NULL,NULL,NULL,NULL,'test','Αθήνα',NULL,'test','test','test','test',NULL,NULL,NULL,NULL,'testostest','test','tes','test','test');
+INSERT INTO `contact` VALUES (2,2,'John','Smith',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'angelos@uit.gr',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'George',NULL,NULL,NULL,NULL,NULL),(3,2,'Angelos','Anagn',NULL,NULL,NULL,NULL,NULL,'Αθήνα',NULL,'angelos@uit.gr',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'G',NULL,NULL,NULL,NULL,NULL),(5,2,'test4','tester4',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos',NULL,NULL,NULL,NULL,NULL),(6,1,'tester5','test5',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos',NULL,NULL,NULL,NULL,NULL),(8,1,'tester7','test7',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos',NULL,NULL,NULL,NULL,NULL),(9,1,'tester8','test8',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos8',NULL,NULL,NULL,NULL,NULL),(10,2,'Tester9','Test9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos9',NULL,NULL,NULL,NULL,NULL),(11,1,'tester10','test10',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testos',NULL,NULL,NULL,NULL,NULL),(12,2,'George','Bush',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'W',NULL,NULL,NULL,NULL,NULL),(13,3,'Γεωργία','Παπαδοπούλου',NULL,NULL,NULL,NULL,'','',NULL,'','','','',NULL,NULL,NULL,NULL,'Γεώργιος','','','','',NULL),(14,7,'George','Bush',NULL,NULL,NULL,NULL,'','',NULL,'','','','',NULL,NULL,NULL,NULL,'Sr','','','','',NULL),(16,2,'Jack','Smith',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'G',NULL,NULL,NULL,NULL,NULL),(18,7,'Dohn','George',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(19,7,'Bong','George',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(20,7,'Collins','Jack',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(23,2,'test1','﻿test4',NULL,NULL,NULL,NULL,'test','Αθήνα',NULL,'test','test','test','test',NULL,NULL,NULL,NULL,'testostest','test','tes','test','test',NULL);
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -343,6 +350,10 @@ CREATE TABLE `incoming_protocol` (
   PRIMARY KEY (`id`),
   KEY `incoming_protocol_FKIndex1` (`distribution_method_id`),
   KEY `incoming_protocol_FKIndex2` (`contact_sender_id`),
+  KEY `FK75459291EE5129A5` (`distribution_method_id`),
+  KEY `FK75459291EA0F2F84` (`contact_sender_id`),
+  CONSTRAINT `FK75459291EA0F2F84` FOREIGN KEY (`contact_sender_id`) REFERENCES `contact` (`id`),
+  CONSTRAINT `FK75459291EE5129A5` FOREIGN KEY (`distribution_method_id`) REFERENCES `distribution_method` (`id`),
   CONSTRAINT `fk_7cbbc300-215b-11e0-9059-080027b715d2` FOREIGN KEY (`distribution_method_id`) REFERENCES `distribution_method` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cbdaecc-215b-11e0-9059-080027b715d2` FOREIGN KEY (`contact_sender_id`) REFERENCES `contact` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
@@ -386,8 +397,10 @@ CREATE TABLE `outgoing_protocol` (
   `is_deleted` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `outgoing_protocol_FKIndex1` (`distribution_method_id`),
+  KEY `FK49E7A60BEE5129A5` (`distribution_method_id`),
+  CONSTRAINT `FK49E7A60BEE5129A5` FOREIGN KEY (`distribution_method_id`) REFERENCES `distribution_method` (`id`),
   CONSTRAINT `fk_7cbca1e4-215b-11e0-9059-080027b715d2` FOREIGN KEY (`distribution_method_id`) REFERENCES `distribution_method` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -396,7 +409,7 @@ CREATE TABLE `outgoing_protocol` (
 
 LOCK TABLES `outgoing_protocol` WRITE;
 /*!40000 ALTER TABLE `outgoing_protocol` DISABLE KEYS */;
-INSERT INTO `outgoing_protocol` VALUES (1,8,3,'2011-05-31 14:24:48',NULL,NULL,'Test outgoing',NULL,'2011-05-12 14:24:15',NULL,NULL,NULL,0,2,2,'2011-05-31 14:23:49','2011-05-31 12:35:38',NULL);
+INSERT INTO `outgoing_protocol` VALUES (1,8,3,'2011-05-31 14:24:48',NULL,NULL,'Test outgoing',NULL,'2011-05-12 14:24:15',NULL,NULL,NULL,3,2,2,'2011-05-31 14:23:49','2011-06-02 06:36:14',NULL),(2,8,4,'2011-06-02 09:39:02',NULL,NULL,'Dokimi',NULL,'2011-06-01 09:39:00',NULL,'John Doe',NULL,2,2,2,'2011-06-02 09:39:02','2011-06-02 06:40:00',NULL);
 /*!40000 ALTER TABLE `outgoing_protocol` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -414,6 +427,10 @@ CREATE TABLE `outgoing_recipient` (
   PRIMARY KEY (`contact_id`,`outgoing_protocol_id`),
   KEY `outgoing_recipients_FKIndex1` (`contact_id`),
   KEY `outgoing_recipients_FKIndex2` (`outgoing_protocol_id`),
+  KEY `FK47A749068388E318` (`contact_id`),
+  KEY `FK47A749066740CA55` (`outgoing_protocol_id`),
+  CONSTRAINT `FK47A749066740CA55` FOREIGN KEY (`outgoing_protocol_id`) REFERENCES `outgoing_protocol` (`id`),
+  CONSTRAINT `FK47A749068388E318` FOREIGN KEY (`contact_id`) REFERENCES `contact` (`id`),
   CONSTRAINT `fk_7cadf144-215b-11e0-9059-080027b715d2` FOREIGN KEY (`contact_id`) REFERENCES `contact` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7caeb0d4-215b-11e0-9059-080027b715d2` FOREIGN KEY (`outgoing_protocol_id`) REFERENCES `outgoing_protocol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
@@ -425,7 +442,7 @@ CREATE TABLE `outgoing_recipient` (
 
 LOCK TABLES `outgoing_recipient` WRITE;
 /*!40000 ALTER TABLE `outgoing_recipient` DISABLE KEYS */;
-INSERT INTO `outgoing_recipient` VALUES (6,1,0);
+INSERT INTO `outgoing_recipient` VALUES (6,1,0),(8,2,0);
 /*!40000 ALTER TABLE `outgoing_recipient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -458,7 +475,7 @@ CREATE TABLE `parameter` (
 
 LOCK TABLES `parameter` WRITE;
 /*!40000 ALTER TABLE `parameter` DISABLE KEYS */;
-INSERT INTO `parameter` VALUES (1,NULL,NULL,'DISTRIBUTION_METHOD_EMAIL_ID',NULL,NULL,'3',NULL,NULL,NULL,NULL),(2,NULL,NULL,'DISTRIBUTION_METHOD_WEBSERVICE_ID',NULL,NULL,'7',NULL,NULL,NULL,NULL),(3,NULL,NULL,'SMTP_HOST',NULL,NULL,'mail.illumine.gr',NULL,NULL,NULL,NULL),(4,NULL,NULL,'SMTP_PASSWORD',NULL,NULL,'XINU666+1',NULL,NULL,NULL,NULL),(5,NULL,NULL,'SMTP_USER',NULL,NULL,'mountrakis@illumine.gr',NULL,NULL,NULL,NULL),(6,NULL,NULL,'EMAIL_FROM',NULL,NULL,'mountrakis@illumine.gr',NULL,NULL,NULL,NULL),(7,NULL,NULL,'OKM_NODE_PENDING_INCOMING',NULL,NULL,'/okm:root/PendingIncoming',NULL,NULL,NULL,NULL),(8,NULL,NULL,'OKM_NODE_INCOMING',NULL,NULL,'/okm:root/IncomingProtocol',NULL,NULL,NULL,NULL),(9,NULL,NULL,'OKM_NODE_PENDING_OUTGOING',NULL,NULL,'/okm:root/PendingOutgoing',NULL,NULL,NULL,NULL),(10,NULL,NULL,'OKM_NODE_OUTGOING',NULL,NULL,'/okm:root/OutgoingProtocol',NULL,NULL,NULL,NULL),(11,NULL,NULL,'PROTOCOL_BOOK_COMPANY',NULL,NULL,'ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(12,NULL,NULL,'PROTOCOL_BOOK_AUTHOR',NULL,NULL,'ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(13,NULL,NULL,'PROTOCOL_BOOK_CREATOR',NULL,NULL,'ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(14,NULL,NULL,'PROTOCOL_BOOK_KEYWORDS',NULL,NULL,'Βιβλίο Πρωτοκόλλου',NULL,NULL,NULL,NULL),(15,NULL,NULL,'PROTOCOL_BOOK_SUBJECT',NULL,NULL,'Βιβλίο Πρωτοκόλλου',NULL,NULL,NULL,NULL),(16,NULL,NULL,'PROTOCOL_BOOK_TITLE',NULL,NULL,'Βιβλίο Πρωτοκόλλου',NULL,NULL,NULL,NULL),(17,NULL,NULL,'PROTOCOL_BOOK_FILE',NULL,NULL,'protocol_book.pdf',NULL,NULL,NULL,NULL),(18,NULL,NULL,'PROTOCOL_BOOK_FONT_FOLDER',NULL,NULL,'/home/aanagnostopoulos/workspace/eProtocol/WebContent/fonts',NULL,NULL,NULL,NULL),(19,NULL,NULL,'DISTRIBUTION_METHOD_NA_ID',NULL,NULL,'8',NULL,NULL,NULL,NULL),(20,NULL,NULL,'OKM_AUTH_PORT_ADDRESS',NULL,NULL,'http://localhost:8080/OpenKM/OKMAuth',NULL,NULL,NULL,NULL),(21,NULL,NULL,'OKM_DOCUMENT_PORT_ADDRESS',NULL,NULL,'http://localhost:8080/OpenKM/OKMDocument',NULL,NULL,NULL,NULL),(22,NULL,NULL,'OKM_FOLDER_PORT_ADDRESS',NULL,NULL,'http://localhost:8080/OpenKM/OKMFolder',NULL,NULL,NULL,NULL),(23,NULL,NULL,'OKM_SEARCH_PORT_ADDRESS',NULL,NULL,'http://localhost:8080/OpenKM/OKMSearch',NULL,NULL,NULL,NULL),(24,NULL,NULL,'DIAVGEIA_BASE_URL',NULL,NULL,'https://193.105.109.110/apofaseis-dokimes',NULL,NULL,NULL,NULL),(25,NULL,NULL,'DIAVGEIA_TIMEOUT',NULL,NULL,'6000',NULL,NULL,NULL,NULL),(26,NULL,NULL,'DIAVGEIA_TRUSTSTORE_FILE',NULL,NULL,'test',NULL,NULL,NULL,NULL),(27,NULL,NULL,'DIAVGEIA_TRUSTSTORE_PASS',NULL,NULL,'test',NULL,NULL,NULL,NULL),(28,NULL,NULL,'DIAVGEIA_USER',NULL,NULL,'test',NULL,NULL,NULL,NULL),(29,NULL,NULL,'DIAVGEIA_PASSWORD',NULL,NULL,'test',NULL,NULL,NULL,NULL),(30,NULL,NULL,'DIAVGEIA_EMAIL',NULL,NULL,'test',NULL,NULL,NULL,NULL),(31,NULL,NULL,'DIAVGEIA_ORGANIZATION_ID',NULL,NULL,'test',NULL,NULL,NULL,NULL),(32,NULL,NULL,'DIAVGEIA_UNIT_ID',NULL,NULL,'test',NULL,NULL,NULL,NULL),(33,NULL,NULL,'DIAVGEIA_SIGNS',NULL,NULL,'test',NULL,NULL,NULL,NULL),(34,NULL,NULL,'DIAVGEIA_TMP_FILES',NULL,NULL,'test',NULL,NULL,NULL,NULL),(35,NULL,NULL,'DIAVGEIA_URL_EIDOS_APOFASIS',NULL,NULL,'http://193.105.109.185/api/types.xml',NULL,NULL,NULL,NULL),(36,NULL,NULL,'DIAVGEIA_URL_EIDOS_THEMATIK',NULL,NULL,'http://193.105.109.185/api/tags.xml',NULL,NULL,NULL,NULL);
+INSERT INTO `parameter` VALUES (1,NULL,NULL,'DISTRIBUTION_METHOD_EMAIL_ID',NULL,NULL,'3',NULL,NULL,NULL,NULL),(2,NULL,NULL,'DISTRIBUTION_METHOD_WEBSERVICE_ID',NULL,NULL,'7',NULL,NULL,NULL,NULL),(3,NULL,NULL,'SMTP_HOST',NULL,NULL,'mail.illumine.gr',NULL,NULL,NULL,NULL),(4,NULL,NULL,'SMTP_PASSWORD',NULL,NULL,'XINU666+1',NULL,NULL,NULL,NULL),(5,NULL,NULL,'SMTP_USER',NULL,NULL,'mountrakis@illumine.gr',NULL,NULL,NULL,NULL),(6,NULL,NULL,'EMAIL_FROM',NULL,NULL,'mountrakis@illumine.gr',NULL,NULL,NULL,NULL),(7,NULL,NULL,'OKM_NODE_PENDING_INCOMING',NULL,NULL,'/okm:root/PendingIncoming',NULL,NULL,NULL,NULL),(8,NULL,NULL,'OKM_NODE_INCOMING',NULL,NULL,'/okm:root/IncomingProtocol',NULL,NULL,NULL,NULL),(9,NULL,NULL,'OKM_NODE_PENDING_OUTGOING',NULL,NULL,'/okm:root/PendingOutgoing',NULL,NULL,NULL,NULL),(10,NULL,NULL,'OKM_NODE_OUTGOING',NULL,NULL,'/okm:root/OutgoingProtocol',NULL,NULL,NULL,NULL),(11,NULL,NULL,'PROTOCOL_BOOK_COMPANY',NULL,NULL,'ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(12,NULL,NULL,'PROTOCOL_BOOK_AUTHOR',NULL,NULL,'ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(13,NULL,NULL,'PROTOCOL_BOOK_CREATOR',NULL,NULL,'ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(14,NULL,NULL,'PROTOCOL_BOOK_KEYWORDS',NULL,NULL,'Βιβλίο Πρωτοκόλλου',NULL,NULL,NULL,NULL),(15,NULL,NULL,'PROTOCOL_BOOK_SUBJECT',NULL,NULL,'Βιβλίο Πρωτοκόλλου',NULL,NULL,NULL,NULL),(16,NULL,NULL,'PROTOCOL_BOOK_TITLE',NULL,NULL,'Βιβλίο Πρωτοκόλλου',NULL,NULL,NULL,NULL),(17,NULL,NULL,'PROTOCOL_BOOK_FILE',NULL,NULL,'protocol_book.pdf',NULL,NULL,NULL,NULL),(18,NULL,NULL,'PROTOCOL_BOOK_FONT_FOLDER',NULL,NULL,'/home/aanagnostopoulos/workspace/eProtocol/WebContent/fonts',NULL,NULL,NULL,NULL),(19,NULL,NULL,'DISTRIBUTION_METHOD_NA_ID',NULL,NULL,'8',NULL,NULL,NULL,NULL),(20,NULL,NULL,'OKM_AUTH_PORT_ADDRESS',NULL,NULL,'http://localhost:8080/OpenKM/OKMAuth',NULL,NULL,NULL,NULL),(21,NULL,NULL,'OKM_DOCUMENT_PORT_ADDRESS',NULL,NULL,'http://localhost:8080/OpenKM/OKMDocument',NULL,NULL,NULL,NULL),(22,NULL,NULL,'OKM_FOLDER_PORT_ADDRESS',NULL,NULL,'http://localhost:8080/OpenKM/OKMFolder',NULL,NULL,NULL,NULL),(23,NULL,NULL,'OKM_SEARCH_PORT_ADDRESS',NULL,NULL,'http://localhost:8080/OpenKM/OKMSearch',NULL,NULL,NULL,NULL),(24,NULL,NULL,'DIAVGEIA_BASE_URL',NULL,NULL,'https://193.105.109.110/apofaseis-dokimes',NULL,NULL,NULL,NULL),(25,NULL,NULL,'DIAVGEIA_TIMEOUT',NULL,NULL,'6000',NULL,NULL,NULL,NULL),(26,NULL,NULL,'DIAVGEIA_TRUSTSTORE_FILE',NULL,NULL,'/home/aanagnostopoulos/.keystore',NULL,NULL,NULL,'2011-06-02 06:30:14'),(27,NULL,NULL,'DIAVGEIA_TRUSTSTORE_PASS',NULL,NULL,'changeit',NULL,NULL,NULL,'2011-06-02 06:30:14'),(28,NULL,NULL,'DIAVGEIA_USER',NULL,NULL,'366_admin',NULL,NULL,NULL,'2011-06-02 06:30:14'),(29,NULL,NULL,'DIAVGEIA_PASSWORD',NULL,NULL,'366',NULL,NULL,NULL,'2011-06-02 06:30:14'),(30,NULL,NULL,'DIAVGEIA_EMAIL',NULL,NULL,'angelosanagnostopoulos@gmail.com',NULL,NULL,NULL,'2011-06-02 06:30:14'),(31,NULL,NULL,'DIAVGEIA_ORGANIZATION_ID',NULL,NULL,'366',NULL,NULL,NULL,'2011-06-02 06:30:14'),(32,NULL,NULL,'DIAVGEIA_UNIT_ID',NULL,NULL,'2111',NULL,NULL,NULL,'2011-06-02 06:30:14'),(33,NULL,NULL,'DIAVGEIA_SIGNS',NULL,NULL,'16',NULL,NULL,NULL,'2011-06-02 06:30:14'),(34,NULL,NULL,'DIAVGEIA_TMP_FILES',NULL,NULL,'/tmp',NULL,NULL,NULL,'2011-06-02 06:30:14'),(35,NULL,NULL,'DIAVGEIA_URL_EIDOS_APOFASIS',NULL,NULL,'http://193.105.109.185/api/types.xml',NULL,NULL,NULL,NULL),(36,NULL,NULL,'DIAVGEIA_URL_EIDOS_THEMATIK',NULL,NULL,'http://193.105.109.185/api/tags.xml',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `parameter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -483,6 +500,8 @@ CREATE TABLE `project` (
   `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `project_FKIndex1` (`user_creator_id`),
+  KEY `FKED904B19B2A351E8` (`user_creator_id`),
+  CONSTRAINT `FKED904B19B2A351E8` FOREIGN KEY (`user_creator_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_7cb85cba-215b-11e0-9059-080027b715d2` FOREIGN KEY (`user_creator_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -538,6 +557,26 @@ CREATE TABLE `project_task` (
   KEY `project_tasks_FKIndex8` (`user_dispatcher_id`),
   KEY `project_task_FKIndex9` (`parent_task_id`),
   KEY `project_task_FKIndex10` (`contact_id`),
+  KEY `FK3800AAEB42FA1627` (`task_document_id`),
+  KEY `FK3800AAEBEAF49C47` (`task_type_id`),
+  KEY `FK3800AAEB79877325` (`user_dispatcher_id`),
+  KEY `FK3800AAEB9CEC3E1C` (`parent_task_id`),
+  KEY `FK3800AAEBEA6B48ED` (`task_state_id`),
+  KEY `FK3800AAEBBAA05478` (`project_id`),
+  KEY `FK3800AAEBBBB75D87` (`task_priority_id`),
+  KEY `FK3800AAEB8388E318` (`contact_id`),
+  KEY `FK3800AAEBB2A351E8` (`user_creator_id`),
+  KEY `FK3800AAEB7058CE27` (`task_result_id`),
+  CONSTRAINT `FK3800AAEB42FA1627` FOREIGN KEY (`task_document_id`) REFERENCES `task_document` (`id`),
+  CONSTRAINT `FK3800AAEB7058CE27` FOREIGN KEY (`task_result_id`) REFERENCES `task_result` (`id`),
+  CONSTRAINT `FK3800AAEB79877325` FOREIGN KEY (`user_dispatcher_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `FK3800AAEB8388E318` FOREIGN KEY (`contact_id`) REFERENCES `contact` (`id`),
+  CONSTRAINT `FK3800AAEB9CEC3E1C` FOREIGN KEY (`parent_task_id`) REFERENCES `project_task` (`id`),
+  CONSTRAINT `FK3800AAEBB2A351E8` FOREIGN KEY (`user_creator_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `FK3800AAEBBAA05478` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`),
+  CONSTRAINT `FK3800AAEBBBB75D87` FOREIGN KEY (`task_priority_id`) REFERENCES `task_priority` (`id`),
+  CONSTRAINT `FK3800AAEBEA6B48ED` FOREIGN KEY (`task_state_id`) REFERENCES `task_state` (`id`),
+  CONSTRAINT `FK3800AAEBEAF49C47` FOREIGN KEY (`task_type_id`) REFERENCES `task_type` (`id`),
   CONSTRAINT `fk_7caf6d6c-215b-11e0-9059-080027b715d2` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cb02aa4-215b-11e0-9059-080027b715d2` FOREIGN KEY (`task_state_id`) REFERENCES `task_state` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cb0faba-215b-11e0-9059-080027b715d2` FOREIGN KEY (`task_type_id`) REFERENCES `task_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -577,6 +616,10 @@ CREATE TABLE `project_user` (
   PRIMARY KEY (`project_id`,`users_id`),
   KEY `project_users_FKIndex1` (`project_id`),
   KEY `project_users_FKIndex2` (`users_id`),
+  KEY `FK38016131BAA05478` (`project_id`),
+  KEY `FK380161311037998` (`users_id`),
+  CONSTRAINT `FK380161311037998` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `FK38016131BAA05478` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`),
   CONSTRAINT `fk_7cb27d0e-215b-11e0-9059-080027b715d2` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cb369ee-215b-11e0-9059-080027b715d2` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
@@ -647,10 +690,16 @@ CREATE TABLE `protocol_document` (
   KEY `protocol_document_FKIndex1` (`incoming_protocol_id`),
   KEY `protocol_document_FKIndex2` (`outgoing_protocol_id`),
   KEY `fk_protocol_document_document_types1` (`document_types_id`),
+  KEY `FK47525EE21ED49D9C` (`document_types_id`),
+  KEY `FK47525EE2B4D7B2C9` (`incoming_protocol_id`),
+  KEY `FK47525EE26740CA55` (`outgoing_protocol_id`),
+  CONSTRAINT `FK47525EE21ED49D9C` FOREIGN KEY (`document_types_id`) REFERENCES `document_type` (`id`),
+  CONSTRAINT `FK47525EE26740CA55` FOREIGN KEY (`outgoing_protocol_id`) REFERENCES `outgoing_protocol` (`id`),
+  CONSTRAINT `FK47525EE2B4D7B2C9` FOREIGN KEY (`incoming_protocol_id`) REFERENCES `incoming_protocol` (`id`),
   CONSTRAINT `fk_7cbf98ea-215b-11e0-9059-080027b715d2` FOREIGN KEY (`incoming_protocol_id`) REFERENCES `incoming_protocol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cc08868-215b-11e0-9059-080027b715d2` FOREIGN KEY (`outgoing_protocol_id`) REFERENCES `outgoing_protocol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_protocol_document_document_types1` FOREIGN KEY (`document_types_id`) REFERENCES `document_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -659,7 +708,7 @@ CREATE TABLE `protocol_document` (
 
 LOCK TABLES `protocol_document` WRITE;
 /*!40000 ALTER TABLE `protocol_document` DISABLE KEYS */;
-INSERT INTO `protocol_document` VALUES (65,NULL,31,2,'casaparts.log.1',1048644,'application/octet-stream',1,'adsfadsf','/okm:root/IncomingProtocol/2/casaparts.log.1','96b8a57d-4692-4f3d-8eea-5bccd01030ce',NULL),(66,1,NULL,2,'casaparts.log.1',1048644,'application/octet-stream',1,'key1','/okm:root/OutgoingProtocol/3/casaparts.log.1','286eb00c-5d1b-4e06-a27e-b070b9b3dec3',NULL);
+INSERT INTO `protocol_document` VALUES (65,NULL,31,2,'casaparts.log.1',1048644,'application/octet-stream',1,'adsfadsf','/okm:root/IncomingProtocol/2/casaparts.log.1','96b8a57d-4692-4f3d-8eea-5bccd01030ce',NULL),(66,1,NULL,2,'casaparts.log.1',1048644,'application/octet-stream',1,'key1','/okm:root/OutgoingProtocol/3/casaparts.log.1','286eb00c-5d1b-4e06-a27e-b070b9b3dec3',NULL),(67,2,NULL,1,'christoforouz_incident.pdf',1830544,'application/pdf',1,'test','/okm:root/OutgoingProtocol/4/christoforouz_incident.pdf','502284b1-4119-4037-9e18-0e94df4f2c17',NULL),(68,2,NULL,3,'eProtocol_DiavgeiaV1.0.pdf',164281,'application/pdf',2,'key','/okm:root/OutgoingProtocol/4/eProtocol_DiavgeiaV1.0.pdf','7ecee509-7838-4988-aeeb-60ef1b8a5671',NULL);
 /*!40000 ALTER TABLE `protocol_document` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -689,7 +738,7 @@ CREATE TABLE `protocol_number` (
 
 LOCK TABLES `protocol_number` WRITE;
 /*!40000 ALTER TABLE `protocol_number` DISABLE KEYS */;
-INSERT INTO `protocol_number` VALUES (1,3,3,1,2011,2,NULL,'2011-05-31 11:24:48');
+INSERT INTO `protocol_number` VALUES (1,4,4,1,2011,2,NULL,'2011-06-02 06:39:02');
 /*!40000 ALTER TABLE `protocol_number` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -756,6 +805,10 @@ CREATE TABLE `role_to_resource` (
   PRIMARY KEY (`role_id`,`resource_id`),
   KEY `roles_to_resource_FKIndex1` (`role_id`),
   KEY `roles_to_resource_FKIndex2` (`resource_id`),
+  KEY `FKFBD0DF09210EDD5C` (`role_id`),
+  KEY `FKFBD0DF094232955C` (`resource_id`),
+  CONSTRAINT `FKFBD0DF09210EDD5C` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
+  CONSTRAINT `FKFBD0DF094232955C` FOREIGN KEY (`resource_id`) REFERENCES `resource` (`id`),
   CONSTRAINT `fk_7cac7e54-215b-11e0-9059-080027b715d2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_7cad2692-215b-11e0-9059-080027b715d2` FOREIGN KEY (`resource_id`) REFERENCES `resource` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
@@ -788,6 +841,8 @@ CREATE TABLE `task_document` (
   `okm_uuid` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_task_document_document_type1` (`document_type_id`),
+  KEY `FK33DF3295A75E2173` (`document_type_id`),
+  CONSTRAINT `FK33DF3295A75E2173` FOREIGN KEY (`document_type_id`) REFERENCES `document_type` (`id`),
   CONSTRAINT `fk_task_document_document_type1` FOREIGN KEY (`document_type_id`) REFERENCES `document_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -820,6 +875,12 @@ CREATE TABLE `task_message` (
   KEY `task_messages_FKIndex1` (`project_task_id`),
   KEY `task_message_FKIndex2` (`user_sender_id`),
   KEY `task_message_FKIndex3` (`user_receiver_id`),
+  KEY `FK6239874D702AC6D7` (`user_sender_id`),
+  KEY `FK6239874DFF1BA18B` (`project_task_id`),
+  KEY `FK6239874D368631DD` (`user_receiver_id`),
+  CONSTRAINT `FK6239874D368631DD` FOREIGN KEY (`user_receiver_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `FK6239874D702AC6D7` FOREIGN KEY (`user_sender_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `FK6239874DFF1BA18B` FOREIGN KEY (`project_task_id`) REFERENCES `project_task` (`id`),
   CONSTRAINT `fk_7cb4f340-215b-11e0-9059-080027b715d2` FOREIGN KEY (`project_task_id`) REFERENCES `project_task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cba0a42-215b-11e0-9059-080027b715d2` FOREIGN KEY (`user_sender_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cbad8e6-215b-11e0-9059-080027b715d2` FOREIGN KEY (`user_receiver_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -950,6 +1011,10 @@ CREATE TABLE `user_to_role` (
   PRIMARY KEY (`users_id`,`role_id`),
   KEY `users_to_roles_FKIndex1` (`users_id`),
   KEY `users_to_roles_FKIndex2` (`role_id`),
+  KEY `FK161C9746210EDD5C` (`role_id`),
+  KEY `FK161C97461037998` (`users_id`),
+  CONSTRAINT `FK161C97461037998` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `FK161C9746210EDD5C` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
   CONSTRAINT `fk_7cab0434-215b-11e0-9059-080027b715d2` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_7cabb168-215b-11e0-9059-080027b715d2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
@@ -986,6 +1051,8 @@ CREATE TABLE `users` (
   `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `users_FKIndex1` (`users_manager_id`),
+  KEY `FK6A68E0823508C6A` (`users_manager_id`),
+  CONSTRAINT `FK6A68E0823508C6A` FOREIGN KEY (`users_manager_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_7cc17c3c-215b-11e0-9059-080027b715d2` FOREIGN KEY (`users_manager_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1009,4 +1076,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-31 16:17:40
+-- Dump completed on 2011-06-10 13:31:28
