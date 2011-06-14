@@ -41,8 +41,10 @@
 
 	<path id="classpatheProtocolWebService">
 		<pathelement location="${build.dir}/ScriptumModel" />
+		<pathelement location="${build.dir}/eProtocolServices" />
 		<fileset dir="EarContent/lib">
 			<include name="*.jar" />
+			<exclude name="eProtocolServices.jar" />			
 		</fileset>
 	</path>
 
