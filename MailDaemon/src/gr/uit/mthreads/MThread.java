@@ -4,8 +4,8 @@ package gr.uit.mthreads;
 import java.util.Date;
 
 /**
- * All MThreads parent.
- * @author mike mountrakis mountrakis@uit.gr
+ * STANDARD UIT THREAD CLASS LIBRARY
+ * @author Mike Mountrakis mountrakis@uit.gr
  */
 
 public abstract class MThread extends Thread{

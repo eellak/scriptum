@@ -2,6 +2,10 @@ package gr.uit.mthreads;
 
 import java.util.Date;
 
+/**
+ * STANDARD UIT THREAD CLASS LIBRARY
+ * @author Mike Mountrakis mountrakis@uit.gr
+ */
 public class MDirectThread extends MThread{
 	
 	public MDirectThread() {

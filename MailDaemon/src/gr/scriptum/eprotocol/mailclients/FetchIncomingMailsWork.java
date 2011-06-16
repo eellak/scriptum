@@ -33,6 +33,14 @@ import javax.transaction.UserTransaction;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * Task that is excecuted from a Java Thread responsible to<br> 
+ * download all incoming protocol Emails<br>
+ * Parses the mails to IncomingProtocol nodes <ds>
+ * Stores the IncomingProtocols to Incoming Pending Folder in the Document Management System
+ * @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
 public class FetchIncomingMailsWork implements MWork {
 
 	private static Log log = LogFactory.getLog(FetchIncomingMailsWork.class);

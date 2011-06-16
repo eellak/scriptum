@@ -4,8 +4,8 @@ package gr.uit.mthreads;
 import java.util.Date;
 
 /**
- * @author mike mountrakis mountrakis@iot.gr
- *
+ * STANDARD UIT THREAD CLASS LIBRARY
+ * @author Mike Mountrakis mountrakis@uit.gr
  */
 
 public class MTransientThread extends MThread{

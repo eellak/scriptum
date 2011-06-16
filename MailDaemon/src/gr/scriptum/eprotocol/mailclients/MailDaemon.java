@@ -7,7 +7,11 @@ import gr.scriptum.eprotocol.mailclients.MailDaemonMBean;
 import gr.scriptum.eprotocol.mailclients.MailDispatcherConfig;
 import gr.uit.mthreads.MTransientThread;
 
-
+/**
+ * Implementation Class of MailDaemonMBean
+ * @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
 public class MailDaemon  implements MailDaemonMBean{
 	
 	public static final int DEFAULT_SLEEP_PERIOD = 60000;
