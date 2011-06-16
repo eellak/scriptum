@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * This is what a document looks like when a client needs to upload it by calling receiveProtocol()
  * method
- * @author Mike Mountrakis
+ *@author Mike Mountrakis mountrakis@uit.gr
  *
  */
 

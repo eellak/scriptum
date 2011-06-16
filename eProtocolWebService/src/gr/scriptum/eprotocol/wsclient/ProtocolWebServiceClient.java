@@ -10,7 +10,11 @@ import org.apache.commons.logging.LogFactory;
 import gr.scriptum.eprotocol.ws.endpoint.ProtocolWebServiceProxy;
 import gr.scriptum.eprotocol.wserver.*;
 
-
+/**
+ * eProtocol Web Service Client Implementation class
+ * @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
 public class ProtocolWebServiceClient implements EProtocolWebServiceClient{
 	private static Log logger = LogFactory.getLog(ProtocolWebServiceClient.class.getSimpleName());
 	ProtocolWebServiceClientConfig 	configuration;
@@ -22,7 +26,11 @@ public class ProtocolWebServiceClient implements EProtocolWebServiceClient{
 	}
 	  
 	
-	
+	/**
+	 * Proxy Singletton factory to create WEB Service clients 
+	 * @return
+	 * @throws Exception
+	 */
 	  private ProtocolWebServiceProxy getInstance() throws Exception {
 		  ProtocolWebServiceProxy eProtocolProxy = new ProtocolWebServiceProxy();
 			if (configuration != null) {
@@ -33,7 +41,9 @@ public class ProtocolWebServiceClient implements EProtocolWebServiceClient{
 			return eProtocolProxy;	  
 	  }
 	  
-	  
+	  /**
+	   * WSDL Client method implementation 
+	   */
 	  public ProtocolReceipt sendProtocol( ProtocolMessage message ) throws Exception{
 		  ProtocolWebServiceProxy  proxy = getInstance();
 		  
@@ -82,7 +92,9 @@ public class ProtocolWebServiceClient implements EProtocolWebServiceClient{
 		  
 	  }
 	  
-		  
+		  /**
+		   * Inquires about a protocol. WSDL method implementation
+		   */
 	  public ProtocolInfo inquireProtocol(ProtocolQuery query) throws Exception{
 		  ProtocolWebServiceProxy  proxy = getInstance();
 		  

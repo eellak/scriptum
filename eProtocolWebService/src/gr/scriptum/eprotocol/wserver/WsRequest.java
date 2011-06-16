@@ -1,7 +1,7 @@
 package gr.scriptum.eprotocol.wserver;
 /**
  * The parent of all eProtocol WS Requests
- * @author mike
+ * @author Mike Mountrakis mountrakis@uit.gr
  *
  */
 

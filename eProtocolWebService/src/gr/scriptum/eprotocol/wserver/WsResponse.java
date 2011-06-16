@@ -1,7 +1,7 @@
 package gr.scriptum.eprotocol.wserver;
 /**
  * The head of all eProtocol Web Service Responses
- * @author Mike Mountrakis
+ * @author Mike Mountrakis mountrakis@uit.gr
  *
  */
 public abstract class WsResponse{
