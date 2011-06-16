@@ -4,7 +4,11 @@ import gr.scriptum.domain.ScriptumDocument;
 
 import java.util.ArrayList;
 import java.util.UUID;
-
+/**
+ * 
+ *  @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
 public class ResponseSearch extends Response{
 
 	ArrayList<ScriptumDocument> searchResults = new ArrayList<ScriptumDocument>();

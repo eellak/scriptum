@@ -3,7 +3,7 @@ package gr.scriptum.eprotocol.ws;
 
 /**
  * Constants of communications protocol error between OpenKm and eProtocol
- * @author mike
+ * @author Mike Mountrakis mountrakis@uit.gr
  */
 
 

@@ -20,25 +20,16 @@ import com.openkm.ws.endpoint.QueryResult;
 import com.openkm.ws.endpoint.RepositoryException;
 
 
-/**
-* TODO
-* 1) create proxy references in a method init() that will be called as a singleton call.
-* so that we save small time from proxy reconstruction/re-bind.
-* 
-* 2) Fix the problem from OpenKM that there are no messages to thrown exceptions when a folder or a file
-* is forced to recreated (already exists). In this case, the exceptions thrown contain null error message.
-* 
-* 3) Ask Paco to provide a small explanation about how his Search criteria in ws method OKMSearch.find() 
-* are used.
-*/
+
 
 
 /**
- * @author mike
+ * 
  * @version 1.0 
  * Implementation of Scriptum to OpenKM interface over AXIS2 libraries
  * Web Service dispatcher class provides the implementation of
  *          interface between eProtocol application with OpenKM.
+ *  @author Mike Mountrakis mountrakis@uit.gr
  */
 public final class OkmProtocolDispatcherImpl  implements OkmProtocolDispatcher{
 	

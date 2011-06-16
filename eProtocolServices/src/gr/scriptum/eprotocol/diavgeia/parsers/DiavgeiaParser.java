@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-
+/**
+ * Parser of Restull API response as it is sent from diavgeia
+ * @author Mike Mountrakis mountrakis@uit.gr
+ * Implements SaxParser methods in order to parse XML GET response sent from diavgeia API 
+ */
 
 public class DiavgeiaParser extends SAXParserHelper {
 

@@ -3,6 +3,11 @@ package gr.scriptum.eprotocol.ws;
 import gr.scriptum.domain.ProtocolBook;
 import gr.scriptum.domain.ProtocolNode;
 
+/**
+ * Creates a protocol node in Document Management System
+ *  @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
 class RequestProtocolNode extends Request {
 
 	/**

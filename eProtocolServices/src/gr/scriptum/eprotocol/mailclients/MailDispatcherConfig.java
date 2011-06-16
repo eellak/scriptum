@@ -8,7 +8,7 @@ import java.util.Properties;
  * It extends  Authenticator so that it can be used in case the mail account is 
  * configured inside JBoss. For example using a jndi lookup session for  
  * eprotocol/mailer configuration
- * @author mike
+ * @author Mike Mountrakis mountrakis@uit.gr
  *
  */
 

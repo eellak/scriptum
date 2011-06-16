@@ -8,6 +8,12 @@ import java.io.InputStreamReader;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpMethod;
 
+/**
+ * Helper class that DEBUGS HttpRequests
+ * @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
+
 public class HttpDispatcher {
 
 	private boolean debug = false;

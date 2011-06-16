@@ -1,5 +1,10 @@
 package gr.scriptum.eprotocol.ws;
 
+/**
+ * Request to register a document to the Protocol Node in Document Management System.
+ *  @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
 public class RequestSendDocument extends Request {
 
 	private String documentPath;

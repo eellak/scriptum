@@ -21,6 +21,14 @@ import gr.scriptum.domain.DiavgeiaDecisionType;
 import gr.scriptum.domain.DiavgeiaSubjectGroup;
 import gr.scriptum.eprotocol.diavgeia.parsers.*;
 
+/**
+ * Diavgeia Updater Implementation Class.
+ * Makes use of the  diavgeia.gov.gr restfull API. makes GET requests, parses the returned XML files and return
+ * ArrayList of DiavgeiaDecisionType and DiavgeiaSubjectGroup.
+ * The default Urls point to diavgeia.gov.gr production server 
+ * @author Mike Mountrakis mountrakis@uit.gr
+ */
+
 public class DiavgeiaUpdaterImpl extends HttpDispatcher implements DiavgeiaUpdater{
 	static boolean DEBUG = true;
 

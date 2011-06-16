@@ -4,6 +4,11 @@ import gr.scriptum.domain.ScriptumDocument;
 
 import java.util.UUID;
 
+/**
+ * 
+ *  @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
 public class ResponseAddDocumentToNode extends Response{
 	private ScriptumDocument document;
 

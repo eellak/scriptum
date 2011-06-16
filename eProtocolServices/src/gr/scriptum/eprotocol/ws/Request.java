@@ -5,7 +5,7 @@ import java.util.UUID;
 
 /**
  * Parent for all Document Repository (OpenKM) requests
- * @author mike
+ *  @author Mike Mountrakis mountrakis@uit.gr
  */
 
 

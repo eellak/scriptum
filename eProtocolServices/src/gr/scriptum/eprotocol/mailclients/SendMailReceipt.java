@@ -12,7 +12,7 @@ import java.util.Set;
 
 /**
  * The receipt of sending a message.
- * @author mike
+ * @author Mike Mountrakis mountrakis@uit.gr
  *
  */
 

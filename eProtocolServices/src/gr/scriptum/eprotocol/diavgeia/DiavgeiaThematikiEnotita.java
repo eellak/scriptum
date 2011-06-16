@@ -1,5 +1,12 @@
 package gr.scriptum.eprotocol.diavgeia;
 
+/**
+ * Class that keeps information for Thematikes Enotites from diavgeia.gov.gr
+ * @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
+
+
 public class DiavgeiaThematikiEnotita {
 	public Integer id;
 	public String  uId;

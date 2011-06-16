@@ -5,19 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * - Στη φόρμα καταχώρησης των στοιχείων μιας απόφασης περιλαμβάνονται τα παρακάτω πεδία:
-name                     Περιγραφή                                                Τύπος        Υποχρεωτικό
-arithmosProtokolou       Ο Αριθμός Πρωτοκόλλου της Απόφασης                       string       ΝΑΙ
-apofasiDate              Η ημ/νια της απόφασης YYYY-MM-DD                                      NAI
-syntaktisEmail           Το email που θα λάβει ενημέρωση για την ολοκλήρωση της ανάρτησης  string  ΝΑΙ
-level2Text                Το ID του φορέα                                         integer      NAI 
-thema                    Το θέμα της απόφασης                                     string       ΝΑΙ
-eidosApofasis            Το ID του τύπου απόφασης                                 integer      ΝΑΙ
-monadesText              Το ID της μονάδας του φορέα                              integer      ΝΑΙ
-telikosYpografwn         Το ID του τελικού υπογράφοντα                            integer      ΝΑΙ
-thematikiEnotitaValuesText Τα IDs των θεματικών ενοτήτων                          #id1#,#id2#,   ΟΧΙ
-file                     Το αρχείο της απόφασης σε μορφή PDF                      HTTP file    ΝΑΙ
-
+Class that represents the Request sent to diavgeia.gov.gr
 * @author mike
 *
 */

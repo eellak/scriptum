@@ -1,5 +1,9 @@
 package gr.scriptum.eprotocol.ws;
-
+/**
+ * Rename a protocol node
+ *  @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
 public class RequestRenameNode extends Request{
 	private String oldName;
 	private String newName;

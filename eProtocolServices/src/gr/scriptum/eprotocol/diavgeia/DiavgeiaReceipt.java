@@ -1,7 +1,11 @@
 package gr.scriptum.eprotocol.diavgeia;
 
 import java.util.Date;
-
+/**
+ * What are the operation results for posting to diavgeia.gov.gr
+ * @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
 public class DiavgeiaReceipt {
 	Integer documentId;
 	String  sessionId;

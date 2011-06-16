@@ -1,5 +1,10 @@
 package gr.scriptum.eprotocol.ws;
 
+/**
+ *  Makes a Serach Request with actual content or comma separated keywords to the Document Management System
+ *  @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
 public class RequestSearch extends Request{
 
 	private String content;

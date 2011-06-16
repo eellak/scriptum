@@ -1,6 +1,9 @@
 package gr.scriptum.eprotocol.diavgeia;
 
-
+/**
+ * Object reflected to SCRIPTUM Database that keeps information about EIDOS APOFASIS
+ * @author Mike Mountrakis mountrakis@uit.gr
+ */
 public class DiavgeiaEidosApofasis {
 	public Integer id;
 	public String  uId;

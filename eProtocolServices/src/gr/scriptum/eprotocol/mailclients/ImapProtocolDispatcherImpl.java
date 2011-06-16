@@ -42,6 +42,12 @@ class YourAuthenticator extends Authenticator {
 	}
 }
 
+/**
+ * Mail Dispatcher. Handles sending and receiving Emails. Can cope with protocols IMAP, POP3, IMAPS for Google.
+ * @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
+
 public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 	public static Log log = LogFactory.getLog(ImapProtocolDispatcherImpl.class);
 
@@ -66,6 +72,14 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 	// Public incoming
 	// ------------------------------
 
+	/**
+	 * Contacts IMAP/POP3/IMAPS server <br>
+	 * Authenticates <br>
+	 * Retrieves incoming mail <br>
+	 * Parses incoming mail <br>
+	 * Creates  Incoming Protoccols <br>
+	 * Returns an array of InconingProtocols
+	 */
 	public synchronized IncomingProtocol[] receiveIncomingProtocols()
 			throws MessagingException {
 
@@ -398,7 +412,16 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 		return mailReceipt;
 	}
 
-	// Works! it has been tested
+	/**
+	 * Simple Send Mail Method vi SMTP protocol
+	 * @param to
+	 * @param cc
+	 * @param from
+	 * @param subject
+	 * @param text
+	 * @param attachements
+	 * @return
+	 */
 	public SendMailReceipt sendOutgoingMail(String[] to, String[] cc,
 			String from, String subject, String text, File[] attachements) {
 
@@ -526,6 +549,9 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 
 	}
 
+	/**
+	 * Send all Outgoing Protocols to the SMTP mail server
+	 */
 	public SendMailReceipt[] sendAllOutgoingProtocols(
 			OutgoingProtocol[] outProtocol) {
 

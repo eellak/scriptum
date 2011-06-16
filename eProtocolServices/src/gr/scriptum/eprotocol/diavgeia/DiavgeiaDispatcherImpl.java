@@ -1,8 +1,17 @@
 package gr.scriptum.eprotocol.diavgeia;
 
-/*
- java -Djavax.net.ssl.trustStore=truststore -Djavax.net.ssl.trustStorePassword=123456 MyADiavgeiaDispatcherImplpp
-*/
+/**
+ * Diavgeia Dispatcher Configuration Object. 
+ * Makes PDF document posts to diavgeia.gov.gr
+ * The default baseUrl points to diavgeia.gov.gr test server.
+ * 
+ *  Remember to use keytool to register the truststore or imply the trustore during java runtime:<br>
+ *  java -Djavax.net.ssl.trustStore=truststore -Djavax.net.ssl.trustStorePassword=123456 MyADiavgeiaDispatcherImplpp
+
+ *  
+ * @author Mike Mountrakis mountrakis@uit.gr
+ */
+
 
 
 

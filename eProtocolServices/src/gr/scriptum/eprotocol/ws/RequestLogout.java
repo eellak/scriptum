@@ -2,7 +2,7 @@ package gr.scriptum.eprotocol.ws;
 
 /**
  * The logout request.
- * @author mike
+ *  @author Mike Mountrakis mountrakis@uit.gr
  *
  */
 public class RequestLogout extends Request{

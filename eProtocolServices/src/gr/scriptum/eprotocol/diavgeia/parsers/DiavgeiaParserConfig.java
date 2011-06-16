@@ -1,5 +1,9 @@
 package gr.scriptum.eprotocol.diavgeia.parsers;
 
+/**
+ * Class that configures the DiavgeiaParser. Contains the mission critical parsing tokens
+ * @author Mike Mountrakis mountrakis@uit.gr
+ */
 public class DiavgeiaParserConfig {
 	String elementStart = "ns3:tag";
 	String attributeUid = "uid";

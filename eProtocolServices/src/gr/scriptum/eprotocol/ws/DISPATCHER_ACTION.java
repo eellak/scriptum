@@ -1,5 +1,10 @@
 package gr.scriptum.eprotocol.ws;
 
+/** 
+ * Dispatcher Operations Action Codes
+ * @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
 public class DISPATCHER_ACTION {
 	public static final String LOGIN = "LOGIN";
 	public static final String LOGOUT = "LOGOUT";

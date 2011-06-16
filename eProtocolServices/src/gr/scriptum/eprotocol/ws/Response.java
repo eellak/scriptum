@@ -5,7 +5,7 @@ import java.util.UUID;
 
 /**
  * Parent for all repository responses 
- * @author mike
+ *  @author Mike Mountrakis mountrakis@uit.gr
  */
 
 public class Response {

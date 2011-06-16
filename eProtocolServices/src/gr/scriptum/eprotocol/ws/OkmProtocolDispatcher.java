@@ -1,5 +1,11 @@
 package gr.scriptum.eprotocol.ws;
 
+/**
+ * Interface for Dispatching requests to the Document Management System.
+ * If the name tricks you, it is written regardless of OpenKM. You can 
+ *  @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
 public interface OkmProtocolDispatcher {
 	ResponseLogin login(RequestLogin loginRequest);
 

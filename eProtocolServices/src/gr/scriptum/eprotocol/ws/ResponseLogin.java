@@ -3,8 +3,8 @@ package gr.scriptum.eprotocol.ws;
 import java.util.UUID;
 
 /**
- * A response to a RequestLogin request
- * @author mike
+ * A response to a RequestLogin request. BEWARE with the okmToken. This is your login Session Tracker string.
+ *  @author Mike Mountrakis mountrakis@uit.gr
  *
  */
 

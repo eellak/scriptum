@@ -5,6 +5,11 @@ package gr.scriptum.eprotocol.ws;
 import java.util.UUID;
 import com.openkm.ws.endpoint.Folder;
 
+/**
+ * 
+ *  @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
 public class ResponseRenameNode extends Response {
 	private Folder   documentFolder = new Folder();
 

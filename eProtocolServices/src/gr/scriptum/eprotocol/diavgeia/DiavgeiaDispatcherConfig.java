@@ -3,8 +3,19 @@ package gr.scriptum.eprotocol.diavgeia;
 import gr.scriptum.dao.ParameterDAO;
 
 
+/**
+ * Diavgeia Dispatcher Configuration Object. 
+ * Makes PDF document posts to diavgeia.gov.gr
+ * The default baseUrl points to diavgeia.gov.gr test server 
+ * @author Mike Mountrakis mountrakis@uit.gr
+ */
+ 
+
 public class DiavgeiaDispatcherConfig {
 
+	/**
+	 * The default baseUrl points to diavgeia.gov.gr test server
+	 */
 	static String baseUrl = "https://193.105.109.110/apofaseis-dokimes";
 	static int    timeout = 60 * 1000;
 	

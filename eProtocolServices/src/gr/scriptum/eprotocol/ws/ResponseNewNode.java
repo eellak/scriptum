@@ -5,7 +5,11 @@ import gr.scriptum.domain.ScriptumDocument;
 import java.util.ArrayList;
 import java.util.UUID;
 import com.openkm.ws.endpoint.Folder;
-
+/**
+ * 
+ *  @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
 public class ResponseNewNode extends Response {
 	private Folder              documentFolder = new Folder();
 	private ArrayList<ScriptumDocument> documentList = new ArrayList<ScriptumDocument>();

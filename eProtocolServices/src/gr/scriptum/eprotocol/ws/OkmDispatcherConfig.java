@@ -2,8 +2,8 @@ package gr.scriptum.eprotocol.ws;
 
 
 /**
- * The dispacher configuration object provides the endpoint port address.
- * @author mike
+ * The OpenKM dispacher configuration object provides the endpoint port address.
+ * @author Mike Mountrakis mountrakis@uit.gr
  *
  */
 public class OkmDispatcherConfig {
@@ -13,10 +13,6 @@ public class OkmDispatcherConfig {
 	private String OKMFolderPort_address   = "http://localhost:8080/OpenKM/OKMFolder";
 	private String OKMSearchPort_address   = "http://localhost:8080/OpenKM/OKMSearch";	
 
-//	private  String OKMAuthPort_address    = "http://office.uit.gr:8888/OpenKM/OKMAuth";
-//	private String OKMDocumentPort_address = "http://office.uit.gr:8888/OpenKM/OKMDocument";
-//	private String OKMFolderPort_address   = "http://office.uit.gr:8888/OpenKM/OKMFolder";
-//	private String OKMSearchPort_address   = "http://office.uit.gr:8888/OpenKM/OKMSearch";	
 	
 	public OkmDispatcherConfig() {
 		super();

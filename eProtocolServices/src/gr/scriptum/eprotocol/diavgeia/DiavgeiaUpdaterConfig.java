@@ -2,7 +2,11 @@ package gr.scriptum.eprotocol.diavgeia;
 
 import gr.scriptum.dao.ParameterDAO;
 
-
+/**
+ * Diavgeia Updater Configuration Object. 
+ * The default Urls point to diavgeia.gov.gr production server 
+ * @author Mike Mountrakis mountrakis@uit.gr
+ */
 public class DiavgeiaUpdaterConfig {
 
 	static int timeout = 60 * 1000; // 1 min

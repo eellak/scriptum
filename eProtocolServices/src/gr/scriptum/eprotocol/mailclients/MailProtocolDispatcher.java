@@ -6,7 +6,11 @@ import javax.mail.MessagingException;
 
 import gr.scriptum.domain.IncomingProtocol;
 import gr.scriptum.domain.OutgoingProtocol;
-
+/**
+ * Interface that must be followed by all Implementation classes need to dispatch mail requests for SCRIPTUM API
+ * @author mike
+ *
+ */
 public interface MailProtocolDispatcher {
 	
 	/**

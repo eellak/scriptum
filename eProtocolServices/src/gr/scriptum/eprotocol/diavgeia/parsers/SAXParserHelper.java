@@ -5,6 +5,11 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ * General class that helps parsing XML documents using SAX parser
+ * @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
 public class SAXParserHelper extends DefaultHandler {
 	public Locator locator;
 

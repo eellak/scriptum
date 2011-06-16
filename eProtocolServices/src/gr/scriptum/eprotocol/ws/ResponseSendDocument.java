@@ -5,6 +5,11 @@ import java.util.Arrays;
 
 import com.openkm.ws.endpoint.Document;
 
+/**
+ * Retrieves the document information after a  document has been registered with Document Management
+ *  @author Mike Mountrakis mountrakis@uit.gr
+ *
+ */
 public class ResponseSendDocument extends Response {
 	Document documentInfo = null;
 	byte[] content = null;
