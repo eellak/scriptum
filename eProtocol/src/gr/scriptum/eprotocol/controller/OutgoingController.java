@@ -105,11 +105,15 @@ public class OutgoingController extends ProtocolController {
 
 	private int distributionMethodWebServiceId;
 
+	private String mailServerType = MailDispatcherConfig.IMAP;
+	
 	private String smtpHost = null;
 
 	private String smtpUser = null;
 
 	private String smtpPassword = null;
+	
+	private int    smtpPort = MailDispatcherConfig.DEFAULT_SMTP_PORT;
 
 	private String emailFrom = null;
 
@@ -629,12 +633,21 @@ public class OutgoingController extends ProtocolController {
 		}
 
 		MailDispatcherConfig config = new MailDispatcherConfig();
+		
+		if( mailServerType.equalsIgnoreCase(MailDispatcherConfig.IMAP ))
+			config.setIMAP();
+		else if( mailServerType.equalsIgnoreCase(MailDispatcherConfig.POP3 ) )
+			config.setPOP3();
+		else if ( mailServerType.equalsIgnoreCase(MailDispatcherConfig.IMAPS )){
+			config.setIMAPS();
+			config.setEnableStarttls(true);
+		}
 		config.setSmtpHost(smtpHost);
+		config.setSmtpPort(smtpPort);
 		config.setSmtpUser(smtpUser);
 		config.setSmtpPassword(smtpPassword);
 		config.setMessageFrom(emailFrom);
-		config.setIMAP(); // works
-		config.setDebug(true);
+		config.setDebug(false);
 
 		ImapProtocolDispatcherImpl disp = new ImapProtocolDispatcherImpl(config);
 		SendMailReceipt sendMailReceipt = disp.sendOutgoingProtocol(protocol);
@@ -700,8 +713,10 @@ public class OutgoingController extends ProtocolController {
 		defaultDistributionMethodId = parameterDAO
 				.getAsInteger(IConstants.PARAM_DISTRIBUTION_METHOD_NA_ID);
 
+		mailServerType = parameterDAO.getAsString(IConstants.PARAM_MAIL_SERVER_TYPE);
 		smtpHost = parameterDAO.getAsString(IConstants.PARAM_SMTP_HOST);
-		smtpHost = parameterDAO.getAsString(IConstants.PARAM_SMTP_USER);
+		smtpPort = parameterDAO.getAsString(IConstants.PARAM_SMTP_PORT);
+		smtpUser = parameterDAO.getAsString(IConstants.PARAM_SMTP_USER);
 		smtpPassword = parameterDAO.getAsString(IConstants.PARAM_SMTP_PASSWORD);
 		emailFrom = parameterDAO.getAsString(IConstants.PARAM_EMAIL_FROM);
 
