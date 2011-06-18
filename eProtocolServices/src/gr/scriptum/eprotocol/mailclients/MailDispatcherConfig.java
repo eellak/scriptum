@@ -16,7 +16,7 @@ public class MailDispatcherConfig{
 	
 	private static boolean debug = true;
 	
-	public static final int DEFAULT_SMTP_PORT = 25;
+	public static final int DEFAULT_SMTP_PORT = 25; // Beware : Google 's outgoing SMTP Gate is 587
 	public static final int DEFAULT_IMAP_PORT = 143;
 	public static final int DEFAULT_POP3_PORT = 110 ;
 	public static final int DEFAULT_IMAPS_PORT = 993;
