@@ -16,6 +16,8 @@ public class MailDispatcherConfig{
 	
 	private static boolean debug = true;
 	
+	public static final int DEFAULT_TIMEOUT = 5000;
+	
 	public static final int DEFAULT_SMTP_PORT = 25; // Beware : Google 's outgoing SMTP Gate is 587
 	public static final int DEFAULT_IMAP_PORT = 143;
 	public static final int DEFAULT_POP3_PORT = 110 ;
@@ -39,6 +41,8 @@ public class MailDispatcherConfig{
 	private int      maxEmails = 20;
 	private boolean  deleteOriginals = false;
 	private boolean  enableStarttls = false;
+	
+	private int timeout = DEFAULT_TIMEOUT;
 	
 	
 	public MailDispatcherConfig(){	
@@ -78,6 +82,14 @@ public class MailDispatcherConfig{
 		this.enableStarttls = enableStarttls;
 	}
 		
+	public int getTimeout() {
+		return timeout;
+	}
+
+	public void setTimeout(int timeout) {
+		this.timeout = timeout;
+	}
+
 	//For the outgoing Protocol we also need some constants that will be used
 	//in order to have a standardized message exchange
 	private String messageFrom    = "protocol@uit.gr";
@@ -96,13 +108,13 @@ public class MailDispatcherConfig{
 		if( isPop3() ){
 			properties.setProperty("mail.pop3.host", smtpHost);
 			properties.setProperty("mail.pop3.port", "" + rcvPort);
-			properties.setProperty("mail.pop3.connectiontimeout", "5000");
-			properties.setProperty("mail.pop3.timeout", "5000");
+			properties.setProperty("mail.pop3.connectiontimeout", "" + timeout);
+			properties.setProperty("mail.pop3.timeout", "" + timeout);
 		}else if(isImap()){
 			properties.setProperty("mail.imap.host", smtpHost);
 			properties.setProperty("mail.imap.port", "" + rcvPort);
-			properties.setProperty("mail.imap.connectiontimeout", "5000");
-			properties.setProperty("mail.imap.timeout", "5000");
+			properties.setProperty("mail.imap.connectiontimeout", "" + timeout);
+			properties.setProperty("mail.imap.timeout", "" + timeout);
 		}else{ //imaps
 			properties.setProperty("mail.store.protocol", "imaps");
 		}
@@ -112,10 +124,6 @@ public class MailDispatcherConfig{
 		properties.setProperty("mail.transport.protocol", "smtp");
 		properties.setProperty("mail.smtp.host", smtpHost);
 		properties.setProperty("mail.smtp.port", "" + smtpPort);
-		
-		//properties.put("mail.smtp.auth", "true");
-		//properties.setProperty("mail.user", smtpUser);
-		//properties.setProperty("mail.password", smtpPassword);	
 				
 	    // To see what is going on behind the scene
 		if(debug)
@@ -168,8 +176,8 @@ public class MailDispatcherConfig{
 		return messageBodyTxt;
 	}
 
-	public final void setDebug(boolean debug ){
-		debug = true;
+	public final void setDebug(boolean d ){
+		debug = d;
 	}
 	public final boolean getDebug(){
 		return debug;
