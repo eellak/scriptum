@@ -37,8 +37,12 @@ public interface IConstants {
 	public static final String PARAM_DISTRIBUTION_METHOD_WEBSERVICE_ID = "DISTRIBUTION_METHOD_WEBSERVICE_ID";
 	
 	public static final String PARAM_DISTRIBUTION_METHOD_NA_ID = "DISTRIBUTION_METHOD_NA_ID";
-
+	
+	public static final String PARAM_MAIL_SERVER_TYPE = "MAIL_SERVER_TYPE";
+	
 	public static final String PARAM_SMTP_HOST = "SMTP_HOST";
+
+	public static final String PARAM_SMTP_PORT = "SMTP_PORT";
 
 	public static final String PARAM_SMTP_USER = "SMTP_HOST";
 
