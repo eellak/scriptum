@@ -25,10 +25,27 @@ public interface MailDaemonMBean{
      * @throws Exception
      */
     public void stop() throws Exception;	
+	/**
+	 * Checks if the service thread is running or not
+	 * @return
+	 */
+	public String isRunning();    
+    /**
+     * Sets debugging state
+     * @param d
+     */
+	public void setDebug(boolean d );
+	public boolean getDebug();
+	/**
+	 * Gets mail fetching timeout
+	 * @return
+	 */
+	public int getTimeout();
+	public void setTimeout(int timeout);
     /**
      * Returns the JMX - friendly object Name
      * @return
-     */
+     */	
     public String getName(); 
     public  ObjectName getObjectName() throws MalformedObjectNameException, NullPointerException;
     /**
@@ -143,11 +160,7 @@ public interface MailDaemonMBean{
 	 * @param deleteOriginals
 	 */
 	public void setDeleteOriginals(boolean deleteOriginals);
-	/**
-	 * Checks if the service thread is running or not
-	 * @return
-	 */
-	public String isRunning();
+
 	/**
 	 * Daemon thread sleep period. Defines how much time in msec debore daemon check for new incomings again.
 	 * @return
