@@ -35,7 +35,7 @@ public class ImapProtocolDispatcherImplTest {
 		config.setSmtpHost("smtp.gmail.com");
 		config.setSmtpUser("mike.mountrakis@gmail.com");
 		config.setSmtpPort(587);
-		config.setSmtpPassword("$kataNaFa$");
+		config.setSmtpPassword("------");
 		config.setEnableStarttls(true);
 		config.setMessageFrom("mike.mountrakis@gmail.com");
 		config.setMessageBodyTxt("This is a message from the electronic protocol.");
