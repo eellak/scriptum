@@ -715,7 +715,7 @@ public class OutgoingController extends ProtocolController {
 
 		mailServerType = parameterDAO.getAsString(IConstants.PARAM_MAIL_SERVER_TYPE);
 		smtpHost = parameterDAO.getAsString(IConstants.PARAM_SMTP_HOST);
-		smtpPort = parameterDAO.getAsString(IConstants.PARAM_SMTP_PORT);
+		smtpPort = parameterDAO.getAsInteger(IConstants.PARAM_SMTP_PORT);
 		smtpUser = parameterDAO.getAsString(IConstants.PARAM_SMTP_USER);
 		smtpPassword = parameterDAO.getAsString(IConstants.PARAM_SMTP_PASSWORD);
 		emailFrom = parameterDAO.getAsString(IConstants.PARAM_EMAIL_FROM);
