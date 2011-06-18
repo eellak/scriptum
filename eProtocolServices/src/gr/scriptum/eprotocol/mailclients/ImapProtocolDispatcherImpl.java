@@ -89,6 +89,7 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 		// Get a Store object from sessiοn
 		Store store = session.getStore(config.getServerType());
 
+		session.setDebug(config.getDebug());
 		// connect
 		store.connect(config.getSmtpHost(), config.getSmtpUser(),
 				config.getSmtpPassword());
@@ -445,8 +446,7 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 
 			// Session mailSession = Session.getDefaultInstance(props, null);
 			System.out.println("sendOutgoingMail()--> Session properties set.");
-			mailSession.setDebug(true);
-
+			mailSession.setDebug(config.getDebug());
 			transport = mailSession.getTransport();
 			System.out.println("sendOutgoingMail()--> Got TRANSPORT Level.");
 
