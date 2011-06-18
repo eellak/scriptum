@@ -154,6 +154,26 @@ public class MailDaemon  implements MailDaemonMBean{
 		MailDaemon.sleepPeriod = sleepPeriod;
 	}
 
+	
+	public void setDebug(boolean d) {
+		configuration.setDebug(d);
+		
+	}
+
+
+	public boolean getDebug() {
+		return configuration.getDebug();
+	}
+
+
+	public int getTimeout() {
+		return configuration.getTimeout();
+	}
+
+
+	public void setTimeout(int timeout) {
+		configuration.setTimeout(timeout);
+	}
 //------------
 // MBean Methods that are implemented
 //------------    
@@ -219,4 +239,5 @@ public class MailDaemon  implements MailDaemonMBean{
 		}
 		System.out.println("Worked");
 	}
+
 }	
