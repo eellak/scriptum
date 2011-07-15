@@ -44,9 +44,9 @@ public interface IConstants {
 
 	public static final String PARAM_SMTP_PORT = "SMTP_PORT";
 
-	public static final String PARAM_SMTP_USER = "SMTP_HOST";
+	public static final String PARAM_SMTP_USER = "SMTP_USER";
 
-	public static final String PARAM_SMTP_PASSWORD = "SMTP_HOST";
+	public static final String PARAM_SMTP_PASSWORD = "SMTP_PASSWORD";
 
 	public static final String PARAM_EMAIL_FROM = "EMAIL_FROM";
 
