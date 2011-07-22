@@ -7,3 +7,4 @@ mysql -u root --password=$rootpass < ellak.sql
 mysql -u root --password=$rootpass < okm_app.sql
 mysql -u root --password=$rootpass < okm_repo.sql
 mysql -u root --password=$rootpass < scriptum_users.sql
+
