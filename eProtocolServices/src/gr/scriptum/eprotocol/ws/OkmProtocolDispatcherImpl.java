@@ -70,7 +70,7 @@ public final class OkmProtocolDispatcherImpl  implements OkmProtocolDispatcher{
 			OKMAuthProxy authProxy = new OKMAuthProxy();
 			if (configuration != null) {
 				authProxy.setEndpoint(configuration.getOKMAuthPort_address());
-				logger.warning("Binding with "
+				logger.info("Binding with "
 						+ configuration.getOKMAuthPort_address());
 			}
 			return authProxy;
@@ -88,7 +88,7 @@ public final class OkmProtocolDispatcherImpl  implements OkmProtocolDispatcher{
 			if (configuration != null) {
 				folderProxy.setEndpoint(configuration
 						.getOKMFolderPort_address());
-				logger.warning("Binding with "
+				logger.info("Binding with "
 						+ configuration.getOKMFolderPort_address());
 			}
 			return folderProxy;
@@ -98,7 +98,7 @@ public final class OkmProtocolDispatcherImpl  implements OkmProtocolDispatcher{
 			if (configuration != null) {
 				searchProxy.setEndpoint(configuration
 						.getOKMSearchPort_address());
-				logger.warning("Binding with "
+				logger.info("Binding with "
 						+ configuration.getOKMSearchPort_address());
 			}
 		default:
