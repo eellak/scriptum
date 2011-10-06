@@ -12,6 +12,12 @@
   </module>
   <module>
     <web>
+      <web-uri>eCase.war</web-uri>
+      <context-root>eCase</context-root>
+    </web>
+  </module>
+  <module>
+    <web>
       <web-uri>eProtocolWebService.war</web-uri>
       <context-root>eProtocolWebService</context-root>
     </web>
