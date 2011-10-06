@@ -1,4 +1,4 @@
-package gr.scriptum.eprotocol.util;
+package gr.scriptum.ecase.util;
 
 public interface IConstants {
 

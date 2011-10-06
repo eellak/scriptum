@@ -6,7 +6,7 @@
 	<include id="ph" sclass="header" src="header.zul" />
 	<window id="win" title="${c:l('contactsPage.title')}"
 		border="normal" width="100%"
-		apply="gr.scriptum.eprotocol.controller.UsersController">
+		apply="gr.scriptum.ecase.controller.UsersController">
 
 		<listbox id="entitiesLstbx" rows="10"
 			model="@{UsersController.entities}"

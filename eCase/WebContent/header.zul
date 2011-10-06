@@ -52,6 +52,8 @@
 			<menupopup>
 				<menuitem label="${c:l('menu.administration.users') }"
 					href="users.zul" visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
+				<menuitem label="${c:l('menu.administration.departments') }"
+					href="departments.zul" visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
 				<menuitem
 					label="${c:l('menu.administration.parameters') }"
 					href="parameters.zul" visible="${sec:isAnyGranted('ROLE_ADMIN')}" />

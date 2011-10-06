@@ -1,7 +1,7 @@
 /**
  * 
  */
-package gr.scriptum.eprotocol.controller;
+package gr.scriptum.ecase.controller;
 
 import gr.scriptum.controller.GenericSearchController;
 import gr.scriptum.csv.UserConverter;

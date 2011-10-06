@@ -14,26 +14,24 @@
 		/> </global-method-security> -->
 
 	<beans:bean id="scriptumUserDetailsService"
-		class="gr.scriptum.security.ScriptumUserDetailsService"
-		lazy-init="true" />
+		class="gr.scriptum.security.ScriptumUserDetailsService" lazy-init="true" />
 
 	<!-- <beans:bean id="scriptumUserDetailsService" class="gr.scriptum.security.ScriptumOfflineUserDetailsService" 
 		lazy-init="true" /> -->
-		
-		
+
+
 	<beans:bean id="sriptumLogoutSuccessHandler"
-		class="gr.scriptum.security.ScriptumLogoutSuccessHandler"
-		lazy-init="true" />
+		class="gr.scriptum.security.ScriptumLogoutSuccessHandler" lazy-init="true" />
 
 	<http auto-config="true" use-expressions="false">
 
 		<intercept-url pattern="/login.zul" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
-		<intercept-url pattern="/index.zul"
-			access="ROLE_USER,ROLE_ADMIN" />
+		<intercept-url pattern="/index.zul" access="ROLE_USER,ROLE_ADMIN" />
 
 		<intercept-url pattern="/users.zul" access="ROLE_ADMIN" />
 		<intercept-url pattern="/user.zul" access="ROLE_ADMIN" />
+		<intercept-url pattern="/departments.zul" access="ROLE_ADMIN" />
 
 		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 

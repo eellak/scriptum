@@ -1,4 +1,4 @@
-package gr.scriptum.eprotocol.controller;
+package gr.scriptum.ecase.controller;
 
 import gr.scriptum.controller.GenericEntityController;
 import gr.scriptum.dao.RoleDAO;

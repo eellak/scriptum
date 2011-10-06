@@ -1,0 +1,29 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./departmentsWin"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
+<?page title="${c:l('departmentsPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+
+	<window id="departmentsWin" title="${c:l('departmentsPage.title')}"
+		border="normal" width="100%"
+		apply="gr.scriptum.ecase.controller.DepartmentsController">
+		<borderlayout>
+			<west size="40%" flex="true" splittable="true"
+				collapsible="true">
+				<tree id="departmentsTree">
+					<treecols>
+						<treecol label="id" />
+						<treecol label="name" />
+						<treecol label="description" />
+					</treecols>
+				</tree>
+			</west>
+			<center autoscroll="true"></center>
+		</borderlayout>
+
+
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

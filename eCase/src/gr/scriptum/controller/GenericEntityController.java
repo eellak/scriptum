@@ -1,7 +1,7 @@
 package gr.scriptum.controller;
 
 import gr.scriptum.dao.GenericDAO;
-import gr.scriptum.eprotocol.util.IConstants;
+import gr.scriptum.ecase.util.IConstants;
 import gr.scriptum.util.Callback;
 
 import java.lang.reflect.Method;

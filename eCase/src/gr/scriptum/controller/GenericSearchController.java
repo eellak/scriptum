@@ -3,7 +3,7 @@ package gr.scriptum.controller;
 import gr.scriptum.csv.BaseCSVConverter;
 import gr.scriptum.csv.ICSVConverter;
 import gr.scriptum.dao.GenericDAO;
-import gr.scriptum.eprotocol.util.IConstants;
+import gr.scriptum.ecase.util.IConstants;
 
 import java.io.File;
 import java.io.IOException;

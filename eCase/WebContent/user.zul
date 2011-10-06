@@ -6,7 +6,7 @@
 	<include id="ph" sclass="header" src="header.zul" />
 	<window id="win" title="${c:l('userPage.title')}" border="normal"
 		width="100%"
-		apply="gr.scriptum.eprotocol.controller.UserController">
+		apply="gr.scriptum.ecase.controller.UserController">
 
 		<grid>
 			<columns>

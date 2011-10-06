@@ -2,7 +2,7 @@ package gr.scriptum.controller;
 
 import gr.scriptum.dao.ParameterDAO;
 import gr.scriptum.domain.Users;
-import gr.scriptum.eprotocol.util.IConstants;
+import gr.scriptum.ecase.util.IConstants;
 import gr.scriptum.eprotocol.ws.OkmDispatcherConfig;
 import gr.scriptum.eprotocol.ws.OkmProtocolDispatcherImpl;
 import gr.scriptum.security.ScriptumUser;

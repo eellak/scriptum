@@ -193,12 +193,9 @@ headerPage.title=Σύστημα Αναθέσεων
 menu.index=Αρχική
 
 menu.administration=Διαχείριση
+menu.administration.departments=Οργανόγραμα
 menu.administration.users=Χρήστες
-menu.administration.documentTypes=Τύποι Εγγράφων
-menu.administration.distributionMethods=Μέθοδοι Διανομής
 menu.administration.parameters=Παράμετροι Συστήματος
-menu.administration.protocolBook=Βιβλίο Πρωτοκόλλου
-menu.administration.diavgeia=Ενημέρωση Διαύγειας
 
 menu.contacts=Επαφές-Οργανισμοί
 menu.contacts.contacts=Επαφές
@@ -210,10 +207,7 @@ menu.help.community=Κοινότητα Χρηστών
 menu.help.links=Χρήσιμοι Σύνδεσμοι
 menu.help.about=Σχετικά
 
-
 menu.exit=Έξοδος
-
-
 
 ##loginPage
 loginPage.title=Σύστημα Αναθέσεων 
@@ -221,17 +215,9 @@ loginPage.error=Εσφαλμένη προσπάθεια εισόδου
 
 ##indexPage
 indexPage.title=Σύστημα Αναθέσεων
-indexPage.incoming=Εισερχόμενα
-indexPage.outgoing=Εξερχόμενα
-indexPage.search=Αναζήτηση
-indexPage.search.direction=Κατεύθυνση
-indexPage.search.incoming=Εισερχόμενο
-indexPage.search.outgoing=Εξερχόμενο
-indexPage.search.protocolNumber=Αριθμός
-indexPage.search.dates=Ημερομηνίες Πρωτοκόλλησης
-indexPage.search.subject=Θέμα
-indexPage.search.keywords=Λέξεις Κλειδιά (χωρισμένες με κόμμα)
 
+##departments Page
+departmentsPage.title=Διαχείριση Οργανογράμματος
 
 ##contactPage
 contactPage.title=Διαχείριση Επαφής
@@ -261,79 +247,14 @@ companyTypePage.title=Διαχείριση Τύπου Εταιρείας/Οργ�
 ##companyTypesPage
 companyTypesPage.title=Διαχείριση Τύπων Εταιριών/Οργανισμών
 
-##documentTypePage
-documentTypePage.title=Διαχείριση Τύπου Εγγράφου
-
-##documentTypesPage
-documentTypesPage.title=Διαχείριση Τύπων Εγγράφων
-
 ##parameterPage
 parameterPage.title=Διαχείριση Παραμέτρου
 
 ##parametersPage
 parametersPage.title=Διαχείριση Παραμέτρων
 
-##distributionMethodPage
-distributionMethodPage.title=Διαχείριση Μεθόδου Διανομής
-
-##distributionMethodsPage
-distributionMethodsPage.title=Διαχείριση Μεθόδων Διανομής
-
 ##userPage
 userPage.title=Διαχείριση Χρήστη
 
 ##usersPage.title=Διαχείριση Χρηστών
 
-##incomingPage
-incomingPage.title=Εισαγωγή Εισερχομένου Πρωτοκόλλου
-incomingPage.documents=Έγγραφα
-incomingPage.documents.prompt=Επιλέξτε τα αρχεία, αρχίζοντας από το κύριο έγγραφο.
-incomingPage.upload.title=Μεταφόρτωση Αρχείου
-incomingPage.upload.noFileUploaded=Πρέπει να μεταφορτώσετε ένα αρχείο προτού επιβεβαιώσετε την ενέργεια. 
-incomingPage.noDocumentsAdded=Πρέπει να προσθέσετε τουλάχιστον ένα αρχείο, προτού εισάγετε το Πρωτόκολλο.
-incomingPage.protocolAlreadySubmitted=Το συγκεκριμένο πρωτόκολλο έχει ήδη λάβει αριθμό και δεν επιδέχεται περαιτέρω τροποποιήσεις. 
-incomingPage.protocolSubmitted=Το πρωτόκολλο εισήχθη επιτυχώς με Αριθμό Πρωτ/λου {0} . Επιθυμείτε εκτύπωση;
-incomingPage.errorSaving=Παρουσιάστηκε σφάλμα κατά την αποθήκευση του Πρωτ/λου.
-incomingPage.errorSubmitting=Παρουσιάστηκε σφάλμα κατά την εισαγωγή του Πρωτ/λου.
-incomingPage.deleteProtocol=Μετά τη διαγραφή του, το πρωτόκολλο δε θα μπορεί να μεταβεί στην αρχική του κατάσταση. Είστε σίγουρος/η πως επιθυμείτε την οριστική διαγραφή του πρωτοκόλλου; 
-incomingPage.deleteProtocol.success=Η διαγραφή πραγματοποιήθηκε επιτυχώς.
- 
-##outgoingPage
-outgoingPage.title=Εισαγωγή Εξερχομένου Πρωτοκόλλου
-outgoingPage.recipients=Παραλήπτες
-outgoingPage.recipients.prompt=Επιλέξτε τους Παραλήπτες
-outgoingPage.cc=Κοινοποίηση προς
-outgoingPage.cc.prompt=Επιλέξτε τους Παραλήπτες Κοινοποίησης
-outgoingPage.noToAdded=Πρέπει να προσθέσετε τουλάχιστον ένα Παραλήπτη, προτού εισάγετε το Πρωτόκολλο.
-outgoingPage.errorSendingEmail=Το πρωτόκολλο εισήχθη επιτυχώς με Αριθμό Πρωτ/λου {0} . Παρ' όλα αυτά, παρουσιάστηκε σφάλμα κατά την αποστολή του Email.
-outgoingPage.errorSendingWebService=Το πρωτόκολλο εισήχθη επιτυχώς με Αριθμό Πρωτ/λου {0} . Παρ' όλα αυτά, παρουσιάστηκε σφάλμα κατά την αποστολή του στο Web Service.
-outgoingPage.diavgeia=Αποστολή στη Διαύγεια
-outgoingPage.diavgeiaNotSelected=Πρέπει να επιλέξετε Είδος Απόφασης και Θεματική Ενότητα για τη Διαύγεια.
-outgoingPage.diavgeiaResultFailed=Παρουσιάστηκε σφάλμα κατά την αποστολή στη Διαύγεια. Παρακαλούμε προσπαθήστε πάλι αργότερα.
-outgoingPage.diavgeiaResultSuccessNoDocumentsSent=Η αποστολή στη Διαύγεια πραγματοποιήθηκε. Δεν απεστάλησαν έγγραφα, καθώς αυτά δεν πληρούσαν τις προϋποθέσεις.
-outgoingPage.diavgeiaResultSuccessWithErrors=Η αποστολή στη Διαύγεια πραγματοποιήθηκε με κάποια σφάλματα. Τα αναλυτικά αποτελέσματα είναι τα ακόλουθα.
-outgoingPage.diavgeiaResultSuccess=Η αποστολή στη Διαύγεια πραγματοποιήθηκε επιτυχώς. Τα αναλυτικά αποτελέσματα είναι τα ακόλουθα.
-outgoingPage.errorSavingDiavgeiaResults=Η αποστολή στη Διαύγεια πραγματοποιήθηκε, αλλά παρουσιάστηκε σφάλμα κατά την αποθήκευση των αποτελεσμάτων στη βάση του Πρωτοκόλλου.
-outgoingPage.diavgeiaLblNA=Δεν έχει αποσταλλεί
-outgoingPage.diavgeiaLblFailed=Μη επιτυχημένη προσπάθεια αποστολής
-outgoingPage.diavgeiaLblSuccess=Έχει αποσταλλεί επιτυχώς
-outgoingPage.diavgeiaLblSuccessWithErrors=Έχει αποσταλλεί επιτυχώς, με κάποια σφάλματα
-outgoingPage.diavgeiaLblSuccessNoDocumentsSent=Έχει αποσταλλεί επιτυχώς, χωρίς έγγραφα
-
-##incomingPrint
-incomingPrintPage.title=Εκτύπωση Εισερχομένου Πρωτοκόλλου
-
-##outgoingPrint
-outgoingPrintPage.title=Εκτύπωση Εξερχομένου Πρωτοκόλλου
-
-##protocolBook
-protocolBookPage.title=Βιβλίο Πρωτοκόλλου
-protocolBookPage.dates=Ημερομηνίες
-protocolBookPage.sort=Ταξινόμηση
-protocolBookPage.sort.protocolDate=Ημ/νία Πρωτοκόλλου
-protocolBookPage.sort.protocolNumber=Αριθμός Πρωτοκόλλου
-protocolBookPage.sort.order=Σειρά
-protocolBookPage.sort.order.asc=Αύξουσα
-protocolBookPage.sort.order.desc=Φθίνουσα
-protocolBookPage.exportError=Παρουσιάστηκε σφάλμα κατά την εξαγωγή του Βιβλίου Πρωτοκόλλου
-protocolBookPage.exportSuccess=Η εξαγωγή του Βιβλίου Πρωτοκόλλου ολοκληρώθηκε επιτυχώς
