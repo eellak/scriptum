@@ -1,0 +1,21 @@
+<?page title="Σχετικά με την Εφαρμογή" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" width="1024px" />
+	<window title="Σχετικά με την Εφαρμογή" border="normal"
+		width="1024px">
+		<vbox width="99%" align="center">
+			<label
+				value="Η εφαρμογή του Συστήματος Αναθέσεων κατασκευάστηκε από την" />
+			<a href="http://www.uit.gr/">
+				<image src="img/uit_logo.png" />
+			</a>
+			<label
+				value="Σε συνεργασία με την Εταιρεία Ελεύθερου Λογισμικού " />
+			<a href="http://www.ellak.gr/">
+				<image src="img/ellak_logo.png" />
+			</a>
+		</vbox>
+	</window>
+		<include id="footer" sclass="footer" src="footer.zul"/>
+</zk>

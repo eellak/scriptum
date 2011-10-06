@@ -1,0 +1,6 @@
+<zk>
+	<toolbar>
+		<toolbarbutton label="Αρχική Σελίδα" href="index.zul"
+			src="img/home_small1.png" />
+	</toolbar>
+</zk>

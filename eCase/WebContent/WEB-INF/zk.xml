@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<!--
+	Created by ZK Studio
+-->
+
+<zk>
+	<device-config>
+		<device-type>ajax</device-type>
+		<timeout-uri>/timeout.zul</timeout-uri>
+		<!--
+			An empty URL can cause the browser to reload the same URL
+		-->
+	</device-config>
+	<listener>
+		<description>Hibernate "Open Session In View" Session Lifecycle
+		</description>
+		<listener-class>gr.scriptum.util.JTAOpenSessionInViewListener
+		</listener-class>
+	</listener>
+	<!--
+
+		<library-property> <name>org.zkoss.util.label.web.charset</name>
+		<value>ISO-8859-1</value> </library-property>
+	-->
+	<library-property>
+		<name>org.zkoss.web.preferred.locale</name>
+		<value>el</value>
+	</library-property>
+
+
+	<library-property>
+		<name>org.zkoss.util.label.web.location</name>
+		<value>/WEB-INF/i3-label.labels</value>
+	</library-property>
+</zk>

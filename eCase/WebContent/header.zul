@@ -1,0 +1,77 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
+<?page title="Page Header" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<hbox spacing="10px"
+		style="background:#BDE0F7;border: 1px solid grey" width="100%">
+		<image src="img/scriptum_logo.png" />
+		<html
+			style="font-family:arial;color:#183682;font-size:45px;text-align:justify;text-valign:center"
+			content="${c:l('headerPage.title')}" width="100%" />
+	</hbox>
+	<div height="5px;"></div>
+	<style>
+		.z-menubar-hor, .z-menubar-ver { border: 1px solid #D8D8D8; }
+	</style>
+
+	<html>
+		
+		<![CDATA[ <style type="text/css"> #feedback img { border:none; }
+
+		#feedback a { background:#FEF9CD; border-top:2px double #6495ED;
+		border-right:2px double #6495ED; border-bottom:2px double
+		#6495ED; display:block; position:fixed; right:-1px; top:200px; }
+		#feedback a:hover { border-color:#0001aa; background:#e0ecf8; }
+
+		#mask { position:absolute; left:0; top:0; z-index:9000;
+		background-color:#000; display:none; }
+
+		#boxes .window { left:0; top:0; width:440px; height:200px;
+		display:none; z-index:9999; padding:20px; position:absolute; }
+
+		#boxes #dialog { width:375px; height:203px; padding:10px;
+		background-color:#ffffff; } </style>
+
+
+
+		<div id="feedback"> <a class="feedbacklink"
+		href="http://go.eellak.gr/scriptumfeedback" target="_blank">
+		<img src="img/feedback.png"> </a> </div>
+
+		]]>
+		
+	</html>
+
+
+
+	<menubar width="100%">
+
+		<menuitem label="${c:l('menu.index') }" href="index.zul" />
+
+		<menu label="${c:l('menu.administration') }">
+			<menupopup>
+				<menuitem label="${c:l('menu.administration.users') }"
+					href="users.zul" visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
+				<menuitem
+					label="${c:l('menu.administration.parameters') }"
+					href="parameters.zul" visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
+			</menupopup>
+		</menu>
+
+		<menu label="${c:l('menu.help') }">
+			<menupopup>
+				<menuitem label="${c:l('menu.help.links') }"
+					href="links.zul" />
+				<menuitem label="${c:l('menu.help.about') }"
+					href="about.zul" />
+			</menupopup>
+		</menu>
+
+		<menuitem
+			label="${c:l('menu.exit') } (${c:l('users')}: ${authentication.principal.username})"
+			href="/j_spring_security_logout" />
+
+	</menubar>
+	<div height="5px;"></div>
+
+</zk>

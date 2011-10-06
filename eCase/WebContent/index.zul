@@ -1,0 +1,14 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./indexWin"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
+<?page title="${c:l('indexPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+
+	<window id="indexWin" title="${c:l('indexPage.title')}"
+		border="normal" width="100%">
+
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

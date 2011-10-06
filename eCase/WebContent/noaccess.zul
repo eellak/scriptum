@@ -1,0 +1,10 @@
+<?page title="Λήξη της Σύνδεσης" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<window width="1024" title="Λήξη της Σύνδεσης" border="normal">
+		<vbox>
+			Η Σελίδα που ζητάτε δεν έιναι διαθέσιμη,καθώς δε διαθέτετε
+			την απαιτούμενη άδεια πρόσβασης.
+		</vbox>
+	</window>
+</zk>

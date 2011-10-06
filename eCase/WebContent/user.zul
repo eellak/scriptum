@@ -1,0 +1,73 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('userPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('userPage.title')}" border="normal"
+		width="100%"
+		apply="gr.scriptum.eprotocol.controller.UserController">
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row visible="@{UserController.isEntityCreated}">
+					${c:l('users.id')}
+					<label id="idLbl"
+						value="@{UserController.entity.id}" />
+				</row>
+				<row>
+					${c:l('users.username')}
+					<textbox id="usernameTxb"
+						value="@{UserController.entity.username}" width="300px"
+						constraint="no empty" />
+				</row>
+				<row>
+					${c:l('users.password')}
+					<textbox id="passwordTxb"
+						value="@{UserController.entity.password}" width="300px"
+						constraint="no empty" type="password" />
+				</row>
+				<row>
+					${c:l('users.name')}
+					<textbox id="nameTxb"
+						value="@{UserController.entity.name}" width="300px"
+						constraint="no empty" />
+				</row>
+				<row>
+					${c:l('users.surname')}
+					<textbox id="surnameTxb"
+						value="@{UserController.entity.surname}" width="300px"
+						constraint="no empty" />
+				</row>
+				<row>
+					${c:l('role')}
+					<combobox id="roleCbx" width="300px"
+						model="@{UserController.roles}"
+						selectedItem="@{UserController.role}" constraint="no empty">
+						<comboitem self="@{each='roleRow'}"
+							label="@{roleRow.name}" />
+					</combobox>
+				</row>
+				<row>
+					${c:l('users.isDisabled')}
+					<checkbox id="isDisabledChkbx" />
+				</row>
+				<row>
+					${c:l('functions')}
+					<hbox>
+						<button id="newBtn" label="${c:l('new')}" />
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@{UserController.isLocked}" />
+						<button id="deleteBtn" label="${c:l('delete')}"
+							disabled="@{UserController.isEntityNotCreated}" />
+					</hbox>
+				</row>
+
+			</rows>
+		</grid>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul"/>	
+</zk>

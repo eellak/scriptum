@@ -1,0 +1,18 @@
+<?page title="Scriptum Footer" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<hbox width="100%" height="100%" pack="center" align="center">
+		<vbox>
+			<html style="font-family:arial;color:#183682;font-size:11px;text-align:justify;text-valign:center;">
+				<![CDATA[ 
+				<div style="height:5px;"></div>          
+				Το Σύστημα Αναθέσεων είναι μέρος του Έργου <a href="http://scriptum.gr/"
+				target="_blank">Scriptum</a>, που είναι <a
+				href="http://open-source.gr/" target="_blank">ΕΛ/ΛΑΚ</a>
+				και διανέμεται με άδεια <a
+				href="http://www.osor.eu/eupl" target="_blank">EUPL</a>.
+				Κατασκευή <a href="http://www.uit.gr"
+				target="_blank">UIT</a> ]]>
+			</html>
+		</vbox>
+	</hbox>
+</zk>

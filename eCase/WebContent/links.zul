@@ -1,0 +1,56 @@
+<?page title="Σύνδεσμοι" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+
+	<window title="Σύνδεσμοι" border="normal" width="100%">
+		<listbox rows="10">
+			<listhead>
+				<listheader label="Σύνδεσμος"/>
+				<listheader label="Περιγραφή"/>
+			</listhead>
+			<listitem>
+				<listcell>
+					<a href="http://www.ellak.gr/">
+						http://www.ellak.gr/
+					</a>
+				</listcell>
+				<listcell label="ΕΛΛΑΚ Α.Ε" />
+			</listitem>
+			<listitem>
+				<listcell>
+					<a href="http://www.uit.gr/">http://www.uit.gr/</a>
+				</listcell>
+				<listcell label="Unified Technology Systems" />
+			</listitem>
+			<listitem>
+				<listcell>
+					<a href="http://www.scriptum.gr/">
+						http://www.scriptum.gr/
+					</a>
+				</listcell>
+				<listcell label="SCRIPTUM" />
+			</listitem>
+			<listitem>
+				<listcell>
+					<a
+						href="http://projects.ellak.gr/projects/scriptum">
+						http://projects.ellak.gr/projects/scriptum
+					</a>
+				</listcell>
+				<listcell
+					label="Προφίλ του SCRIPTUM στα εργα της ΕΛΛΑΚ" />
+			</listitem>
+			<listitem>
+				<listcell>
+					<a
+						href="http://projects.ellak.gr/projects/scriptum/wiki">
+						http://projects.ellak.gr/projects/scriptum/wiki
+					</a>
+				</listcell>
+				<listcell label="SCRIPTUM Wiki" />
+			</listitem>
+		</listbox>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul"/>	
+</zk>
