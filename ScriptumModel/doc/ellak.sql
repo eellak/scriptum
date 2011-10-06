@@ -112,7 +112,7 @@ CREATE TABLE `company` (
   PRIMARY KEY (`id`),
   KEY `fk_company_company_type1` (`company_type_id`),
   CONSTRAINT `fk_company_company_type1` FOREIGN KEY (`company_type_id`) REFERENCES `company_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,6 +121,7 @@ CREATE TABLE `company` (
 
 LOCK TABLES `company` WRITE;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
+INSERT INTO `company` VALUES (1,'Company1',NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1);
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,7 +141,7 @@ CREATE TABLE `company_type` (
   `crate_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
   `update_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,6 +150,7 @@ CREATE TABLE `company_type` (
 
 LOCK TABLES `company_type` WRITE;
 /*!40000 ALTER TABLE `company_type` DISABLE KEYS */;
+INSERT INTO `company_type` VALUES (1,'CompanyType1',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `company_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,7 +189,7 @@ CREATE TABLE `contact` (
   PRIMARY KEY (`id`),
   KEY `contact_FKIndex1` (`company_id`),
   CONSTRAINT `fk_7cc2855a-215b-11e0-9059-080027b715d2` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -196,7 +198,35 @@ CREATE TABLE `contact` (
 
 LOCK TABLES `contact` WRITE;
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
+INSERT INTO `contact` VALUES (1,1,'Contact1','Test',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `department`
+--
+
+DROP TABLE IF EXISTS `department`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `department` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `parent_department_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_department_department1` (`parent_department_id`),
+  CONSTRAINT `fk_department_department1` FOREIGN KEY (`parent_department_id`) REFERENCES `department` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Defines an organization/department/section etc.';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `department`
+--
+
+LOCK TABLES `department` WRITE;
+/*!40000 ALTER TABLE `department` DISABLE KEYS */;
+/*!40000 ALTER TABLE `department` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -298,7 +328,7 @@ CREATE TABLE `document_type` (
   `create_dt` datetime DEFAULT NULL,
   `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -307,6 +337,7 @@ CREATE TABLE `document_type` (
 
 LOCK TABLES `document_type` WRITE;
 /*!40000 ALTER TABLE `document_type` DISABLE KEYS */;
+INSERT INTO `document_type` VALUES (1,'Document Type1',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `document_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -341,7 +372,7 @@ CREATE TABLE `incoming_protocol` (
   KEY `incoming_protocol_FKIndex2` (`contact_sender_id`),
   CONSTRAINT `fk_7cbbc300-215b-11e0-9059-080027b715d2` FOREIGN KEY (`distribution_method_id`) REFERENCES `distribution_method` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cbdaecc-215b-11e0-9059-080027b715d2` FOREIGN KEY (`contact_sender_id`) REFERENCES `contact` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -499,7 +530,7 @@ DROP TABLE IF EXISTS `project_task`;
 CREATE TABLE `project_task` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `contact_id` int(11) unsigned NOT NULL,
-  `parent_task_id` int(11) unsigned NOT NULL,
+  `parent_task_id` int(11) unsigned DEFAULT NULL,
   `user_creator_id` int(11) unsigned NOT NULL,
   `user_dispatcher_id` int(11) unsigned NOT NULL,
   `project_id` int(11) unsigned NOT NULL,
@@ -643,7 +674,7 @@ CREATE TABLE `protocol_document` (
   CONSTRAINT `fk_7cbf98ea-215b-11e0-9059-080027b715d2` FOREIGN KEY (`incoming_protocol_id`) REFERENCES `incoming_protocol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cc08868-215b-11e0-9059-080027b715d2` FOREIGN KEY (`outgoing_protocol_id`) REFERENCES `outgoing_protocol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_protocol_document_document_types1` FOREIGN KEY (`document_types_id`) REFERENCES `document_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -722,7 +753,7 @@ CREATE TABLE `role` (
   `description` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
   `is_protocol` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -731,7 +762,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'ADMIN',NULL,1),(2,'READER',NULL,1),(3,'WRITER',NULL,1);
+INSERT INTO `role` VALUES (1,'ADMIN',NULL,3),(2,'READER',NULL,1),(3,'WRITER',NULL,1),(4,'USER',NULL,2);
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -930,6 +961,37 @@ LOCK TABLES `task_type` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_hierarchy`
+--
+
+DROP TABLE IF EXISTS `user_hierarchy`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_hierarchy` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `manager_id` int(11) DEFAULT NULL,
+  `users_id` int(10) unsigned NOT NULL,
+  `department_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_user_details_user_details1` (`manager_id`),
+  KEY `fk_user_details_users1` (`users_id`),
+  KEY `fk_user_details_department1` (`department_id`),
+  CONSTRAINT `fk_user_details_department1` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_details_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_details_user_details1` FOREIGN KEY (`manager_id`) REFERENCES `user_hierarchy` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Defines the Hierarchy of each user within a department.';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_hierarchy`
+--
+
+LOCK TABLES `user_hierarchy` WRITE;
+/*!40000 ALTER TABLE `user_hierarchy` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_hierarchy` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user_to_role`
 --
 
@@ -966,7 +1028,6 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `users_manager_id` int(11) unsigned DEFAULT NULL,
   `username` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -976,9 +1037,9 @@ CREATE TABLE `users` (
   `update_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
   `create_dt` datetime DEFAULT NULL,
   `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `users_FKIndex1` (`users_manager_id`),
-  CONSTRAINT `fk_7cc17c3c-215b-11e0-9059-080027b715d2` FOREIGN KEY (`users_manager_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `address` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -988,7 +1049,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,NULL,'okmAdmin','admin','admin','admin',0,NULL,NULL,NULL,'2011-06-10 10:41:59');
+INSERT INTO `users` VALUES (1,'okmAdmin','admin','admin','admin',0,NULL,NULL,NULL,'2011-06-10 10:41:59',NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1001,4 +1062,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-14 10:11:59
+-- Dump completed on 2011-10-06 14:09:51
