@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated May 31, 2011 10:47:04 AM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="gr.scriptum.domain.DiavgeiaSubjectGroup" table="diavgeia_subject_group" catalog="ellak">
+    <class name="gr.scriptum.domain.DiavgeiaSubjectGroup" table="diavgeia_subject_group">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />

@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Jan 31, 2011 9:51:40 AM by Hibernate Tools 3.4.0.Beta1 -->
 <hibernate-mapping>
-    <class name="gr.scriptum.domain.Parameter" table="parameter" catalog="ellak">
+    <class name="gr.scriptum.domain.Parameter" table="parameter">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />

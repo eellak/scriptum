@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated May 25, 2011 9:59:26 AM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="gr.scriptum.domain.DiavgeiaDecisionType" table="diavgeia_decision_type" catalog="ellak">
+    <class name="gr.scriptum.domain.DiavgeiaDecisionType" table="diavgeia_decision_type">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />

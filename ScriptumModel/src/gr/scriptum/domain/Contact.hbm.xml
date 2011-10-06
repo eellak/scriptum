@@ -3,8 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 	<!-- Generated Jan 27, 2011 1:23:43 PM by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
-	<class name="gr.scriptum.domain.Contact" table="contact"
-		catalog="ellak">
+	<class name="gr.scriptum.domain.Contact" table="contact">
 		<id name="id" type="java.lang.Integer">
 			<column name="id" />
 			<generator class="identity" />
