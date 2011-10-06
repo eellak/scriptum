@@ -16,5 +16,9 @@
         <dependent-module archiveName="ELLAKModel.har" deploy-path="/" handle="module:/classpath/lib/ELLAKModel/ELLAKModel.har">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="eCase.war" deploy-path="/" handle="module:/resource/eCase/eCase">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>
