@@ -1,6 +1,6 @@
 package gr.scriptum.domain;
 
-// Generated Jan 19, 2011 4:36:37 PM by Hibernate Tools 3.3.0.GA
+// Generated Oct 5, 2011 7:41:16 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -12,7 +12,6 @@ import java.util.Set;
 public class Users implements java.io.Serializable {
 
 	private Integer id;
-	private Users users;
 	private String username;
 	private String password;
 	private String name;
@@ -22,36 +21,38 @@ public class Users implements java.io.Serializable {
 	private String updateUser;
 	private Date createDt;
 	private Date updateTs;
+	private String address;
+	private String email;
 	private Set<Project> projects = new HashSet<Project>(0);
 	private Set<TaskMessage> taskMessagesForUserReceiverId = new HashSet<TaskMessage>(
 			0);
 	private Set<Role> roles = new HashSet<Role>(0);
-	private Set<Users> userses = new HashSet<Users>(0);
 	private Set<ProjectUser> projectUsers = new HashSet<ProjectUser>(0);
 	private Set<ProjectTask> projectTasksForUserCreatorId = new HashSet<ProjectTask>(
 			0);
 	private Set<ProjectTask> projectTasksForUserDispatcherId = new HashSet<ProjectTask>(
 			0);
+	private Set<UserHierarchy> userHierarchies = new HashSet<UserHierarchy>(0);
 	private Set<TaskMessage> taskMessagesForUserSenderId = new HashSet<TaskMessage>(
 			0);
 
 	public Users() {
 	}
 
-	public Users(Users users) {
-		this.users = users;
+	public Users(String password) {
+		this.password = password;
 	}
 
-	public Users(Users users, String username, String name, String surname,
-			String password, Boolean isDisabled, String createUser,
-			String updateUser, Date createDt, Date updateTs,
+	public Users(String username, String password, String name, String surname,
+			Boolean isDisabled, String createUser, String updateUser,
+			Date createDt, Date updateTs, String address, String email,
 			Set<Project> projects,
 			Set<TaskMessage> taskMessagesForUserReceiverId, Set<Role> roles,
-			Set<Users> userses, Set<ProjectUser> projectUsers,
+			Set<ProjectUser> projectUsers,
 			Set<ProjectTask> projectTasksForUserCreatorId,
 			Set<ProjectTask> projectTasksForUserDispatcherId,
+			Set<UserHierarchy> userHierarchies,
 			Set<TaskMessage> taskMessagesForUserSenderId) {
-		this.users = users;
 		this.username = username;
 		this.password = password;
 		this.name = name;
@@ -61,13 +62,15 @@ public class Users implements java.io.Serializable {
 		this.updateUser = updateUser;
 		this.createDt = createDt;
 		this.updateTs = updateTs;
+		this.address = address;
+		this.email = email;
 		this.projects = projects;
 		this.taskMessagesForUserReceiverId = taskMessagesForUserReceiverId;
 		this.roles = roles;
-		this.userses = userses;
 		this.projectUsers = projectUsers;
 		this.projectTasksForUserCreatorId = projectTasksForUserCreatorId;
 		this.projectTasksForUserDispatcherId = projectTasksForUserDispatcherId;
+		this.userHierarchies = userHierarchies;
 		this.taskMessagesForUserSenderId = taskMessagesForUserSenderId;
 	}
 
@@ -79,14 +82,6 @@ public class Users implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Users getUsers() {
-		return this.users;
-	}
-
-	public void setUsers(Users users) {
-		this.users = users;
-	}
-
 	public String getUsername() {
 		return this.username;
 	}
@@ -96,7 +91,7 @@ public class Users implements java.io.Serializable {
 	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	public void setPassword(String password) {
@@ -159,6 +154,22 @@ public class Users implements java.io.Serializable {
 		this.updateTs = updateTs;
 	}
 
+	public String getAddress() {
+		return this.address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public Set<Project> getProjects() {
 		return this.projects;
 	}
@@ -182,14 +193,6 @@ public class Users implements java.io.Serializable {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
-	}
-
-	public Set<Users> getUserses() {
-		return this.userses;
-	}
-
-	public void setUserses(Set<Users> userses) {
-		this.userses = userses;
 	}
 
 	public Set<ProjectUser> getProjectUsers() {
@@ -216,6 +219,14 @@ public class Users implements java.io.Serializable {
 	public void setProjectTasksForUserDispatcherId(
 			Set<ProjectTask> projectTasksForUserDispatcherId) {
 		this.projectTasksForUserDispatcherId = projectTasksForUserDispatcherId;
+	}
+
+	public Set<UserHierarchy> getUserHierarchies() {
+		return this.userHierarchies;
+	}
+
+	public void setUserHierarchies(Set<UserHierarchy> userHierarchies) {
+		this.userHierarchies = userHierarchies;
 	}
 
 	public Set<TaskMessage> getTaskMessagesForUserSenderId() {

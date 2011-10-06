@@ -1,6 +1,6 @@
 package gr.scriptum.domain;
 
-// Generated Jan 19, 2011 4:36:37 PM by Hibernate Tools 3.3.0.GA
+// Generated Oct 5, 2011 7:41:16 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -41,14 +41,12 @@ public class ProjectTask implements java.io.Serializable {
 	}
 
 	public ProjectTask(Project project, Users usersByUserDispatcherId,
-			TaskResult taskResult, ProjectTask projectTask,
-			Users usersByUserCreatorId, Contact contact, TaskType taskType,
-			TaskState taskState, TaskPriority taskPriority,
+			TaskResult taskResult, Users usersByUserCreatorId, Contact contact,
+			TaskType taskType, TaskState taskState, TaskPriority taskPriority,
 			TaskDocument taskDocument) {
 		this.project = project;
 		this.usersByUserDispatcherId = usersByUserDispatcherId;
 		this.taskResult = taskResult;
-		this.projectTask = projectTask;
 		this.usersByUserCreatorId = usersByUserCreatorId;
 		this.contact = contact;
 		this.taskType = taskType;

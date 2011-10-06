@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 5, 2011 7:41:17 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="gr.scriptum.domain.UserHierarchy" table="user_hierarchy">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="userHierarchy" class="gr.scriptum.domain.UserHierarchy" fetch="select">
+            <column name="manager_id" />
+        </many-to-one>
+        <many-to-one name="department" class="gr.scriptum.domain.Department" fetch="select">
+            <column name="department_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="users" class="gr.scriptum.domain.Users" fetch="select">
+            <column name="users_id" not-null="true" />
+        </many-to-one>
+        <set name="userHierarchies" table="user_hierarchy" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="manager_id" />
+            </key>
+            <one-to-many class="gr.scriptum.domain.UserHierarchy" />
+        </set>
+    </class>
+</hibernate-mapping>
