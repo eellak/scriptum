@@ -63,7 +63,7 @@ public class UserController extends GenericEntityController<Users, UsersDAO> {
 		entity.setIsDisabled(isDisabledChkbx.isChecked());
 		List<Role> rolesToBeRemoved = new ArrayList<Role>();
 		for(Role role: entity.getRoles()) {
-			if(role.getIsProtocol().equals(RoleDAO.ROLE_IS_PROTOCOL)) {
+			if(role.getIsProtocol().equals(RoleDAO.ROLE_IS_PROTOCOL) || role.getIsProtocol().equals(RoleDAO.ROLE_IS_COMMON)) {
 				rolesToBeRemoved.add(role);
 			}
 		}
