@@ -10,27 +10,73 @@
 		border="normal" width="100%" height="100%"
 		apply="gr.scriptum.ecase.controller.DepartmentsController">
 		<borderlayout>
-			<center title="Departments">
+			<center title="${c:l('departmentsPage.tree')}">
 				<div>
 					<tree id="departmentsTree" width="100%">
 						<treecols>
-							<treecol label="${c:l('department.id')}" width="20%"/>
-							<treecol label="${c:l('department.name')}" width="30%"/>
-							<treecol label="${c:l('department.description')}" width="50%"/>
+							<treecol label="${c:l('department.id')}"
+								width="20%" />
+							<treecol label="${c:l('department.name')}"
+								width="30%" />
+							<treecol
+								label="${c:l('department.description')}" width="50%" />
 						</treecols>
 					</tree>
 				</div>
 			</center>
-			<east title="Department" size="50%" flex="true"
+			<east title="${c:l('department')}" size="50%" flex="true"
 				splittable="true" collapsible="true">
 				<div>
-					<label value="test" />
+					<grid>
+						<columns>
+							<column width="30%" />
+						</columns>
+						<rows>
+							<row
+								visible="@{DepartmentsController.isDepartmentCreated}">
+								${c:l('department.id')}
+								<label id="idLbl"
+									value="@{DepartmentsController.department.id}" />
+							</row>
+							<row>
+								${c:l('department.name')}
+								<textbox id="nameTxb"
+									value="@{DepartmentsController.department.name}" width="300px"
+									constraint="no empty" />
+							</row>
+							<row>
+								${c:l('department.description')}
+								<textbox id="descriptionTxb"
+									value="@{DepartmentsController.department.description}" width="300px"
+									constraint="no empty" />
+							</row>
+							<row>
+								${c:l('department.department')}
+								<combobox id="departmentCbx" width="300px"
+									model="@{DepartmentsController.departments}"
+									selectedItem="@{DepartmentsController.department.department}">
+									<comboitem self="@{each='departmentRow'}"
+										label="@{departmentRow.name}" />
+								</combobox>
+							</row>
+							<row>
+								${c:l('functions')}
+								<hbox>
+									<button id="newBtn"
+										label="${c:l('new')}" />
+									<button id="saveBtn"
+										label="${c:l('save')}" disabled="@{DepartmentsController.isSaveDisabled}" />
+									<button id="deleteBtn"
+										label="${c:l('delete')}"
+										disabled="@{DepartmentsController.isDepartmentNotCreated}" />
+								</hbox>
+							</row>
+
+						</rows>
+					</grid>
 				</div>
 			</east>
 		</borderlayout>
-
-
-
 
 	</window>
 	<include id="footer" sclass="footer" src="footer.zul" />

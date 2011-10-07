@@ -29,6 +29,7 @@ public class DepartmentTreeRenderer implements TreeitemRenderer {
 		final Department data = (Department) treeNode.getData();
 
 		treeItem.setOpen(true);
+		treeItem.setValue(data);
 
 		Treerow treerow = new Treerow();
 		treeItem.appendChild(treerow);

@@ -225,6 +225,8 @@ indexPage.title=Σύστημα Αναθέσεων
 
 ##departments Page
 departmentsPage.title=Διαχείριση Οργανογράμματος
+departmentsPage.tree=Δένδρο Οργανογράμματος
+
 
 ##contactPage
 contactPage.title=Διαχείριση Επαφής
