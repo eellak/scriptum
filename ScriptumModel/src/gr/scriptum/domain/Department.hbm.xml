@@ -23,7 +23,7 @@
             </key>
             <one-to-many class="gr.scriptum.domain.UserHierarchy" />
         </set>
-        <set name="departments" table="department" inverse="true" lazy="true" fetch="select">
+        <set name="departments" table="department" inverse="true" lazy="true" fetch="select" order-by="id">
             <key>
                 <column name="parent_department_id" />
             </key>
