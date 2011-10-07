@@ -19,4 +19,15 @@ public class DepartmentDAO extends GenericDAO<Department, Integer> {
 				.list();
 	}
 
+	public boolean isDeletable(Integer id) {
+		Department department = findById(id, false);
+		if (!department.getDepartments().isEmpty()) {
+			return false;
+		}
+		if (!department.getUserHierarchies().isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+
 }
