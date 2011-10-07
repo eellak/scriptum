@@ -183,6 +183,13 @@ diavgeiaSubjectGroup=Θεματική Ενότητα
 diavgeiaSubjectGroup.id=Α/Α
 diavgeiaSubjectGroup.description=Περιγραφή
 
+##Department
+department=Οργανική Μονάδα
+department.department=Ανώτερη Οργανική Μονάδα
+department.id=Α/Α
+department.name=Ονομασία
+department.description=Περιγραφή
+
 #############
 #pages
 

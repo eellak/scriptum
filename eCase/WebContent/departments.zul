@@ -7,21 +7,29 @@
 	<include id="ph" sclass="header" src="header.zul" />
 
 	<window id="departmentsWin" title="${c:l('departmentsPage.title')}"
-		border="normal" width="100%"
+		border="normal" width="100%" height="100%"
 		apply="gr.scriptum.ecase.controller.DepartmentsController">
 		<borderlayout>
-			<west size="40%" flex="true" splittable="true"
-				collapsible="true">
-				<tree id="departmentsTree">
-					<treecols>
-						<treecol label="id" />
-						<treecol label="name" />
-						<treecol label="description" />
-					</treecols>
-				</tree>
-			</west>
-			<center autoscroll="true"></center>
+			<center title="Departments">
+				<div>
+					<tree id="departmentsTree" width="100%">
+						<treecols>
+							<treecol label="${c:l('department.id')}" width="20%"/>
+							<treecol label="${c:l('department.name')}" width="30%"/>
+							<treecol label="${c:l('department.description')}" width="50%"/>
+						</treecols>
+					</tree>
+				</div>
+			</center>
+			<east title="Department" size="50%" flex="true"
+				splittable="true" collapsible="true">
+				<div>
+					<label value="test" />
+				</div>
+			</east>
 		</borderlayout>
+
+
 
 
 	</window>
