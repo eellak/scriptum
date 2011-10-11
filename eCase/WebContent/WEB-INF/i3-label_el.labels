@@ -190,6 +190,11 @@ department.id=Α/Α
 department.name=Ονομασία
 department.description=Περιγραφή
 
+
+##UserHierarchy
+userHierarchy=Ιεραρχική Θέση
+
+
 #############
 #pages
 
@@ -201,6 +206,7 @@ menu.index=Αρχική
 
 menu.administration=Διαχείριση
 menu.administration.departments=Οργανόγραμα
+menu.administration.hierarchy=Ιεραρχία
 menu.administration.users=Χρήστες
 menu.administration.parameters=Παράμετροι Συστήματος
 
@@ -222,11 +228,7 @@ loginPage.error=Εσφαλμένη προσπάθεια εισόδου
 
 ##indexPage
 indexPage.title=Σύστημα Αναθέσεων
-
-##departments Page
-departmentsPage.title=Διαχείριση Οργανογράμματος
-departmentsPage.tree=Δένδρο Οργανογράμματος
-
+indexPage.projects=Έργα
 
 ##contactPage
 contactPage.title=Διαχείριση Επαφής
@@ -267,3 +269,11 @@ userPage.title=Διαχείριση Χρήστη
 
 ##usersPage.title=Διαχείριση Χρηστών
 
+##departments Page
+departmentsPage.title=Διαχείριση Οργανογράμματος
+departmentsPage.tree=Δένδρο Οργανογράμματος
+
+##hierarchyPage
+hierarchyPage.title=Διαχείριση Ιεραρχίας
+hierarchyPage.tree=Δένδρο Ιεραρχίας
+hierarchyPage.users=Διαθέσιμοι Χρήστες
