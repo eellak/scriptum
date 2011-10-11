@@ -120,7 +120,6 @@ public class DepartmentsController extends BaseController {
 	}
 
 	public void onSelect$departmentsTree(SelectEvent event) {
-		log.info(event);
 		if (event.getSelectedItems().isEmpty()) {
 			department = null;
 		} else {
