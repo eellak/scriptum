@@ -39,6 +39,8 @@ public class DepartmentsController extends BaseController {
 	private static final long serialVersionUID = -7691729026696290141L;
 
 	private static Log log = LogFactory.getLog(DepartmentsController.class);
+	
+	public static final String PAGE = "departments.zul";
 
 	/* components */
 	Window departmentsWin;
