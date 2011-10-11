@@ -194,6 +194,15 @@ department.description=Περιγραφή
 ##UserHierarchy
 userHierarchy=Ιεραρχική Θέση
 
+##Project
+project=Έργο
+project.id=Α/Α
+project.name=Όνομα Έργου
+project.description=Αναλυτική Περιγραφή
+project.startDt=Ημ/νία Έναρξης
+project.endDt=Ημ/νία Ημερολογιακής Λήξη
+project.expectedDt=Ημ/νία Προγραμματισμένης Λήξης
+project.users=Υπεύθυνος Έργου
 
 #############
 #pages

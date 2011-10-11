@@ -26,16 +26,16 @@
 						<listhead>
 							<listheader id="projectIdLsthdr"
 								label="${c:l('project.id')}" sort="auto" value="id"
-								forward="onSort=onSort" width="10%" />
+								forward="onSort=onSort" width="10%" sortDirection="ascending"/>
 							<listheader id="projectNameLsthdr"
 								label="${c:l('project.projectName')}" sort="auto" value="name"
 								forward="onSort=onSort" />
 							<listheader id="startDtLsthdr"
 								label="${c:l('project.startDt')}" sort="auto" value="startDt"
-								forward="onSort=onSort" sortDirection="descending" />
+								forward="onSort=onSort"/>
 							<listheader id="endDtLsthdr"
 								label="${c:l('project.endDt')}" sort="auto" value="endDt"
-								forward="onSort=onSort" sortDirection="descending" />
+								forward="onSort=onSort" />
 						</listhead>
 						<listitem self="@{each='projectRow'}">
 							<listcell label="@{projectRow.id}" />

@@ -3,20 +3,26 @@
  */
 package gr.scriptum.ecase.controller;
 
+import gr.scriptum.controller.BaseController;
+import gr.scriptum.dao.ProjectDAO;
+import gr.scriptum.domain.Project;
+
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.criterion.Order;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Window;
-
-import gr.scriptum.controller.BaseController;
-import gr.scriptum.domain.Project;
 
 /**
  * @author aanagnostopoulos
@@ -54,13 +60,33 @@ public class IndexController extends BaseController {
 	private Date projectEndDateTo = null;
 
 	private void initProjects() {
-		project = null;
+		project = new Project();
 		projects = null;
 		selectedProject = null;
 		projectStartDateFrom = null;
 		projectStartDateTo = null;
 		projectEndDateFrom = null;
 		projectEndDateTo = null;
+	}
+
+	private void searchProjects(Integer startIndex) {
+
+		project = (Project) trimStringProperties(project);
+		ProjectDAO projectDAO = new ProjectDAO();
+		// set up paging by counting records first
+		Integer totalSize = projectDAO.countSearch(project.getName(),
+				projectStartDateFrom, projectStartDateTo, projectEndDateFrom,
+				projectEndDateTo);
+		projectsPgng.setTotalSize(totalSize);
+		int pageSize = projectsPgng.getPageSize();
+		
+		// figure out which header to sort by
+		Listheader header = getSortingListheader(projectsLstbx);
+		List<Order> sortBy = getSortBy(header);
+
+		projects = projectDAO.search(project.getName(), projectStartDateFrom,
+				projectStartDateTo, projectEndDateFrom, projectEndDateTo,
+				startIndex, pageSize, sortBy.toArray(new Order[0]));
 	}
 
 	@Override
@@ -75,10 +101,43 @@ public class IndexController extends BaseController {
 			if (tab.equals(projectsTab.getId())) {
 				indexTbx.setSelectedTab(projectsTab);
 			}
+		}else {
+			searchProjects(0);
 		}
 
 	}
 
+	/**
+	 * Custom sorting event listener, overriding default sorting mechanism.
+	 * Instead, database sorting is used. The property to be sorted by gets
+	 * picked up from the 'value' attribute of the Listheader triggering the
+	 * event. The sorting order (asc,desc) used the Listheader's sortDirection
+	 * attribute.
+	 * 
+	 * @param event
+	 *            The sorting event
+	 */
+	public void onSort(Event event) {
+		Event sortEvent = ((ForwardEvent) event).getOrigin();
+		// prevent default sorting from getting called
+		sortEvent.stopPropagation();
+		// setup sorting
+		Listheader header = (Listheader) sortEvent.getTarget();
+		Listbox parent = (Listbox) header.getParent().getParent();
+		setSortingListheader(header);
+
+		if (parent.equals(projectsLstbx)) {
+			searchProjects(0);
+			projectsPgng.setActivePage(0);
+		} 
+
+		getBinder(indexWin).loadAll();
+	}
+	
+	public void onClick$newProjectBtn() {
+		Executions.getCurrent().sendRedirect(ProjectController.PAGE);
+	}
+	
 	public Project getProject() {
 		return project;
 	}
