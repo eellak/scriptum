@@ -36,12 +36,12 @@ public class UserController extends GenericEntityController<Users, UsersDAO> {
 		super.doAfterCompose(comp);
 		
 		RoleDAO roleDAO = new RoleDAO();
-		roles = roleDAO.findProtocolRoles();
+		roles = roleDAO.findCaseRoles();
 		
 		if(entity!=null && entity.getIsDisabled()!=null) {
 			isDisabledChkbx.setChecked(entity.getIsDisabled());
 			
-			role = roleDAO.findProtocolRole(entity);
+			role = roleDAO.findCaseRole(entity);
 			
 		}
 		
@@ -62,7 +62,7 @@ public class UserController extends GenericEntityController<Users, UsersDAO> {
 		entity.setIsDisabled(isDisabledChkbx.isChecked());
 		List<Role> rolesToBeRemoved = new ArrayList<Role>();
 		for(Role role: entity.getRoles()) {
-			if(role.getIsProtocol().equals(RoleDAO.ROLE_IS_PROTOCOL)) {
+			if(role.getIsProtocol().equals(RoleDAO.ROLE_IS_CASE)) {
 				rolesToBeRemoved.add(role);
 			}
 		}
