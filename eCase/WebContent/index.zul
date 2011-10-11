@@ -7,7 +7,99 @@
 	<include id="ph" sclass="header" src="header.zul" />
 
 	<window id="indexWin" title="${c:l('indexPage.title')}"
-		border="normal" width="100%">
+		border="normal" width="100%" apply="gr.scriptum.ecase.controller.IndexController">
+
+		<tabbox id="indexTbx">
+			<tabs>
+				<tab label="${c:l('indexPage.projects') }"
+					id="projectsTb"
+					visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER,ROLE_USER')}" />
+			</tabs>
+
+			<tabpanels>
+
+				<tabpanel id="projectsTbPnl">
+
+					<listbox id="projectsLstbx" rows="10"
+						model="@{IndexController.projects}"
+						selectedItem="@{IndexController.selectedProject}">
+						<listhead>
+							<listheader id="projectIdLsthdr"
+								label="${c:l('project.id')}" sort="auto" value="id"
+								forward="onSort=onSort" width="10%" />
+							<listheader id="projectNameLsthdr"
+								label="${c:l('project.projectName')}" sort="auto" value="name"
+								forward="onSort=onSort" />
+							<listheader id="startDtLsthdr"
+								label="${c:l('project.startDt')}" sort="auto" value="startDt"
+								forward="onSort=onSort" sortDirection="descending" />
+							<listheader id="endDtLsthdr"
+								label="${c:l('project.endDt')}" sort="auto" value="endDt"
+								forward="onSort=onSort" sortDirection="descending" />
+						</listhead>
+						<listitem self="@{each='projectRow'}">
+							<listcell label="@{projectRow.id}" />
+							<listcell label="@{projectRow.name}" />
+							<listcell label="@{projectRow.startDt}" />
+							<listcell label="@{projectRow.endDt}" />
+						</listitem>
+					</listbox>
+					<paging id="projectsPgng" pageSize="10" />
+
+					<separator bar="true" />
+
+					<grid>
+						<columns>
+							<column width="30%" />
+						</columns>
+						<rows>
+							<row>
+								${c:l('project.startDt')}
+								<hbox>
+									(${c:l('from')})
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.projectStartDateFrom }" />
+									(${c:l('to')})
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.projectStartDateTo }" />
+								</hbox>
+							</row>
+							<row>
+								${c:l('project.endDt')}
+								<hbox>
+									(${c:l('from')})
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.projectEndDateFrom }" />
+									(${c:l('to')})
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.projectEndDateTo }" />
+								</hbox>
+							</row>
+							<row>
+								${c:l('project.name')}
+								<textbox width="300px"
+									value="@{IndexController.project.name}" />
+							</row>
+							<row>
+								<label value="${c:l('functions')}" />
+								<hbox>
+									<button
+										id="searchProjectBtn" label="${c:l('search')}" />
+									<button id="clearProjectBtn"
+										label="${c:l('clear')}" />
+									<button id="newProjectBtn"
+										label="${c:l('new')}" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
 
 	</window>
 	<include id="footer" sclass="footer" src="footer.zul" />
