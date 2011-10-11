@@ -53,7 +53,7 @@ public class RoleDAO extends GenericDAO<Role, Integer> {
 		// example.setIsProtocol(ROLE_IS_PROTOCOL);
 		// return findByExample(example, new String[] {});
 		Query query = getSession().createQuery(
-				"from Role r where r.isProtocol in :roles order by r.id");
+				"from Role r where r.isProtocol in (:roles) order by r.id");
 		query.setParameterList("roles", new Integer[] { ROLE_IS_CASE,
 				ROLE_IS_COMMON });
 		return query.list();
