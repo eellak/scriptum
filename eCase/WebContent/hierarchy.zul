@@ -1,0 +1,74 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./hierarchyWin"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
+<?page title="${c:l('hierarchyPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+
+	<window id="hierarchyWin" title="${c:l('hierarchyPage.title')}"
+		border="normal" width="100%"
+		apply="gr.scriptum.ecase.controller.HierarchyController">
+		<hbox>
+			<grid>
+				<columns>
+					<column width="30%" />
+				</columns>
+				<rows>
+					<row>
+						${c:l('department')}
+						<combobox id="departmentCbx" width="300px"
+							model="@{HierarchyController.departments}"
+							selectedItem="@{HierarchyController.department}"
+							constraint="no empty">
+							<comboitem self="@{each='departmentRow'}"
+								label="@{departmentRow.name}" />
+						</combobox>
+					</row>
+					<row>
+						${c:l('hierarchyPage.users')}
+						<listbox id="usersLstbx"
+							model="@{HierarchyController.users }"
+							selectedItem="@{HierarchyController.user }" rows="10"
+							vflex="true">
+							<listhead>
+								<listheader label="${c:l('users.id')}" />
+								<listheader
+									label="${c:l('users.username')}" />
+								<listheader
+									label="${c:l('users.name')}" />
+								<listheader
+									label="${c:l('users.surname')}" />
+							</listhead>
+							<listitem self="@{each='userRow'}">
+								<listcell label="@{userRow.id}" />
+								<listcell label="@{userRow.username}" />
+								<listcell label="@{userRow.name}" />
+								<listcell label="@{userRow.surname}" />
+							</listitem>
+						</listbox>
+					</row>
+				</rows>
+			</grid>
+			<vbox>
+				<button id="addBtn" label="${c:l('add')}"
+					disabled="@{HierarchyController.isAddDisabled }" />
+				<button id="removeBtn" label="${c:l('remove')}"
+					disabled="@{HierarchyController.isRemoveDisabled }" />
+			</vbox>
+			<tree id="hierarchyTree">
+				<auxhead>
+					<auxheader label="${c:l('hierarchyPage.tree')}"
+						colspan="3" />
+				</auxhead>
+				<treecols>
+					<treecol label="${c:l('users.name')}" />
+					<treecol label="${c:l('users.surname')}" />
+					<treecol label="${c:l('users.username')}" />
+				</treecols>
+			</tree>
+		</hbox>
+
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>
