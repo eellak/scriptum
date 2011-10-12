@@ -27,11 +27,12 @@
 
 		<intercept-url pattern="/login.zul" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
-		<intercept-url pattern="/index.zul" access="ROLE_USER,ROLE_ADMIN" />
-
-		<intercept-url pattern="/users.zul" access="ROLE_ADMIN" />
-		<intercept-url pattern="/user.zul" access="ROLE_ADMIN" />
-		<intercept-url pattern="/departments.zul" access="ROLE_ADMIN" />
+		<intercept-url pattern="/index.zul" access="ROLE_CASE_USER,ROLE_CASE_ADMIN" />
+		<intercept-url pattern="/project.zul" access="ROLE_CASE_USER,ROLE_CASE_ADMIN" />
+		
+		<intercept-url pattern="/users.zul" access="ROLE_CASE_ADMIN" />
+		<intercept-url pattern="/user.zul" access="ROLE_CASE_ADMIN" />
+		<intercept-url pattern="/departments.zul" access="ROLE_CASE_ADMIN" />
 
 		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
@@ -57,7 +58,7 @@
 
 	<zksp:zk-event login-template-close-delay="0">
 		<!--<zksp:intercept-event event="onClick" path="//incoming.zul/incomingWin/testBtn" 
-			access="ROLE_WRITER,ROLE_ADMIN"/> --><!-- <zksp:intercept-event path="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" 
+			access="ROLE_WRITER,ROLE_CASE_ADMIN"/> --><!-- <zksp:intercept-event path="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" 
 			/> -->
 	</zksp:zk-event>
 
