@@ -6,6 +6,7 @@ package gr.scriptum.ecase.controller;
 import gr.scriptum.controller.BaseController;
 import gr.scriptum.dao.ProjectDAO;
 import gr.scriptum.domain.Project;
+import gr.scriptum.ecase.util.IConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.ForwardEvent;
+import org.zkoss.zk.ui.event.SelectEvent;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
@@ -79,7 +81,7 @@ public class IndexController extends BaseController {
 				projectEndDateTo);
 		projectsPgng.setTotalSize(totalSize);
 		int pageSize = projectsPgng.getPageSize();
-		
+
 		// figure out which header to sort by
 		Listheader header = getSortingListheader(projectsLstbx);
 		List<Order> sortBy = getSortBy(header);
@@ -101,7 +103,7 @@ public class IndexController extends BaseController {
 			if (tab.equals(projectsTab.getId())) {
 				indexTbx.setSelectedTab(projectsTab);
 			}
-		}else {
+		} else {
 			searchProjects(0);
 		}
 
@@ -129,15 +131,24 @@ public class IndexController extends BaseController {
 		if (parent.equals(projectsLstbx)) {
 			searchProjects(0);
 			projectsPgng.setActivePage(0);
-		} 
+		}
 
 		getBinder(indexWin).loadAll();
 	}
-	
+
 	public void onClick$newProjectBtn() {
 		Executions.getCurrent().sendRedirect(ProjectController.PAGE);
 	}
-	
+
+	public void onSelect$projectsLstbx(SelectEvent event) {
+		Integer id = selectedProject.getId();
+
+		Executions.getCurrent().sendRedirect(
+				ProjectController.PAGE + "?" + IConstants.PARAM_KEY_ID + "="
+						+ id);
+
+	}
+
 	public Project getProject() {
 		return project;
 	}

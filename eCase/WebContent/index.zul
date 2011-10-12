@@ -13,7 +13,7 @@
 			<tabs>
 				<tab label="${c:l('indexPage.projects') }"
 					id="projectsTb"
-					visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER,ROLE_USER')}" />
+					visible="${sec:isAnyGranted('ROLE_CASE_ADMIN,ROLE_CASE_USER')}" />
 			</tabs>
 
 			<tabpanels>

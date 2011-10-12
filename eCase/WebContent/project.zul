@@ -5,69 +5,132 @@
 <zk>
 	<include id="ph" sclass="header" src="header.zul" />
 	<window id="win" title="${c:l('projectPage.title')}" border="normal"
-		width="100%"
-		apply="gr.scriptum.ecase.controller.ProjectController">
+		width="100%" apply="gr.scriptum.ecase.controller.ProjectController">
 
 		<grid>
 			<columns>
 				<column width="30%" />
 			</columns>
 			<rows>
-				<row visible="@{UserController.isEntityCreated}">
-					${c:l('users.id')}
+				<row visible="@{ProjectController.isEntityCreated}">
+					${c:l('project.id')}
 					<label id="idLbl"
-						value="@{UserController.entity.id}" />
+						value="@{ProjectController.entity.id}" />
 				</row>
 				<row>
-					${c:l('users.username')}
-					<textbox id="usernameTxb"
-						value="@{UserController.entity.username}" width="300px"
-						constraint="no empty" />
-				</row>
-				<row>
-					${c:l('users.password')}
-					<textbox id="passwordTxb"
-						value="@{UserController.entity.password}" width="300px"
-						constraint="no empty" type="password" />
-				</row>
-				<row>
-					${c:l('users.name')}
+					${c:l('project.name')}
 					<textbox id="nameTxb"
-						value="@{UserController.entity.name}" width="300px"
+						value="@{ProjectController.entity.name}" width="300px"
 						constraint="no empty" />
 				</row>
 				<row>
-					${c:l('users.surname')}
-					<textbox id="surnameTxb"
-						value="@{UserController.entity.surname}" width="300px"
+					${c:l('project.description')}
+					<textbox id="descriptionTxb"
+						value="@{ProjectController.entity.description}" width="300px"
 						constraint="no empty" />
 				</row>
 				<row>
-					${c:l('role')}
-					<combobox id="roleCbx" width="300px"
-						model="@{UserController.roles}"
-						selectedItem="@{UserController.role}" constraint="no empty">
-						<comboitem self="@{each='roleRow'}"
-							label="@{roleRow.name}" />
-					</combobox>
+					${c:l('project.users')}
+					<hbox>
+						<label
+							value="@{ProjectController.entity.users.name }" />
+						<label
+							value="@{ProjectController.entity.users.surname }" />
+					</hbox>
 				</row>
 				<row>
-					${c:l('users.isDisabled')}
-					<checkbox id="isDisabledChkbx" />
+					${c:l('project.startDt')}
+					<datebox compact="true" width="200px"
+						lenient="false" format="dd/MM/yyyy"
+						value="@{ProjectController.entity.startDt }" />
+				</row>
+				<row>
+					${c:l('project.endDt')}
+					<datebox compact="true" width="200px"
+						lenient="false" format="dd/MM/yyyy"
+						value="@{ProjectController.entity.endDt }" />
+				</row>
+				<row>
+					${c:l('project.expectedDt')}
+					<datebox compact="true" width="200px"
+						lenient="false" format="dd/MM/yyyy"
+						value="@{ProjectController.entity.expectedDt }" />
+				</row>
+				<row>
+					${c:l('project.projectUsers')}
+					<hbox>
+						<listbox id="usersLstbx"
+							model="@{ProjectController.users }"
+							selectedItem="@{ProjectController.selectedUser }" rows="5" vflex="true">
+							<auxhead>
+								<auxheader
+									label="${c:l('projectPage.availableUsers')}" colspan="4" />
+							</auxhead>
+							<listhead>
+								<listheader label="${c:l('users.id')}" />
+								<listheader
+									label="${c:l('users.username')}" />
+								<listheader
+									label="${c:l('users.name')}" />
+								<listheader
+									label="${c:l('users.surname')}" />
+							</listhead>
+							<listitem self="@{each='userRow'}">
+								<listcell label="@{userRow.id}" />
+								<listcell label="@{userRow.username}" />
+								<listcell label="@{userRow.name}" />
+								<listcell label="@{userRow.surname}" />
+							</listitem>
+						</listbox>
+						<vbox>
+							<button id="addProjectUserBtn"
+								label="${c:l('add')}"
+								disabled="@{ProjectController.isAddProjectUserBtnDisabled }" />
+							<button id="removeProjectUserBtn"
+								label="${c:l('remove')}"
+								disabled="@{ProjectController.isRemoveProjectUserBtnDisabled }" />
+						</vbox>
+						<listbox id="projectUsersLstbx"
+							model="@{ProjectController.entity.projectUsers }"
+							selectedItem="@{ProjectController.projectUser }" rows="5" vflex="true">
+							<auxhead>
+								<auxheader
+									label="${c:l('projectPage.projectUsers')}" colspan="4" />
+							</auxhead>
+							<listhead>
+								<listheader label="${c:l('users.id')}" />
+								<listheader
+									label="${c:l('users.username')}" />
+								<listheader
+									label="${c:l('users.name')}" />
+								<listheader
+									label="${c:l('users.surname')}" />
+							</listhead>
+							<listitem self="@{each='projectUserRow'}">
+								<listcell
+									label="@{projectUserRow.id.users.id}" />
+								<listcell
+									label="@{projectUserRow.id.users.username}" />
+								<listcell
+									label="@{projectUserRow.id.users.name}" />
+								<listcell
+									label="@{projectUserRow.id.users.surname}" />
+							</listitem>
+						</listbox>
+					</hbox>
 				</row>
 				<row>
 					${c:l('functions')}
 					<hbox>
 						<button id="newBtn" label="${c:l('new')}" />
 						<button id="saveBtn" label="${c:l('save')}"
-							disabled="@{UserController.isLocked}" />
+							disabled="@{ProjectController.isLocked}" />
 						<button id="deleteBtn" label="${c:l('delete')}"
-							disabled="@{UserController.isEntityNotCreated}" />
+							disabled="@{ProjectController.isEntityNotCreated}" />
 					</hbox>
 				</row>
-
 			</rows>
 		</grid>
 	</window>
-	<include id="footer" sclass="footer" src="footer.zul"/>	
+	<include id="footer" sclass="footer" src="footer.zul" />
 </zk>

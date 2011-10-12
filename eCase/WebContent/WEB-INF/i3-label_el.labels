@@ -203,6 +203,7 @@ project.startDt=Ημ/νία Έναρξης
 project.endDt=Ημ/νία Ημερολογιακής Λήξη
 project.expectedDt=Ημ/νία Προγραμματισμένης Λήξης
 project.users=Υπεύθυνος Έργου
+project.projectUsers=Συμμετέχοντες
 
 #############
 #pages
@@ -286,3 +287,8 @@ departmentsPage.tree=Δένδρο Οργανογράμματος
 hierarchyPage.title=Διαχείριση Ιεραρχίας
 hierarchyPage.tree=Δένδρο Ιεραρχίας
 hierarchyPage.users=Διαθέσιμοι Χρήστες
+
+##projectPage
+projectPage.title=Διαχείριση Έργου
+projectPage.availableUsers=Διαθέσιμοι Χρήστες
+projectPage.projectUsers=Λαμβάνουν Μέρος
