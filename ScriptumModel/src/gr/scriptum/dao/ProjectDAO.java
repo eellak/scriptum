@@ -104,4 +104,11 @@ public class ProjectDAO extends GenericDAO<Project, Integer> {
 
 	}
 
+	public boolean isDeletable(Integer id) {
+		Project project = findById(id, false);
+		if (!project.getProjectTasks().isEmpty()) {
+			return false;
+		}
+		return true;
+	}
 }
