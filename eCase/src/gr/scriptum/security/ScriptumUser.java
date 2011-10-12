@@ -31,7 +31,6 @@ public class ScriptumUser implements Serializable, UserDetails {
 	private Users user = null;
 	private String okmToken = null;
 
-	
 	public ScriptumUser(Users user, String okmToken) {
 		super();
 		this.user = user;
@@ -50,11 +49,13 @@ public class ScriptumUser implements Serializable, UserDetails {
 
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
 
-		Role role = user.getRoles().toArray(new Role[0])[0];
+		// Role role = user.getRoles().toArray(new Role[0])[0];
+		for (Role role : user.getRoles()) {
+			GrantedAuthority grantedAuthority = new GrantedAuthorityImpl(
+					ROLE_PREFIX + role.getName());
+			grantedAuthorities.add(grantedAuthority);
 
-		GrantedAuthority grantedAuthority = new GrantedAuthorityImpl(
-				ROLE_PREFIX + role.getName());
-		grantedAuthorities.add(grantedAuthority);
+		}
 
 		return grantedAuthorities;
 	}
