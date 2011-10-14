@@ -43,8 +43,8 @@ public class HierarchyController extends BaseController {
 	private static Log log = LogFactory.getLog(HierarchyController.class);
 
 	/* components */
-	private Window hierarchyWin;
-	private Tree hierarchyTree;
+	Window hierarchyWin;
+	Tree hierarchyTree;
 
 	/* data binding */
 	private List<Department> departments = null;
