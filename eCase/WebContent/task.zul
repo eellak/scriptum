@@ -1,0 +1,230 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./taskWin"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('taskPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="taskWin" title="${c:l('taskPage.title')}"
+		border="normal" width="100%"
+		apply="gr.scriptum.ecase.controller.TaskController">
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row visible="@{TaskController.isTaskCreated}">
+					${c:l('projectTask.id')}
+					<label id="idLbl"
+						value="@{TaskController.projectTask.id}" />
+				</row>
+				<row>
+					${c:l('projectTask.name')}
+					<textbox id="nameTxb"
+						value="@{TaskController.projectTask.name}" width="300px"
+						constraint="no empty" />
+				</row>
+				<row>
+					${c:l('projectTask.description')}
+					<textbox id="descriptionTxb"
+						value="@{TaskController.projectTask.description}" width="50%"
+						rows="4" constraint="no empty" />
+				</row>
+				<row>
+					${c:l('projectTask.project')}
+					<combobox id="projectCbx" width="300px"
+						model="@{TaskController.projects}"
+						selectedItem="@{TaskController.projectTask.project}">
+						<comboitem self="@{each='projectRow'}"
+							label="@{projectRow.name}" />
+					</combobox>
+				</row>
+				<row>
+					${c:l('projectTask.usersByUserDispatcherId')}
+					<bandbox id="userHierarchyBndbx" autodrop="true"
+						value="@{TaskController.userFullName }" constraint="no empty"
+						width="300px">
+						<bandpopup>
+							<listbox id="userHierarchiesLstbx"
+								model="@{TaskController.userHierarchies}"
+								selectedItem="@{TaskController.selectedUserHierarchy}">
+								<listhead>
+									<listheader
+										label="${c:l('users.id')}" />
+									<listheader
+										label="${c:l('users.name')}" />
+									<listheader
+										label="${c:l('users.surname')}" />
+									<listheader
+										label="${c:l('users.username')}" />
+									<listheader
+										label="${c:l('department')}" />
+								</listhead>
+								<listitem
+									self="@{each='userHierarchyRow'}">
+									<listcell
+										label="@{userHierarchyRow.users.id}" />
+									<listcell
+										label="@{userHierarchyRow.users.name}" />
+									<listcell
+										label="@{userHierarchyRow.users.surname}" />
+									<listcell
+										label="@{userHierarchyRow.users.username}" />
+									<listcell
+										label="@{userHierarchyRow.department.name}" />
+								</listitem>
+							</listbox>
+						</bandpopup>
+					</bandbox>
+				</row>
+				<row>
+					${c:l('projectTask.contact')}
+					<bandbox id="contactBndbx" autodrop="true"
+						value="@{TaskController.contactFullName }" width="300px">
+						<bandpopup>
+							<listbox id="contactsLstbx"
+								model="@{TaskController.contacts}"
+								selectedItem="@{TaskController.projectTask.contact}">
+								<listhead>
+									<listheader
+										label="${c:l('contact.id')}" />
+									<listheader
+										label="${c:l('contact.name')}" />
+									<listheader
+										label="${c:l('contact.surname')}" />
+									<listheader
+										label="${c:l('company.name')}" />
+									<listheader
+										label="${c:l('contact.email')}" />
+									<listheader
+										label="${c:l('contact.telephone')}" />
+								</listhead>
+								<listitem self="@{each='contactRow'}">
+									<listcell label="@{contactRow.id}" />
+									<listcell
+										label="@{contactRow.name}" />
+									<listcell
+										label="@{contactRow.surname}" />
+									<listcell
+										label="@{contactRow.company.name}" />
+									<listcell
+										label="@{contactRow.email}" />
+									<listcell
+										label="@{contactRow.telephone}" />
+								</listitem>
+							</listbox>
+							<paging id="contactsPgng" pageSize="10" />
+						</bandpopup>
+					</bandbox>
+				</row>
+				<row>
+					${c:l('projectTask.startDt')}
+					<datebox compact="true" width="200px"
+						lenient="false" format="dd/MM/yyyy"
+						value="@{TaskController.projectTask.startDt }"
+						constraint="no empty" />
+				</row>
+				<row>
+					${c:l('projectTask.taskType')}
+					<combobox id="typeCbx" width="300px"
+						model="@{TaskController.taskTypes}"
+						selectedItem="@{TaskController.projectTask.taskType}"
+						constraint="no empty">
+						<comboitem self="@{each='taskTypeRow'}"
+							label="@{taskTypeRow.name}" />
+					</combobox>
+				</row>
+				<row>
+					${c:l('projectTask.taskPriority')}
+					<combobox id="priorityCbx" width="300px"
+						model="@{TaskController.taskPriorities}"
+						selectedItem="@{TaskController.projectTask.taskPriority}"
+						constraint="no empty">
+						<comboitem self="@{each='taskPriorityRow'}"
+							label="@{taskPriorityRow.name}" />
+					</combobox>
+				</row>
+				<row>
+					${c:l('projectTask.taskState')}
+					<combobox id="stateCbx" width="300px"
+						model="@{TaskController.taskStates}"
+						selectedItem="@{TaskController.projectTask.taskState}"
+						constraint="no empty">
+						<comboitem self="@{each='taskStateRow'}"
+							label="@{taskStateRow.name}" />
+					</combobox>
+				</row>
+				<row>
+					${c:l('projectTask.taskDocuments')}
+					<vbox width="100%">
+						${c:l('taskPage.documents.prompt')}
+						<listbox id="documentsLstbx" rows="4"
+							width="99%" model="@{TaskController.taskDocuments}"
+							selectedItem="@{TaskController.taskDocument}">
+							<listhead>
+								<listheader
+									label="${c:l('protocolDocument.documentNumber')}" width="5%" />
+								<listheader
+									label="${c:l('protocolDocument.documentName')}" width="40%" />
+								<listheader
+									label="${c:l('protocolDocument.documentSize')}" width="15%" />
+								<listheader
+									label="${c:l('documentType')}" width="40%" />
+							</listhead>
+							<listitem self="@{each='documentRow'}">
+								<listcell
+									label="@{documentRow.documentNumber}" />
+								<listcell
+									label="@{documentRow.documentName}" />
+								<listcell
+									label="@{documentRow.documentSize}" />
+								<listcell
+									label="@{documentRow.documentType.name}" />
+							</listitem>
+						</listbox>
+						<hbox>
+							<button id="addFileBtn"
+								label="${c:l('add')}"
+								disabled="@{TaskController.isAddFileBtnDisabled}" />
+							<button id="removeFileBtn"
+								label="${c:l('remove')}"
+								disabled="@{TaskController.isRemoveFileBtnDisabled}" />
+							<button id="downloadFileBtn"
+								label="${c:l('download')}"
+								disabled="@{TaskController.isDownloadFileBtnDisabled}" />
+						</hbox>
+					</vbox>
+				</row>
+				<row>
+					${c:l('projectTask.closedDt')}
+					<datebox compact="true" width="200px"
+						lenient="false" format="dd/MM/yyyy"
+						value="@{TaskController.projectTask.closedDt }"/>
+				</row>
+				<row>
+					${c:l('projectTask.expectedDt')}
+					<datebox compact="true" width="200px"
+						lenient="false" format="dd/MM/yyyy"
+						value="@{TaskController.projectTask.expectedDt }"/>
+				</row>
+				<row>
+					${c:l('projectTask.comments')}
+					<textbox id="commentsTxb"
+						value="@{TaskController.projectTask.comments}" width="50%"
+						rows="4" />
+				</row>
+				<row>
+					${c:l('functions')}
+					<hbox>
+						<button id="newBtn" label="${c:l('new')}" />
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@{TaskController.isLocked}" />
+						<button id="deleteBtn" label="${c:l('delete')}"
+							disabled="@{TaskController.isEntityNotCreated}" />
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

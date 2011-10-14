@@ -29,6 +29,7 @@
 
 		<intercept-url pattern="/index.zul" access="ROLE_CASE_USER,ROLE_CASE_ADMIN" />
 		<intercept-url pattern="/project.zul" access="ROLE_CASE_USER,ROLE_CASE_ADMIN" />
+		<intercept-url pattern="/task.zul" access="ROLE_CASE_USER,ROLE_CASE_ADMIN" />
 		
 		<intercept-url pattern="/users.zul" access="ROLE_CASE_ADMIN" />
 		<intercept-url pattern="/user.zul" access="ROLE_CASE_ADMIN" />

@@ -200,10 +200,31 @@ project.id=Α/Α
 project.name=Όνομα Έργου
 project.description=Αναλυτική Περιγραφή
 project.startDt=Ημ/νία Έναρξης
-project.endDt=Ημ/νία Ημερολογιακής Λήξη
+project.endDt=Ημ/νία Λήξης
 project.expectedDt=Ημ/νία Προγραμματισμένης Λήξης
 project.users=Υπεύθυνος Έργου
 project.projectUsers=Συμμετέχοντες
+
+##ProjectTask
+projectTask=Ανάθεση
+projectTask.id=Α/Α
+projectTask.name=Όνομα Ανάθεσης
+projectTask.description=Αναλυτική Περιγραφή
+projectTask.project=Έργο-Γονέας
+projectTask.usersByUserDispatcherId=Υπεύθυνος Διεκπεραίωσης
+projectTask.projectTask=Ανάθεση-Γονέας
+projectTask.taskType=Τυπός
+projectTask.taskState=Κατάσταση
+projectTask.taskPriority=Προτεραιότητα
+projectTask.contact=Εξωτερικός Διεκπεραιωτής
+projectTask.taskDocuments=Έγγραφα
+projectTask.startDt=Ημ/νία Έναρξης
+projectTask.endDt=Καταληκτική Ημ/νία
+projectTask.expectedDt=Ημ/νία Προγραμματισμένης Λήξης
+projectTask.closedDt=Ημ/νία Λήξης
+projectTask.comments=Σχόλια
+
+
 
 #############
 #pages
@@ -292,3 +313,10 @@ hierarchyPage.users=Διαθέσιμοι Χρήστες
 projectPage.title=Διαχείριση Έργου
 projectPage.availableUsers=Διαθέσιμοι Χρήστες
 projectPage.projectUsers=Λαμβάνουν Μέρος
+
+##taskPage
+taskPage.title=Διαχείριση Ανάθεσης
+taskPage.documents.prompt=Επιλέξτε τα αρχεία, αρχίζοντας από το κύριο έγγραφο.
+taskPage.upload.title=Μεταφόρτωση Αρχείου
+taskPage.upload.noFileUploaded=Πρέπει να μεταφορτώσετε ένα αρχείο προτού επιβεβαιώσετε την ενέργεια. 
+taskPage.taskEnd=Λήξη Ανάθεσης
