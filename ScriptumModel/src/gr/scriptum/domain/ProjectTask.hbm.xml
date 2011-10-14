@@ -9,7 +9,7 @@
             <generator class="identity" />
         </id>
         <many-to-one name="project" class="gr.scriptum.domain.Project" fetch="select">
-            <column name="project_id" not-null="true" />
+            <column name="project_id"/>
         </many-to-one>
         <many-to-one name="usersByUserDispatcherId" class="gr.scriptum.domain.Users" fetch="select">
             <column name="user_dispatcher_id" not-null="true" />
@@ -24,7 +24,7 @@
             <column name="user_creator_id" not-null="true" />
         </many-to-one>
         <many-to-one name="contact" class="gr.scriptum.domain.Contact" fetch="select">
-            <column name="contact_id" not-null="true" />
+            <column name="contact_id" />
         </many-to-one>
         <many-to-one name="taskType" class="gr.scriptum.domain.TaskType" fetch="select">
             <column name="task_type_id" not-null="true" />
@@ -34,9 +34,6 @@
         </many-to-one>
         <many-to-one name="taskPriority" class="gr.scriptum.domain.TaskPriority" fetch="select">
             <column name="task_priority_id" not-null="true" />
-        </many-to-one>
-        <many-to-one name="taskDocument" class="gr.scriptum.domain.TaskDocument" fetch="select">
-            <column name="task_document_id" not-null="true" />
         </many-to-one>
         <property name="name" type="string">
             <column name="name" length="256" />
@@ -79,6 +76,12 @@
                 <column name="parent_task_id" />
             </key>
             <one-to-many class="gr.scriptum.domain.ProjectTask" />
+        </set>
+        <set name="taskDocuments" table="task_document" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="project_task_id" not-null="true" />
+            </key>
+            <one-to-many class="gr.scriptum.domain.TaskDocument" />
         </set>
         <set name="taskMessages" table="task_message" inverse="true" lazy="true" fetch="select">
             <key>

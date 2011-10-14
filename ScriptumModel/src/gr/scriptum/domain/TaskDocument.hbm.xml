@@ -3,45 +3,44 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Feb 5, 2011 11:21:55 AM by Hibernate Tools 3.4.0.Beta1 -->
 <hibernate-mapping>
-    <class name="gr.scriptum.domain.TaskDocument" table="task_document">
-        <id name="id" type="java.lang.Integer">
-            <column name="id" />
-            <generator class="identity" />
-        </id>
-        <many-to-one name="documentType" class="gr.scriptum.domain.DocumentType" fetch="select">
-            <column name="document_type_id" not-null="true" />
-        </many-to-one>
-        <property name="documentName" type="string">
-            <column name="document_name" length="256" not-null="true">
-                <comment>'the filename'</comment>
-            </column>
-        </property>
-        <property name="documentSize" type="string">
-            <column name="document_size" length="11" not-null="true">
-                <comment>'the filesize'</comment>
-            </column>
-        </property>
-        <property name="documentNumber" type="int">
-            <column name="document_number" not-null="true">
-                <comment>the index of doc in task</comment>
-            </column>
-        </property>
-        <property name="documentKeywords" type="string">
-            <column name="document_keywords" length="1024">
-                <comment>'comma sep keywirds'</comment>
-            </column>
-        </property>
-        <property name="okmPath" type="string">
-            <column name="okm_path" length="1024" />
-        </property>
-        <property name="okmUuid" type="string">
-            <column name="okm_uuid" length="32" />
-        </property>
-        <set name="projectTasks" table="project_task" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="task_document_id" not-null="true" />
-            </key>
-            <one-to-many class="gr.scriptum.domain.ProjectTask" />
-        </set>
-    </class>
+	<class name="gr.scriptum.domain.TaskDocument" table="task_document">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+		<many-to-one name="documentType" class="gr.scriptum.domain.DocumentType"
+			fetch="select">
+			<column name="document_type_id" not-null="true" />
+		</many-to-one>
+		<many-to-one name="projectTask" class="gr.scriptum.domain.ProjectTask"
+			fetch="select">
+			<column name="project_task_id" not-null="true" />
+		</many-to-one>
+		<property name="documentName" type="string">
+			<column name="document_name" length="256" not-null="true">
+				<comment>'the filename'</comment>
+			</column>
+		</property>
+		<property name="documentSize" type="string">
+			<column name="document_size" length="11" not-null="true">
+				<comment>'the filesize'</comment>
+			</column>
+		</property>
+		<property name="documentNumber" type="int">
+			<column name="document_number" not-null="true">
+				<comment>the index of doc in task</comment>
+			</column>
+		</property>
+		<property name="documentKeywords" type="string">
+			<column name="document_keywords" length="1024">
+				<comment>'comma sep keywirds'</comment>
+			</column>
+		</property>
+		<property name="okmPath" type="string">
+			<column name="okm_path" length="1024" />
+		</property>
+		<property name="okmUuid" type="string">
+			<column name="okm_uuid" length="32" />
+		</property>
+	</class>
 </hibernate-mapping>

@@ -1,6 +1,6 @@
 package gr.scriptum.domain;
 
-// Generated Oct 5, 2011 7:41:16 PM by Hibernate Tools 3.4.0.CR1
+// Generated Oct 14, 2011 9:53:36 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -21,7 +21,6 @@ public class ProjectTask implements java.io.Serializable {
 	private TaskType taskType;
 	private TaskState taskState;
 	private TaskPriority taskPriority;
-	private TaskDocument taskDocument;
 	private String name;
 	private String description;
 	private Integer taskNo;
@@ -35,36 +34,32 @@ public class ProjectTask implements java.io.Serializable {
 	private Date createDt;
 	private Date updateTs;
 	private Set<ProjectTask> projectTasks = new HashSet<ProjectTask>(0);
+	private Set<TaskDocument> taskDocuments = new HashSet<TaskDocument>(0);
 	private Set<TaskMessage> taskMessages = new HashSet<TaskMessage>(0);
 
 	public ProjectTask() {
 	}
 
-	public ProjectTask(Project project, Users usersByUserDispatcherId,
-			TaskResult taskResult, Users usersByUserCreatorId, Contact contact,
-			TaskType taskType, TaskState taskState, TaskPriority taskPriority,
-			TaskDocument taskDocument) {
-		this.project = project;
+	public ProjectTask(Users usersByUserDispatcherId, TaskResult taskResult,
+			Users usersByUserCreatorId, TaskType taskType, TaskState taskState,
+			TaskPriority taskPriority) {
 		this.usersByUserDispatcherId = usersByUserDispatcherId;
 		this.taskResult = taskResult;
 		this.usersByUserCreatorId = usersByUserCreatorId;
-		this.contact = contact;
 		this.taskType = taskType;
 		this.taskState = taskState;
 		this.taskPriority = taskPriority;
-		this.taskDocument = taskDocument;
 	}
 
 	public ProjectTask(Project project, Users usersByUserDispatcherId,
 			TaskResult taskResult, ProjectTask projectTask,
 			Users usersByUserCreatorId, Contact contact, TaskType taskType,
-			TaskState taskState, TaskPriority taskPriority,
-			TaskDocument taskDocument, String name, String description,
-			Integer taskNo, Date startDt, Date expectedDt, Date closedDt,
-			String comments, Integer timesRevised,
+			TaskState taskState, TaskPriority taskPriority, String name,
+			String description, Integer taskNo, Date startDt, Date expectedDt,
+			Date closedDt, String comments, Integer timesRevised,
 			Integer timesContactExternal, Integer reviewerScore, Date createDt,
 			Date updateTs, Set<ProjectTask> projectTasks,
-			Set<TaskMessage> taskMessages) {
+			Set<TaskDocument> taskDocuments, Set<TaskMessage> taskMessages) {
 		this.project = project;
 		this.usersByUserDispatcherId = usersByUserDispatcherId;
 		this.taskResult = taskResult;
@@ -74,7 +69,6 @@ public class ProjectTask implements java.io.Serializable {
 		this.taskType = taskType;
 		this.taskState = taskState;
 		this.taskPriority = taskPriority;
-		this.taskDocument = taskDocument;
 		this.name = name;
 		this.description = description;
 		this.taskNo = taskNo;
@@ -88,6 +82,7 @@ public class ProjectTask implements java.io.Serializable {
 		this.createDt = createDt;
 		this.updateTs = updateTs;
 		this.projectTasks = projectTasks;
+		this.taskDocuments = taskDocuments;
 		this.taskMessages = taskMessages;
 	}
 
@@ -169,14 +164,6 @@ public class ProjectTask implements java.io.Serializable {
 
 	public void setTaskPriority(TaskPriority taskPriority) {
 		this.taskPriority = taskPriority;
-	}
-
-	public TaskDocument getTaskDocument() {
-		return this.taskDocument;
-	}
-
-	public void setTaskDocument(TaskDocument taskDocument) {
-		this.taskDocument = taskDocument;
 	}
 
 	public String getName() {
@@ -283,12 +270,45 @@ public class ProjectTask implements java.io.Serializable {
 		this.projectTasks = projectTasks;
 	}
 
+	public Set<TaskDocument> getTaskDocuments() {
+		return this.taskDocuments;
+	}
+
+	public void setTaskDocuments(Set<TaskDocument> taskDocuments) {
+		this.taskDocuments = taskDocuments;
+	}
+
 	public Set<TaskMessage> getTaskMessages() {
 		return this.taskMessages;
 	}
 
 	public void setTaskMessages(Set<TaskMessage> taskMessages) {
 		this.taskMessages = taskMessages;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ProjectTask other = (ProjectTask) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }
