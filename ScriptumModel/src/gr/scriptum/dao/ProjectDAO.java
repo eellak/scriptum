@@ -10,12 +10,14 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import gr.scriptum.domain.Project;
+import gr.scriptum.domain.Users;
 
 /**
  * @author aanagnostopoulos
@@ -110,5 +112,12 @@ public class ProjectDAO extends GenericDAO<Project, Integer> {
 			return false;
 		}
 		return true;
+	}
+
+	public List<Project> findByCreator(Users user) {
+		Query query = getSession().createQuery(
+				"from Project p where p.users = :user");
+		query.setParameter("user", user);
+		return query.list();
 	}
 }
