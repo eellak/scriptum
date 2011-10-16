@@ -40,6 +40,17 @@
 					</combobox>
 				</row>
 				<row>
+					${c:l('projectTask.projectTask')}
+					<hbox
+						visible="@{TaskController.isParentTaskVisible }">
+						<label
+							value="@{TaskController.projectTask.projectTask.id }" />
+						<label value="-" />
+						<label
+							value="@{TaskController.projectTask.projectTask.name }" />
+					</hbox>
+				</row>
+				<row>
 					${c:l('projectTask.usersByUserDispatcherId')}
 					<bandbox id="userHierarchyBndbx" autodrop="true"
 						value="@{TaskController.userFullName }" constraint="no empty"
@@ -76,6 +87,11 @@
 							</listbox>
 						</bandpopup>
 					</bandbox>
+				</row>
+				<row>
+					${c:l('projectTask.dispatcherCloseable')}
+					<checkbox
+						value="@{TaskController.projectTask.dispatcherCloseable,converter=gr.scriptum.util.CheckBoxToIntegerTypeConverter }" />
 				</row>
 				<row>
 					${c:l('projectTask.contact')}
@@ -199,19 +215,44 @@
 					${c:l('projectTask.closedDt')}
 					<datebox compact="true" width="200px"
 						lenient="false" format="dd/MM/yyyy"
-						value="@{TaskController.projectTask.closedDt }"/>
+						value="@{TaskController.projectTask.closedDt }" />
 				</row>
 				<row>
 					${c:l('projectTask.expectedDt')}
 					<datebox compact="true" width="200px"
 						lenient="false" format="dd/MM/yyyy"
-						value="@{TaskController.projectTask.expectedDt }"/>
+						value="@{TaskController.projectTask.expectedDt }" />
 				</row>
 				<row>
 					${c:l('projectTask.comments')}
 					<textbox id="commentsTxb"
 						value="@{TaskController.projectTask.comments}" width="50%"
 						rows="4" />
+				</row>
+				<row>
+					${c:l('projectTask.taskResult')}
+					<combobox id="resultCbx" width="300px"
+						model="@{TaskController.taskResults}"
+						selectedItem="@{TaskController.projectTask.taskResult}">
+						<comboitem self="@{each='taskResultRow'}"
+							label="@{taskResultRow.name}" />
+					</combobox>
+				</row>
+				<row>
+					${c:l('projectTask.reviewerScore')}
+					<textbox id="reviewerScoreTxb"
+						value="@{TaskController.projectTask.reviewerScore}" width="100px" />
+				</row>
+				<row>
+					${c:l('projectTask.timesRevised')}
+					<textbox id="timesRevisesTxb"
+						value="@{TaskController.projectTask.timesRevised}" width="100px" />
+				</row>
+				<row>
+					${c:l('projectTask.timesContactExternal')}
+					<textbox id="timesContactExternalTxb"
+						value="@{TaskController.projectTask.timesContactExternal}"
+						width="100px" />
 				</row>
 				<row>
 					${c:l('functions')}

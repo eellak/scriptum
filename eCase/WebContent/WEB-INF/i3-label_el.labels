@@ -223,7 +223,17 @@ projectTask.endDt=Καταληκτική Ημ/νία
 projectTask.expectedDt=Ημ/νία Προγραμματισμένης Λήξης
 projectTask.closedDt=Ημ/νία Λήξης
 projectTask.comments=Σχόλια
+projectTask.reviewerScore=Βαθμολογία Αναθέτη
+projectTask.timesRevised=Αριθμός Ελέγχων απο Αναθέτη
+projectTask.timesContactExternal=Βαθμολογία Επικοινωνίας με Εξωτερικούς
+projectTask.dispatcherCloseable=Μπορεί να κλείσει από Διεκπεραιωτή
 
+##TaskDocument
+taskDocument=Έγγραφο Ανάθεσης
+taskDocument.documentNumber=Αριθμός
+taskDocument.documentName=Όνομα
+taskDocument.documentSize=Μέγεθος
+taskDocument.documentKeywords=Λέξεις Κλειδιά
 
 
 #############

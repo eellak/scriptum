@@ -3,26 +3,11 @@
  */
 package gr.scriptum.ecase.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.event.InputEvent;
-import org.zkoss.zk.ui.event.OpenEvent;
-import org.zkoss.zk.ui.event.SelectEvent;
-import org.zkoss.zul.Bandbox;
-import org.zkoss.zul.Listbox;
-import org.zkoss.zul.Paging;
-import org.zkoss.zul.Window;
-import org.zkoss.zul.event.PagingEvent;
-
 import gr.scriptum.controller.BaseController;
 import gr.scriptum.dao.ContactDAO;
 import gr.scriptum.dao.ProjectDAO;
 import gr.scriptum.dao.TaskPriorityDAO;
+import gr.scriptum.dao.TaskResultDAO;
 import gr.scriptum.dao.TaskStateDAO;
 import gr.scriptum.dao.TaskTypeDAO;
 import gr.scriptum.dao.UserHierarchyDAO;
@@ -36,6 +21,30 @@ import gr.scriptum.domain.TaskState;
 import gr.scriptum.domain.TaskType;
 import gr.scriptum.domain.UserHierarchy;
 import gr.scriptum.ecase.util.IConstants;
+import gr.scriptum.util.Callback;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.SuspendNotAllowedException;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.ForwardEvent;
+import org.zkoss.zk.ui.event.InputEvent;
+import org.zkoss.zk.ui.event.OpenEvent;
+import org.zkoss.zk.ui.event.SelectEvent;
+import org.zkoss.zul.Bandbox;
+import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Paging;
+import org.zkoss.zul.Window;
+import org.zkoss.zul.event.PagingEvent;
 
 /**
  * @author aanagnostopoulos
@@ -52,6 +61,7 @@ public class TaskController extends BaseController {
 
 	/* componenents */
 	Window taskWin;
+	Window uploadWin;
 	Paging contactsPgng;
 	Bandbox userHierarchyBndbx;
 	Bandbox contactBndbx;
@@ -80,6 +90,10 @@ public class TaskController extends BaseController {
 		contacts = new ArrayList<Contact>();
 	}
 
+	private void initDocuments() {
+		taskDocuments = new LinkedList<TaskDocument>();
+	}
+
 	private void addHierarchyBranch(UserHierarchy root) {
 		userHierarchies.add(root);
 		for (UserHierarchy child : root.getUserHierarchies()) {
@@ -105,6 +119,11 @@ public class TaskController extends BaseController {
 	private void refreshTaskStates() {
 		TaskStateDAO taskStateDAO = new TaskStateDAO();
 		taskStates = taskStateDAO.findAll();
+	}
+
+	private void refreshTaskResults() {
+		TaskResultDAO taskResultDAO = new TaskResultDAO();
+		taskResults = taskResultDAO.findAll();
 	}
 
 	private void refreshUserHierarchies() {
@@ -139,10 +158,12 @@ public class TaskController extends BaseController {
 		page.setAttribute(this.getClass().getSimpleName(), this);
 
 		initContacts();
+		initDocuments();
 		refreshUserHierarchies();
 		refreshTaskPriorities();
 		refreshTaskStates();
 		refreshTaskTypes();
+		refreshTaskResults();
 
 		String idString = execution.getParameter(IConstants.PARAM_KEY_ID);
 		if (idString != null) { // existing task
@@ -188,6 +209,66 @@ public class TaskController extends BaseController {
 		// populateContactBndbx();
 		contactBndbx.close();
 		getBinder(taskWin).loadAll();
+	}
+
+	public void onClick$addFileBtn() throws SuspendNotAllowedException,
+			InterruptedException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put(IConstants.PARAM_CALLBACK, new Callback(documentsLstbx,
+				"onDocumentAdded"));
+		uploadWin = (Window) Executions.createComponents(UploadController.PAGE,
+				taskWin, params);
+		uploadWin.setClosable(true);
+		uploadWin.doModal();
+	}
+
+	public void onDocumentAdded$documentsLstbx(Event event) {
+		TaskDocument document = (TaskDocument) ((ForwardEvent) event)
+				.getOrigin().getData();
+		document.setDocumentNumber(taskDocuments.size() + 1);
+		taskDocuments.add(document);
+		getBinder(taskWin).loadAll();
+	}
+
+	public void onSelect$documentsLstbx(SelectEvent event) {
+		getBinder(taskWin).loadAll();
+	}
+
+	public boolean isAddFileBtnDisabled() {
+		if (projectTask.getId() != null) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isRemoveFileBtnDisabled() {
+		if (projectTask.getId() != null) {
+			return true;
+		}
+
+		if (taskDocument == null) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+	public boolean isDownloadFileBtnDisabled() {
+
+		if (taskDocument == null) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+	public boolean isParentTaskVisible() {
+		if (projectTask != null && projectTask.getProjectTask() != null) {
+			return true;
+		}
+		return false;
 	}
 
 	public String getContactFullName() {
