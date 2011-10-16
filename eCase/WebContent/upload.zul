@@ -1,0 +1,43 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./uploadWin"?>
+<window id="uploadWin" title="${c:l('taskPage.upload.title')}"
+	border="normal" width="600px" closable="true"
+	apply="gr.scriptum.ecase.controller.UploadController">
+
+	<grid width="99%">
+		<columns></columns>
+		<rows>
+			<row>
+				${c:l('taskDocument.documentName')}
+				<label id="documentNameLbl"
+					value="@{UploadController.taskDocument.documentName}" />
+			</row>
+			<row>
+				${c:l('documentType')}
+				<combobox id="documentTypeCbx" width="97%"
+					model="@{UploadController.documentTypes}"
+					selectedItem="@{UploadController.taskDocument.documentType}" constraint="no empty">
+					<comboitem self="@{each='documentTypeRow'}"
+						label="@{documentTypeRow.name}" />
+				</combobox>
+			</row>
+			<row>
+				${c:l('taskDocument.documentKeywords')}
+				<textbox rows="2" width="100%" id="documentKeywordsTxb"
+					value="@{UploadController.taskDocument.documentKeywords}" />
+			</row>
+			<row>
+				${c:l('taskDocument.documentSize')}
+				<label id="documentSizeLbl"
+					value="@{UploadController.taskDocument.documentSize}" />
+			</row>
+			<row>
+				${c:l('functions')}
+				<hbox width="99%">
+					<button id="uploadBtn" label="${c:l('upload')}"
+						upload="true,maxsize=204800" />
+					<button id="confirmBtn" label="${c:l('confirm')}" />
+				</hbox>
+			</row>
+		</rows>
+	</grid>
+</window>
