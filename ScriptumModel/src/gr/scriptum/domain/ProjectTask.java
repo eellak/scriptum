@@ -1,6 +1,6 @@
 package gr.scriptum.domain;
 
-// Generated Oct 14, 2011 9:53:36 AM by Hibernate Tools 3.4.0.CR1
+// Generated Oct 16, 2011 11:00:47 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -33,6 +33,7 @@ public class ProjectTask implements java.io.Serializable {
 	private Integer reviewerScore;
 	private Date createDt;
 	private Date updateTs;
+	private Boolean dispatcherCloseable;
 	private Set<ProjectTask> projectTasks = new HashSet<ProjectTask>(0);
 	private Set<TaskDocument> taskDocuments = new HashSet<TaskDocument>(0);
 	private Set<TaskMessage> taskMessages = new HashSet<TaskMessage>(0);
@@ -58,8 +59,9 @@ public class ProjectTask implements java.io.Serializable {
 			String description, Integer taskNo, Date startDt, Date expectedDt,
 			Date closedDt, String comments, Integer timesRevised,
 			Integer timesContactExternal, Integer reviewerScore, Date createDt,
-			Date updateTs, Set<ProjectTask> projectTasks,
-			Set<TaskDocument> taskDocuments, Set<TaskMessage> taskMessages) {
+			Date updateTs, Boolean dispatcherCloseable,
+			Set<ProjectTask> projectTasks, Set<TaskDocument> taskDocuments,
+			Set<TaskMessage> taskMessages) {
 		this.project = project;
 		this.usersByUserDispatcherId = usersByUserDispatcherId;
 		this.taskResult = taskResult;
@@ -81,6 +83,7 @@ public class ProjectTask implements java.io.Serializable {
 		this.reviewerScore = reviewerScore;
 		this.createDt = createDt;
 		this.updateTs = updateTs;
+		this.dispatcherCloseable = dispatcherCloseable;
 		this.projectTasks = projectTasks;
 		this.taskDocuments = taskDocuments;
 		this.taskMessages = taskMessages;
@@ -260,6 +263,14 @@ public class ProjectTask implements java.io.Serializable {
 
 	public void setUpdateTs(Date updateTs) {
 		this.updateTs = updateTs;
+	}
+
+	public Boolean getDispatcherCloseable() {
+		return this.dispatcherCloseable;
+	}
+
+	public void setDispatcherCloseable(Boolean dispatcherCloseable) {
+		this.dispatcherCloseable = dispatcherCloseable;
 	}
 
 	public Set<ProjectTask> getProjectTasks() {
