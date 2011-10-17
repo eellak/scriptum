@@ -21,8 +21,8 @@
 				<comment>'the filename'</comment>
 			</column>
 		</property>
-		<property name="documentSize" type="string">
-			<column name="document_size" length="11" not-null="true">
+		<property name="documentSize" type="java.lang.Long">
+			<column name="document_size" not-null="true">
 				<comment>'the filesize'</comment>
 			</column>
 		</property>
@@ -40,7 +40,7 @@
 			<column name="okm_path" length="1024" />
 		</property>
 		<property name="okmUuid" type="string">
-			<column name="okm_uuid" length="32" />
+			<column name="okm_uuid" length="256" />
 		</property>
 	</class>
 </hibernate-mapping>
