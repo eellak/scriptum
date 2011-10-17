@@ -10,15 +10,7 @@ public interface IConstants {
 
 	public static final String KEY_OKM_TOKEN = "token";
 
-	public static final String SYSTEM_NAME = "eProtocol";
-
-//	public static final String OKM_NODE_PENDING_INCOMING = "/okm:root/PendingIncoming";
-
-//	public static final String OKM_NODE_PENDING_OUTGOING = "/okm:root/PendingOutgoing";
-
-//	public static final String OKM_NODE_INCOMING = "/okm:root/IncomingProtocol";
-
-//	public static final String OKM_NODE_OUTGOING = "/okm:root/OutgoingProtocol";
+	public static final String SYSTEM_NAME = "eCase";
 
 	public static final String OKM_FOLDER_DELIMITER = "/";
 
@@ -27,10 +19,6 @@ public interface IConstants {
 	public static final String PARAM_CALLBACK = "callback";
 
 	public static final String SORTING_DELIMITER = ",";
-
-	// public static final int DISTRIBUTION_METHOD_EMAIL_ID = 3;
-	//
-	// public static final int DISTRIBUTION_WEBSERVICE_ID = 7;
 
 	public static final String PARAM_DISTRIBUTION_METHOD_EMAIL_ID = "DISTRIBUTION_METHOD_EMAIL_ID";
 
@@ -87,4 +75,6 @@ public interface IConstants {
 	public static final String ROLE_WRITER = "ROLE_WRITER";
 	
 	public static final String ROLE_READER = "ROLE_READER";
+
+	public static final String PARAM_OKM_NODE_TASKS = "OKM_NODE_TASKS";
 }
