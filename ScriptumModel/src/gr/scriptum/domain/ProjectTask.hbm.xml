@@ -15,7 +15,7 @@
             <column name="user_dispatcher_id" not-null="true" />
         </many-to-one>
         <many-to-one name="taskResult" class="gr.scriptum.domain.TaskResult" fetch="select">
-            <column name="task_result_id" not-null="true" />
+            <column name="task_result_id" />
         </many-to-one>
         <many-to-one name="projectTask" class="gr.scriptum.domain.ProjectTask" fetch="select">
             <column name="parent_task_id" />
@@ -70,6 +70,9 @@
         </property>
         <property name="updateTs" type="timestamp">
             <column name="update_ts" length="19" />
+        </property>
+        <property name="dispatcherCloseable" type="java.lang.Boolean">
+            <column name="dispatcher_closeable" />
         </property>
         <set name="projectTasks" table="project_task" inverse="true" lazy="true" fetch="select">
             <key>
