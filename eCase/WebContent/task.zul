@@ -32,12 +32,23 @@
 				</row>
 				<row>
 					${c:l('projectTask.project')}
-					<combobox id="projectCbx" width="300px"
-						model="@{TaskController.projects}"
-						selectedItem="@{TaskController.projectTask.project}">
-						<comboitem self="@{each='projectRow'}"
-							label="@{projectRow.name}" />
-					</combobox>
+					<hbox>
+						<combobox id="projectCbx" width="300px"
+							model="@{TaskController.projects}"
+							selectedItem="@{TaskController.projectTask.project}"
+							visible="@{TaskController.isProjectCbxVisible }">
+							<comboitem self="@{each='projectRow'}"
+								label="@{projectRow.name}" />
+						</combobox>
+						<hbox id="projectHbx"
+							visible="@{TaskController.isProjectHbxVisible }">
+							<label
+								value="@{TaskController.projectTask.project.id }" />
+							-
+							<label
+								value="@{TaskController.projectTask.project.name }" />
+						</hbox>
+					</hbox>
 				</row>
 				<row>
 					${c:l('projectTask.projectTask')}
@@ -52,46 +63,64 @@
 				</row>
 				<row>
 					${c:l('projectTask.usersByUserDispatcherId')}
-					<bandbox id="userHierarchyBndbx" autodrop="true"
-						value="@{TaskController.userFullName }" constraint="no empty"
-						width="300px">
-						<bandpopup>
-							<listbox id="userHierarchiesLstbx"
-								model="@{TaskController.userHierarchies}"
-								selectedItem="@{TaskController.selectedUserHierarchy}">
-								<listhead>
-									<listheader
-										label="${c:l('users.id')}" />
-									<listheader
-										label="${c:l('users.name')}" />
-									<listheader
-										label="${c:l('users.surname')}" />
-									<listheader
-										label="${c:l('users.username')}" />
-									<listheader
-										label="${c:l('department')}" />
-								</listhead>
-								<listitem
-									self="@{each='userHierarchyRow'}">
-									<listcell
-										label="@{userHierarchyRow.users.id}" />
-									<listcell
-										label="@{userHierarchyRow.users.name}" />
-									<listcell
-										label="@{userHierarchyRow.users.surname}" />
-									<listcell
-										label="@{userHierarchyRow.users.username}" />
-									<listcell
-										label="@{userHierarchyRow.department.name}" />
-								</listitem>
-							</listbox>
-						</bandpopup>
-					</bandbox>
+					<hbox>
+						<bandbox id="userHierarchyBndbx" autodrop="true"
+							value="@{TaskController.userFullName }" constraint="no empty"
+							width="300px"
+							visible="@{TaskController.isUserHierarchyBndbxVisible }">
+							<bandpopup>
+								<listbox id="userHierarchiesLstbx"
+									model="@{TaskController.userHierarchies}"
+									selectedItem="@{TaskController.selectedUserHierarchy}">
+									<listhead>
+										<listheader
+											label="${c:l('users.id')}" />
+										<listheader
+											label="${c:l('users.name')}" />
+										<listheader
+											label="${c:l('users.surname')}" />
+										<listheader
+											label="${c:l('users.username')}" />
+										<listheader
+											label="${c:l('department')}" />
+									</listhead>
+									<listitem
+										self="@{each='userHierarchyRow'}">
+										<listcell
+											label="@{userHierarchyRow.users.id}" />
+										<listcell
+											label="@{userHierarchyRow.users.name}" />
+										<listcell
+											label="@{userHierarchyRow.users.surname}" />
+										<listcell
+											label="@{userHierarchyRow.users.username}" />
+										<listcell
+											label="@{userHierarchyRow.department.name}" />
+									</listitem>
+								</listbox>
+							</bandpopup>
+						</bandbox>
+						<hbox id="usersByUserDispatcherIdHbx"
+							visible="@{TaskController.isUsersByUserDispatcherIdHbxVisible }">
+							<label
+								value="@{TaskController.projectTask.usersByUserDispatcherId.id }" />
+							<label
+								value="@{TaskController.projectTask.usersByUserDispatcherId.name }" />
+							<label
+								value="@{TaskController.projectTask.usersByUserDispatcherId.surname }" />
+							<label
+								value="@{TaskController.projectTask.usersByUserDispatcherId.username }" />
+							(
+							<label
+								value="@{TaskController.projectTask.usersByUserDispatcherId.department.name }" />
+							)
+						</hbox>
+					</hbox>
 				</row>
 				<row>
 					${c:l('projectTask.dispatcherCloseable')}
 					<checkbox
-						value="@{TaskController.projectTask.dispatcherCloseable,converter=gr.scriptum.util.CheckBoxToIntegerTypeConverter }" />
+						checked="@{TaskController.projectTask.dispatcherCloseable,converter=gr.scriptum.util.CheckBoxToBooleanTypeConverter }" />
 				</row>
 				<row>
 					${c:l('projectTask.contact')}
@@ -259,9 +288,7 @@
 					<hbox>
 						<button id="newBtn" label="${c:l('new')}" />
 						<button id="saveBtn" label="${c:l('save')}"
-							disabled="@{TaskController.isLocked}" />
-						<button id="deleteBtn" label="${c:l('delete')}"
-							disabled="@{TaskController.isEntityNotCreated}" />
+							disabled="@{TaskController.isSaveBtnDisabled}" />
 					</hbox>
 				</row>
 			</rows>

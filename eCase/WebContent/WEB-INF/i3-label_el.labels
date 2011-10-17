@@ -227,6 +227,7 @@ projectTask.reviewerScore=Βαθμολογία Αναθέτη
 projectTask.timesRevised=Αριθμός Ελέγχων απο Αναθέτη
 projectTask.timesContactExternal=Βαθμολογία Επικοινωνίας με Εξωτερικούς
 projectTask.dispatcherCloseable=Μπορεί να κλείσει από Διεκπεραιωτή
+projectTask.taskResult=Αποτέλεσμα
 
 ##TaskDocument
 taskDocument=Έγγραφο Ανάθεσης
@@ -330,3 +331,4 @@ taskPage.documents.prompt=Επιλέξτε τα αρχεία, αρχίζοντα
 taskPage.upload.title=Μεταφόρτωση Αρχείου
 taskPage.upload.noFileUploaded=Πρέπει να μεταφορτώσετε ένα αρχείο προτού επιβεβαιώσετε την ενέργεια. 
 taskPage.taskEnd=Λήξη Ανάθεσης
+taskPage.errorSaving=Παρουσιάστηκε σφάλμα κατά την αποθήκευση της Ανάθεσης.
