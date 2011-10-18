@@ -74,8 +74,10 @@ public class TaskController extends BaseController {
 	 */
 	private static final long serialVersionUID = -7291754158464890911L;
 
-	private static Log log = LogFactory.getLog(TaskController.class);
+	public static final String PAGE = "task.zul";
 
+	private static Log log = LogFactory.getLog(TaskController.class);
+	
 	/* componenents */
 	Window taskWin;
 	Window uploadWin;

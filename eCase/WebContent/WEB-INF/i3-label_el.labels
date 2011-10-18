@@ -211,6 +211,7 @@ projectTask.id=Α/Α
 projectTask.name=Όνομα Ανάθεσης
 projectTask.description=Αναλυτική Περιγραφή
 projectTask.project=Έργο-Γονέας
+projectTask.usersByUserCreatorId=Αναθέτης
 projectTask.usersByUserDispatcherId=Υπεύθυνος Διεκπεραίωσης
 projectTask.projectTask=Ανάθεση-Γονέας
 projectTask.taskType=Τυπός
@@ -271,6 +272,8 @@ loginPage.error=Εσφαλμένη προσπάθεια εισόδου
 ##indexPage
 indexPage.title=Σύστημα Αναθέσεων
 indexPage.projects=Έργα
+indexPage.incomingTasks=Εισερχόμενες Αναθέσεις
+indexPage.outgoingTasks=Εξερχόμενες Αναθέσεις
 
 ##contactPage
 contactPage.title=Διαχείριση Επαφής

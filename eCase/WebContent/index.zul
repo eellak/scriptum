@@ -7,16 +7,247 @@
 	<include id="ph" sclass="header" src="header.zul" />
 
 	<window id="indexWin" title="${c:l('indexPage.title')}"
-		border="normal" width="100%" apply="gr.scriptum.ecase.controller.IndexController">
+		border="normal" width="100%"
+		apply="gr.scriptum.ecase.controller.IndexController">
 
 		<tabbox id="indexTbx">
 			<tabs>
+				<tab label="${c:l('indexPage.incomingTasks') }"
+					id="incomingTasksTb"
+					visible="${sec:isAnyGranted('ROLE_CASE_ADMIN,ROLE_CASE_USER')}" />
+				<tab label="${c:l('indexPage.outgoingTasks') }"
+					id="outgoingTasksTb"
+					visible="${sec:isAnyGranted('ROLE_CASE_ADMIN,ROLE_CASE_USER')}" />
 				<tab label="${c:l('indexPage.projects') }"
 					id="projectsTb"
 					visible="${sec:isAnyGranted('ROLE_CASE_ADMIN,ROLE_CASE_USER')}" />
 			</tabs>
 
 			<tabpanels>
+				<tabpanel id="incomingTbPnl">
+					<listbox id="incomingTasksLstbx" rows="10"
+						model="@{IndexController.incomingTasks}"
+						selectedItem="@{IndexController.selectedIncomingTask}">
+						<listhead>
+							<listheader id="incomingTaskIdLsthdr"
+								label="${c:l('projectTask.id')}" sort="auto" value="id"
+								forward="onSort=onSort" width="10%" sortDirection="ascending" />
+							<listheader id="incomingTaskNameLsthdr"
+								label="${c:l('projectTask.name')}" sort="auto" value="name"
+								forward="onSort=onSort" />
+							<listheader
+								id="incomingTaskProjectNameLsthdr"
+								label="${c:l('projectTask.project')}" sort="auto"
+								value="project" forward="onSort=onSort" />
+							<listheader id="incomingTaskCreatorLsthdr"
+								label="${c:l('projectTask.usersByUserCreatorId')}" sort="auto"
+								value="usersByUserCreatorId" forward="onSort=onSort" />
+							<listheader id="incomingTaskStartDtLsthdr"
+								label="${c:l('projectTask.startDt')}" sort="auto"
+								value="startDt" forward="onSort=onSort" />
+							<listheader id="incomingTaskEndDtLsthdr"
+								label="${c:l('projectTask.endDt')}" sort="auto" value="endDt"
+								forward="onSort=onSort" />
+							<listheader id="incomingTaskStateLsthdr"
+								label="${c:l('projectTask.taskState')}" sort="auto"
+								value="taskState" forward="onSort=onSort" />
+						</listhead>
+						<listitem self="@{each='incomingTaskRow'}">
+							<listcell label="@{incomingTaskRow.id}" />
+							<listcell label="@{incomingTaskRow.name}" />
+							<listcell>
+								<label
+									value="@{incomingTaskRow.project.id}" />
+								-
+								<label
+									value="@{incomingTaskRow.project.name}" />
+							</listcell>
+							<listcell>
+								<label
+									value="@{incomingTaskRow.usersByUserCreatorId.id}" />
+								-
+								<label
+									value="@{incomingTaskRow.usersByUserCreatorId.name}" />
+								<label
+									value="@{incomingTaskRow.usersByUserCreatorId.surname}" />
+							</listcell>
+							<listcell
+								label="@{incomingTaskRow.startDt}" />
+							<listcell label="@{incomingTaskRow.endDt}" />
+							<listcell
+								label="@{incomingTaskRow.taskState.name}" />
+						</listitem>
+
+					</listbox>
+					<paging id="incomingTasksPgng" pageSize="10" />
+
+					<separator bar="true" />
+
+					<grid>
+						<columns>
+							<column width="30%" />
+						</columns>
+						<rows>
+							<row>
+								${c:l('projectTask.startDt')}
+								<hbox>
+									(${c:l('from')})
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.incomingTaskStartDateFrom }" />
+									(${c:l('to')})
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.incomingTaskStartDateTo }" />
+								</hbox>
+							</row>
+							<row>
+								${c:l('projectTask.endDt')}
+								<hbox>
+									(${c:l('from')})
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.incomingTaskEndDateFrom }" />
+									(${c:l('to')})
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.incomingTaskEndDateTo }" />
+								</hbox>
+							</row>
+							<row>
+								${c:l('projectTask.name')}
+								<textbox width="300px"
+									value="@{IndexController.incomingTask.name}" />
+							</row>
+							<row>
+								<label value="${c:l('functions')}" />
+								<hbox>
+									<button id="searchIncomingTasksBtn"
+										label="${c:l('search')}" />
+									<button id="clearIncomingTasksBtn"
+										label="${c:l('clear')}" />
+									<!-- 									<button id="newIncomingTaskBtn"
+										label="${c:l('new')}" />
+									-->
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+
+				</tabpanel>
+
+				<tabpanel id="outgoingTbPnl">
+					<listbox id="outgoingTasksLstbx" rows="10"
+						model="@{IndexController.outgoingTasks}"
+						selectedItem="@{IndexController.selectedOutgoingTask}">
+						<listhead>
+							<listheader id="outgoingTaskIdLsthdr"
+								label="${c:l('projectTask.id')}" sort="auto" value="id"
+								forward="onSort=onSort" width="10%" sortDirection="ascending" />
+							<listheader id="outgoingTaskNameLsthdr"
+								label="${c:l('projectTask.name')}" sort="auto" value="name"
+								forward="onSort=onSort" />
+							<listheader
+								id="outgoingTaskProjectNameLsthdr"
+								label="${c:l('projectTask.project')}" sort="auto" value="project"
+								forward="onSort=onSort"  />
+							<listheader
+								id="outgoingTaskDispatcherLsthdr"
+								label="${c:l('projectTask.usersByUserDispatcherId')}"
+								sort="auto" value="usersByUserDispatcherId"
+								forward="onSort=onSort" />
+							<listheader id="outgoingTaskStartDtLsthdr"
+								label="${c:l('projectTask.startDt')}" sort="auto"
+								value="startDt" forward="onSort=onSort" />
+							<listheader id="outgoingTaskEndDtLsthdr"
+								label="${c:l('projectTask.endDt')}" sort="auto" value="endDt"
+								forward="onSort=onSort" />
+							<listheader id="outgoingTaskStateLsthdr"
+								label="${c:l('projectTask.taskState')}" sort="auto"
+								value="taskState" forward="onSort=onSort" />
+						</listhead>
+						<listitem self="@{each='outgoingTaskRow'}">
+							<listcell label="@{outgoingTaskRow.id}" />
+							<listcell label="@{outgoingTaskRow.name}" />
+							<listcell>
+								<label
+									value="@{outgoingTaskRow.project.id}" />
+								-
+								<label
+									value="@{outgoingTaskRow.project.name}" />
+							</listcell>
+							<listcell>
+								<label
+									value="@{outgoingTaskRow.usersByUserDispatcherId.id}" />
+								-
+								<label
+									value="@{outgoingTaskRow.usersByUserDispatcherId.name}" />
+								<label
+									value="@{outgoingTaskRow.usersByUserDispatcherId.surname}" />
+							</listcell>
+							<listcell
+								label="@{outgoingTaskRow.startDt}" />
+							<listcell label="@{outgoingTaskRow.endDt}" />
+							<listcell
+								label="@{outgoingTaskRow.taskState.name}" />
+						</listitem>
+
+					</listbox>
+					<paging id="outgoingTasksPgng" pageSize="10" />
+
+					<separator bar="true" />
+
+					<grid>
+						<columns>
+							<column width="30%" />
+						</columns>
+						<rows>
+							<row>
+								${c:l('projectTask.startDt')}
+								<hbox>
+									(${c:l('from')})
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.outgoingTaskStartDateFrom }" />
+									(${c:l('to')})
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.outgoingTaskStartDateTo }" />
+								</hbox>
+							</row>
+							<row>
+								${c:l('projectTask.endDt')}
+								<hbox>
+									(${c:l('from')})
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.outgoingTaskEndDateFrom }" />
+									(${c:l('to')})
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.outgoingTaskEndDateTo }" />
+								</hbox>
+							</row>
+							<row>
+								${c:l('projectTask.name')}
+								<textbox width="300px"
+									value="@{IndexController.outgoingTask.name}" />
+							</row>
+							<row>
+								<label value="${c:l('functions')}" />
+								<hbox>
+									<button id="searchOutgoingTasksBtn"
+										label="${c:l('search')}" />
+									<button id="clearOutgoingTasksBtn"
+										label="${c:l('clear')}" />
+									<button id="newOutgoingTaskBtn"
+										label="${c:l('new')}" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+
+				</tabpanel>
 
 				<tabpanel id="projectsTbPnl">
 
@@ -26,13 +257,13 @@
 						<listhead>
 							<listheader id="projectIdLsthdr"
 								label="${c:l('project.id')}" sort="auto" value="id"
-								forward="onSort=onSort" width="10%" sortDirection="ascending"/>
+								forward="onSort=onSort" width="10%" sortDirection="ascending" />
 							<listheader id="projectNameLsthdr"
-								label="${c:l('project.projectName')}" sort="auto" value="name"
+								label="${c:l('project.name')}" sort="auto" value="name"
 								forward="onSort=onSort" />
 							<listheader id="startDtLsthdr"
 								label="${c:l('project.startDt')}" sort="auto" value="startDt"
-								forward="onSort=onSort"/>
+								forward="onSort=onSort" />
 							<listheader id="endDtLsthdr"
 								label="${c:l('project.endDt')}" sort="auto" value="endDt"
 								forward="onSort=onSort" />
@@ -87,8 +318,8 @@
 							<row>
 								<label value="${c:l('functions')}" />
 								<hbox>
-									<button
-										id="searchProjectBtn" label="${c:l('search')}" />
+									<button id="searchProjectBtn"
+										label="${c:l('search')}" />
 									<button id="clearProjectBtn"
 										label="${c:l('clear')}" />
 									<button id="newProjectBtn"

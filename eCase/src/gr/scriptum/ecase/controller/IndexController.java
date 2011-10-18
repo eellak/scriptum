@@ -5,7 +5,9 @@ package gr.scriptum.ecase.controller;
 
 import gr.scriptum.controller.BaseController;
 import gr.scriptum.dao.ProjectDAO;
+import gr.scriptum.dao.ProjectTaskDAO;
 import gr.scriptum.domain.Project;
+import gr.scriptum.domain.ProjectTask;
 import gr.scriptum.ecase.util.IConstants;
 
 import java.util.Date;
@@ -14,6 +16,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.Order;
+import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
@@ -21,10 +24,12 @@ import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.event.SelectEvent;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Window;
+import org.zkoss.zul.event.PagingEvent;
 
 /**
  * @author aanagnostopoulos
@@ -47,12 +52,41 @@ public class IndexController extends BaseController {
 	Window indexWin;
 	Tabbox indexTbx;
 
-	Tab projectsTab;
+	// incoming tasks tab related
+	Tab incomingTasksTb;
+	Listbox incomingTasksLstbx;
+	Paging incomingTasksPgng;
 
+	// outgoing tasks tab related
+	Tab outgoingTasksTb;
+	Listbox outgoingTasksLstbx;
+	Paging outgoingTasksPgng;
+
+	// projects tab related
+	Tab projectsTb;
 	Listbox projectsLstbx;
 	Paging projectsPgng;
 
 	/* Data binding */
+	// incoming tasks tab related
+	private ProjectTask incomingTask = null;
+	private List<ProjectTask> incomingTasks = null;
+	private ProjectTask selectedIncomingTask = null;
+	private Date incomingTaskStartDateFrom = null;
+	private Date incomingTaskStartDateTo = null;
+	private Date incomingTaskEndDateFrom = null;
+	private Date incomingTaskEndDateTo = null;
+
+	// outgoing tasks tab related
+	private ProjectTask outgoingTask = null;
+	private List<ProjectTask> outgoingTasks = null;
+	private ProjectTask selectedOutgoingTask = null;
+	private Date outgoingTaskStartDateFrom = null;
+	private Date outgoingTaskStartDateTo = null;
+	private Date outgoingTaskEndDateFrom = null;
+	private Date outgoingTaskEndDateTo = null;
+
+	// project tab related
 	private Project project = null;
 	private List<Project> projects = null;
 	private Project selectedProject = null;
@@ -60,6 +94,26 @@ public class IndexController extends BaseController {
 	private Date projectStartDateTo = null;
 	private Date projectEndDateFrom = null;
 	private Date projectEndDateTo = null;
+
+	private void initIncomingTasks() {
+		incomingTask = new ProjectTask();
+		incomingTasks = null;
+		selectedIncomingTask = null;
+		incomingTaskStartDateFrom = null;
+		incomingTaskStartDateTo = null;
+		incomingTaskEndDateFrom = null;
+		incomingTaskEndDateTo = null;
+	}
+
+	private void initOutgoingTasks() {
+		outgoingTask = new ProjectTask();
+		outgoingTasks = null;
+		selectedOutgoingTask = null;
+		outgoingTaskStartDateFrom = null;
+		outgoingTaskStartDateTo = null;
+		outgoingTaskEndDateFrom = null;
+		outgoingTaskEndDateTo = null;
+	}
 
 	private void initProjects() {
 		project = new Project();
@@ -69,6 +123,50 @@ public class IndexController extends BaseController {
 		projectStartDateTo = null;
 		projectEndDateFrom = null;
 		projectEndDateTo = null;
+	}
+
+	private void searchIncomingTasks(Integer startIndex) {
+		incomingTask = (ProjectTask) trimStringProperties(incomingTask);
+		ProjectTaskDAO projectTaskDAO = new ProjectTaskDAO();
+		// set up paging by counting records first
+		Integer totalSize = projectTaskDAO.countSearch(incomingTask.getName(),
+				incomingTaskStartDateFrom, incomingTaskStartDateTo,
+				incomingTaskEndDateFrom, incomingTaskEndDateTo,
+				getUserInSession(), null);
+		incomingTasksPgng.setTotalSize(totalSize);
+		int pageSize = incomingTasksPgng.getPageSize();
+
+		// figure out which header to sort by
+		Listheader header = getSortingListheader(incomingTasksLstbx);
+		List<Order> sortBy = getSortBy(header);
+
+		incomingTasks = projectTaskDAO.search(incomingTask.getName(),
+				incomingTaskStartDateFrom, incomingTaskStartDateTo,
+				incomingTaskEndDateFrom, incomingTaskEndDateTo,
+				getUserInSession(), null, startIndex, pageSize,
+				sortBy.toArray(new Order[0]));
+	}
+
+	private void searchOutgoingTasks(Integer startIndex) {
+		outgoingTask = (ProjectTask) trimStringProperties(outgoingTask);
+		ProjectTaskDAO projectTaskDAO = new ProjectTaskDAO();
+		// set up paging by counting records first
+		Integer totalSize = projectTaskDAO.countSearch(outgoingTask.getName(),
+				outgoingTaskStartDateFrom, outgoingTaskStartDateTo,
+				outgoingTaskEndDateFrom, outgoingTaskEndDateTo, null,
+				getUserInSession());
+		outgoingTasksPgng.setTotalSize(totalSize);
+		int pageSize = outgoingTasksPgng.getPageSize();
+
+		// figure out which header to sort by
+		Listheader header = getSortingListheader(outgoingTasksLstbx);
+		List<Order> sortBy = getSortBy(header);
+
+		outgoingTasks = projectTaskDAO.search(outgoingTask.getName(),
+				outgoingTaskStartDateFrom, outgoingTaskStartDateTo,
+				outgoingTaskEndDateFrom, outgoingTaskEndDateTo, null,
+				getUserInSession(), startIndex, pageSize,
+				sortBy.toArray(new Order[0]));
 	}
 
 	private void searchProjects(Integer startIndex) {
@@ -93,20 +191,34 @@ public class IndexController extends BaseController {
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
+
 		super.doAfterCompose(comp);
 		page.setAttribute(this.getClass().getSimpleName(), this);
 
-		initProjects();
+		// initProjects();
 		String tab = execution.getParameter(PARAM_SELECTED_TAB);
 
 		if (tab != null) {
-			if (tab.equals(projectsTab.getId())) {
-				indexTbx.setSelectedTab(projectsTab);
-			}
-		} else {
-			searchProjects(0);
-		}
 
+			if (tab.equals(incomingTasksTb.getId())) {
+				initIncomingTasks();
+				indexTbx.setSelectedTab(incomingTasksTb);
+				searchIncomingTasks(0);
+			} else if (tab.equals(outgoingTasksTb.getId())) {
+				initOutgoingTasks();
+				indexTbx.setSelectedTab(outgoingTasksTb);
+				searchOutgoingTasks(0);
+			} else if (tab.equals(projectsTb.getId())) {
+				initProjects();
+				indexTbx.setSelectedTab(projectsTb);
+				searchProjects(0);
+			}
+
+		} else {
+			initIncomingTasks();
+			indexTbx.setSelectedTab(incomingTasksTb);
+			searchIncomingTasks(0);
+		}
 	}
 
 	/**
@@ -120,6 +232,7 @@ public class IndexController extends BaseController {
 	 *            The sorting event
 	 */
 	public void onSort(Event event) {
+
 		Event sortEvent = ((ForwardEvent) event).getOrigin();
 		// prevent default sorting from getting called
 		sortEvent.stopPropagation();
@@ -131,8 +244,113 @@ public class IndexController extends BaseController {
 		if (parent.equals(projectsLstbx)) {
 			searchProjects(0);
 			projectsPgng.setActivePage(0);
+		} else if (parent.equals(incomingTasksLstbx)) {
+			searchIncomingTasks(0);
+			incomingTasksPgng.setActivePage(0);
+		} else if (parent.equals(outgoingTasksLstbx)) {
+			searchOutgoingTasks(0);
+			outgoingTasksPgng.setActivePage(0);
 		}
 
+		getBinder(indexWin).loadAll();
+	}
+
+	/* incoming Tasks tab related */
+	public void onSelect$incomingTasksTb(SelectEvent event) {
+
+		initIncomingTasks();
+		searchIncomingTasks(0);
+		getBinder(indexWin).loadAll();
+	}
+
+	public void onPaging$incomingTasksPgng(PagingEvent event) {
+
+		int activePage = event.getActivePage();
+		int startIndex = activePage * incomingTasksPgng.getPageSize();
+		searchIncomingTasks(startIndex);
+		getBinder(indexWin).loadAll();
+
+	}
+
+	public void onSelect$incomingTasksLstbx(SelectEvent event) {
+
+		log.info(event);
+		Integer id = selectedIncomingTask.getId();
+
+		Executions.getCurrent().sendRedirect(
+				TaskController.PAGE + "?" + IConstants.PARAM_KEY_ID + "=" + id);
+	}
+
+	public void onClick$searchIncomingTasksBtn() throws InterruptedException {
+
+		searchIncomingTasks(0);
+		getBinder(indexWin).loadAll();
+
+		if (incomingTasks.isEmpty()) {
+			Messagebox.show(Labels.getLabel("search.notFound"),
+					Labels.getLabel("search.title"), Messagebox.OK,
+					Messagebox.EXCLAMATION);
+		}
+	}
+
+	public void onClick$clearIncomingTasksBtn() {
+
+		initIncomingTasks();
+		getBinder(indexWin).loadAll();
+	}
+
+	// public void onClick$newIncomingTaskBtn() {
+	// Executions.getCurrent().sendRedirect(TaskController.PAGE);
+	// }
+
+	/* outgoing Tasks tab related */
+	public void onSelect$outgoingTasksTb(SelectEvent event) {
+		initOutgoingTasks();
+		searchOutgoingTasks(0);
+		getBinder(indexWin).loadAll();
+	}
+
+	public void onPaging$outgoingTasksPgng(PagingEvent event) {
+
+		int activePage = event.getActivePage();
+		int startIndex = activePage * outgoingTasksPgng.getPageSize();
+		searchOutgoingTasks(startIndex);
+		getBinder(indexWin).loadAll();
+
+	}
+
+	public void onSelect$outgoingTasksLstbx(SelectEvent event) {
+		log.info(event);
+		Integer id = selectedOutgoingTask.getId();
+
+		Executions.getCurrent().sendRedirect(
+				TaskController.PAGE + "?" + IConstants.PARAM_KEY_ID + "=" + id);
+	}
+
+	public void onClick$searchOutoingTasksBtn() throws InterruptedException {
+		searchOutgoingTasks(0);
+		getBinder(indexWin).loadAll();
+
+		if (outgoingTasks.isEmpty()) {
+			Messagebox.show(Labels.getLabel("search.notFound"),
+					Labels.getLabel("search.title"), Messagebox.OK,
+					Messagebox.EXCLAMATION);
+		}
+	}
+
+	public void onClick$clearOutoingTasksBtn() {
+		initOutgoingTasks();
+		getBinder(indexWin).loadAll();
+	}
+
+	public void onClick$newOutgoingTaskBtn() {
+		Executions.getCurrent().sendRedirect(TaskController.PAGE);
+	}
+
+	/* projects tab related */
+	public void onSelect$projectsTb(SelectEvent event) {
+		initProjects();
+		searchProjects(0);
 		getBinder(indexWin).loadAll();
 	}
 
@@ -203,6 +421,118 @@ public class IndexController extends BaseController {
 
 	public void setProjectEndDateTo(Date projectEndDateTo) {
 		this.projectEndDateTo = projectEndDateTo;
+	}
+
+	public ProjectTask getIncomingTask() {
+		return incomingTask;
+	}
+
+	public void setIncomingTask(ProjectTask incomingTask) {
+		this.incomingTask = incomingTask;
+	}
+
+	public List<ProjectTask> getIncomingTasks() {
+		return incomingTasks;
+	}
+
+	public void setIncomingTasks(List<ProjectTask> incomingTasks) {
+		this.incomingTasks = incomingTasks;
+	}
+
+	public ProjectTask getSelectedIncomingTask() {
+		return selectedIncomingTask;
+	}
+
+	public void setSelectedIncomingTask(ProjectTask selectedIncomingTask) {
+		this.selectedIncomingTask = selectedIncomingTask;
+	}
+
+	public Date getIncomingTaskStartDateFrom() {
+		return incomingTaskStartDateFrom;
+	}
+
+	public void setIncomingTaskStartDateFrom(Date incomingTaskStartDateFrom) {
+		this.incomingTaskStartDateFrom = incomingTaskStartDateFrom;
+	}
+
+	public Date getIncomingTaskStartDateTo() {
+		return incomingTaskStartDateTo;
+	}
+
+	public void setIncomingTaskStartDateTo(Date incomingTaskStartDateTo) {
+		this.incomingTaskStartDateTo = incomingTaskStartDateTo;
+	}
+
+	public Date getIncomingTaskEndDateFrom() {
+		return incomingTaskEndDateFrom;
+	}
+
+	public void setIncomingTaskEndDateFrom(Date incomingTaskEndDateFrom) {
+		this.incomingTaskEndDateFrom = incomingTaskEndDateFrom;
+	}
+
+	public Date getIncomingTaskEndDateTo() {
+		return incomingTaskEndDateTo;
+	}
+
+	public void setIncomingTaskEndDateTo(Date incomingTaskEndDateTo) {
+		this.incomingTaskEndDateTo = incomingTaskEndDateTo;
+	}
+
+	public ProjectTask getOutgoingTask() {
+		return outgoingTask;
+	}
+
+	public void setOutgoingTask(ProjectTask outgoingTask) {
+		this.outgoingTask = outgoingTask;
+	}
+
+	public List<ProjectTask> getOutgoingTasks() {
+		return outgoingTasks;
+	}
+
+	public void setOutgoingTasks(List<ProjectTask> outgoingTasks) {
+		this.outgoingTasks = outgoingTasks;
+	}
+
+	public ProjectTask getSelectedOutgoingTask() {
+		return selectedOutgoingTask;
+	}
+
+	public void setSelectedOutgoingTask(ProjectTask selectedOutgoingTask) {
+		this.selectedOutgoingTask = selectedOutgoingTask;
+	}
+
+	public Date getOutgoingTaskStartDateFrom() {
+		return outgoingTaskStartDateFrom;
+	}
+
+	public void setOutgoingTaskStartDateFrom(Date outgoingTaskStartDateFrom) {
+		this.outgoingTaskStartDateFrom = outgoingTaskStartDateFrom;
+	}
+
+	public Date getOutgoingTaskStartDateTo() {
+		return outgoingTaskStartDateTo;
+	}
+
+	public void setOutgoingTaskStartDateTo(Date outgoingTaskStartDateTo) {
+		this.outgoingTaskStartDateTo = outgoingTaskStartDateTo;
+	}
+
+	public Date getOutgoingTaskEndDateFrom() {
+		return outgoingTaskEndDateFrom;
+	}
+
+	public void setOutgoingTaskEndDateFrom(Date outgoingTaskEndDateFrom) {
+		this.outgoingTaskEndDateFrom = outgoingTaskEndDateFrom;
+	}
+
+	public Date getOutgoingTaskEndDateTo() {
+		return outgoingTaskEndDateTo;
+	}
+
+	public void setOutgoingTaskEndDateTo(Date outgoingTaskEndDateTo) {
+		this.outgoingTaskEndDateTo = outgoingTaskEndDateTo;
 	}
 
 }
