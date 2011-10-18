@@ -170,6 +170,12 @@
 						constraint="no empty" />
 				</row>
 				<row>
+					${c:l('projectTask.endDt')}
+					<datebox compact="true" width="200px"
+						lenient="false" format="dd/MM/yyyy"
+						value="@{TaskController.projectTask.endDt }"/>
+				</row>
+				<row>
 					${c:l('projectTask.taskType')}
 					<combobox id="typeCbx" width="300px"
 						model="@{TaskController.taskTypes}"
