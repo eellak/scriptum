@@ -74,6 +74,9 @@
         <property name="dispatcherCloseable" type="java.lang.Boolean">
             <column name="dispatcher_closeable" />
         </property>
+        <property name="endDt" type="timestamp">
+            <column name="end_dt" length="19" />
+        </property>
         <set name="projectTasks" table="project_task" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="parent_task_id" />

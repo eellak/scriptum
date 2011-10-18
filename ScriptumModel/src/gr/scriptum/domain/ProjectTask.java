@@ -34,6 +34,7 @@ public class ProjectTask implements java.io.Serializable {
 	private Date createDt;
 	private Date updateTs;
 	private Boolean dispatcherCloseable;
+	private Date endDt;
 	private Set<ProjectTask> projectTasks = new HashSet<ProjectTask>(0);
 	private Set<TaskDocument> taskDocuments = new HashSet<TaskDocument>(0);
 	private Set<TaskMessage> taskMessages = new HashSet<TaskMessage>(0);
@@ -59,7 +60,7 @@ public class ProjectTask implements java.io.Serializable {
 			String description, Integer taskNo, Date startDt, Date expectedDt,
 			Date closedDt, String comments, Integer timesRevised,
 			Integer timesContactExternal, Integer reviewerScore, Date createDt,
-			Date updateTs, Boolean dispatcherCloseable,
+			Date updateTs, Boolean dispatcherCloseable, Date endDt,
 			Set<ProjectTask> projectTasks, Set<TaskDocument> taskDocuments,
 			Set<TaskMessage> taskMessages) {
 		this.project = project;
@@ -84,6 +85,7 @@ public class ProjectTask implements java.io.Serializable {
 		this.createDt = createDt;
 		this.updateTs = updateTs;
 		this.dispatcherCloseable = dispatcherCloseable;
+		this.endDt=endDt;
 		this.projectTasks = projectTasks;
 		this.taskDocuments = taskDocuments;
 		this.taskMessages = taskMessages;
@@ -320,6 +322,14 @@ public class ProjectTask implements java.io.Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Date getEndDt() {
+		return endDt;
+	}
+
+	public void setEndDt(Date endDt) {
+		this.endDt = endDt;
 	}
 
 }
