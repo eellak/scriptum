@@ -30,6 +30,7 @@ success=Η ενέργεια ολοκληρώθηκε επιτυχώς.
 error.title=Σφάλμα
 confirm.title=Επιβεβαίωση
 error=Παρουσιάστηκε σφάλμα κατά τη συγκεκριμένη ενέργεια.
+error.notAllowed=Δεν έχετε δικαίωμα εκτέλεσης της συγκεκριμένης ενέργειας.
 save.title=Αποτέλεσμα Αποθήκευσης
 save.OK=Η εγγραφή αποθηκεύθηκε επιτυχώς.
 search.title=Αποτελέσματα Αναζήτησης
@@ -237,6 +238,12 @@ taskDocument.documentName=Όνομα
 taskDocument.documentSize=Μέγεθος
 taskDocument.documentKeywords=Λέξεις Κλειδιά
 
+##TaskMessage
+taskMessage=Μήνυμα
+taskMessage.subject=Θέμα
+taskMessage.message=Κείμενο
+taskMessage.projectTask=Σχετική Ανάθεση
+taskMessage.createdTs=Ημ/νία
 
 #############
 #pages
@@ -274,6 +281,9 @@ indexPage.title=Σύστημα Αναθέσεων
 indexPage.projects=Έργα
 indexPage.incomingTasks=Εισερχόμενες Αναθέσεις
 indexPage.outgoingTasks=Εξερχόμενες Αναθέσεις
+indexPage.incomingMessages=Εισερχόμενα Μηνύματα
+indexPage.outgoingMessages=Εξερχόμενα Μηνύματα
+
 
 ##contactPage
 contactPage.title=Διαχείριση Επαφής
@@ -335,3 +345,8 @@ taskPage.upload.title=Μεταφόρτωση Αρχείου
 taskPage.upload.noFileUploaded=Πρέπει να μεταφορτώσετε ένα αρχείο προτού επιβεβαιώσετε την ενέργεια. 
 taskPage.taskEnd=Λήξη Ανάθεσης
 taskPage.errorSaving=Παρουσιάστηκε σφάλμα κατά την αποθήκευση της Ανάθεσης.
+
+##messagePage
+messagePage.title=Προβολή/Δημιουργία Μηνύματος
+messagePage.send=Αποστολή
+messagePage.reply=Απάντηση

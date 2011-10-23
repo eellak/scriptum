@@ -6,8 +6,10 @@ package gr.scriptum.ecase.controller;
 import gr.scriptum.controller.BaseController;
 import gr.scriptum.dao.ProjectDAO;
 import gr.scriptum.dao.ProjectTaskDAO;
+import gr.scriptum.dao.TaskMessageDAO;
 import gr.scriptum.domain.Project;
 import gr.scriptum.domain.ProjectTask;
+import gr.scriptum.domain.TaskMessage;
 import gr.scriptum.ecase.util.IConstants;
 
 import java.util.Date;
@@ -67,6 +69,11 @@ public class IndexController extends BaseController {
 	Listbox projectsLstbx;
 	Paging projectsPgng;
 
+	// incoming messages tab related
+	Tab incomingMessagesTb;
+	Listbox incomingMessagesLstbx;
+	Paging incomingMessagesPgng;
+
 	/* Data binding */
 	// incoming tasks tab related
 	private ProjectTask incomingTask = null;
@@ -94,6 +101,13 @@ public class IndexController extends BaseController {
 	private Date projectStartDateTo = null;
 	private Date projectEndDateFrom = null;
 	private Date projectEndDateTo = null;
+
+	// incoming messages tab related
+	private TaskMessage incomingMessage = null;
+	private List<TaskMessage> incomingMessages = null;
+	private TaskMessage selectedIncomingMessage = null;
+	private Date incomingMessageDateFrom = null;
+	private Date incomingMessageDateTo = null;
 
 	private void initIncomingTasks() {
 		incomingTask = new ProjectTask();
@@ -123,6 +137,14 @@ public class IndexController extends BaseController {
 		projectStartDateTo = null;
 		projectEndDateFrom = null;
 		projectEndDateTo = null;
+	}
+
+	private void initIncomingMessages() {
+		incomingMessage = new TaskMessage();
+		incomingMessages = null;
+		selectedIncomingMessage = null;
+		incomingMessageDateFrom = null;
+		incomingMessageDateTo = null;
 	}
 
 	private void searchIncomingTasks(Integer startIndex) {
@@ -189,6 +211,28 @@ public class IndexController extends BaseController {
 				startIndex, pageSize, sortBy.toArray(new Order[0]));
 	}
 
+	private void searchIncomingMessages(Integer startIndex) {
+
+		incomingMessage = (TaskMessage) trimStringProperties(incomingMessage);
+		TaskMessageDAO taskMessageDAO = new TaskMessageDAO();
+		// set up paging by counting records first
+		Integer totalSize = taskMessageDAO.countSearch(
+				incomingMessage.getSubject(), incomingMessageDateFrom,
+				incomingMessageDateTo, null, getUserInSession());
+		incomingMessagesPgng.setTotalSize(totalSize);
+		int pageSize = incomingMessagesPgng.getPageSize();
+
+		// figure out which header to sort by
+		Listheader header = getSortingListheader(incomingMessagesLstbx);
+		List<Order> sortBy = getSortBy(header);
+
+		incomingMessages = taskMessageDAO.search(incomingMessage.getSubject(),
+				incomingMessageDateFrom, incomingMessageDateTo, null,
+				getUserInSession(), startIndex, pageSize,
+				sortBy.toArray(new Order[0]));
+
+	}
+
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 
@@ -212,6 +256,10 @@ public class IndexController extends BaseController {
 				initProjects();
 				indexTbx.setSelectedTab(projectsTb);
 				searchProjects(0);
+			} else if (tab.equals(incomingMessagesTb.getId())) {
+				initIncomingMessages();
+				indexTbx.setSelectedTab(incomingMessagesTb);
+				searchIncomingMessages(0);
 			}
 
 		} else {
@@ -250,6 +298,9 @@ public class IndexController extends BaseController {
 		} else if (parent.equals(outgoingTasksLstbx)) {
 			searchOutgoingTasks(0);
 			outgoingTasksPgng.setActivePage(0);
+		} else if (parent.equals(incomingMessagesLstbx)) {
+			searchIncomingMessages(0);
+			incomingMessagesPgng.setActivePage(0);
 		}
 
 		getBinder(indexWin).loadAll();
@@ -327,7 +378,7 @@ public class IndexController extends BaseController {
 				TaskController.PAGE + "?" + IConstants.PARAM_KEY_ID + "=" + id);
 	}
 
-	public void onClick$searchOutoingTasksBtn() throws InterruptedException {
+	public void onClick$searchOutgoingTasksBtn() throws InterruptedException {
 		searchOutgoingTasks(0);
 		getBinder(indexWin).loadAll();
 
@@ -338,7 +389,7 @@ public class IndexController extends BaseController {
 		}
 	}
 
-	public void onClick$clearOutoingTasksBtn() {
+	public void onClick$clearOutgoingTasksBtn() {
 		initOutgoingTasks();
 		getBinder(indexWin).loadAll();
 	}
@@ -354,6 +405,22 @@ public class IndexController extends BaseController {
 		getBinder(indexWin).loadAll();
 	}
 
+	public void onClick$searchProjectsBtn() throws InterruptedException {
+		searchProjects(0);
+		getBinder(indexWin).loadAll();
+
+		if (projects.isEmpty()) {
+			Messagebox.show(Labels.getLabel("search.notFound"),
+					Labels.getLabel("search.title"), Messagebox.OK,
+					Messagebox.EXCLAMATION);
+		}
+	}
+	
+	public void onClick$clearProjectsBtn() {
+		initProjects();
+		getBinder(indexWin).loadAll();
+	}
+	
 	public void onClick$newProjectBtn() {
 		Executions.getCurrent().sendRedirect(ProjectController.PAGE);
 	}
@@ -365,6 +432,37 @@ public class IndexController extends BaseController {
 				ProjectController.PAGE + "?" + IConstants.PARAM_KEY_ID + "="
 						+ id);
 
+	}
+
+	/* incoming messages tab related */
+	public void onSelect$incomingMessagesTb(SelectEvent event) {
+		initIncomingMessages();
+		searchIncomingMessages(0);
+		getBinder(indexWin).loadAll();
+	}
+
+	public void onSelect$incomingMessagesLstbx(SelectEvent event) {
+		Integer id = selectedIncomingMessage.getId();
+
+		Executions.getCurrent().sendRedirect(
+				MessageController.PAGE + "?" + IConstants.PARAM_KEY_ID + "="
+						+ id);
+	}
+
+	public void onClick$searchIncomingMessagesBtn() throws InterruptedException {
+		searchIncomingMessages(0);
+		getBinder(indexWin).loadAll();
+
+		if (incomingMessages.isEmpty()) {
+			Messagebox.show(Labels.getLabel("search.notFound"),
+					Labels.getLabel("search.title"), Messagebox.OK,
+					Messagebox.EXCLAMATION);
+		}
+	}
+	
+	public void onClick$clearIncomingMessagesBtn() {
+		initIncomingMessages();
+		getBinder(indexWin).loadAll();
 	}
 
 	public Project getProject() {
@@ -533,6 +631,46 @@ public class IndexController extends BaseController {
 
 	public void setOutgoingTaskEndDateTo(Date outgoingTaskEndDateTo) {
 		this.outgoingTaskEndDateTo = outgoingTaskEndDateTo;
+	}
+
+	public TaskMessage getIncomingMessage() {
+		return incomingMessage;
+	}
+
+	public void setIncomingMessage(TaskMessage incomingMessage) {
+		this.incomingMessage = incomingMessage;
+	}
+
+	public List<TaskMessage> getIncomingMessages() {
+		return incomingMessages;
+	}
+
+	public void setIncomingMessages(List<TaskMessage> incomingMessages) {
+		this.incomingMessages = incomingMessages;
+	}
+
+	public TaskMessage getSelectedIncomingMessage() {
+		return selectedIncomingMessage;
+	}
+
+	public void setSelectedIncomingMessage(TaskMessage selectedIncomingMessage) {
+		this.selectedIncomingMessage = selectedIncomingMessage;
+	}
+
+	public Date getIncomingMessageDateFrom() {
+		return incomingMessageDateFrom;
+	}
+
+	public void setIncomingMessageDateFrom(Date incomingMessageDateFrom) {
+		this.incomingMessageDateFrom = incomingMessageDateFrom;
+	}
+
+	public Date getIncomingMessageDateTo() {
+		return incomingMessageDateTo;
+	}
+
+	public void setIncomingMessageDateTo(Date incomingMessageDateTo) {
+		this.incomingMessageDateTo = incomingMessageDateTo;
 	}
 
 }

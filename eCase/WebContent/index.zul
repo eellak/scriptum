@@ -21,6 +21,9 @@
 				<tab label="${c:l('indexPage.projects') }"
 					id="projectsTb"
 					visible="${sec:isAnyGranted('ROLE_CASE_ADMIN,ROLE_CASE_USER')}" />
+				<tab label="${c:l('indexPage.incomingMessages') }"
+					id="incomingMessagesTb"
+					visible="${sec:isAnyGranted('ROLE_CASE_ADMIN,ROLE_CASE_USER')}" />
 			</tabs>
 
 			<tabpanels>
@@ -149,8 +152,8 @@
 								forward="onSort=onSort" />
 							<listheader
 								id="outgoingTaskProjectNameLsthdr"
-								label="${c:l('projectTask.project')}" sort="auto" value="project"
-								forward="onSort=onSort"  />
+								label="${c:l('projectTask.project')}" sort="auto"
+								value="project" forward="onSort=onSort" />
 							<listheader
 								id="outgoingTaskDispatcherLsthdr"
 								label="${c:l('projectTask.usersByUserDispatcherId')}"
@@ -318,9 +321,9 @@
 							<row>
 								<label value="${c:l('functions')}" />
 								<hbox>
-									<button id="searchProjectBtn"
+									<button id="searchProjectsBtn"
 										label="${c:l('search')}" />
-									<button id="clearProjectBtn"
+									<button id="clearProjectsBtn"
 										label="${c:l('clear')}" />
 									<button id="newProjectBtn"
 										label="${c:l('new')}" />
@@ -329,6 +332,89 @@
 						</rows>
 					</grid>
 				</tabpanel>
+
+				<tabpanel id="incomingMessagesTbPnl">
+
+					<listbox id="incomingMessagesLstbx" rows="10"
+						model="@{IndexController.incomingMessages}"
+						selectedItem="@{IndexController.selectedIncomingMessage}">
+						<listhead>
+							<listheader id="incomingMessageIdLsthdr"
+								label="${c:l('taskMessage.id')}" sort="auto" value="id"
+								forward="onSort=onSort" width="10%" sortDirection="ascending" />
+							<listheader
+								id="incomingMessageCreatedTsLsthdr"
+								label="${c:l('taskMessage.createdTs')}" sort="auto" value="name"
+								forward="onSort=onSort" />
+							<listheader id="incomingMessageTaskLsthdr"
+								label="${c:l('taskMessage.projectTask')}" sort="auto"
+								value="projectTask" forward="onSort=onSort" />
+							<listheader
+								id="incomingMessageSubjectLsthdr"
+								label="${c:l('taskMessage.subject')}" sort="auto"
+								value="subject" forward="onSort=onSort" />
+							<listheader
+								id="incomingMessageMessageLsthdr"
+								label="${c:l('taskMessage.message')}" sort="auto"
+								value="message" forward="onSort=onSort" />
+						</listhead>
+						<listitem self="@{each='incomingMessageRow'}">
+							<listcell label="@{incomingMessageRow.id}" />
+							<listcell
+								label="@{incomingMessageRow.createdTs}" />
+							<listcell>
+								<label
+									value="@{incomingMessageRow.projectTask.id }" />
+								-
+								<label
+									value="@{incomingMessageRow.projectTask.name }" />
+							</listcell>
+							<listcell
+								label="@{incomingMessageRow.subject}" />
+							<listcell
+								label="@{incomingMessageRow.message}" />
+						</listitem>
+					</listbox>
+					<paging id="incomingMessagesPgng" pageSize="10" />
+
+					<separator bar="true" />
+
+					<grid>
+						<columns>
+							<column width="30%" />
+						</columns>
+						<rows>
+							<row>
+								${c:l('taskMessage.createdTs')}
+								<hbox>
+									(${c:l('from')})
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.incomingMessageDateFrom }" />
+									(${c:l('to')})
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.incomingMessageDateTo }" />
+								</hbox>
+							</row>
+							<row>
+								${c:l('taskMessage.subject')}
+								<textbox width="300px"
+									value="@{IndexController.incomingMessage.subject}" />
+							</row>
+							<row>
+								<label value="${c:l('functions')}" />
+								<hbox>
+									<button id="searchIncomingMessagesBtn"
+										label="${c:l('search')}" />
+									<button id="clearIncomingMessagesBtn"
+										label="${c:l('clear')}" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+
 			</tabpanels>
 		</tabbox>
 

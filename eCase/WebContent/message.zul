@@ -1,0 +1,57 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('messagePage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('messagePage.title')}" border="normal"
+		width="100%" apply="gr.scriptum.ecase.controller.MessageController">
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row visible="@{MessageController.isEntityCreated}">
+					${c:l('taskMessage.id')}
+					<label id="idLbl"
+						value="@{MessageController.entity.id}" />
+				</row>
+				<row>
+					${c:l('taskMessage.subject')}
+					<textbox id="subjectTxb"
+						value="@{MessageController.entity.subject}" width="300px"
+						constraint="no empty" />
+				</row>
+				<row>
+					${c:l('taskMessage.message')}
+					<textbox id="messageTxb"
+						value="@{MessageController.entity.message}" width="50%" rows="4"
+						constraint="no empty" />
+				</row>
+				<row>
+					${c:l('taskMessage.projectTask')}
+					<combobox id="projectTaskCbx" constraint="no empty"
+						selectedItem="@{MessageController.entity.projectTask}"
+						model="@{MessageController.projectTasks }">
+						<comboitem self="@{each='projectTaskRow'}"
+							value="@{projectTaskRow}" label="@{projectTaskRow.name projectTaskRow.id}" />
+					</combobox>
+				</row>
+				<row>
+					${c:l('functions')}
+					<hbox>
+						<button id="newBtn" label="${c:l('new')}" />
+						<button id="saveBtn"
+							label="${c:l('messagePage.send')}"
+							visible="@{MessageController.isEntityNotCreated}" />
+						<button id="replyBtn"
+							label="${c:l('messagePage.reply')}"
+							visible="@{MessageController.isEntityCreated}" />
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>
