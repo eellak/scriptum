@@ -3,25 +3,24 @@
  */
 package gr.scriptum.ecase.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import gr.scriptum.controller.GenericEntityController;
-import gr.scriptum.dao.ContactDAO;
 import gr.scriptum.dao.ProjectTaskDAO;
 import gr.scriptum.dao.TaskMessageDAO;
 import gr.scriptum.dao.UsersDAO;
-import gr.scriptum.domain.Contact;
 import gr.scriptum.domain.ProjectTask;
 import gr.scriptum.domain.TaskMessage;
 import gr.scriptum.domain.Users;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.InputEvent;
 import org.zkoss.zk.ui.event.OpenEvent;
 import org.zkoss.zk.ui.event.SelectEvent;
@@ -46,6 +45,8 @@ public class MessageController extends
 
 	public static final String PARAM_KEY_TASK = "t";
 
+	public static final String PARAM_KEY_RECIPIENT = "r";
+
 	public static final String PAGE = "message.zul";
 
 	/* components */
@@ -62,53 +63,91 @@ public class MessageController extends
 		projectTasks = new ArrayList<ProjectTask>();
 		recipients = new ArrayList<Users>();
 
+		// Fetch related task, if any
 		String taskIdString = execution.getParameter(PARAM_KEY_TASK);
-		Integer taskId = null;
-		try {
-			taskId = taskIdString != null ? Integer.valueOf(taskIdString)
-					: null;
-		} catch (NumberFormatException e) {
-			log.error(e);
+		if (taskIdString != null) {
+
+			Integer taskId = null;
+			try {
+				taskId = taskIdString != null ? Integer.valueOf(taskIdString)
+						: null;
+			} catch (NumberFormatException e) {
+				log.error(e);
+			}
+
+			if (taskId == null) {
+				Messagebox.show(Labels.getLabel("fetch.notFound"),
+						Labels.getLabel("fetch.title"), Messagebox.OK,
+						Messagebox.ERROR);
+				entity = null;
+				return;
+			}
+
+			ProjectTaskDAO projectTaskDAO = new ProjectTaskDAO();
+			ProjectTask projectTask = projectTaskDAO.findById(taskId, false);
+
+			if (projectTask == null) {
+				Messagebox.show(Labels.getLabel("fetch.notFound"),
+						Labels.getLabel("fetch.title"), Messagebox.OK,
+						Messagebox.ERROR);
+				entity = null;
+				return;
+
+			}
+
+			// check if currently logged-on user is allowed to send messages
+			// related to this task
+			Integer dispatcherId = projectTask.getUsersByUserDispatcherId()
+					.getId();
+			Integer creatorId = projectTask.getUsersByUserCreatorId().getId();
+			Integer userId = getUserInSession().getId();
+
+			if (userId.intValue() != dispatcherId.intValue()
+					&& userId.intValue() != creatorId.intValue()) {
+				Messagebox.show(Labels.getLabel("error.notAllowed"),
+						Labels.getLabel("error.title"), Messagebox.OK,
+						Messagebox.ERROR);
+				entity = null;
+				return;
+			}
+
+			((TaskMessage) entity).setProjectTask(projectTask);
+			projectTasks.add(projectTask);
+			((TaskMessage) entity).setUsersByUserSenderId(getUserInSession());
 		}
 
-		if (taskId == null) {
-			Messagebox.show(Labels.getLabel("fetch.notFound"),
-					Labels.getLabel("fetch.title"), Messagebox.OK,
-					Messagebox.ERROR);
-			entity = null;
-			return;
+		// fetch recipient, if any
+		String recipientIdString = execution.getParameter(PARAM_KEY_RECIPIENT);
+		if (recipientIdString != null) {
+			Integer recipientId = null;
+			try {
+				recipientId = Integer.valueOf(recipientIdString);
+			} catch (NumberFormatException e) {
+				log.error(e);
+			}
+
+			if (recipientId == null) {
+				Messagebox.show(Labels.getLabel("fetch.notFound"),
+						Labels.getLabel("fetch.title"), Messagebox.OK,
+						Messagebox.ERROR);
+				entity = null;
+				return;
+			}
+
+			UsersDAO usersDAO = new UsersDAO();
+			Users recipient = usersDAO.findById(recipientId, false);
+
+			if (recipient == null) {
+				Messagebox.show(Labels.getLabel("fetch.notFound"),
+						Labels.getLabel("fetch.title"), Messagebox.OK,
+						Messagebox.ERROR);
+				entity = null;
+				return;
+			}
+
+			((TaskMessage) entity).setUsersByUserReceiverId(recipient);
+			recipients.add(recipient);
 		}
-
-		ProjectTaskDAO projectTaskDAO = new ProjectTaskDAO();
-		ProjectTask projectTask = projectTaskDAO.findById(taskId, false);
-
-		if (projectTask == null) {
-			Messagebox.show(Labels.getLabel("fetch.notFound"),
-					Labels.getLabel("fetch.title"), Messagebox.OK,
-					Messagebox.ERROR);
-			entity = null;
-			return;
-
-		}
-
-		// check if currently logged-on user is allowed to send messages
-		// related to this task
-		Integer dispatcherId = projectTask.getUsersByUserDispatcherId().getId();
-		Integer creatorId = projectTask.getUsersByUserCreatorId().getId();
-		Integer userId = getUserInSession().getId();
-
-		if (userId.intValue() != dispatcherId.intValue()
-				&& userId.intValue() != creatorId.intValue()) {
-			Messagebox.show(Labels.getLabel("error.notAllowed"),
-					Labels.getLabel("error.title"), Messagebox.OK,
-					Messagebox.ERROR);
-			entity = null;
-			return;
-		}
-
-		((TaskMessage) entity).setProjectTask(projectTask);
-		projectTasks.add(projectTask);
-		((TaskMessage) entity).setUsersByUserSenderId(getUserInSession());
 	}
 
 	private void searchRecipients(Integer startIndex) {
@@ -125,9 +164,7 @@ public class MessageController extends
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
-		if (isEntityNotCreated()) {
-			initTaskMessage();
-		}
+		initTaskMessage();
 	}
 
 	public void onChanging$recipientBndbx(InputEvent event) {
@@ -170,6 +207,18 @@ public class MessageController extends
 
 	public void onClick$replyBtn() {
 
+		Executions.getCurrent().sendRedirect(
+				PAGE
+						+ "?"
+						+ PARAM_KEY_TASK
+						+ "="
+						+ ((TaskMessage) entity).getProjectTask().getId()
+						+ "&"
+						+ PARAM_KEY_RECIPIENT
+						+ "="
+						+ ((TaskMessage) entity).getUsersByUserSenderId()
+								.getId());
+
 	}
 
 	public String getRecipientFullName() {
@@ -181,6 +230,16 @@ public class MessageController extends
 		return (recipient.getName() != null ? recipient.getName() : "")
 				+ " "
 				+ (recipient.getSurname() != null ? recipient.getSurname() : "");
+	}
+
+	public String getTaskFullName() {
+
+		ProjectTask projectTask = ((TaskMessage) entity).getProjectTask();
+		if (projectTask == null) {
+			return "";
+		}
+		return (projectTask.getId() != null ? projectTask.getId() : "") + " - "
+				+ (projectTask.getName() != null ? projectTask.getName() : "");
 	}
 
 	public List<ProjectTask> getProjectTasks() {

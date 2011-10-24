@@ -295,6 +295,8 @@
 						<button id="newBtn" label="${c:l('new')}" />
 						<button id="saveBtn" label="${c:l('save')}"
 							disabled="@{TaskController.isSaveBtnDisabled}" />
+						<button id="sendMessageBtn" label="${c:l('taskPage.sendMessage')}"
+							disabled="@{TaskController.isSendMessageBtnDisabled}" />
 					</hbox>
 				</row>
 			</rows>

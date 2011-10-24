@@ -240,12 +240,13 @@ taskDocument.documentKeywords=Λέξεις Κλειδιά
 
 ##TaskMessage
 taskMessage=Μήνυμα
+taskMessage.id=Α/Α
 taskMessage.subject=Θέμα
 taskMessage.message=Κείμενο
 taskMessage.projectTask=Σχετική Ανάθεση
 taskMessage.createdTs=Ημ/νία
-taskMessage.usersByUserSenderId=Sender
-taskMessage.usersByUserReceiverId=Recipient
+taskMessage.usersByUserSenderId=Αποστολέας
+taskMessage.usersByUserReceiverId=Παραλήπτης
 
 #############
 #pages
@@ -347,6 +348,7 @@ taskPage.upload.title=Μεταφόρτωση Αρχείου
 taskPage.upload.noFileUploaded=Πρέπει να μεταφορτώσετε ένα αρχείο προτού επιβεβαιώσετε την ενέργεια. 
 taskPage.taskEnd=Λήξη Ανάθεσης
 taskPage.errorSaving=Παρουσιάστηκε σφάλμα κατά την αποθήκευση της Ανάθεσης.
+taskPage.sendMessage=Αποστολή Μηνύματος
 
 ##messagePage
 messagePage.title=Προβολή/Δημιουργία Μηνύματος

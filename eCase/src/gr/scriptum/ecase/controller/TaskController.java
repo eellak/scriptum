@@ -77,7 +77,7 @@ public class TaskController extends BaseController {
 	public static final String PAGE = "task.zul";
 
 	private static Log log = LogFactory.getLog(TaskController.class);
-	
+
 	/* componenents */
 	Window taskWin;
 	Window uploadWin;
@@ -247,10 +247,11 @@ public class TaskController extends BaseController {
 			} else { // existing task, update
 
 				/* local database actions */
-				projectTaskDAO.update(projectTask); //TODO: Which task fields are modifiable?
-				
-				//TODO: Should documents be modifiable?????
-				
+				projectTaskDAO.update(projectTask); // TODO: Which task fields
+													// are modifiable?
+
+				// TODO: Should documents be modifiable?????
+
 			}
 
 			tx.commit();
@@ -430,6 +431,14 @@ public class TaskController extends BaseController {
 
 	}
 
+	public void onClick$sendMessageBtn() {
+
+		Executions.getCurrent().sendRedirect(
+				MessageController.PAGE + "?" + MessageController.PARAM_KEY_TASK
+						+ "=" + projectTask.getId());
+
+	}
+
 	public boolean isAddFileBtnDisabled() {
 		if (projectTask.getId() != null) {
 			return true;
@@ -505,6 +514,10 @@ public class TaskController extends BaseController {
 
 	public boolean isUsersByUserDispatcherIdHbxVisible() {
 		return !(isUserHierarchyBndbxVisible());
+	}
+
+	public boolean isSendMessageBtnDisabled() {
+		return isSaveBtnDisabled();
 	}
 
 	public String getContactFullName() {

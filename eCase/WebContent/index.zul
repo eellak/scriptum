@@ -24,6 +24,9 @@
 				<tab label="${c:l('indexPage.incomingMessages') }"
 					id="incomingMessagesTb"
 					visible="${sec:isAnyGranted('ROLE_CASE_ADMIN,ROLE_CASE_USER')}" />
+				<tab label="${c:l('indexPage.outgoingMessages') }"
+					id="outgoingMessagesTb"
+					visible="${sec:isAnyGranted('ROLE_CASE_ADMIN,ROLE_CASE_USER')}" />
 			</tabs>
 
 			<tabpanels>
@@ -341,11 +344,15 @@
 						<listhead>
 							<listheader id="incomingMessageIdLsthdr"
 								label="${c:l('taskMessage.id')}" sort="auto" value="id"
-								forward="onSort=onSort" width="10%" sortDirection="ascending" />
+								forward="onSort=onSort" width="10%" />
 							<listheader
 								id="incomingMessageCreatedTsLsthdr"
-								label="${c:l('taskMessage.createdTs')}" sort="auto" value="name"
-								forward="onSort=onSort" />
+								label="${c:l('taskMessage.createdTs')}" sort="auto"
+								value="createdTs" forward="onSort=onSort"
+								sortDirection="descending" />
+							<listheader id="incomingMessageSenderLsthdr"
+								label="${c:l('taskMessage.usersByUserSenderId')}" sort="auto"
+								value="usersByUserSenderId" forward="onSort=onSort" />
 							<listheader id="incomingMessageTaskLsthdr"
 								label="${c:l('taskMessage.projectTask')}" sort="auto"
 								value="projectTask" forward="onSort=onSort" />
@@ -362,6 +369,15 @@
 							<listcell label="@{incomingMessageRow.id}" />
 							<listcell
 								label="@{incomingMessageRow.createdTs}" />
+							<listcell>
+								<label
+									value="@{incomingMessageRow.usersByUserSenderId.id }" />
+								-
+								<label
+									value="@{incomingMessageRow.usersByUserSenderId.name }" />
+								<label
+									value="@{incomingMessageRow.usersByUserSenderId.surname }" />
+							</listcell>
 							<listcell>
 								<label
 									value="@{incomingMessageRow.projectTask.id }" />
@@ -405,10 +421,106 @@
 							<row>
 								<label value="${c:l('functions')}" />
 								<hbox>
-									<button id="searchIncomingMessagesBtn"
-										label="${c:l('search')}" />
-									<button id="clearIncomingMessagesBtn"
-										label="${c:l('clear')}" />
+									<button
+										id="searchIncomingMessagesBtn" label="${c:l('search')}" />
+									<button
+										id="clearIncomingMessagesBtn" label="${c:l('clear')}" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+
+				<tabpanel id="outgoingMessagesTbPnl">
+
+					<listbox id="outgoingMessagesLstbx" rows="10"
+						model="@{IndexController.outgoingMessages}"
+						selectedItem="@{IndexController.selectedOutgoingMessage}">
+						<listhead>
+							<listheader id="outgoingMessageIdLsthdr"
+								label="${c:l('taskMessage.id')}" sort="auto" value="id"
+								forward="onSort=onSort" width="10%" />
+							<listheader
+								id="outgoingMessageCreatedTsLsthdr"
+								label="${c:l('taskMessage.createdTs')}" sort="auto"
+								value="createdTs" forward="onSort=onSort"
+								sortDirection="descending" />
+							<listheader
+								id="outgoingMessageRecipientLsthdr"
+								label="${c:l('taskMessage.usersByUserReceiverId')}" sort="auto"
+								value="usersByUserReceiverId" forward="onSort=onSort" />
+							<listheader id="outgoingMessageTaskLsthdr"
+								label="${c:l('taskMessage.projectTask')}" sort="auto"
+								value="projectTask" forward="onSort=onSort" />
+							<listheader
+								id="outgoingMessageSubjectLsthdr"
+								label="${c:l('taskMessage.subject')}" sort="auto"
+								value="subject" forward="onSort=onSort" />
+							<listheader
+								id="outgoingMessageMessageLsthdr"
+								label="${c:l('taskMessage.message')}" sort="auto"
+								value="message" forward="onSort=onSort" />
+						</listhead>
+						<listitem self="@{each='outgoingMessageRow'}">
+							<listcell label="@{outgoingMessageRow.id}" />
+							<listcell
+								label="@{outgoingMessageRow.createdTs}" />
+							<listcell>
+								<label
+									value="@{outgoingMessageRow.usersByUserReceiverId.id }" />
+								-
+								<label
+									value="@{outgoingMessageRow.usersByUserReceiverId.name }" />
+								<label
+									value="@{outgoingMessageRow.usersByUserReceiverId.surname }" />
+							</listcell>
+							<listcell>
+								<label
+									value="@{outgoingMessageRow.projectTask.id }" />
+								-
+								<label
+									value="@{outgoingMessageRow.projectTask.name }" />
+							</listcell>
+							<listcell
+								label="@{outgoingMessageRow.subject}" />
+							<listcell
+								label="@{outgoingMessageRow.message}" />
+						</listitem>
+					</listbox>
+					<paging id="outgoingMessagesPgng" pageSize="10" />
+
+					<separator bar="true" />
+
+					<grid>
+						<columns>
+							<column width="30%" />
+						</columns>
+						<rows>
+							<row>
+								${c:l('taskMessage.createdTs')}
+								<hbox>
+									(${c:l('from')})
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.outgoingMessageDateFrom }" />
+									(${c:l('to')})
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@{IndexController.outgoingMessageDateTo }" />
+								</hbox>
+							</row>
+							<row>
+								${c:l('taskMessage.subject')}
+								<textbox width="300px"
+									value="@{IndexController.outgoingMessage.subject}" />
+							</row>
+							<row>
+								<label value="${c:l('functions')}" />
+								<hbox>
+									<button
+										id="searchOutgoingMessagesBtn" label="${c:l('search')}" />
+									<button
+										id="clearOutgoingMessagesBtn" label="${c:l('clear')}" />
 								</hbox>
 							</row>
 						</rows>

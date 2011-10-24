@@ -74,6 +74,11 @@ public class IndexController extends BaseController {
 	Listbox incomingMessagesLstbx;
 	Paging incomingMessagesPgng;
 
+	// outgoing messages tab related
+	Tab outgoingMessagesTb;
+	Listbox outgoingMessagesLstbx;
+	Paging outgoingMessagesPgng;
+
 	/* Data binding */
 	// incoming tasks tab related
 	private ProjectTask incomingTask = null;
@@ -108,6 +113,13 @@ public class IndexController extends BaseController {
 	private TaskMessage selectedIncomingMessage = null;
 	private Date incomingMessageDateFrom = null;
 	private Date incomingMessageDateTo = null;
+
+	// outgoing messages tab related
+	private TaskMessage outgoingMessage = null;
+	private List<TaskMessage> outgoingMessages = null;
+	private TaskMessage selectedOutgoingMessage = null;
+	private Date outgoingMessageDateFrom = null;
+	private Date outgoingMessageDateTo = null;
 
 	private void initIncomingTasks() {
 		incomingTask = new ProjectTask();
@@ -145,6 +157,14 @@ public class IndexController extends BaseController {
 		selectedIncomingMessage = null;
 		incomingMessageDateFrom = null;
 		incomingMessageDateTo = null;
+	}
+
+	private void initOutgoingMessages() {
+		outgoingMessage = new TaskMessage();
+		outgoingMessages = null;
+		selectedOutgoingMessage = null;
+		outgoingMessageDateFrom = null;
+		outgoingMessageDateTo = null;
 	}
 
 	private void searchIncomingTasks(Integer startIndex) {
@@ -233,6 +253,27 @@ public class IndexController extends BaseController {
 
 	}
 
+	private void searchOutgoingMessages(Integer startIndex) {
+
+		outgoingMessage = (TaskMessage) trimStringProperties(outgoingMessage);
+		TaskMessageDAO taskMessageDAO = new TaskMessageDAO();
+		// set up paging by counting records first
+		Integer totalSize = taskMessageDAO.countSearch(
+				outgoingMessage.getSubject(), outgoingMessageDateFrom,
+				outgoingMessageDateTo, getUserInSession(), null);
+		outgoingMessagesPgng.setTotalSize(totalSize);
+		int pageSize = outgoingMessagesPgng.getPageSize();
+
+		// figure out which header to sort by
+		Listheader header = getSortingListheader(outgoingMessagesLstbx);
+		List<Order> sortBy = getSortBy(header);
+
+		outgoingMessages = taskMessageDAO.search(outgoingMessage.getSubject(),
+				outgoingMessageDateFrom, outgoingMessageDateTo,
+				getUserInSession(), null, startIndex, pageSize,
+				sortBy.toArray(new Order[0]));
+	}
+
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 
@@ -260,6 +301,10 @@ public class IndexController extends BaseController {
 				initIncomingMessages();
 				indexTbx.setSelectedTab(incomingMessagesTb);
 				searchIncomingMessages(0);
+			} else if (tab.equals(incomingMessagesTb.getId())) {
+				initOutgoingMessages();
+				indexTbx.setSelectedTab(outgoingMessagesTb);
+				searchOutgoingMessages(0);
 			}
 
 		} else {
@@ -301,6 +346,9 @@ public class IndexController extends BaseController {
 		} else if (parent.equals(incomingMessagesLstbx)) {
 			searchIncomingMessages(0);
 			incomingMessagesPgng.setActivePage(0);
+		} else if (parent.equals(outgoingMessagesLstbx)) {
+			searchOutgoingMessages(0);
+			outgoingMessagesPgng.setActivePage(0);
 		}
 
 		getBinder(indexWin).loadAll();
@@ -415,12 +463,12 @@ public class IndexController extends BaseController {
 					Messagebox.EXCLAMATION);
 		}
 	}
-	
+
 	public void onClick$clearProjectsBtn() {
 		initProjects();
 		getBinder(indexWin).loadAll();
 	}
-	
+
 	public void onClick$newProjectBtn() {
 		Executions.getCurrent().sendRedirect(ProjectController.PAGE);
 	}
@@ -459,9 +507,40 @@ public class IndexController extends BaseController {
 					Messagebox.EXCLAMATION);
 		}
 	}
-	
+
 	public void onClick$clearIncomingMessagesBtn() {
 		initIncomingMessages();
+		getBinder(indexWin).loadAll();
+	}
+
+	/* outoing messages tab related */
+	public void onSelect$outgoingMessagesTb(SelectEvent event) {
+		initOutgoingMessages();
+		searchOutgoingMessages(0);
+		getBinder(indexWin).loadAll();
+	}
+
+	public void onSelect$outgoingMessagesLstbx(SelectEvent event) {
+		Integer id = selectedOutgoingMessage.getId();
+
+		Executions.getCurrent().sendRedirect(
+				MessageController.PAGE + "?" + IConstants.PARAM_KEY_ID + "="
+						+ id);
+	}
+
+	public void onClick$searchOutgoingMessagesBtn() throws InterruptedException {
+		searchOutgoingMessages(0);
+		getBinder(indexWin).loadAll();
+
+		if (outgoingMessages.isEmpty()) {
+			Messagebox.show(Labels.getLabel("search.notFound"),
+					Labels.getLabel("search.title"), Messagebox.OK,
+					Messagebox.EXCLAMATION);
+		}
+	}
+
+	public void onClick$clearOutgoingMessagesBtn() {
+		initOutgoingMessages();
 		getBinder(indexWin).loadAll();
 	}
 
@@ -671,6 +750,46 @@ public class IndexController extends BaseController {
 
 	public void setIncomingMessageDateTo(Date incomingMessageDateTo) {
 		this.incomingMessageDateTo = incomingMessageDateTo;
+	}
+
+	public TaskMessage getOutgoingMessage() {
+		return outgoingMessage;
+	}
+
+	public void setOutgoingMessage(TaskMessage outgoingMessage) {
+		this.outgoingMessage = outgoingMessage;
+	}
+
+	public List<TaskMessage> getOutgoingMessages() {
+		return outgoingMessages;
+	}
+
+	public void setOutgoingMessages(List<TaskMessage> outgoingMessages) {
+		this.outgoingMessages = outgoingMessages;
+	}
+
+	public TaskMessage getSelectedOutgoingMessage() {
+		return selectedOutgoingMessage;
+	}
+
+	public void setSelectedOutgoingMessage(TaskMessage selectedOutgoingMessage) {
+		this.selectedOutgoingMessage = selectedOutgoingMessage;
+	}
+
+	public Date getOutgoingMessageDateFrom() {
+		return outgoingMessageDateFrom;
+	}
+
+	public void setOutgoingMessageDateFrom(Date outgoingMessageDateFrom) {
+		this.outgoingMessageDateFrom = outgoingMessageDateFrom;
+	}
+
+	public Date getOutgoingMessageDateTo() {
+		return outgoingMessageDateTo;
+	}
+
+	public void setOutgoingMessageDateTo(Date outgoingMessageDateTo) {
+		this.outgoingMessageDateTo = outgoingMessageDateTo;
 	}
 
 }

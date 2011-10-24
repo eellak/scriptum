@@ -21,7 +21,7 @@
 					${c:l('taskMessage.usersByUserReceiverId')}
 					<bandbox id="recipientBndbx" autodrop="true"
 						value="@{MessageController.recipientFullName }" constraint="no empty"
-						width="300px">
+						width="300px" readonly="@{MessageController.isEntityCreated }">
 						<bandpopup>
 							<listbox id="recipientsLstbx"
 								model="@{MessageController.recipients}"
@@ -56,28 +56,44 @@
 					${c:l('taskMessage.subject')}
 					<textbox id="subjectTxb"
 						value="@{MessageController.entity.subject}" width="300px"
-						constraint="no empty" />
+						constraint="no empty" readonly="@{MessageController.isEntityCreated }"/>
 				</row>
 				<row>
 					${c:l('taskMessage.message')}
 					<textbox id="messageTxb"
 						value="@{MessageController.entity.message}" width="50%" rows="4"
-						constraint="no empty" />
+						constraint="no empty" readonly="@{MessageController.isEntityCreated }"/>
 				</row>
 				<row>
 					${c:l('taskMessage.projectTask')}
-					<combobox id="projectTaskCbx" constraint="no empty"
-						selectedItem="@{MessageController.entity.projectTask}"
-						model="@{MessageController.projectTasks }">
-						<comboitem self="@{each='projectTaskRow'}"
-							value="@{projectTaskRow}"
-							label="@{projectTaskRow.name projectTaskRow.id}" />
-					</combobox>
+					<bandbox id="projectTaskBndbx" autodrop="true"
+						value="@{MessageController.taskFullName }" constraint="no empty"
+						width="300px" readonly="true">
+						<bandpopup>
+							<listbox id="projectTasksLstbx"
+								model="@{MessageController.projectTasks}"
+								selectedItem="@{MessageController.entity.projectTask}">
+								<listhead>
+									<listheader
+										label="${c:l('projectTak.id')}" />
+									<listheader
+										label="${c:l('users.name')}" />
+								</listhead>
+								<listitem
+									self="@{each='projectTaskRow'}">
+									<listcell
+										label="@{projectTaskRow.id}" />
+									<listcell
+										label="@{projectTaskRow.name}" />
+								</listitem>
+							</listbox>
+						</bandpopup>
+					</bandbox>
 				</row>
 				<row>
 					${c:l('functions')}
 					<hbox>
-						<button id="newBtn" label="${c:l('new')}" />
+<!-- 						<button id="newBtn" label="${c:l('new')}" /> -->
 						<button id="saveBtn"
 							label="${c:l('messagePage.send')}"
 							visible="@{MessageController.isEntityNotCreated}" />
