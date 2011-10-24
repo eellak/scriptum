@@ -18,6 +18,41 @@
 						value="@{MessageController.entity.id}" />
 				</row>
 				<row>
+					${c:l('taskMessage.usersByUserReceiverId')}
+					<bandbox id="recipientBndbx" autodrop="true"
+						value="@{MessageController.recipientFullName }" constraint="no empty"
+						width="300px">
+						<bandpopup>
+							<listbox id="recipientsLstbx"
+								model="@{MessageController.recipients}"
+								selectedItem="@{MessageController.entity.usersByUserReceiverId}">
+								<listhead>
+									<listheader
+										label="${c:l('users.id')}" />
+									<listheader
+										label="${c:l('users.name')}" />
+									<listheader
+										label="${c:l('users.surname')}" />
+									<listheader
+										label="${c:l('users.username')}" />
+								</listhead>
+								<listitem
+									self="@{each='recipientRow'}">
+									<listcell
+										label="@{recipientRow.id}" />
+									<listcell
+										label="@{recipientRow.name}" />
+									<listcell
+										label="@{recipientRow.surname}" />
+									<listcell
+										label="@{recipientRow.username}" />
+								</listitem>
+							</listbox>
+							<paging id="recipientsPgng" pageSize="10" />
+						</bandpopup>
+					</bandbox>
+				</row>
+				<row>
 					${c:l('taskMessage.subject')}
 					<textbox id="subjectTxb"
 						value="@{MessageController.entity.subject}" width="300px"
@@ -35,7 +70,8 @@
 						selectedItem="@{MessageController.entity.projectTask}"
 						model="@{MessageController.projectTasks }">
 						<comboitem self="@{each='projectTaskRow'}"
-							value="@{projectTaskRow}" label="@{projectTaskRow.name projectTaskRow.id}" />
+							value="@{projectTaskRow}"
+							label="@{projectTaskRow.name projectTaskRow.id}" />
 					</combobox>
 				</row>
 				<row>

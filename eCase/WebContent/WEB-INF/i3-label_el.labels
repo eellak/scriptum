@@ -244,6 +244,8 @@ taskMessage.subject=Θέμα
 taskMessage.message=Κείμενο
 taskMessage.projectTask=Σχετική Ανάθεση
 taskMessage.createdTs=Ημ/νία
+taskMessage.usersByUserSenderId=Sender
+taskMessage.usersByUserReceiverId=Recipient
 
 #############
 #pages
