@@ -1,0 +1,196 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./taskWin"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('incomingTaskPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="taskWin" title="${c:l('taskPage.title')}"
+		border="normal" width="100%"
+		apply="gr.scriptum.ecase.controller.IncomingTaskController">
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row>
+					${c:l('projectTask.id')}
+					<label id="idLbl"
+						value="@{IncomingTaskController.projectTask.id}" />
+				</row>
+				<row>
+					${c:l('projectTask.name')}
+					<label id="nameLbl"
+						value="@{IncomingTaskController.projectTask.name}" />
+				</row>
+				<row>
+					${c:l('projectTask.description')}
+					<label id="descriptionLbl"
+						value="@{IncomingTaskController.projectTask.description}" />
+				</row>
+				<row>
+					${c:l('projectTask.project')}
+					<hbox id="projectHbx">
+						<label
+							value="@{IncomingTaskController.projectTask.project.id }" />
+						-
+						<label
+							value="@{IncomingTaskController.projectTask.project.name }" />
+					</hbox>
+				</row>
+				<row>
+					${c:l('projectTask.projectTask')}
+					<hbox
+						visible="@{IncomingTaskController.hasParentTask }">
+						<label
+							value="@{IncomingTaskController.projectTask.projectTask.id }" />
+						<label value="-" />
+						<label
+							value="@{IncomingTaskController.projectTask.projectTask.name }" />
+					</hbox>
+				</row>
+				<row>
+					${c:l('projectTask.usersByUserDispatcherId')}
+					<hbox id="usersByUserDispatcherIdHbx">
+						<label
+							value="@{IncomingTaskController.projectTask.usersByUserDispatcherId.id }" />
+						<label
+							value="@{IncomingTaskController.projectTask.usersByUserDispatcherId.name }" />
+						<label
+							value="@{IncomingTaskController.projectTask.usersByUserDispatcherId.surname }" />
+						<label
+							value="@{IncomingTaskController.projectTask.usersByUserDispatcherId.username }" />
+						(
+						<label
+							value="@{IncomingTaskController.projectTask.usersByUserDispatcherId.department.name }" />
+						)
+					</hbox>
+				</row>
+				<row>
+					${c:l('projectTask.contact')}
+					<label
+						value="@{IncomingTaskController.contactFullName }" />
+				</row>
+				<row>
+					${c:l('projectTask.startDt')}
+
+					<datebox compact="true" width="200px"
+						lenient="false" format="dd/MM/yyyy"
+						value="@{IncomingTaskController.projectTask.startDt }"
+						readonly="true" />
+				</row>
+				<row>
+					${c:l('projectTask.endDt')}
+					<datebox compact="true" width="200px"
+						lenient="false" format="dd/MM/yyyy"
+						value="@{IncomingTaskController.projectTask.endDt }"
+						readonly="true" />
+				</row>
+				<row>
+					${c:l('projectTask.taskType')}
+					<label
+						value="@{IncomingTaskController.projectTask.taskType.name}" />
+				</row>
+				<row>
+					${c:l('projectTask.taskPriority')}
+					<label
+						value="@{IncomingTaskController.projectTask.taskPriority.name}" />
+				</row>
+				<row>
+					${c:l('projectTask.taskDocuments')}
+					<vbox width="100%">
+						${c:l('taskPage.documents.prompt')}
+						<listbox id="documentsLstbx" rows="4"
+							width="99%" model="@{IncomingTaskController.taskDocuments}"
+							selectedItem="@{IncomingTaskController.taskDocument}">
+							<listhead>
+								<listheader
+									label="${c:l('protocolDocument.documentNumber')}" width="5%" />
+								<listheader
+									label="${c:l('protocolDocument.documentName')}" width="40%" />
+								<listheader
+									label="${c:l('protocolDocument.documentSize')}" width="15%" />
+								<listheader
+									label="${c:l('documentType')}" width="40%" />
+							</listhead>
+							<listitem self="@{each='documentRow'}">
+								<listcell
+									label="@{documentRow.documentNumber}" />
+								<listcell
+									label="@{documentRow.documentName}" />
+								<listcell
+									label="@{documentRow.documentSize}" />
+								<listcell
+									label="@{documentRow.documentType.name}" />
+							</listitem>
+						</listbox>
+						<hbox>
+							<button id="downloadFileBtn"
+								label="${c:l('download')}"
+								disabled="@{IncomingTaskController.isDownloadFileBtnDisabled}" />
+						</hbox>
+					</vbox>
+				</row>
+				<row>
+					${c:l('projectTask.closedDt')}
+					<datebox compact="true" width="200px"
+						lenient="false" format="dd/MM/yyyy"
+						value="@{IncomingTaskController.projectTask.closedDt }"
+						readonly="true" />
+				</row>
+				<row>
+					${c:l('projectTask.expectedDt')}
+					<datebox compact="true" width="200px"
+						lenient="false" format="dd/MM/yyyy"
+						value="@{IncomingTaskController.projectTask.expectedDt }"
+						readonly="true" />
+				</row>
+				<row>
+					${c:l('projectTask.taskState')}
+					<hbox>
+						<combobox id="stateCbx" width="300px"
+							model="@{IncomingTaskController.taskStates}"
+							selectedItem="@{IncomingTaskController.taskState}"
+							constraint="no empty">
+							<comboitem self="@{each='taskStateRow'}"
+								label="@{taskStateRow.name}" />
+						</combobox>
+						<label
+							value="${c:l('incomingTaskPage.nonClosable')}" style="color:red;"
+							visible="@{IncomingTaskController.isTaskNonClosable }" />
+					</hbox>
+				</row>
+				<row>
+					${c:l('projectTask.taskResult')}
+					<combobox id="resultCbx" width="300px"
+						model="@{IncomingTaskController.taskResults}"
+						selectedItem="@{IncomingTaskController.projectTask.taskResult}"
+						disabled="@{IncomingTaskController.isResultCbxDisabled }">
+						<comboitem self="@{each='taskResultRow'}"
+							label="@{taskResultRow.name}" />
+					</combobox>
+				</row>
+				<row>
+					${c:l('projectTask.comments')}
+					<textbox id="commentsTxb"
+						value="@{IncomingTaskController.projectTask.comments}" width="50%"
+						rows="4" />
+				</row>
+				<row>
+					${c:l('functions')}
+					<hbox>
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@{IncomingTaskController.isSaveBtnDisabled}" />
+						<button id="sendMessageBtn"
+							label="${c:l('taskPage.sendMessage')}"
+							disabled="@{IncomingTaskController.isTaskNotCreated}" />
+						<button id="newSubTaskBtn"
+							label="${c:l('incomingTaskPage.newSubTask')}"
+							visible="@{IncomingTaskController.isTaskCreated }" />
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

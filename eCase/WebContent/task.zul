@@ -6,72 +6,70 @@
 	<include id="ph" sclass="header" src="header.zul" />
 	<window id="taskWin" title="${c:l('taskPage.title')}"
 		border="normal" width="100%"
-		apply="gr.scriptum.ecase.controller.TaskController">
+		apply="gr.scriptum.ecase.controller.OutgoingTaskController">
 
 		<grid>
 			<columns>
 				<column width="30%" />
 			</columns>
 			<rows>
-				<row visible="@{TaskController.isTaskCreated}">
+				<row visible="@{OutgoingTaskController.isTaskCreated}">
 					${c:l('projectTask.id')}
 					<label id="idLbl"
-						value="@{TaskController.projectTask.id}" />
+						value="@{OutgoingTaskController.projectTask.id}" />
 				</row>
 				<row>
 					${c:l('projectTask.name')}
 					<textbox id="nameTxb"
-						value="@{TaskController.projectTask.name}" width="300px"
+						value="@{OutgoingTaskController.projectTask.name}" width="300px"
 						constraint="no empty" />
 				</row>
 				<row>
 					${c:l('projectTask.description')}
 					<textbox id="descriptionTxb"
-						value="@{TaskController.projectTask.description}" width="50%"
+						value="@{OutgoingTaskController.projectTask.description}" width="50%"
 						rows="4" constraint="no empty" />
 				</row>
 				<row>
 					${c:l('projectTask.project')}
 					<hbox>
 						<combobox id="projectCbx" width="300px"
-							model="@{TaskController.projects}"
-							selectedItem="@{TaskController.projectTask.project}"
-							visible="@{TaskController.isProjectCbxVisible }">
+							model="@{OutgoingTaskController.projects}"
+							selectedItem="@{OutgoingTaskController.projectTask.project}"
+							visible="@{OutgoingTaskController.isProjectCbxVisible }">
 							<comboitem self="@{each='projectRow'}"
 								label="@{projectRow.name}" />
 						</combobox>
 						<hbox id="projectHbx"
-							visible="@{TaskController.isProjectHbxVisible }">
+							visible="@{OutgoingTaskController.isProjectHbxVisible }">
 							<label
-								value="@{TaskController.projectTask.project.id }" />
+								value="@{OutgoingTaskController.projectTask.project.id }" />
 							-
 							<label
-								value="@{TaskController.projectTask.project.name }" />
+								value="@{OutgoingTaskController.projectTask.project.name }" />
 						</hbox>
 					</hbox>
 				</row>
 				<row>
 					${c:l('projectTask.projectTask')}
-					<hbox
-						visible="@{TaskController.isParentTaskVisible }">
+					<hbox visible="@{OutgoingTaskController.hasParentTask }">
 						<label
-							value="@{TaskController.projectTask.projectTask.id }" />
+							value="@{OutgoingTaskController.projectTask.projectTask.id }" />
 						<label value="-" />
 						<label
-							value="@{TaskController.projectTask.projectTask.name }" />
+							value="@{OutgoingTaskController.projectTask.projectTask.name }" />
 					</hbox>
 				</row>
 				<row>
 					${c:l('projectTask.usersByUserDispatcherId')}
 					<hbox>
 						<bandbox id="userHierarchyBndbx" autodrop="true"
-							value="@{TaskController.userFullName }" constraint="no empty"
-							width="300px"
-							visible="@{TaskController.isUserHierarchyBndbxVisible }">
+							value="@{OutgoingTaskController.userFullName }" constraint="no empty"
+							width="300px" visible="@{OutgoingTaskController.isTaskNotCreated }">
 							<bandpopup>
 								<listbox id="userHierarchiesLstbx"
-									model="@{TaskController.userHierarchies}"
-									selectedItem="@{TaskController.selectedUserHierarchy}">
+									model="@{OutgoingTaskController.userHierarchies}"
+									selectedItem="@{OutgoingTaskController.selectedUserHierarchy}">
 									<listhead>
 										<listheader
 											label="${c:l('users.id')}" />
@@ -101,18 +99,18 @@
 							</bandpopup>
 						</bandbox>
 						<hbox id="usersByUserDispatcherIdHbx"
-							visible="@{TaskController.isUsersByUserDispatcherIdHbxVisible }">
+							visible="@{OutgoingTaskController.isTaskCreated }">
 							<label
-								value="@{TaskController.projectTask.usersByUserDispatcherId.id }" />
+								value="@{OutgoingTaskController.projectTask.usersByUserDispatcherId.id }" />
 							<label
-								value="@{TaskController.projectTask.usersByUserDispatcherId.name }" />
+								value="@{OutgoingTaskController.projectTask.usersByUserDispatcherId.name }" />
 							<label
-								value="@{TaskController.projectTask.usersByUserDispatcherId.surname }" />
+								value="@{OutgoingTaskController.projectTask.usersByUserDispatcherId.surname }" />
 							<label
-								value="@{TaskController.projectTask.usersByUserDispatcherId.username }" />
+								value="@{OutgoingTaskController.projectTask.usersByUserDispatcherId.username }" />
 							(
 							<label
-								value="@{TaskController.projectTask.usersByUserDispatcherId.department.name }" />
+								value="@{OutgoingTaskController.projectTask.usersByUserDispatcherId.department.name }" />
 							)
 						</hbox>
 					</hbox>
@@ -120,16 +118,16 @@
 				<row>
 					${c:l('projectTask.dispatcherCloseable')}
 					<checkbox
-						checked="@{TaskController.projectTask.dispatcherCloseable,converter=gr.scriptum.util.CheckBoxToBooleanTypeConverter }" />
+						checked="@{OutgoingTaskController.projectTask.dispatcherCloseable,converter=gr.scriptum.util.CheckBoxToBooleanTypeConverter }" />
 				</row>
 				<row>
 					${c:l('projectTask.contact')}
 					<bandbox id="contactBndbx" autodrop="true"
-						value="@{TaskController.contactFullName }" width="300px">
+						value="@{OutgoingTaskController.contactFullName }" width="300px">
 						<bandpopup>
 							<listbox id="contactsLstbx"
-								model="@{TaskController.contacts}"
-								selectedItem="@{TaskController.projectTask.contact}">
+								model="@{OutgoingTaskController.contacts}"
+								selectedItem="@{OutgoingTaskController.projectTask.contact}">
 								<listhead>
 									<listheader
 										label="${c:l('contact.id')}" />
@@ -166,20 +164,20 @@
 					${c:l('projectTask.startDt')}
 					<datebox compact="true" width="200px"
 						lenient="false" format="dd/MM/yyyy"
-						value="@{TaskController.projectTask.startDt }"
+						value="@{OutgoingTaskController.projectTask.startDt }"
 						constraint="no empty" />
 				</row>
 				<row>
 					${c:l('projectTask.endDt')}
 					<datebox compact="true" width="200px"
 						lenient="false" format="dd/MM/yyyy"
-						value="@{TaskController.projectTask.endDt }"/>
+						value="@{OutgoingTaskController.projectTask.endDt }" />
 				</row>
 				<row>
 					${c:l('projectTask.taskType')}
 					<combobox id="typeCbx" width="300px"
-						model="@{TaskController.taskTypes}"
-						selectedItem="@{TaskController.projectTask.taskType}"
+						model="@{OutgoingTaskController.taskTypes}"
+						selectedItem="@{OutgoingTaskController.projectTask.taskType}"
 						constraint="no empty">
 						<comboitem self="@{each='taskTypeRow'}"
 							label="@{taskTypeRow.name}" />
@@ -188,21 +186,11 @@
 				<row>
 					${c:l('projectTask.taskPriority')}
 					<combobox id="priorityCbx" width="300px"
-						model="@{TaskController.taskPriorities}"
-						selectedItem="@{TaskController.projectTask.taskPriority}"
+						model="@{OutgoingTaskController.taskPriorities}"
+						selectedItem="@{OutgoingTaskController.projectTask.taskPriority}"
 						constraint="no empty">
 						<comboitem self="@{each='taskPriorityRow'}"
 							label="@{taskPriorityRow.name}" />
-					</combobox>
-				</row>
-				<row>
-					${c:l('projectTask.taskState')}
-					<combobox id="stateCbx" width="300px"
-						model="@{TaskController.taskStates}"
-						selectedItem="@{TaskController.projectTask.taskState}"
-						constraint="no empty">
-						<comboitem self="@{each='taskStateRow'}"
-							label="@{taskStateRow.name}" />
 					</combobox>
 				</row>
 				<row>
@@ -210,8 +198,8 @@
 					<vbox width="100%">
 						${c:l('taskPage.documents.prompt')}
 						<listbox id="documentsLstbx" rows="4"
-							width="99%" model="@{TaskController.taskDocuments}"
-							selectedItem="@{TaskController.taskDocument}">
+							width="99%" model="@{OutgoingTaskController.taskDocuments}"
+							selectedItem="@{OutgoingTaskController.taskDocument}">
 							<listhead>
 								<listheader
 									label="${c:l('protocolDocument.documentNumber')}" width="5%" />
@@ -236,13 +224,13 @@
 						<hbox>
 							<button id="addFileBtn"
 								label="${c:l('add')}"
-								disabled="@{TaskController.isAddFileBtnDisabled}" />
+								disabled="@{OutgoingTaskController.isAddFileBtnDisabled}" />
 							<button id="removeFileBtn"
 								label="${c:l('remove')}"
-								disabled="@{TaskController.isRemoveFileBtnDisabled}" />
+								disabled="@{OutgoingTaskController.isRemoveFileBtnDisabled}" />
 							<button id="downloadFileBtn"
 								label="${c:l('download')}"
-								disabled="@{TaskController.isDownloadFileBtnDisabled}" />
+								disabled="@{OutgoingTaskController.isDownloadFileBtnDisabled}" />
 						</hbox>
 					</vbox>
 				</row>
@@ -250,53 +238,65 @@
 					${c:l('projectTask.closedDt')}
 					<datebox compact="true" width="200px"
 						lenient="false" format="dd/MM/yyyy"
-						value="@{TaskController.projectTask.closedDt }" />
+						value="@{OutgoingTaskController.projectTask.closedDt }" />
 				</row>
 				<row>
 					${c:l('projectTask.expectedDt')}
 					<datebox compact="true" width="200px"
 						lenient="false" format="dd/MM/yyyy"
-						value="@{TaskController.projectTask.expectedDt }" />
+						value="@{OutgoingTaskController.projectTask.expectedDt }" />
 				</row>
 				<row>
-					${c:l('projectTask.comments')}
-					<textbox id="commentsTxb"
-						value="@{TaskController.projectTask.comments}" width="50%"
-						rows="4" />
+					${c:l('projectTask.taskState')}
+					<combobox id="stateCbx" width="300px"
+						model="@{OutgoingTaskController.taskStates}"
+						selectedItem="@{OutgoingTaskController.projectTask.taskState}"
+						constraint="no empty">
+						<comboitem self="@{each='taskStateRow'}"
+							label="@{taskStateRow.name}" />
+					</combobox>
 				</row>
 				<row>
 					${c:l('projectTask.taskResult')}
 					<combobox id="resultCbx" width="300px"
-						model="@{TaskController.taskResults}"
-						selectedItem="@{TaskController.projectTask.taskResult}">
+						model="@{OutgoingTaskController.taskResults}"
+						selectedItem="@{OutgoingTaskController.projectTask.taskResult}"
+						disabled="@{OutgoingTaskController.isTaskOpen }">
 						<comboitem self="@{each='taskResultRow'}"
 							label="@{taskResultRow.name}" />
 					</combobox>
 				</row>
 				<row>
+					${c:l('projectTask.comments')}
+					<textbox id="commentsTxb"
+						value="@{OutgoingTaskController.projectTask.comments}" width="50%"
+						rows="4" />
+				</row>
+				<row>
 					${c:l('projectTask.reviewerScore')}
 					<textbox id="reviewerScoreTxb"
-						value="@{TaskController.projectTask.reviewerScore}" width="100px" />
+						value="@{OutgoingTaskController.projectTask.reviewerScore}" width="100px" />
 				</row>
 				<row>
 					${c:l('projectTask.timesRevised')}
 					<textbox id="timesRevisesTxb"
-						value="@{TaskController.projectTask.timesRevised}" width="100px" />
+						value="@{OutgoingTaskController.projectTask.timesRevised}" width="100px" />
 				</row>
 				<row>
 					${c:l('projectTask.timesContactExternal')}
 					<textbox id="timesContactExternalTxb"
-						value="@{TaskController.projectTask.timesContactExternal}"
+						value="@{OutgoingTaskController.projectTask.timesContactExternal}"
 						width="100px" />
 				</row>
 				<row>
 					${c:l('functions')}
 					<hbox>
-						<button id="newBtn" label="${c:l('new')}" />
+						<!-- <button id="newBtn" label="${c:l('new')}" /> -->
 						<button id="saveBtn" label="${c:l('save')}"
-							disabled="@{TaskController.isSaveBtnDisabled}" />
-						<button id="sendMessageBtn" label="${c:l('taskPage.sendMessage')}"
-							disabled="@{TaskController.isSendMessageBtnDisabled}" />
+							disabled="@{OutgoingTaskController.isSaveBtnDisabled}" />
+						<button id="sendMessageBtn"
+							label="${c:l('taskPage.sendMessage')}"
+							disabled="@{OutgoingTaskController.isTaskNotCreated}" />
 					</hbox>
 				</row>
 			</rows>

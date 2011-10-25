@@ -350,6 +350,11 @@ taskPage.taskEnd=Λήξη Ανάθεσης
 taskPage.errorSaving=Παρουσιάστηκε σφάλμα κατά την αποθήκευση της Ανάθεσης.
 taskPage.sendMessage=Αποστολή Μηνύματος
 
+##incomingTaskPage
+incomingTaskPage.title=Εισερχόμενη Ανάθεση
+incomingTaskPage.newSubTask=Νέα Ανάθεση-Παιδί
+incomingTaskPage.nonClosable=Δεν έχετε δικαίωμα να κλείσετε την Ανάθεση.
+
 ##messagePage
 messagePage.title=Προβολή/Δημιουργία Μηνύματος
 messagePage.send=Αποστολή

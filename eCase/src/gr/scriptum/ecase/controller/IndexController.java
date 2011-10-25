@@ -377,7 +377,7 @@ public class IndexController extends BaseController {
 		Integer id = selectedIncomingTask.getId();
 
 		Executions.getCurrent().sendRedirect(
-				TaskController.PAGE + "?" + IConstants.PARAM_KEY_ID + "=" + id);
+				TaskController.PAGE_INCOMING + "?" + IConstants.PARAM_KEY_ID + "=" + id);
 	}
 
 	public void onClick$searchIncomingTasksBtn() throws InterruptedException {

@@ -63,6 +63,8 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.event.PagingEvent;
 
+import EDU.oswego.cs.dl.util.concurrent.Takable;
+
 /**
  * @author aanagnostopoulos
  * 
@@ -74,11 +76,15 @@ public class TaskController extends BaseController {
 	 */
 	private static final long serialVersionUID = -7291754158464890911L;
 
-	public static final String PAGE = "task.zul";
-
 	private static Log log = LogFactory.getLog(TaskController.class);
 
-	/* componenents */
+	public static final String PAGE = "task.zul";
+
+	public static final String PAGE_INCOMING = "incomingTask.zul";
+
+	public static final String PARAM_KEY_PARENT_TASK = "t";
+
+	/* components */
 	Window taskWin;
 	Window uploadWin;
 	Paging contactsPgng;
@@ -87,67 +93,72 @@ public class TaskController extends BaseController {
 	Listbox documentsLstbx;
 
 	/* data binding */
-	private List<Project> projects = null;
-	private ProjectTask projectTask = null;
-	private List<UserHierarchy> userHierarchies = null;
-	private List<TaskType> taskTypes = null;
-	private List<TaskState> taskStates = null;
-	private List<TaskPriority> taskPriorities = null;
-	private List<TaskResult> taskResults = null;
-	private List<Contact> contacts = null;
-	private UserHierarchy selectedUserHierarchy = null;
-	private List<TaskDocument> taskDocuments = null;
-	private TaskDocument taskDocument = null;
-	private String term = null;
+	protected List<Project> projects = null;
+	protected ProjectTask projectTask = null;
+	protected List<UserHierarchy> userHierarchies = null;
+	protected List<TaskType> taskTypes = null;
+	protected List<TaskState> taskStates = null;
+	protected List<TaskPriority> taskPriorities = null;
+	protected List<TaskResult> taskResults = null;
+	protected List<Contact> contacts = null;
+	protected UserHierarchy selectedUserHierarchy = null;
+	protected List<TaskDocument> taskDocuments = null;
+	protected TaskDocument taskDocument = null;
+	protected String term = null;
 
-	private String okmNodeTask = null;
+	protected String okmNodeTask = null;
+	protected Integer taskStateClosedId = null;
 
-	private void initTask() {
+	protected void initTask() {
 		projectTask = new ProjectTask();
 		projectTask.setUsersByUserCreatorId(getUserInSession());
 	}
 
-	private void initContacts() {
+	protected void initContacts() {
 		contacts = new ArrayList<Contact>();
 	}
 
-	private void initDocuments() {
+	protected void initDocuments() {
 		taskDocuments = new LinkedList<TaskDocument>();
 	}
 
-	private void addHierarchyBranch(UserHierarchy root) {
+	protected void initProjects() {
+		projects = new ArrayList<Project>();
+	}
+
+	protected void addHierarchyBranch(UserHierarchy root) {
 		userHierarchies.add(root);
 		for (UserHierarchy child : root.getUserHierarchies()) {
 			addHierarchyBranch(child);
 		}
 	}
 
-	private void refreshProjects() {
+	protected void refreshProjects() {
 		ProjectDAO projectDAO = new ProjectDAO();
 		projects = projectDAO.findByCreator(getUserInSession());
 	}
 
-	private void refreshTaskTypes() {
+	protected void refreshTaskTypes() {
 		TaskTypeDAO taskTypeDAO = new TaskTypeDAO();
 		taskTypes = taskTypeDAO.findAll();
 	}
 
-	private void refreshTaskPriorities() {
+	protected void refreshTaskPriorities() {
 		TaskPriorityDAO taskPriorityDAO = new TaskPriorityDAO();
 		taskPriorities = taskPriorityDAO.findAll();
 	}
 
-	private void refreshTaskStates() {
+	protected void refreshTaskStates() {
 		TaskStateDAO taskStateDAO = new TaskStateDAO();
 		taskStates = taskStateDAO.findAll();
 	}
 
-	private void refreshTaskResults() {
+	protected void refreshTaskResults() {
 		TaskResultDAO taskResultDAO = new TaskResultDAO();
 		taskResults = taskResultDAO.findAll();
 	}
 
-	private void refreshUserHierarchies() {
+	protected void refreshUserHierarchies() {
 		userHierarchies = new ArrayList<UserHierarchy>();
 		UserHierarchyDAO userHierarchyDAO = new UserHierarchyDAO();
 		List<UserHierarchy> hierarchies = userHierarchyDAO
@@ -158,7 +169,7 @@ public class TaskController extends BaseController {
 		}
 	}
 
-	private void searchContacts(Integer startIndex) {
+	protected void searchContacts(Integer startIndex) {
 		ContactDAO contactDAO = new ContactDAO();
 
 		// set up paging by counting records first
@@ -173,7 +184,7 @@ public class TaskController extends BaseController {
 		}
 	}
 
-	private void save() throws Exception {
+	protected void save() throws Exception {
 
 		// get the current transaction and commit it. We want to perform saving
 		// in a new transaction, for better isolation.
@@ -268,7 +279,7 @@ public class TaskController extends BaseController {
 
 	}
 
-	private ResponseSendDocument fetchDocumentFromOpenKM(
+	protected ResponseSendDocument fetchDocumentFromOpenKM(
 			TaskDocument taskDocument) {
 
 		OkmProtocolDispatcherImpl okmDispatcher = getOkmDispatcher();
@@ -293,6 +304,8 @@ public class TaskController extends BaseController {
 
 		ParameterDAO parameterDAO = new ParameterDAO();
 		okmNodeTask = parameterDAO.getAsString(IConstants.PARAM_OKM_NODE_TASKS);
+		taskStateClosedId = parameterDAO
+				.getAsInteger(IConstants.PARAM_TASK_STATED_CLOSED);
 
 		initContacts();
 		initDocuments();
@@ -301,79 +314,69 @@ public class TaskController extends BaseController {
 		refreshTaskTypes();
 		refreshTaskResults();
 
-		String idString = execution.getParameter(IConstants.PARAM_KEY_ID);
-		if (idString != null) { // existing task
-
-			ProjectTaskDAO projectTaskDAO = new ProjectTaskDAO();
-			projectTask = projectTaskDAO.findById(Integer.valueOf(idString),
-					false);
-
-			projects = new ArrayList<Project>();
-			projects.add(projectTask.getProject());
-
-			taskDocuments.addAll(projectTask.getTaskDocuments());
-
-		} else { // new task
-			initTask();
-			refreshProjects();
-			refreshUserHierarchies();
-		}
-	}
-
-	public void onSelect$userHierarchiesLstbx(SelectEvent event) {
-		userHierarchyBndbx.close();
-		projectTask
-				.setUsersByUserDispatcherId(selectedUserHierarchy.getUsers());
-		getBinder(taskWin).loadAll();
-	}
-
-	public void onChanging$contactBndbx(InputEvent event) {
-		term = StringUtils.trimToNull(event.getValue());
-
-		searchContacts(0);
-		getBinder(taskWin).loadAll();
-	}
-
-	public void onOpen$contactBndbx(OpenEvent event) {
-		if (!contacts.isEmpty()) {
-			return;
-		}
-		term = "";
-		searchContacts(0);
-
-		getBinder(taskWin).loadAll();
-	}
-
-	public void onPaging$contactsPgng(PagingEvent event) {
-		int activePage = event.getActivePage();
-		int startIndex = activePage * contactsPgng.getPageSize();
-		searchContacts(startIndex);
-		getBinder(taskWin).loadAll();
-	}
-
-	public void onSelect$contactsLstbx(SelectEvent event) {
-		// populateContactBndbx();
-		contactBndbx.close();
-		getBinder(taskWin).loadAll();
-	}
-
-	public void onClick$addFileBtn() throws SuspendNotAllowedException,
-			InterruptedException {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put(IConstants.PARAM_CALLBACK, new Callback(documentsLstbx,
-				"onDocumentAdded"));
-		uploadWin = (Window) Executions.createComponents(UploadController.PAGE,
-				taskWin, params);
-		uploadWin.setClosable(true);
-		uploadWin.doModal();
-	}
-
-	public void onDocumentAdded$documentsLstbx(Event event) {
-		TaskDocument document = (TaskDocument) ((ForwardEvent) event)
-				.getOrigin().getData();
-		document.setDocumentNumber(taskDocuments.size() + 1);
-		taskDocuments.add(document);
-		getBinder(taskWin).loadAll();
+		// String idString = execution.getParameter(IConstants.PARAM_KEY_ID);
+		// if (idString != null) { // existing task
+		// // TODO: check if user has access to the given task
+		// ProjectTaskDAO projectTaskDAO = new ProjectTaskDAO();
+		// projectTask = projectTaskDAO.findById(Integer.valueOf(idString),
+		// false);
+		//
+		// projects = new ArrayList<Project>();
+		// projects.add(projectTask.getProject());
+		//
+		// taskDocuments.addAll(projectTask.getTaskDocuments());
+		//
+		// } else { // new task
+		// initTask();
+		// refreshProjects();
+		// refreshUserHierarchies();
+		//
+		// // set parent task, if any
+		// String idParentTaskString = execution
+		// .getParameter(PARAM_KEY_PARENT_TASK);
+		// if (idParentTaskString != null) {
+		// Integer idParentTask = null;
+		// try {
+		// idParentTask = Integer.valueOf(idParentTaskString);
+		// } catch (Exception e) {
+		// log.error(e);
+		// projectTask = null;
+		// return;
+		// }
+		//
+		// ProjectTaskDAO projectTaskDAO = new ProjectTaskDAO();
+		// ProjectTask parentTask = projectTaskDAO.findById(idParentTask,
+		// false);
+		// // TODO: check if user has access to the given parent task
+		// if (parentTask != null) {
+		// projectTask.setProjectTask(parentTask);
+		// projectTask.setProject(parentTask.getProject());
+		//
+		// // copy task documents (including byte content)
+		// for (TaskDocument parentTaskDocument : parentTask
+		// .getTaskDocuments()) {
+		// TaskDocument taskDocument = new TaskDocument();
+		// taskDocument.setDocumentName(parentTaskDocument
+		// .getDocumentName());
+		// taskDocument.setDocumentType(parentTaskDocument
+		// .getDocumentType());
+		// taskDocument.setDocumentKeywords(parentTaskDocument
+		// .getDocumentKeywords());
+		// taskDocument.setDocumentSize(parentTaskDocument
+		// .getDocumentSize());
+		// taskDocument.setDocumentNumber(parentTaskDocument
+		// .getDocumentNumber());
+		// // Document content is stored in OpenKM, fetch and copy
+		// ResponseSendDocument responseSendDocument =
+		// fetchDocumentFromOpenKM(parentTaskDocument);
+		// taskDocument.setContent(responseSendDocument
+		// .getContent());
+		// taskDocuments.add(taskDocument);
+		// }
+		//
+		// }
+		// }
+		// }
 	}
 
 	public void onSelect$documentsLstbx(SelectEvent event) {
@@ -439,24 +442,22 @@ public class TaskController extends BaseController {
 
 	}
 
-	public boolean isAddFileBtnDisabled() {
-		if (projectTask.getId() != null) {
+	public boolean isTaskCreated() {
+		if (projectTask != null && projectTask.getId() != null) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean isRemoveFileBtnDisabled() {
-		if (projectTask.getId() != null) {
+	public boolean isTaskNotCreated() {
+		return !isTaskCreated();
+	}
+
+	public boolean hasParentTask() {
+		if (projectTask != null && projectTask.getProjectTask() != null) {
 			return true;
 		}
-
-		if (taskDocument == null) {
-			return true;
-		}
-
 		return false;
-
 	}
 
 	public boolean isDownloadFileBtnDisabled() {
@@ -469,13 +470,6 @@ public class TaskController extends BaseController {
 
 	}
 
-	public boolean isParentTaskVisible() {
-		if (projectTask != null && projectTask.getProjectTask() != null) {
-			return true;
-		}
-		return false;
-	}
-
 	public boolean isSaveBtnDisabled() {
 		if (projectTask == null) {
 			return true;
@@ -483,41 +477,16 @@ public class TaskController extends BaseController {
 		return false;
 	}
 
-	public boolean isProjectCbxReadonly() {
-		if (projectTask == null) {
-			return true;
-		}
-
-		if (projectTask.getId() != null) {
+	public boolean isTaskClosed() {
+		if (isTaskCreated()
+				&& projectTask.getTaskState().getId().intValue() == taskStateClosedId) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean isProjectCbxVisible() {
-		if (projectTask != null && projectTask.getId() == null) {
-			return true;
-		}
-		return false;
-	}
-
-	public boolean isProjectHbxVisible() {
-		return !(isProjectCbxVisible());
-	}
-
-	public boolean isUserHierarchyBndbxVisible() {
-		if (projectTask != null && projectTask.getId() == null) {
-			return true;
-		}
-		return false;
-	}
-
-	public boolean isUsersByUserDispatcherIdHbxVisible() {
-		return !(isUserHierarchyBndbxVisible());
-	}
-
-	public boolean isSendMessageBtnDisabled() {
-		return isSaveBtnDisabled();
+	public boolean isTaskOpen() {
+		return !isTaskClosed();
 	}
 
 	public String getContactFullName() {
@@ -545,11 +514,11 @@ public class TaskController extends BaseController {
 	}
 
 	public void setuserFullName(String userFullName) {
-
+		// stub
 	}
 
 	public void setContactFullName(String contactFullName) {
-
+		// stub
 	}
 
 	public List<Project> getProjects() {
