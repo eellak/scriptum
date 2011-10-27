@@ -20,8 +20,9 @@
 				<row>
 					${c:l('taskMessage.usersByUserReceiverId')}
 					<bandbox id="recipientBndbx" autodrop="true"
-						value="@{MessageController.recipientFullName }" constraint="no empty"
-						width="300px" readonly="@{MessageController.isEntityCreated }">
+						value="@{MessageController.recipientFullName }"
+						constraint="no empty" width="300px"
+						readonly="@{MessageController.isEntityCreated }">
 						<bandpopup>
 							<listbox id="recipientsLstbx"
 								model="@{MessageController.recipients}"
@@ -56,13 +57,15 @@
 					${c:l('taskMessage.subject')}
 					<textbox id="subjectTxb"
 						value="@{MessageController.entity.subject}" width="300px"
-						constraint="no empty" readonly="@{MessageController.isEntityCreated }"/>
+						constraint="no empty"
+						readonly="@{MessageController.isEntityCreated }" />
 				</row>
 				<row>
 					${c:l('taskMessage.message')}
 					<textbox id="messageTxb"
 						value="@{MessageController.entity.message}" width="50%" rows="4"
-						constraint="no empty" readonly="@{MessageController.isEntityCreated }"/>
+						constraint="no empty"
+						readonly="@{MessageController.isEntityCreated }" />
 				</row>
 				<row>
 					${c:l('taskMessage.projectTask')}
@@ -93,13 +96,16 @@
 				<row>
 					${c:l('functions')}
 					<hbox>
-<!-- 						<button id="newBtn" label="${c:l('new')}" /> -->
+						<!-- 						<button id="newBtn" label="${c:l('new')}" /> -->
 						<button id="saveBtn"
 							label="${c:l('messagePage.send')}"
 							visible="@{MessageController.isEntityNotCreated}" />
 						<button id="replyBtn"
 							label="${c:l('messagePage.reply')}"
 							visible="@{MessageController.isEntityCreated}" />
+						<button id="cancelBtn"
+							label="${c:l('cancel')}">
+						</button>
 					</hbox>
 				</row>
 			</rows>

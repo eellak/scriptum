@@ -24,6 +24,7 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.InputEvent;
 import org.zkoss.zk.ui.event.OpenEvent;
 import org.zkoss.zk.ui.event.SelectEvent;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
@@ -219,6 +220,10 @@ public class MessageController extends
 						+ ((TaskMessage) entity).getUsersByUserSenderId()
 								.getId());
 
+	}
+
+	public void onClick$cancelBtn() {
+		Clients.evalJavaScript("window.history.back()");
 	}
 
 	public String getRecipientFullName() {
