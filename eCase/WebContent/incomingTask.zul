@@ -125,6 +125,12 @@
 							</listitem>
 						</listbox>
 						<hbox>
+							<button id="addFileBtn"
+								label="${c:l('add')}"
+								disabled="@{IncomingTaskController.isAddFileBtnDisabled}" />
+							<button id="removeFileBtn"
+								label="${c:l('remove')}"
+								disabled="@{IncomingTaskController.isRemoveFileBtnDisabled}" />
 							<button id="downloadFileBtn"
 								label="${c:l('download')}"
 								disabled="@{IncomingTaskController.isDownloadFileBtnDisabled}" />

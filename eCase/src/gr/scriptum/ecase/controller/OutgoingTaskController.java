@@ -147,45 +147,6 @@ public class OutgoingTaskController extends TaskController {
 		getBinder(taskWin).loadAll();
 	}
 
-	public void onClick$addFileBtn() throws SuspendNotAllowedException,
-			InterruptedException {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put(IConstants.PARAM_CALLBACK, new Callback(documentsLstbx,
-				"onDocumentAdded"));
-		uploadWin = (Window) Executions.createComponents(UploadController.PAGE,
-				taskWin, params);
-		uploadWin.setClosable(true);
-		uploadWin.doModal();
-	}
-
-	public void onDocumentAdded$documentsLstbx(Event event) {
-		TaskDocument document = (TaskDocument) ((ForwardEvent) event)
-				.getOrigin().getData();
-		document.setDocumentNumber(taskDocuments.size() + 1);
-		taskDocuments.add(document);
-		getBinder(taskWin).loadAll();
-	}
-
-	public boolean isAddFileBtnDisabled() {
-		if (projectTask.getId() != null) {
-			return true;
-		}
-		return false;
-	}
-
-	public boolean isRemoveFileBtnDisabled() {
-		if (projectTask.getId() != null) {
-			return true;
-		}
-
-		if (taskDocument == null) {
-			return true;
-		}
-
-		return false;
-
-	}
-
 	public boolean isProjectCbxVisible() {
 
 		if (isTaskNotCreated() && !hasParentTask()) {

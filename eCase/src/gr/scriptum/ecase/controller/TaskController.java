@@ -26,8 +26,12 @@ import gr.scriptum.domain.TaskType;
 import gr.scriptum.domain.UserHierarchy;
 import gr.scriptum.ecase.util.IConstants;
 import gr.scriptum.eprotocol.ws.OkmProtocolDispatcherImpl;
+import gr.scriptum.eprotocol.ws.RequestAddDocumentToNode;
+import gr.scriptum.eprotocol.ws.RequestDelete;
 import gr.scriptum.eprotocol.ws.RequestNewNode;
 import gr.scriptum.eprotocol.ws.RequestSendDocument;
+import gr.scriptum.eprotocol.ws.Response;
+import gr.scriptum.eprotocol.ws.ResponseAddDocumentToNode;
 import gr.scriptum.eprotocol.ws.ResponseNewNode;
 import gr.scriptum.eprotocol.ws.ResponseSendDocument;
 import gr.scriptum.util.Callback;
@@ -43,7 +47,6 @@ import javax.naming.InitialContext;
 import javax.transaction.Status;
 import javax.transaction.UserTransaction;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.zkoss.util.resource.Labels;
@@ -52,8 +55,6 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.SuspendNotAllowedException;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.ForwardEvent;
-import org.zkoss.zk.ui.event.InputEvent;
-import org.zkoss.zk.ui.event.OpenEvent;
 import org.zkoss.zk.ui.event.SelectEvent;
 import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Filedownload;
@@ -61,9 +62,6 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
-import org.zkoss.zul.event.PagingEvent;
-
-import EDU.oswego.cs.dl.util.concurrent.Takable;
 
 /**
  * @author aanagnostopoulos
@@ -103,6 +101,7 @@ public class TaskController extends BaseController {
 	protected List<Contact> contacts = null;
 	protected UserHierarchy selectedUserHierarchy = null;
 	protected List<TaskDocument> taskDocuments = null;
+	protected List<TaskDocument> taskDocumentsToBeDeleted = null;
 	protected TaskDocument taskDocument = null;
 	protected String term = null;
 
@@ -120,6 +119,10 @@ public class TaskController extends BaseController {
 
 	protected void initDocuments() {
 		taskDocuments = new LinkedList<TaskDocument>();
+	}
+
+	protected void initDocumentsToBeDeleted() {
+		taskDocumentsToBeDeleted = new ArrayList<TaskDocument>();
 	}
 
 	protected void initProjects() {
@@ -181,6 +184,13 @@ public class TaskController extends BaseController {
 		for (Contact contact : contacts) {
 			contact.getCompany().getName().toString(); // force hibernate to
 														// fetch company
+		}
+	}
+
+	private void renumberTaskDocuments() {
+		for (int i = 0; i < taskDocuments.size(); i++) {
+			TaskDocument document = taskDocuments.get(i);
+			document.setDocumentNumber(i + 1);
 		}
 	}
 
@@ -261,12 +271,74 @@ public class TaskController extends BaseController {
 				projectTaskDAO.update(projectTask); // TODO: Which task fields
 													// are modifiable?
 
-				// TODO: Should documents be modifiable?????
+				// update documents
+				List<TaskDocument> newlyAdded = new LinkedList<TaskDocument>();
+				for (TaskDocument document : taskDocuments) {
+					if (document.getId() != null) { // existing document, update
 
+						taskDocumentDAO.update(document);
+
+					} else {// Create newly added documents
+						document.setProjectTask(projectTask);
+						taskDocumentDAO.makePersistent(document);
+						projectTask.getTaskDocuments().add(document);
+						newlyAdded.add(document);
+					}
+				}
+
+				// Delete documents marked respectively
+				for (TaskDocument document : taskDocumentsToBeDeleted) {
+					taskDocumentDAO.delete(document);
+					projectTask.getTaskDocuments().remove(document);
+				}
+				/* OpenKM actions */
+
+				// add newly added documents to OpenKM
+				for (TaskDocument document : newlyAdded) {
+					RequestAddDocumentToNode request = new RequestAddDocumentToNode(
+							getUserInSession().getUsername(),
+							getUserInSession().getId(), getIp(),
+							IConstants.SYSTEM_NAME, getOkmToken());
+					request.setNodePath(okmNodeTask
+							+ IConstants.OKM_FOLDER_DELIMITER
+							+ projectTask.getId());
+					request.setDocument(document);
+
+					ResponseAddDocumentToNode response = okmDispatcher
+							.addDocumentToNode(request);
+					if (response.isError()) {
+						log.error(response.toString());
+						throw new RuntimeException(response.toString());
+					}
+
+					// update local document, storing OKM Path, UUID and size
+					taskDocumentDAO.update(document);
+				}
+
+				// delete documents marked respectively from OpenKM
+				for (TaskDocument document : taskDocumentsToBeDeleted) {
+
+					RequestDelete requestDelete = new RequestDelete(
+							getUserInSession().getUsername(),
+							getUserInSession().getId(), getIp(),
+							IConstants.SYSTEM_NAME, getOkmToken());
+					requestDelete.setDirectory(false);
+					requestDelete.setPath(document.getOkmPath());
+
+					Response responseDelete = okmDispatcher
+							.delete(requestDelete);
+					if (responseDelete.isError()) {
+						log.error(responseDelete.toString());
+						throw new RuntimeException(responseDelete.toString());
+					}
+				}
 			}
 
 			tx.commit();
 			log.info("Saved Task (Committed transaction): " + tx);
+
+			// clean up
+			taskDocumentsToBeDeleted.clear();
 
 		} catch (Exception e) {
 			log.error(e);
@@ -309,6 +381,7 @@ public class TaskController extends BaseController {
 
 		initContacts();
 		initDocuments();
+		initDocumentsToBeDeleted();
 		refreshTaskPriorities();
 		refreshTaskStates();
 		refreshTaskTypes();
@@ -407,6 +480,38 @@ public class TaskController extends BaseController {
 
 	}
 
+	public void onClick$addFileBtn() throws SuspendNotAllowedException,
+			InterruptedException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put(IConstants.PARAM_CALLBACK, new Callback(documentsLstbx,
+				"onDocumentAdded"));
+		uploadWin = (Window) Executions.createComponents(UploadController.PAGE,
+				taskWin, params);
+		uploadWin.setClosable(true);
+		uploadWin.doModal();
+	}
+
+	public void onDocumentAdded$documentsLstbx(Event event) {
+		TaskDocument document = (TaskDocument) ((ForwardEvent) event)
+				.getOrigin().getData();
+		document.setDocumentNumber(taskDocuments.size() + 1);
+		taskDocuments.add(document);
+		getBinder(taskWin).loadAll();
+	}
+
+	public void onClick$removeFileBtn() {
+
+		taskDocuments.remove(taskDocument);
+		if (taskDocument.getId() != null) { // only mark already created
+			// documents for deletion
+			taskDocumentsToBeDeleted.add(taskDocument);
+		}
+		renumberTaskDocuments();
+		taskDocument = null;
+		getBinder(taskWin).loadAll();
+
+	}
+
 	public void onClick$downloadFileBtn() throws InterruptedException {
 
 		try {
@@ -458,6 +563,29 @@ public class TaskController extends BaseController {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean isAddFileBtnDisabled() {
+		// if (projectTask.getId() != null) {
+		// return true;
+		// }
+		if (projectTask == null) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isRemoveFileBtnDisabled() {
+		if (projectTask == null) {
+			return true;
+		}
+
+		if (taskDocument == null) {
+			return true;
+		}
+
+		return false;
+
 	}
 
 	public boolean isDownloadFileBtnDisabled() {
@@ -607,5 +735,14 @@ public class TaskController extends BaseController {
 
 	public void setTaskDocument(TaskDocument taskDocument) {
 		this.taskDocument = taskDocument;
+	}
+
+	public List<TaskDocument> getTaskDocumentsToBeDeleted() {
+		return taskDocumentsToBeDeleted;
+	}
+
+	public void setTaskDocumentsToBeDeleted(
+			List<TaskDocument> taskDocumentsToBeDeleted) {
+		this.taskDocumentsToBeDeleted = taskDocumentsToBeDeleted;
 	}
 }
