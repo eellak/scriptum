@@ -110,6 +110,7 @@ public class TaskController extends BaseController {
 
 	protected void initTask() {
 		projectTask = new ProjectTask();
+		projectTask.setDispatcherCloseable(false);
 		projectTask.setUsersByUserCreatorId(getUserInSession());
 	}
 
@@ -127,13 +128,6 @@ public class TaskController extends BaseController {
 
 	protected void initProjects() {
 		projects = new ArrayList<Project>();
-	}
-
-	protected void addHierarchyBranch(UserHierarchy root) {
-		userHierarchies.add(root);
-		for (UserHierarchy child : root.getUserHierarchies()) {
-			addHierarchyBranch(child);
-		}
 	}
 
 	protected void refreshProjects() {
@@ -159,17 +153,6 @@ public class TaskController extends BaseController {
 	protected void refreshTaskResults() {
 		TaskResultDAO taskResultDAO = new TaskResultDAO();
 		taskResults = taskResultDAO.findAll();
-	}
-
-	protected void refreshUserHierarchies() {
-		userHierarchies = new ArrayList<UserHierarchy>();
-		UserHierarchyDAO userHierarchyDAO = new UserHierarchyDAO();
-		List<UserHierarchy> hierarchies = userHierarchyDAO
-				.findByUser(getUserInSession());
-
-		for (UserHierarchy hierarchy : hierarchies) {
-			addHierarchyBranch(hierarchy);
-		}
 	}
 
 	protected void searchContacts(Integer startIndex) {
@@ -540,7 +523,7 @@ public class TaskController extends BaseController {
 	}
 
 	public void onClick$sendMessageBtn() {
-
+		
 		Executions.getCurrent().sendRedirect(
 				MessageController.PAGE + "?" + MessageController.PARAM_KEY_TASK
 						+ "=" + projectTask.getId());

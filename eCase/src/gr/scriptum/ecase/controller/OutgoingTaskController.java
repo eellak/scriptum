@@ -4,15 +4,18 @@
 package gr.scriptum.ecase.controller;
 
 import gr.scriptum.dao.ProjectTaskDAO;
+import gr.scriptum.dao.UserHierarchyDAO;
 import gr.scriptum.domain.Project;
 import gr.scriptum.domain.ProjectTask;
 import gr.scriptum.domain.TaskDocument;
+import gr.scriptum.domain.UserHierarchy;
 import gr.scriptum.ecase.util.IConstants;
 import gr.scriptum.eprotocol.ws.ResponseSendDocument;
 import gr.scriptum.util.Callback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -42,6 +45,33 @@ public class OutgoingTaskController extends TaskController {
 
 	private static Log log = LogFactory.getLog(OutgoingTaskController.class);
 
+	private void addHierarchyBranch(UserHierarchy root) {
+		userHierarchies.add(root);
+		for (UserHierarchy child : root.getUserHierarchies()) {
+			addHierarchyBranch(child);
+		}
+	}
+
+	private void refreshUserHierarchies() {
+		userHierarchies = new ArrayList<UserHierarchy>();
+		UserHierarchyDAO userHierarchyDAO = new UserHierarchyDAO();
+
+		List<UserHierarchy> hierarchies = null;
+		//TODO: figure out if users will be filtered, based on project participants
+		hierarchies = userHierarchyDAO.findByUser(getUserInSession());
+//		if (projectTask.getProject() == null) {
+//			hierarchies = userHierarchyDAO.findByUser(getUserInSession());
+//		} else {
+//			hierarchies = userHierarchyDAO.findByUser(getUserInSession(),
+//					projectTask.getProject());
+//		}
+
+		for (UserHierarchy hierarchy : hierarchies) {
+			addHierarchyBranch(hierarchy);
+		}
+	}
+
+	
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
@@ -108,6 +138,11 @@ public class OutgoingTaskController extends TaskController {
 				}
 			}
 		}
+	}
+	
+	public void onSelect$projectCbx(SelectEvent event) {
+		refreshUserHierarchies();
+		getBinder(taskWin).loadAll();
 	}
 
 	public void onSelect$userHierarchiesLstbx(SelectEvent event) {
