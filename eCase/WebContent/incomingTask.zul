@@ -73,18 +73,15 @@
 				</row>
 				<row>
 					${c:l('projectTask.startDt')}
-
-					<datebox compact="true" width="200px"
-						lenient="false" format="dd/MM/yyyy"
-						value="@{IncomingTaskController.projectTask.startDt }"
-						readonly="true" />
+					<label
+						value="@{IncomingTaskController.projectTask.startDt, converter='org.zkoss.zkplus.databind.DateFormatConverter' }"
+						self="@{format(dd/MM/yyyy)}" />
 				</row>
 				<row>
 					${c:l('projectTask.endDt')}
-					<datebox compact="true" width="200px"
-						lenient="false" format="dd/MM/yyyy"
-						value="@{IncomingTaskController.projectTask.endDt }"
-						readonly="true" />
+					<label
+						value="@{IncomingTaskController.projectTask.endDt, converter='org.zkoss.zkplus.databind.DateFormatConverter' }"
+						self="@{format(dd/MM/yyyy)}" />
 				</row>
 				<row>
 					${c:l('projectTask.taskType')}
@@ -138,18 +135,10 @@
 					</vbox>
 				</row>
 				<row>
-					${c:l('projectTask.closedDt')}
-					<datebox compact="true" width="200px"
-						lenient="false" format="dd/MM/yyyy"
-						value="@{IncomingTaskController.projectTask.closedDt }"
-						readonly="true" />
-				</row>
-				<row>
 					${c:l('projectTask.expectedDt')}
-					<datebox compact="true" width="200px"
-						lenient="false" format="dd/MM/yyyy"
-						value="@{IncomingTaskController.projectTask.expectedDt }"
-						readonly="true" />
+					<label
+						value="@{IncomingTaskController.projectTask.expectedDt, converter='org.zkoss.zkplus.databind.DateFormatConverter' }"
+						self="@{format(dd/MM/yyyy)}" />
 				</row>
 				<row>
 					${c:l('projectTask.taskState')}
@@ -175,6 +164,12 @@
 						<comboitem self="@{each='taskResultRow'}"
 							label="@{taskResultRow.name}" />
 					</combobox>
+				</row>
+				<row>
+					${c:l('projectTask.closedDt')}
+					<label
+						value="@{IncomingTaskController.projectTask.closedDt, converter='org.zkoss.zkplus.databind.DateFormatConverter' }"
+						self="@{format(dd/MM/yyyy-HH:mm:ss)}" />
 				</row>
 				<row>
 					${c:l('projectTask.comments')}

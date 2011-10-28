@@ -117,7 +117,7 @@
 				</row>
 				<row>
 					${c:l('projectTask.dispatcherCloseable')}
-					<checkbox
+					<checkbox 
 						checked="@{OutgoingTaskController.projectTask.dispatcherCloseable,converter=gr.scriptum.util.CheckBoxToBooleanTypeConverter }" />
 				</row>
 				<row>
@@ -235,12 +235,6 @@
 					</vbox>
 				</row>
 				<row>
-					${c:l('projectTask.closedDt')}
-					<datebox compact="true" width="200px"
-						lenient="false" format="dd/MM/yyyy"
-						value="@{OutgoingTaskController.projectTask.closedDt }" />
-				</row>
-				<row>
 					${c:l('projectTask.expectedDt')}
 					<datebox compact="true" width="200px"
 						lenient="false" format="dd/MM/yyyy"
@@ -267,6 +261,12 @@
 					</combobox>
 				</row>
 				<row>
+					${c:l('projectTask.closedDt')}
+					<label
+						value="@{IncomingTaskController.projectTask.closedDt, converter='org.zkoss.zkplus.databind.DateFormatConverter' }"
+						self="@{format(dd/MM/yyyy-HH:mm:ss)}" />
+				</row>
+				<row>
 					${c:l('projectTask.comments')}
 					<textbox id="commentsTxb"
 						value="@{OutgoingTaskController.projectTask.comments}" width="50%"
@@ -291,7 +291,6 @@
 				<row>
 					${c:l('functions')}
 					<hbox>
-						<!-- <button id="newBtn" label="${c:l('new')}" /> -->
 						<button id="saveBtn" label="${c:l('save')}"
 							disabled="@{OutgoingTaskController.isSaveBtnDisabled}" />
 						<button id="sendMessageBtn"
