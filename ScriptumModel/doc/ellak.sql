@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.54, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.1.58, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: ellak
 -- ------------------------------------------------------
--- Server version	5.1.54-1ubuntu4
+-- Server version	5.1.58-1ubuntu1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -477,7 +477,7 @@ CREATE TABLE `parameter` (
   `create_dt` datetime DEFAULT NULL,
   `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -486,7 +486,7 @@ CREATE TABLE `parameter` (
 
 LOCK TABLES `parameter` WRITE;
 /*!40000 ALTER TABLE `parameter` DISABLE KEYS */;
-INSERT INTO `parameter` VALUES (1,'CORE','Integer','DISTRIBUTION_METHOD_EMAIL_ID','Το ID της μεθόδου διανομής με email. ΝΑ ΜΗΝ ΑΛΛΑΞΕΙ','3','3',NULL,NULL,NULL,NULL),(2,'CORE','Integer','DISTRIBUTION_METHOD_WEBSERVICE_ID','Το ID της μεθόδου διανομής Web Service. ΝΑ ΜΗΝ ΑΛΛΑΞΕΙ','7','7',NULL,NULL,NULL,NULL),(3,'MAIL','String','SMTP_HOST','Η διέυθυνση του  SMTP Host','mail.illumine.gr','mail.illumine.gr',NULL,NULL,NULL,NULL),(4,'MAIL','String','SMTP_PASSWORD','Το συνθηματικό του  SMTP','my_password','my_password',NULL,NULL,NULL,NULL),(5,'MAIL','String','SMTP_USER','Ο Χρήστης SMTP','info@uit.gr','info@uit.gr',NULL,NULL,NULL,NULL),(6,'MAIL','String','EMAIL_FROM','Η διέυθυνση email με την οποία αποστέλλονται από εσάς τα μυνήματα','info@uit.gr','info@uit.gr',NULL,NULL,NULL,NULL),(7,'CORE','String','OKM_NODE_PENDING_INCOMING','Ο φάκελος του OpenKM Taxonomy που αποθηκεύονται τα προσωρινά εισερχόμενα','/okm:root/PendingIncoming','/okm:root/PendingIncoming',NULL,NULL,NULL,NULL),(8,'CORE','String','OKM_NODE_INCOMING','Ο φάκελος του OpenKM Taxonomy στον οποίον αποθηκεύονται τα εισερχόμενα','/okm:root/IncomingProtocol','/okm:root/IncomingProtocol',NULL,NULL,NULL,NULL),(9,'CORE','String','OKM_NODE_PENDING_OUTGOING','Ο φάκελος του OpenKM Taxonomy στον οποίον αποθηκεύονται τα προσορινά εξερχόμενα','/okm:root/PendingOutgoing','/okm:root/PendingOutgoing',NULL,NULL,NULL,NULL),(10,'CORE','String','OKM_NODE_OUTGOING','Ο φάκελος του OpenKM Taxonomy στον οποίον αποθηκεύονται τα εξερχόμενα','/okm:root/OutgoingProtocol','/okm:root/OutgoingProtocol',NULL,NULL,NULL,NULL),(11,'Protocol Book','String','PROTOCOL_BOOK_COMPANY','Ο Τίτλος του οργανισμού σας που εμφανίζεται στο έντυπο του πρωτοκόλλου','ΕΛΛΑΚ','ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(12,'Protocol Book','String','PROTOCOL_BOOK_AUTHOR','Ο Υπευθυνος Συγγραφέας  που εμφανίζεται στο έντυπο του πρωτοκόλλου','ΕΛΛΑΚ','ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(13,'Protocol Book','String','PROTOCOL_BOOK_CREATOR','Ο υπεύθυνος για την εκτύπωση του έντυπου του πρωτοκόλλου','ΕΛΛΑΚ','ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(14,'Protocol Book','String','PROTOCOL_BOOK_KEYWORDS','Οι λέξεις κλειδιά του βιβλίου πρωτοκόλλου που θα μπαίνουν στο παραγόμενο PDF','Βιβλίο, Πρωτοκόλλου','Βιβλίο, Πρωτοκόλλου',NULL,NULL,NULL,NULL),(15,'Protocol Book','String','PROTOCOL_BOOK_SUBJECT','Το θέμα του παραγόμενου βιβλίου πρωτοκόλλου που εμφανίζεται στο PDF','Βιβλίο Πρωτοκόλλου','Βιβλίο Πρωτοκόλλου',NULL,NULL,NULL,NULL),(16,'Protocol Book','String','PROTOCOL_BOOK_TITLE','Ο Τίτλος που θα εμφανίζεται στο PDF βιβλίο πρωτοκόλλου ','String','Βιβλίο Πρωτοκόλλου',NULL,NULL,NULL,NULL),(17,'Protocol Book','String','PROTOCOL_BOOK_FILE','Το όνομα του PDF αρχείου στο οποίο θα σωζεται τι βιβλίο πρωτοκόλλου',NULL,'protocol_book.pdf',NULL,NULL,NULL,NULL),(18,'Protocol Book','String','PROTOCOL_BOOK_FONT_FOLDER','Ο φάκελος στον οποίον αποθηκευονται τα fonts για την παραγωγή του PDF','../fonts','../fonts',NULL,NULL,NULL,NULL),(19,'CORE','Integer','DISTRIBUTION_METHOD_NA_ID','Προκαθορισμένο ID για not applicable τρόπο διακίνησης. ΝΑ ΜΗΝ ΑΛΛΑΞΕΙ','8','8',NULL,NULL,NULL,NULL),(20,'CORE','String','OKM_AUTH_PORT_ADDRESS','URL for OpenKM Web Service authentication','http://localhost:8080/OpenKM/OKMAuth','http://localhost:8080/OpenKM/OKMAuth',NULL,NULL,NULL,NULL),(21,'CORE','String','OKM_DOCUMENT_PORT_ADDRESS','URL for OpenKM Web Service Document','http://localhost:8080/OpenKM/OKMDocument','http://localhost:8080/OpenKM/OKMDocument',NULL,NULL,NULL,NULL),(22,'CORE','String','OKM_FOLDER_PORT_ADDRESS','URL for OpenKM Web Service for Folder ','http://localhost:8080/OpenKM/OKMFolder','http://localhost:8080/OpenKM/OKMFolder',NULL,NULL,NULL,NULL),(23,'CORE','String','OKM_SEARCH_PORT_ADDRESS','URL for OpenKM Web Service for Document Search','http://localhost:8080/OpenKM/OKMSearch','http://localhost:8080/OpenKM/OKMSearch',NULL,NULL,NULL,NULL),(24,'DIAVGEIA Interface','String','DIAVGEIA_BASE_URL','Η Βασική διυθυνση της DIAVGEIA.GOV.GR API URL','https://193.105.109.110/apofaseis-dokimes','https://193.105.109.110/apofaseis-dokimes',NULL,NULL,NULL,NULL),(25,'DIAVGEIA Interface','Integer','DIAVGEIA_TIMEOUT','Ο Χρόνος σε Milliseconds στον οποίον θα κάνει timeout τα post στη διαύγεια','60000','60000',NULL,NULL,NULL,NULL),(26,'DIAVGEIA Interface','String','DIAVGEIA_TRUSTSTORE_FILE','Το truststore στο οποίο εγκαθιστούμε το ψηφιακό πιστοποιητικό της Διαύγειας','/my-linux/path/DIAVGEIA.cer','c:\\\\my-windows\\\\path\\\\DIAVGEIA.cer',NULL,NULL,NULL,NULL),(27,'DIAVGEIA Interface','String','DIAVGEIA_TRUSTSTORE_PASS','Το συνθηματικό για να ανοίξει το truststore','changeit','changeit',NULL,NULL,NULL,NULL),(28,'DIAVGEIA Interface','String','DIAVGEIA_USER','Ο χρήστης της διαυγειας. Αντοστοιχεί στο πεδίο edUser','366_admin','366_admin',NULL,NULL,NULL,NULL),(29,'DIAVGEIA Interface','String','DIAVGEIA_PASSWORD','Το συνθηματικό της ΔΙΑΥΓΕΙΑΣ. Αντιστοιχεί στο πεδίο edPassword','366','366',NULL,NULL,NULL,NULL),(30,'DIAVGEIA Interface','String','DIAVGEIA_EMAIL','Το email του που θα λάβει την απάντηση από τη Διαυγεια.  Πεδίο field_syntaktis_email','someone@your-organization.gr','someone@your-organization.gr',NULL,NULL,NULL,NULL),(31,'DIAVGEIA Interface','Integer','DIAVGEIA_ORGANIZATION_ID','To UID του οργανισμού σας στη Διαυγεια. Αντιστοιχεί στο πεδίο field_level2_text','366','366',NULL,NULL,NULL,NULL),(32,'DIAVGEIA Interface','String','DIAVGEIA_UNIT_ID','Το UID της μονάδος στον οργανισμό όπως το δίνει η Διαυγεια. Πεδίο field_monades_text','2111','2111',NULL,NULL,NULL,NULL),(33,'DIAVGEIA Interface','Integer','DIAVGEIA_SIGNS','Field_telikos_ypografwn in Diavgeia API','16','16',NULL,NULL,NULL,NULL),(34,'DIAVGEIA Interface','String','DIAVGEIA_TMP_FILES','Φάκελος στον οποίον αποθηκευονται προσωρινά τα PDF αρχεία που αποστέλλονται.','/tmp','/tmp',NULL,NULL,NULL,NULL),(35,'DIAVGEIA Interface','String','DIAVGEIA_URL_EIDOS_APOFASIS','Το URL από το οποίο ενημερώνουμε τα είδη των αποφάσεων','http://193.105.109.185/api/types.xml','http://193.105.109.185/api/types.xml',NULL,NULL,NULL,NULL),(36,'DIAVGEIA Interface','String','DIAVGEIA_URL_EIDOS_THEMATIK','To URL που ενημερώνει τα είδη των θεματικών ενοτήτων','http://193.105.109.185/api/tags.xml','http://193.105.109.185/api/tags.xml',NULL,NULL,NULL,NULL),(37,'MAIL','Integer','SMTP_PORT','Η πόρτα SMTP','25','25',NULL,NULL,NULL,'2011-10-07 06:32:59'),(38,'CORE','String','OKM_NODE_TASKS','Ο φάκελος του OpenKM Taxonomy που αποθηκεύονται οι αναθέσεις','/okm:root/Tasks','/okm:root/Tasks',NULL,NULL,NULL,'2011-10-17 11:57:19');
+INSERT INTO `parameter` VALUES (1,'CORE','Integer','DISTRIBUTION_METHOD_EMAIL_ID','Το ID της μεθόδου διανομής με email. ΝΑ ΜΗΝ ΑΛΛΑΞΕΙ','3','3',NULL,NULL,NULL,NULL),(2,'CORE','Integer','DISTRIBUTION_METHOD_WEBSERVICE_ID','Το ID της μεθόδου διανομής Web Service. ΝΑ ΜΗΝ ΑΛΛΑΞΕΙ','7','7',NULL,NULL,NULL,NULL),(3,'MAIL','String','SMTP_HOST','Η διέυθυνση του  SMTP Host','mail.illumine.gr','mail.illumine.gr',NULL,NULL,NULL,NULL),(4,'MAIL','String','SMTP_PASSWORD','Το συνθηματικό του  SMTP','my_password','my_password',NULL,NULL,NULL,NULL),(5,'MAIL','String','SMTP_USER','Ο Χρήστης SMTP','info@uit.gr','info@uit.gr',NULL,NULL,NULL,NULL),(6,'MAIL','String','EMAIL_FROM','Η διέυθυνση email με την οποία αποστέλλονται από εσάς τα μυνήματα','info@uit.gr','info@uit.gr',NULL,NULL,NULL,NULL),(7,'CORE','String','OKM_NODE_PENDING_INCOMING','Ο φάκελος του OpenKM Taxonomy που αποθηκεύονται τα προσωρινά εισερχόμενα','/okm:root/PendingIncoming','/okm:root/PendingIncoming',NULL,NULL,NULL,NULL),(8,'CORE','String','OKM_NODE_INCOMING','Ο φάκελος του OpenKM Taxonomy στον οποίον αποθηκεύονται τα εισερχόμενα','/okm:root/IncomingProtocol','/okm:root/IncomingProtocol',NULL,NULL,NULL,NULL),(9,'CORE','String','OKM_NODE_PENDING_OUTGOING','Ο φάκελος του OpenKM Taxonomy στον οποίον αποθηκεύονται τα προσορινά εξερχόμενα','/okm:root/PendingOutgoing','/okm:root/PendingOutgoing',NULL,NULL,NULL,NULL),(10,'CORE','String','OKM_NODE_OUTGOING','Ο φάκελος του OpenKM Taxonomy στον οποίον αποθηκεύονται τα εξερχόμενα','/okm:root/OutgoingProtocol','/okm:root/OutgoingProtocol',NULL,NULL,NULL,NULL),(11,'Protocol Book','String','PROTOCOL_BOOK_COMPANY','Ο Τίτλος του οργανισμού σας που εμφανίζεται στο έντυπο του πρωτοκόλλου','ΕΛΛΑΚ','ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(12,'Protocol Book','String','PROTOCOL_BOOK_AUTHOR','Ο Υπευθυνος Συγγραφέας  που εμφανίζεται στο έντυπο του πρωτοκόλλου','ΕΛΛΑΚ','ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(13,'Protocol Book','String','PROTOCOL_BOOK_CREATOR','Ο υπεύθυνος για την εκτύπωση του έντυπου του πρωτοκόλλου','ΕΛΛΑΚ','ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(14,'Protocol Book','String','PROTOCOL_BOOK_KEYWORDS','Οι λέξεις κλειδιά του βιβλίου πρωτοκόλλου που θα μπαίνουν στο παραγόμενο PDF','Βιβλίο, Πρωτοκόλλου','Βιβλίο, Πρωτοκόλλου',NULL,NULL,NULL,NULL),(15,'Protocol Book','String','PROTOCOL_BOOK_SUBJECT','Το θέμα του παραγόμενου βιβλίου πρωτοκόλλου που εμφανίζεται στο PDF','Βιβλίο Πρωτοκόλλου','Βιβλίο Πρωτοκόλλου',NULL,NULL,NULL,NULL),(16,'Protocol Book','String','PROTOCOL_BOOK_TITLE','Ο Τίτλος που θα εμφανίζεται στο PDF βιβλίο πρωτοκόλλου ','String','Βιβλίο Πρωτοκόλλου',NULL,NULL,NULL,NULL),(17,'Protocol Book','String','PROTOCOL_BOOK_FILE','Το όνομα του PDF αρχείου στο οποίο θα σωζεται τι βιβλίο πρωτοκόλλου',NULL,'protocol_book.pdf',NULL,NULL,NULL,NULL),(18,'Protocol Book','String','PROTOCOL_BOOK_FONT_FOLDER','Ο φάκελος στον οποίον αποθηκευονται τα fonts για την παραγωγή του PDF','../fonts','../fonts',NULL,NULL,NULL,NULL),(19,'CORE','Integer','DISTRIBUTION_METHOD_NA_ID','Προκαθορισμένο ID για not applicable τρόπο διακίνησης. ΝΑ ΜΗΝ ΑΛΛΑΞΕΙ','8','8',NULL,NULL,NULL,NULL),(20,'CORE','String','OKM_AUTH_PORT_ADDRESS','URL for OpenKM Web Service authentication','http://localhost:8080/OpenKM/OKMAuth','http://localhost:8080/OpenKM/OKMAuth',NULL,NULL,NULL,NULL),(21,'CORE','String','OKM_DOCUMENT_PORT_ADDRESS','URL for OpenKM Web Service Document','http://localhost:8080/OpenKM/OKMDocument','http://localhost:8080/OpenKM/OKMDocument',NULL,NULL,NULL,NULL),(22,'CORE','String','OKM_FOLDER_PORT_ADDRESS','URL for OpenKM Web Service for Folder ','http://localhost:8080/OpenKM/OKMFolder','http://localhost:8080/OpenKM/OKMFolder',NULL,NULL,NULL,NULL),(23,'CORE','String','OKM_SEARCH_PORT_ADDRESS','URL for OpenKM Web Service for Document Search','http://localhost:8080/OpenKM/OKMSearch','http://localhost:8080/OpenKM/OKMSearch',NULL,NULL,NULL,NULL),(24,'DIAVGEIA Interface','String','DIAVGEIA_BASE_URL','Η Βασική διυθυνση της DIAVGEIA.GOV.GR API URL','https://193.105.109.110/apofaseis-dokimes','https://193.105.109.110/apofaseis-dokimes',NULL,NULL,NULL,NULL),(25,'DIAVGEIA Interface','Integer','DIAVGEIA_TIMEOUT','Ο Χρόνος σε Milliseconds στον οποίον θα κάνει timeout τα post στη διαύγεια','60000','60000',NULL,NULL,NULL,NULL),(26,'DIAVGEIA Interface','String','DIAVGEIA_TRUSTSTORE_FILE','Το truststore στο οποίο εγκαθιστούμε το ψηφιακό πιστοποιητικό της Διαύγειας','/my-linux/path/DIAVGEIA.cer','c:\\\\my-windows\\\\path\\\\DIAVGEIA.cer',NULL,NULL,NULL,NULL),(27,'DIAVGEIA Interface','String','DIAVGEIA_TRUSTSTORE_PASS','Το συνθηματικό για να ανοίξει το truststore','changeit','changeit',NULL,NULL,NULL,NULL),(28,'DIAVGEIA Interface','String','DIAVGEIA_USER','Ο χρήστης της διαυγειας. Αντοστοιχεί στο πεδίο edUser','366_admin','366_admin',NULL,NULL,NULL,NULL),(29,'DIAVGEIA Interface','String','DIAVGEIA_PASSWORD','Το συνθηματικό της ΔΙΑΥΓΕΙΑΣ. Αντιστοιχεί στο πεδίο edPassword','366','366',NULL,NULL,NULL,NULL),(30,'DIAVGEIA Interface','String','DIAVGEIA_EMAIL','Το email του που θα λάβει την απάντηση από τη Διαυγεια.  Πεδίο field_syntaktis_email','someone@your-organization.gr','someone@your-organization.gr',NULL,NULL,NULL,NULL),(31,'DIAVGEIA Interface','Integer','DIAVGEIA_ORGANIZATION_ID','To UID του οργανισμού σας στη Διαυγεια. Αντιστοιχεί στο πεδίο field_level2_text','366','366',NULL,NULL,NULL,NULL),(32,'DIAVGEIA Interface','String','DIAVGEIA_UNIT_ID','Το UID της μονάδος στον οργανισμό όπως το δίνει η Διαυγεια. Πεδίο field_monades_text','2111','2111',NULL,NULL,NULL,NULL),(33,'DIAVGEIA Interface','Integer','DIAVGEIA_SIGNS','Field_telikos_ypografwn in Diavgeia API','16','16',NULL,NULL,NULL,NULL),(34,'DIAVGEIA Interface','String','DIAVGEIA_TMP_FILES','Φάκελος στον οποίον αποθηκευονται προσωρινά τα PDF αρχεία που αποστέλλονται.','/tmp','/tmp',NULL,NULL,NULL,NULL),(35,'DIAVGEIA Interface','String','DIAVGEIA_URL_EIDOS_APOFASIS','Το URL από το οποίο ενημερώνουμε τα είδη των αποφάσεων','http://193.105.109.185/api/types.xml','http://193.105.109.185/api/types.xml',NULL,NULL,NULL,NULL),(36,'DIAVGEIA Interface','String','DIAVGEIA_URL_EIDOS_THEMATIK','To URL που ενημερώνει τα είδη των θεματικών ενοτήτων','http://193.105.109.185/api/tags.xml','http://193.105.109.185/api/tags.xml',NULL,NULL,NULL,NULL),(37,'MAIL','Integer','SMTP_PORT','Η πόρτα SMTP','25','25',NULL,NULL,NULL,'2011-10-07 06:32:59'),(38,'CORE','String','OKM_NODE_TASKS','Ο φάκελος του OpenKM Taxonomy που αποθηκεύονται οι αναθέσεις','/okm:root/Tasks','/okm:root/Tasks',NULL,NULL,NULL,'2011-10-17 11:57:19'),(39,'CORE','Integer','TASK_STATE_CLOSED_ID','Το ID της Κατάστασης Ανάθεσης που υποδηλώνει το κλέισιμο της','5','5',NULL,NULL,NULL,'2011-10-25 12:22:40'),(40,'CORE','String','PARENT_TASK_PREFIX','Το λεκτικό που μπαίνει ως πρόθεμα σε κάποια πεδία που αντιγράφονται από μια ανάθεση-πατέρα','Fwd:','Fwd:',NULL,NULL,NULL,'2011-10-29 09:28:01'),(41,NULL,NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,'2011-10-29 09:28:01');
 /*!40000 ALTER TABLE `parameter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -576,7 +576,7 @@ CREATE TABLE `project_task` (
   CONSTRAINT `fk_7cb7739a-215b-11e0-9059-080027b715d2` FOREIGN KEY (`user_dispatcher_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cb931e4-215b-11e0-9059-080027b715d2` FOREIGN KEY (`parent_task_id`) REFERENCES `project_task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cc393e6-215b-11e0-9059-080027b715d2` FOREIGN KEY (`contact_id`) REFERENCES `contact` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -585,7 +585,7 @@ CREATE TABLE `project_task` (
 
 LOCK TABLES `project_task` WRITE;
 /*!40000 ALTER TABLE `project_task` DISABLE KEYS */;
-INSERT INTO `project_task` VALUES (2,NULL,NULL,1,2,1,NULL,2,1,2,'Test task','1 2 three',NULL,'2011-10-17 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-10-17 12:07:39','2011-10-17 12:52:29',1,NULL),(4,NULL,NULL,1,3,1,NULL,1,1,2,'Test Task 2','test one two',NULL,'2011-10-17 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-10-17 15:01:52','2011-10-17 12:52:10',0,NULL),(5,NULL,NULL,1,1,NULL,NULL,2,1,2,'Dokimi','one twho three',NULL,'2011-10-17 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-10-17 16:02:56','2011-10-17 13:02:56',NULL,NULL),(6,NULL,NULL,1,2,NULL,NULL,2,1,3,'Another test','bla bla bla',NULL,'2011-10-17 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-10-17 16:10:42','2011-10-18 12:13:33',1,NULL);
+INSERT INTO `project_task` VALUES (2,NULL,NULL,1,2,1,NULL,2,1,2,'Test task','1 2 three',NULL,'2011-10-17 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-10-17 12:07:39','2011-10-17 12:52:29',1,NULL),(4,NULL,NULL,1,3,1,NULL,1,1,5,'Test Task 2','test one two',NULL,'2011-10-17 00:00:00',NULL,'2011-10-31 12:49:33',NULL,NULL,NULL,NULL,'2011-10-17 15:01:52','2011-10-31 10:49:33',0,NULL),(5,NULL,NULL,1,1,NULL,NULL,2,1,3,'Dokimi','one twho three',NULL,'2011-10-17 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-10-17 16:02:56','2011-10-31 10:57:05',1,NULL),(6,NULL,NULL,1,2,NULL,NULL,2,1,3,'Another test','bla bla bla',NULL,'2011-10-17 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-10-17 16:10:42','2011-10-27 09:30:04',1,NULL),(7,NULL,NULL,1,2,NULL,1,2,1,2,'New Task','bla bla bla',NULL,'2011-10-28 00:00:00',NULL,'2011-10-30 11:09:48',NULL,NULL,NULL,NULL,'2011-10-28 21:29:34','2011-10-30 09:10:33',1,NULL),(8,NULL,NULL,1,1,NULL,NULL,2,2,5,'boolean test','1231231',NULL,'2011-10-28 00:00:00',NULL,'2011-10-31 12:46:56',NULL,NULL,NULL,NULL,'2011-10-28 21:31:39','2011-10-31 10:46:56',0,NULL),(9,NULL,NULL,1,2,NULL,1,2,1,5,'boolean3','adsf adf',NULL,'2011-10-28 00:00:00',NULL,'2011-10-30 11:04:03',NULL,NULL,NULL,NULL,'2011-10-28 21:40:08','2011-10-30 09:04:03',0,NULL),(10,NULL,7,2,3,NULL,NULL,2,1,2,'Fwd:New Task','bla bla bla',NULL,'2011-10-30 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-10-30 10:58:43','2011-10-30 09:02:01',0,NULL),(11,NULL,NULL,1,1,1,1,2,1,5,'Recursive1','test',NULL,'2011-10-30 00:00:00',NULL,'2011-10-30 11:17:42',NULL,NULL,NULL,NULL,'2011-10-30 11:11:48','2011-10-30 09:17:42',0,NULL),(12,NULL,11,1,2,1,1,2,1,5,'Fwd:Recursive1','test',NULL,'2011-10-30 00:00:00',NULL,'2011-10-30 11:17:42',NULL,NULL,NULL,NULL,'2011-10-30 11:12:06','2011-10-30 09:12:06',0,NULL),(13,NULL,12,2,3,1,1,2,1,5,'Fwd:Fwd:Recursive1','test',NULL,'2011-10-30 00:00:00',NULL,'2011-10-30 11:17:42',NULL,NULL,NULL,NULL,'2011-10-30 11:12:29','2011-10-30 09:12:29',0,NULL),(14,NULL,12,2,2,1,1,2,1,5,'Fwd:Fwd:Recursive1','test',NULL,'2011-10-30 00:00:00',NULL,'2011-10-30 11:17:42',NULL,NULL,NULL,NULL,'2011-10-30 11:13:06','2011-10-30 09:13:06',0,NULL);
 /*!40000 ALTER TABLE `project_task` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -822,7 +822,7 @@ CREATE TABLE `task_document` (
   KEY `fk_task_document_project_task1` (`project_task_id`),
   CONSTRAINT `fk_task_document_document_type1` FOREIGN KEY (`document_type_id`) REFERENCES `document_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_task_document_project_task1` FOREIGN KEY (`project_task_id`) REFERENCES `project_task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -831,7 +831,7 @@ CREATE TABLE `task_document` (
 
 LOCK TABLES `task_document` WRITE;
 /*!40000 ALTER TABLE `task_document` DISABLE KEYS */;
-INSERT INTO `task_document` VALUES (1,'bank.txt',482,1,'fasdfasdf',1,NULL,NULL,2),(3,'casaparts.log',755640,1,'one two three',1,'/okm:root/Tasks/4/casaparts.log','62462cdf-990f-42c4-a10b-4fc1499d65d9',4);
+INSERT INTO `task_document` VALUES (1,'bank.txt',482,1,'fasdfasdf',1,NULL,NULL,2),(3,'casaparts.log',755640,1,'one two three',1,'/okm:root/Tasks/4/casaparts.log','62462cdf-990f-42c4-a10b-4fc1499d65d9',4),(5,'Δοκιμαστική Υποβολή ένα δυο tria.pdf',7595840,1,'adsfad',1,'/okm:root/Tasks/6/Δοκιμαστική Υποβολή ένα δυο tria.pdf','c90162fd-327f-4f99-939d-35c20ae5c2a7',6),(6,'7673v1.1(G52-76731X5)(P67A-C45_P67A-C43_P67S-C43_P67A-S40).pdf',7595840,1,'33333',1,'/okm:root/Tasks/5/7673v1.1(G52-76731X5)(P67A-C45_P67A-C43_P67S-C43_P67A-S40).pdf','2eac86fe-5748-48f3-baf8-db362b1a8640',5);
 /*!40000 ALTER TABLE `task_document` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -857,7 +857,7 @@ CREATE TABLE `task_message` (
   CONSTRAINT `fk_7cb4f340-215b-11e0-9059-080027b715d2` FOREIGN KEY (`project_task_id`) REFERENCES `project_task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cba0a42-215b-11e0-9059-080027b715d2` FOREIGN KEY (`user_sender_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cbad8e6-215b-11e0-9059-080027b715d2` FOREIGN KEY (`user_receiver_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -866,6 +866,7 @@ CREATE TABLE `task_message` (
 
 LOCK TABLES `task_message` WRITE;
 /*!40000 ALTER TABLE `task_message` DISABLE KEYS */;
+INSERT INTO `task_message` VALUES (1,1,1,5,'Test','adsfadsf','2011-10-24 08:21:42'),(2,2,1,2,'Test outgoing','test 1 2 3 ','2011-10-24 09:15:48');
 /*!40000 ALTER TABLE `task_message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -940,7 +941,7 @@ CREATE TABLE `task_state` (
 
 LOCK TABLES `task_state` WRITE;
 /*!40000 ALTER TABLE `task_state` DISABLE KEYS */;
-INSERT INTO `task_state` VALUES (1,'Δεν έχει γίνει ανάθεση',NULL),(2,'Σε εξέλιξη',NULL),(3,'Αναμονή Εξωτερικού Οργανισμού',NULL),(4,'Αναμονή Ελέγχου',NULL),(5,'Έκλεισε',NULL);
+INSERT INTO `task_state` VALUES (2,'Σε εξέλιξη',NULL),(3,'Αναμονή Εξωτερικού Οργανισμού',NULL),(4,'Αναμονή Ελέγχου',NULL),(5,'Έκλεισε',NULL);
 /*!40000 ALTER TABLE `task_state` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -991,9 +992,9 @@ CREATE TABLE `user_hierarchy` (
   KEY `fk_user_details_user_details1` (`manager_id`),
   KEY `fk_user_details_users1` (`users_id`),
   KEY `fk_user_details_department1` (`department_id`),
-  CONSTRAINT `fk_user_details_user_details1` FOREIGN KEY (`manager_id`) REFERENCES `user_hierarchy` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_details_department1` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_details_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_details_department1` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_user_details_user_details1` FOREIGN KEY (`manager_id`) REFERENCES `user_hierarchy` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Defines the Hierarchy of each user within a department.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1031,7 +1032,7 @@ CREATE TABLE `user_to_role` (
 
 LOCK TABLES `user_to_role` WRITE;
 /*!40000 ALTER TABLE `user_to_role` DISABLE KEYS */;
-INSERT INTO `user_to_role` VALUES (1,1),(1,4),(2,3),(2,4);
+INSERT INTO `user_to_role` VALUES (1,1),(1,4),(2,3),(2,4),(3,5);
 /*!40000 ALTER TABLE `user_to_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1078,4 +1079,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-10-18 15:13:58
+-- Dump completed on 2011-11-01 15:00:57
