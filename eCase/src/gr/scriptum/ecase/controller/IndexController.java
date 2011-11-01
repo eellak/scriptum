@@ -377,7 +377,7 @@ public class IndexController extends BaseController {
 		Integer id = selectedIncomingTask.getId();
 
 		Executions.getCurrent().sendRedirect(
-				TaskController.PAGE_INCOMING + "?" + IConstants.PARAM_KEY_ID + "=" + id);
+				IncomingTaskController.PAGE_INCOMING + "?" + IConstants.PARAM_KEY_ID + "=" + id);
 	}
 
 	public void onClick$searchIncomingTasksBtn() throws InterruptedException {
@@ -423,7 +423,7 @@ public class IndexController extends BaseController {
 		Integer id = selectedOutgoingTask.getId();
 
 		Executions.getCurrent().sendRedirect(
-				TaskController.PAGE + "?" + IConstants.PARAM_KEY_ID + "=" + id);
+				OutgoingTaskController.PAGE + "?" + IConstants.PARAM_KEY_ID + "=" + id);
 	}
 
 	public void onClick$searchOutgoingTasksBtn() throws InterruptedException {
@@ -443,7 +443,7 @@ public class IndexController extends BaseController {
 	}
 
 	public void onClick$newOutgoingTaskBtn() {
-		Executions.getCurrent().sendRedirect(TaskController.PAGE);
+		Executions.getCurrent().sendRedirect(OutgoingTaskController.PAGE);
 	}
 
 	/* projects tab related */

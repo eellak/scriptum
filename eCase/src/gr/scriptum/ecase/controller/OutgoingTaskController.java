@@ -45,6 +45,12 @@ public class OutgoingTaskController extends TaskController {
 	 */
 	private static final long serialVersionUID = 4338541320808714303L;
 
+	public static final String PAGE = "task.zul";
+
+	public static final String PARAM_KEY_CLONE = "c";
+
+	public static final String PARAM_CLONE_TRUE = "1";
+
 	private static Log log = LogFactory.getLog(OutgoingTaskController.class);
 
 	private void addHierarchyBranch(UserHierarchy root) {
@@ -80,7 +86,7 @@ public class OutgoingTaskController extends TaskController {
 
 		String idString = execution.getParameter(IConstants.PARAM_KEY_ID);
 		if (idString != null) { // existing task
-			// TODO: check if user has access to the given task
+
 			ProjectTaskDAO projectTaskDAO = new ProjectTaskDAO();
 			projectTask = projectTaskDAO.findById(Integer.valueOf(idString),
 					false);
@@ -114,12 +120,59 @@ public class OutgoingTaskController extends TaskController {
 				return;
 			}
 
-			
-			projects = new ArrayList<Project>();
-			projects.add(projectTask.getProject());
-			taskState = projectTask.getTaskState();
-			taskResult = projectTask.getTaskResult();
-			taskDocuments.addAll(projectTask.getTaskDocuments());
+			String cloneString = execution.getParameter(PARAM_KEY_CLONE);
+			if (cloneString != null
+					&& cloneString.equalsIgnoreCase(PARAM_CLONE_TRUE)) {
+				/* clone task */
+				// copy fields
+				ProjectTask clone = new ProjectTask();
+				clone.setProject(projectTask.getProject());
+				clone.setUsersByUserCreatorId(projectTask
+						.getUsersByUserCreatorId());
+				clone.setUsersByUserDispatcherId(projectTask
+						.getUsersByUserDispatcherId());
+				clone.setProjectTask(projectTask.getProjectTask());
+				clone.setTaskType(projectTask.getTaskType());
+				clone.setTaskPriority(projectTask.getTaskPriority());
+				clone.setName(projectTask.getName());
+				clone.setDescription(projectTask.getDescription());
+				clone.setComments(projectTask.getComments());
+				clone.setDispatcherCloseable(projectTask
+						.getDispatcherCloseable());
+
+				// copy task documents (including byte content)
+				for (TaskDocument taskDocument : projectTask.getTaskDocuments()) {
+					TaskDocument cloneTaskDocument = new TaskDocument();
+					cloneTaskDocument.setProjectTask(clone);
+					cloneTaskDocument.setDocumentName(taskDocument
+							.getDocumentName());
+					cloneTaskDocument.setDocumentType(taskDocument
+							.getDocumentType());
+					cloneTaskDocument.setDocumentKeywords(taskDocument
+							.getDocumentKeywords());
+					cloneTaskDocument.setDocumentSize(taskDocument
+							.getDocumentSize());
+					cloneTaskDocument.setDocumentNumber(taskDocument
+							.getDocumentNumber());
+					// Document content is stored in OpenKM, fetch and copy
+					ResponseSendDocument responseSendDocument = fetchDocumentFromOpenKM(taskDocument);
+					cloneTaskDocument.setContent(responseSendDocument
+							.getContent());
+					taskDocuments.add(cloneTaskDocument);
+				}
+				projects = new ArrayList<Project>();
+				projects.add(clone.getProject());
+
+				projectTask = clone;
+
+			} else {
+
+				projects = new ArrayList<Project>();
+				projects.add(projectTask.getProject());
+				taskState = projectTask.getTaskState();
+				taskResult = projectTask.getTaskResult();
+				taskDocuments.addAll(projectTask.getTaskDocuments());
+			}
 
 		} else { // new task
 			initTask();
@@ -155,10 +208,11 @@ public class OutgoingTaskController extends TaskController {
 					projectTask.setTaskPriority(parentTask.getTaskPriority());
 					projectTask.setTaskState(parentTask.getTaskState());
 
-					// copy task documents (including byte content)
+					// copy parent task documents (including byte content)
 					for (TaskDocument parentTaskDocument : parentTask
 							.getTaskDocuments()) {
 						TaskDocument taskDocument = new TaskDocument();
+						taskDocument.setProjectTask(projectTask);
 						taskDocument.setDocumentName(parentTaskDocument
 								.getDocumentName());
 						taskDocument.setDocumentType(parentTaskDocument
@@ -228,6 +282,13 @@ public class OutgoingTaskController extends TaskController {
 		getBinder(taskWin).loadAll();
 	}
 
+	public void onClick$cloneBtn() {
+		Executions.getCurrent().sendRedirect(
+				PAGE + "?" + IConstants.PARAM_KEY_ID + "="
+						+ projectTask.getId() + "&" + PARAM_KEY_CLONE + "="
+						+ PARAM_CLONE_TRUE);
+	}
+
 	public boolean isProjectCbxVisible() {
 
 		if (isTaskNotCreated() && !hasParentTask()) {
@@ -240,7 +301,7 @@ public class OutgoingTaskController extends TaskController {
 	public boolean isProjectHbxVisible() {
 		return !(isProjectCbxVisible());
 	}
-	
+
 	public boolean isResultCbxDisabled() {
 
 		if (isTaskNotCreated()) {

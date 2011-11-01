@@ -303,6 +303,9 @@
 						<button id="sendMessageBtn"
 							label="${c:l('taskPage.sendMessage')}"
 							disabled="@{OutgoingTaskController.isTaskNotCreated}" />
+						<button id="cloneBtn"
+							label="${c:l('taskPage.clone')}"
+							disabled="@{OutgoingTaskController.isTaskNotCreated}" />
 					</hbox>
 				</row>
 			</rows>

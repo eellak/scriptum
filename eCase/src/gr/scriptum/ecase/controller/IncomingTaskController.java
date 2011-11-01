@@ -34,6 +34,8 @@ public class IncomingTaskController extends TaskController {
 
 	private static Log log = LogFactory.getLog(IncomingTaskController.class);
 
+	public static final String PAGE_INCOMING = "incomingTask.zul";
+
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
@@ -87,7 +89,8 @@ public class IncomingTaskController extends TaskController {
 	public void onClick$newSubTaskBtn() {
 
 		Executions.getCurrent().sendRedirect(
-				PAGE + "?" + PARAM_KEY_PARENT_TASK + "=" + projectTask.getId());
+				OutgoingTaskController.PAGE + "?" + PARAM_KEY_PARENT_TASK + "="
+						+ projectTask.getId());
 
 	}
 
@@ -108,10 +111,10 @@ public class IncomingTaskController extends TaskController {
 	}
 
 	public boolean isTaskClosable() {
-		if(projectTask==null) {
+		if (projectTask == null) {
 			return false;
 		}
-		
+
 		if (projectTask.getDispatcherCloseable()) {
 			return true;
 		}

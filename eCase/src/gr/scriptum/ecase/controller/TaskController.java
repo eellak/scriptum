@@ -77,10 +77,6 @@ public class TaskController extends BaseController {
 
 	private static Log log = LogFactory.getLog(TaskController.class);
 
-	public static final String PAGE = "task.zul";
-
-	public static final String PAGE_INCOMING = "incomingTask.zul";
-
 	public static final String PARAM_KEY_PARENT_TASK = "t";
 
 	/* components */

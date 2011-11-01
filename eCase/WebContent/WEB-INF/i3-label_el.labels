@@ -351,6 +351,7 @@ taskPage.taskEnd=Λήξη Ανάθεσης
 taskPage.noResultSet=Πρέπει να επιλέξετε ένα Αποτέλεσμα, προκειμένου να κλείσετε την Ανάθεση.
 taskPage.errorSaving=Παρουσιάστηκε σφάλμα κατά την αποθήκευση της Ανάθεσης.
 taskPage.sendMessage=Αποστολή Μηνύματος
+taskPage.clone=Κλωνοποίηση
 
 ##incomingTaskPage
 incomingTaskPage.title=Εισερχόμενη Ανάθεση
