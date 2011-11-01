@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.naming.InitialContext;
 import javax.transaction.Status;
@@ -106,7 +107,11 @@ public class TaskController extends BaseController {
 	protected String term = null;
 
 	protected String okmNodeTask = null;
+	protected String parentTaskPrefix = null;
 	protected Integer taskStateClosedId = null;
+
+	protected TaskState taskState = null;
+	protected TaskResult taskResult = null;
 
 	protected void initTask() {
 		projectTask = new ProjectTask();
@@ -195,6 +200,8 @@ public class TaskController extends BaseController {
 
 		Date now = new Date();
 		projectTask.setUpdateTs(now);
+		projectTask.setTaskState(taskState);
+		projectTask.setTaskResult(taskResult);
 
 		try {
 
@@ -208,6 +215,9 @@ public class TaskController extends BaseController {
 			if (projectTask.getId() == null) { // new task, create
 
 				projectTask.setCreateDt(now);
+				if (projectTask.getTaskState().getId().intValue() == taskStateClosedId) {
+					projectTask.setClosedDt(now);
+				}
 
 				/* local database actions */
 				projectTaskDAO.makePersistent(projectTask);
@@ -251,8 +261,7 @@ public class TaskController extends BaseController {
 			} else { // existing task, update
 
 				/* local database actions */
-				projectTaskDAO.update(projectTask); // TODO: Which task fields
-													// are modifiable?
+				projectTaskDAO.update(projectTask);
 
 				// update documents
 				List<TaskDocument> newlyAdded = new LinkedList<TaskDocument>();
@@ -274,6 +283,30 @@ public class TaskController extends BaseController {
 					taskDocumentDAO.delete(document);
 					projectTask.getTaskDocuments().remove(document);
 				}
+
+				// if task is being closed, close all, if any, children tasks as
+				// well
+				if (projectTask.getTaskState().getId().intValue() == taskStateClosedId) {
+					Date closedDt = new Date();
+					projectTask.setClosedDt(closedDt);
+					projectTaskDAO.update(projectTask);
+
+					// recursively close all children tasks
+					ProjectTask root = projectTask;
+					log.info("Root:" + projectTask.getId());
+					while (!root.getProjectTasks().isEmpty()) {
+						Set<ProjectTask> children = root.getProjectTasks();
+						for (ProjectTask child : children) {
+							log.info("Child:" + child.getId());
+							child.setClosedDt(closedDt);
+							child.setTaskState(projectTask.getTaskState());
+							child.setTaskResult(projectTask.getTaskResult());
+							projectTaskDAO.update(child);
+							root = child;
+						}
+					}
+				}
+
 				/* OpenKM actions */
 
 				// add newly added documents to OpenKM
@@ -359,6 +392,8 @@ public class TaskController extends BaseController {
 
 		ParameterDAO parameterDAO = new ParameterDAO();
 		okmNodeTask = parameterDAO.getAsString(IConstants.PARAM_OKM_NODE_TASKS);
+		parentTaskPrefix = parameterDAO
+				.getAsString(IConstants.PARAM_PARENT_TASK_PREFIX);
 		taskStateClosedId = parameterDAO
 				.getAsInteger(IConstants.PARAM_TASK_STATED_CLOSED);
 
@@ -369,70 +404,6 @@ public class TaskController extends BaseController {
 		refreshTaskStates();
 		refreshTaskTypes();
 		refreshTaskResults();
-
-		// String idString = execution.getParameter(IConstants.PARAM_KEY_ID);
-		// if (idString != null) { // existing task
-		// // TODO: check if user has access to the given task
-		// ProjectTaskDAO projectTaskDAO = new ProjectTaskDAO();
-		// projectTask = projectTaskDAO.findById(Integer.valueOf(idString),
-		// false);
-		//
-		// projects = new ArrayList<Project>();
-		// projects.add(projectTask.getProject());
-		//
-		// taskDocuments.addAll(projectTask.getTaskDocuments());
-		//
-		// } else { // new task
-		// initTask();
-		// refreshProjects();
-		// refreshUserHierarchies();
-		//
-		// // set parent task, if any
-		// String idParentTaskString = execution
-		// .getParameter(PARAM_KEY_PARENT_TASK);
-		// if (idParentTaskString != null) {
-		// Integer idParentTask = null;
-		// try {
-		// idParentTask = Integer.valueOf(idParentTaskString);
-		// } catch (Exception e) {
-		// log.error(e);
-		// projectTask = null;
-		// return;
-		// }
-		//
-		// ProjectTaskDAO projectTaskDAO = new ProjectTaskDAO();
-		// ProjectTask parentTask = projectTaskDAO.findById(idParentTask,
-		// false);
-		// // TODO: check if user has access to the given parent task
-		// if (parentTask != null) {
-		// projectTask.setProjectTask(parentTask);
-		// projectTask.setProject(parentTask.getProject());
-		//
-		// // copy task documents (including byte content)
-		// for (TaskDocument parentTaskDocument : parentTask
-		// .getTaskDocuments()) {
-		// TaskDocument taskDocument = new TaskDocument();
-		// taskDocument.setDocumentName(parentTaskDocument
-		// .getDocumentName());
-		// taskDocument.setDocumentType(parentTaskDocument
-		// .getDocumentType());
-		// taskDocument.setDocumentKeywords(parentTaskDocument
-		// .getDocumentKeywords());
-		// taskDocument.setDocumentSize(parentTaskDocument
-		// .getDocumentSize());
-		// taskDocument.setDocumentNumber(parentTaskDocument
-		// .getDocumentNumber());
-		// // Document content is stored in OpenKM, fetch and copy
-		// ResponseSendDocument responseSendDocument =
-		// fetchDocumentFromOpenKM(parentTaskDocument);
-		// taskDocument.setContent(responseSendDocument
-		// .getContent());
-		// taskDocuments.add(taskDocument);
-		// }
-		//
-		// }
-		// }
-		// }
 	}
 
 	public void onSelect$documentsLstbx(SelectEvent event) {
@@ -442,6 +413,15 @@ public class TaskController extends BaseController {
 	public void onClick$saveBtn() throws InterruptedException {
 
 		validateFields(taskWin);
+
+		if (taskState.getId().intValue() == taskStateClosedId
+				&& taskResult == null) {
+
+			Messagebox.show(Labels.getLabel("taskPage.noResultSet"),
+					Labels.getLabel("error.title"), Messagebox.OK,
+					Messagebox.ERROR);
+			return;
+		}
 
 		try {
 
@@ -523,7 +503,7 @@ public class TaskController extends BaseController {
 	}
 
 	public void onClick$sendMessageBtn() {
-		
+
 		Executions.getCurrent().sendRedirect(
 				MessageController.PAGE + "?" + MessageController.PARAM_KEY_TASK
 						+ "=" + projectTask.getId());
@@ -541,6 +521,19 @@ public class TaskController extends BaseController {
 		return !isTaskCreated();
 	}
 
+	public boolean isTaskClosed() {
+		if (isTaskCreated()
+				&& projectTask.getTaskState().getId().intValue() == taskStateClosedId
+				&& projectTask.getTaskResult() != null) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isTaskOpen() {
+		return !isTaskClosed();
+	}
+
 	public boolean hasParentTask() {
 		if (projectTask != null && projectTask.getProjectTask() != null) {
 			return true;
@@ -549,13 +542,14 @@ public class TaskController extends BaseController {
 	}
 
 	public boolean isAddFileBtnDisabled() {
-		// if (projectTask.getId() != null) {
-		// return true;
-		// }
+
 		if (projectTask == null) {
 			return true;
 		}
-		return false;
+
+		return isTaskClosed();
+
+		// return false;
 	}
 
 	public boolean isRemoveFileBtnDisabled() {
@@ -567,7 +561,9 @@ public class TaskController extends BaseController {
 			return true;
 		}
 
-		return false;
+		return isTaskClosed();
+
+		// return false;
 
 	}
 
@@ -585,10 +581,13 @@ public class TaskController extends BaseController {
 		if (projectTask == null) {
 			return true;
 		}
-		return false;
+
+		return isTaskClosed();
+
+		// return false;
 	}
 
-	public boolean isTaskClosed() {
+	public boolean isResultCbxEnabled() {
 		if (isTaskCreated()
 				&& projectTask.getTaskState().getId().intValue() == taskStateClosedId) {
 			return true;
@@ -596,11 +595,14 @@ public class TaskController extends BaseController {
 		return false;
 	}
 
-	public boolean isTaskOpen() {
-		return !isTaskClosed();
+	public boolean isResultCbxDisabled() {
+		return !isResultCbxEnabled();
 	}
 
 	public String getContactFullName() {
+		if (projectTask == null) {
+			return "";
+		}
 		if (projectTask.getContact() == null) {
 			return "";
 		}
@@ -614,6 +616,9 @@ public class TaskController extends BaseController {
 	}
 
 	public String getUserFullName() {
+		if (projectTask == null) {
+			return "";
+		}
 		if (projectTask.getUsersByUserDispatcherId() == null) {
 			return "";
 		}
@@ -727,5 +732,21 @@ public class TaskController extends BaseController {
 	public void setTaskDocumentsToBeDeleted(
 			List<TaskDocument> taskDocumentsToBeDeleted) {
 		this.taskDocumentsToBeDeleted = taskDocumentsToBeDeleted;
+	}
+
+	public TaskState getTaskState() {
+		return taskState;
+	}
+
+	public void setTaskState(TaskState taskState) {
+		this.taskState = taskState;
+	}
+
+	public TaskResult getTaskResult() {
+		return taskResult;
+	}
+
+	public void setTaskResult(TaskResult taskResult) {
+		this.taskResult = taskResult;
 	}
 }

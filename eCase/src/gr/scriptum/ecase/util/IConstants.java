@@ -79,4 +79,6 @@ public interface IConstants {
 	public static final String PARAM_OKM_NODE_TASKS = "OKM_NODE_TASKS";
 
 	public static final String PARAM_TASK_STATED_CLOSED = "TASK_STATE_CLOSED_ID";
+
+	public static final String PARAM_PARENT_TASK_PREFIX = "PARENT_TASK_PREFIX";
 }

@@ -146,7 +146,8 @@
 						<combobox id="stateCbx" width="300px"
 							model="@{IncomingTaskController.taskStates}"
 							selectedItem="@{IncomingTaskController.taskState}"
-							constraint="no empty">
+							constraint="no empty"
+							disabled="@{IncomingTaskController.isTaskClosed }">
 							<comboitem self="@{each='taskStateRow'}"
 								label="@{taskStateRow.name}" />
 						</combobox>
@@ -159,7 +160,7 @@
 					${c:l('projectTask.taskResult')}
 					<combobox id="resultCbx" width="300px"
 						model="@{IncomingTaskController.taskResults}"
-						selectedItem="@{IncomingTaskController.projectTask.taskResult}"
+						selectedItem="@{IncomingTaskController.taskResult}"
 						disabled="@{IncomingTaskController.isResultCbxDisabled }">
 						<comboitem self="@{each='taskResultRow'}"
 							label="@{taskResultRow.name}" />
@@ -175,7 +176,7 @@
 					${c:l('projectTask.comments')}
 					<textbox id="commentsTxb"
 						value="@{IncomingTaskController.projectTask.comments}" width="50%"
-						rows="4" />
+						rows="4" readonly="@{IncomingTaskController.isTaskClosed }" />
 				</row>
 				<row>
 					${c:l('functions')}
@@ -187,7 +188,8 @@
 							disabled="@{IncomingTaskController.isTaskNotCreated}" />
 						<button id="newSubTaskBtn"
 							label="${c:l('incomingTaskPage.newSubTask')}"
-							visible="@{IncomingTaskController.isTaskCreated }" />
+							visible="@{IncomingTaskController.isTaskCreated }"
+							disabled="@{IncomingTaskController.isTaskClosed }" />
 					</hbox>
 				</row>
 			</rows>

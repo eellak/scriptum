@@ -348,6 +348,7 @@ taskPage.documents.prompt=Επιλέξτε τα αρχεία, αρχίζοντα
 taskPage.upload.title=Μεταφόρτωση Αρχείου
 taskPage.upload.noFileUploaded=Πρέπει να μεταφορτώσετε ένα αρχείο προτού επιβεβαιώσετε την ενέργεια. 
 taskPage.taskEnd=Λήξη Ανάθεσης
+taskPage.noResultSet=Πρέπει να επιλέξετε ένα Αποτέλεσμα, προκειμένου να κλείσετε την Ανάθεση.
 taskPage.errorSaving=Παρουσιάστηκε σφάλμα κατά την αποθήκευση της Ανάθεσης.
 taskPage.sendMessage=Αποστολή Μηνύματος
 

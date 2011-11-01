@@ -13,7 +13,8 @@
 				<column width="30%" />
 			</columns>
 			<rows>
-				<row visible="@{OutgoingTaskController.isTaskCreated}">
+				<row
+					visible="@{OutgoingTaskController.isTaskCreated}">
 					${c:l('projectTask.id')}
 					<label id="idLbl"
 						value="@{OutgoingTaskController.projectTask.id}" />
@@ -27,8 +28,8 @@
 				<row>
 					${c:l('projectTask.description')}
 					<textbox id="descriptionTxb"
-						value="@{OutgoingTaskController.projectTask.description}" width="50%"
-						rows="4" constraint="no empty" />
+						value="@{OutgoingTaskController.projectTask.description}"
+						width="50%" rows="4" constraint="no empty" />
 				</row>
 				<row>
 					${c:l('projectTask.project')}
@@ -52,7 +53,8 @@
 				</row>
 				<row>
 					${c:l('projectTask.projectTask')}
-					<hbox visible="@{OutgoingTaskController.hasParentTask }">
+					<hbox
+						visible="@{OutgoingTaskController.hasParentTask }">
 						<label
 							value="@{OutgoingTaskController.projectTask.projectTask.id }" />
 						<label value="-" />
@@ -64,8 +66,9 @@
 					${c:l('projectTask.usersByUserDispatcherId')}
 					<hbox>
 						<bandbox id="userHierarchyBndbx" autodrop="true"
-							value="@{OutgoingTaskController.userFullName }" constraint="no empty"
-							width="300px" visible="@{OutgoingTaskController.isTaskNotCreated }">
+							value="@{OutgoingTaskController.userFullName }"
+							constraint="no empty" width="300px"
+							visible="@{OutgoingTaskController.isTaskNotCreated }">
 							<bandpopup>
 								<listbox id="userHierarchiesLstbx"
 									model="@{OutgoingTaskController.userHierarchies}"
@@ -117,13 +120,14 @@
 				</row>
 				<row>
 					${c:l('projectTask.dispatcherCloseable')}
-					<checkbox 
+					<checkbox
 						checked="@{OutgoingTaskController.projectTask.dispatcherCloseable,converter=gr.scriptum.util.CheckBoxToBooleanTypeConverter }" />
 				</row>
 				<row>
 					${c:l('projectTask.contact')}
 					<bandbox id="contactBndbx" autodrop="true"
-						value="@{OutgoingTaskController.contactFullName }" width="300px">
+						value="@{OutgoingTaskController.contactFullName }"
+						width="300px">
 						<bandpopup>
 							<listbox id="contactsLstbx"
 								model="@{OutgoingTaskController.contacts}"
@@ -244,8 +248,9 @@
 					${c:l('projectTask.taskState')}
 					<combobox id="stateCbx" width="300px"
 						model="@{OutgoingTaskController.taskStates}"
-						selectedItem="@{OutgoingTaskController.projectTask.taskState}"
-						constraint="no empty">
+						selectedItem="@{OutgoingTaskController.taskState}"
+						constraint="no empty"
+						disabled="@{OutgoingTaskController.isTaskClosed }">
 						<comboitem self="@{each='taskStateRow'}"
 							label="@{taskStateRow.name}" />
 					</combobox>
@@ -254,8 +259,8 @@
 					${c:l('projectTask.taskResult')}
 					<combobox id="resultCbx" width="300px"
 						model="@{OutgoingTaskController.taskResults}"
-						selectedItem="@{OutgoingTaskController.projectTask.taskResult}"
-						disabled="@{OutgoingTaskController.isTaskOpen }">
+						selectedItem="@{OutgoingTaskController.taskResult}"
+						disabled="@{OutgoingTaskController.isResultCbxDisabled }">
 						<comboitem self="@{each='taskResultRow'}"
 							label="@{taskResultRow.name}" />
 					</combobox>
@@ -270,23 +275,25 @@
 					${c:l('projectTask.comments')}
 					<textbox id="commentsTxb"
 						value="@{OutgoingTaskController.projectTask.comments}" width="50%"
-						rows="4" />
+						rows="4" readonly="@{OutgoingTaskController.isTaskClosed }" />
 				</row>
 				<row>
 					${c:l('projectTask.reviewerScore')}
 					<textbox id="reviewerScoreTxb"
-						value="@{OutgoingTaskController.projectTask.reviewerScore}" width="100px" />
+						value="@{OutgoingTaskController.projectTask.reviewerScore}"
+						width="100px" readonly="@{OutgoingTaskController.isTaskClosed }" />
 				</row>
 				<row>
 					${c:l('projectTask.timesRevised')}
 					<textbox id="timesRevisesTxb"
-						value="@{OutgoingTaskController.projectTask.timesRevised}" width="100px" />
+						value="@{OutgoingTaskController.projectTask.timesRevised}"
+						width="100px" readonly="@{OutgoingTaskController.isTaskClosed }" />
 				</row>
 				<row>
 					${c:l('projectTask.timesContactExternal')}
 					<textbox id="timesContactExternalTxb"
 						value="@{OutgoingTaskController.projectTask.timesContactExternal}"
-						width="100px" />
+						width="100px" readonly="@{OutgoingTaskController.isTaskClosed }" />
 				</row>
 				<row>
 					${c:l('functions')}

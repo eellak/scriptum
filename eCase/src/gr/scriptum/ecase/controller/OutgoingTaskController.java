@@ -21,6 +21,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.SuspendNotAllowedException;
@@ -29,6 +30,7 @@ import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.event.InputEvent;
 import org.zkoss.zk.ui.event.OpenEvent;
 import org.zkoss.zk.ui.event.SelectEvent;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.event.PagingEvent;
 
@@ -57,21 +59,21 @@ public class OutgoingTaskController extends TaskController {
 		UserHierarchyDAO userHierarchyDAO = new UserHierarchyDAO();
 
 		List<UserHierarchy> hierarchies = null;
-		//TODO: figure out if users will be filtered, based on project participants
+		// TODO: figure out if users will be filtered, based on project
+		// participants
 		hierarchies = userHierarchyDAO.findByUser(getUserInSession());
-//		if (projectTask.getProject() == null) {
-//			hierarchies = userHierarchyDAO.findByUser(getUserInSession());
-//		} else {
-//			hierarchies = userHierarchyDAO.findByUser(getUserInSession(),
-//					projectTask.getProject());
-//		}
+		// if (projectTask.getProject() == null) {
+		// hierarchies = userHierarchyDAO.findByUser(getUserInSession());
+		// } else {
+		// hierarchies = userHierarchyDAO.findByUser(getUserInSession(),
+		// projectTask.getProject());
+		// }
 
 		for (UserHierarchy hierarchy : hierarchies) {
 			addHierarchyBranch(hierarchy);
 		}
 	}
 
-	
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
@@ -83,9 +85,40 @@ public class OutgoingTaskController extends TaskController {
 			projectTask = projectTaskDAO.findById(Integer.valueOf(idString),
 					false);
 
+			if (projectTask == null) {
+				Messagebox.show(Labels.getLabel("fetch.notFound"),
+						Labels.getLabel("fetch.title"), Messagebox.OK,
+						Messagebox.ERROR);
+				return;
+			}
+
+			// check if user has access to the given task
+			boolean authorized = true;
+			if (getUserInSession().getId().intValue() != projectTask
+					.getUsersByUserCreatorId().getId().intValue()
+					&& getUserInSession().getId().intValue() != projectTask
+							.getUsersByUserDispatcherId().getId().intValue()) {
+				// logged in user is neither the task creator nor the assignee
+				authorized = false;
+			} else if (getUserInSession().getId().intValue() != projectTask
+					.getUsersByUserCreatorId().getId().intValue()) {
+				// logged in user is not the task assignee
+				authorized = false;
+			}
+
+			if (!authorized) {
+				Messagebox.show(Labels.getLabel("fetch.notFound"),
+						Labels.getLabel("fetch.title"), Messagebox.OK,
+						Messagebox.ERROR);
+				projectTask = null;
+				return;
+			}
+
+			
 			projects = new ArrayList<Project>();
 			projects.add(projectTask.getProject());
-
+			taskState = projectTask.getTaskState();
+			taskResult = projectTask.getTaskResult();
 			taskDocuments.addAll(projectTask.getTaskDocuments());
 
 		} else { // new task
@@ -114,6 +147,14 @@ public class OutgoingTaskController extends TaskController {
 					projectTask.setProjectTask(parentTask);
 					projectTask.setProject(parentTask.getProject());
 
+					// copy certain fields
+					projectTask
+							.setName(parentTaskPrefix + parentTask.getName());
+					projectTask.setDescription(parentTask.getDescription());
+					projectTask.setTaskType(parentTask.getTaskType());
+					projectTask.setTaskPriority(parentTask.getTaskPriority());
+					projectTask.setTaskState(parentTask.getTaskState());
+
 					// copy task documents (including byte content)
 					for (TaskDocument parentTaskDocument : parentTask
 							.getTaskDocuments()) {
@@ -139,7 +180,7 @@ public class OutgoingTaskController extends TaskController {
 			}
 		}
 	}
-	
+
 	public void onSelect$projectCbx(SelectEvent event) {
 		refreshUserHierarchies();
 		getBinder(taskWin).loadAll();
@@ -182,6 +223,11 @@ public class OutgoingTaskController extends TaskController {
 		getBinder(taskWin).loadAll();
 	}
 
+	public void onSelect$stateCbx(SelectEvent event)
+			throws InterruptedException {
+		getBinder(taskWin).loadAll();
+	}
+
 	public boolean isProjectCbxVisible() {
 
 		if (isTaskNotCreated() && !hasParentTask()) {
@@ -193,6 +239,24 @@ public class OutgoingTaskController extends TaskController {
 
 	public boolean isProjectHbxVisible() {
 		return !(isProjectCbxVisible());
+	}
+	
+	public boolean isResultCbxDisabled() {
+
+		if (isTaskNotCreated()) {
+			return true;
+		}
+
+		if (isTaskClosed()) {
+			return true;
+		}
+
+		if (taskState != null
+				&& taskState.getId().intValue() != taskStateClosedId) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

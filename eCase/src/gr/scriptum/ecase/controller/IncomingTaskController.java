@@ -8,7 +8,6 @@ import gr.scriptum.dao.ProjectTaskDAO;
 import gr.scriptum.domain.Project;
 import gr.scriptum.domain.ProjectTask;
 import gr.scriptum.domain.TaskDocument;
-import gr.scriptum.domain.TaskState;
 import gr.scriptum.ecase.util.IConstants;
 import gr.scriptum.eprotocol.ws.ResponseSendDocument;
 
@@ -35,9 +34,6 @@ public class IncomingTaskController extends TaskController {
 
 	private static Log log = LogFactory.getLog(IncomingTaskController.class);
 
-	/* data binding */
-	private TaskState taskState = null;
-
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
@@ -49,7 +45,6 @@ public class IncomingTaskController extends TaskController {
 					Messagebox.ERROR);
 			return;
 		}
-		// TODO: check if user has access to the given task
 		ProjectTaskDAO projectTaskDAO = new ProjectTaskDAO();
 		projectTask = projectTaskDAO.findById(Integer.valueOf(idString), false);
 
@@ -60,9 +55,32 @@ public class IncomingTaskController extends TaskController {
 			return;
 		}
 
+		// check if user has access to the given task
+		boolean authorized = true;
+		if (getUserInSession().getId().intValue() != projectTask
+				.getUsersByUserCreatorId().getId().intValue()
+				&& getUserInSession().getId().intValue() != projectTask
+						.getUsersByUserDispatcherId().getId().intValue()) {
+			// logged in user is neither the task creator nor the assignee
+			authorized = false;
+		} else if (getUserInSession().getId().intValue() != projectTask
+				.getUsersByUserDispatcherId().getId().intValue()) {
+			// logged in user is not the task assignee
+			authorized = false;
+		}
+
+		if (!authorized) {
+			Messagebox.show(Labels.getLabel("fetch.notFound"),
+					Labels.getLabel("fetch.title"), Messagebox.OK,
+					Messagebox.ERROR);
+			projectTask = null;
+			return;
+		}
+
 		initProjects();
 		projects.add(projectTask.getProject());
 		taskState = projectTask.getTaskState();
+		taskResult = projectTask.getTaskResult();
 		taskDocuments.addAll(projectTask.getTaskDocuments());
 	}
 
@@ -84,13 +102,17 @@ public class IncomingTaskController extends TaskController {
 			return;
 		}
 
-		projectTask.setTaskState(taskState);
+		// projectTask.setTaskState(taskState);
 
 		getBinder(taskWin).loadAll();
 	}
 
 	public boolean isTaskClosable() {
-		if (isTaskCreated() && projectTask.getDispatcherCloseable()) {
+		if(projectTask==null) {
+			return false;
+		}
+		
+		if (projectTask.getDispatcherCloseable()) {
 			return true;
 		}
 		return false;
@@ -106,7 +128,16 @@ public class IncomingTaskController extends TaskController {
 			return true;
 		}
 
-		if (projectTask.getTaskState().getId().intValue() != taskStateClosedId) {
+		if (isTaskClosed()) {
+			return true;
+		}
+
+		if (!isTaskClosable()) {
+			return true;
+		}
+
+		if (taskState != null
+				&& taskState.getId().intValue() != taskStateClosedId) {
 			return true;
 		}
 
@@ -119,19 +150,16 @@ public class IncomingTaskController extends TaskController {
 		if (projectTask == null) {
 			return true;
 		}
-		if (!projectTask.getDispatcherCloseable()
+
+		if (isTaskClosed()) {
+			return true;
+		}
+
+		if (isTaskNonClosable()
 				&& taskState.getId().intValue() == taskStateClosedId) {
 			return true;
 		}
 
 		return false;
-	}
-
-	public TaskState getTaskState() {
-		return taskState;
-	}
-
-	public void setTaskState(TaskState taskState) {
-		this.taskState = taskState;
 	}
 }
