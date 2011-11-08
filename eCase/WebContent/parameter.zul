@@ -1,0 +1,63 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('parameterPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul"/>
+	<window id="win" title="${c:l('parameterPage.title')}" border="normal"
+		width="100%" apply="gr.scriptum.ecase.controller.ParameterController">
+
+		<grid>
+			<columns>
+			<column width="30%"/>
+			</columns>
+			<rows>
+				<row
+					visible="@{ParameterController.isEntityCreated}">
+					${c:l('parameter.id')}
+					<label id="idLbl"
+						value="@{ParameterController.entity.id}" />
+				</row>
+				<row>
+					${c:l('parameter.name')}
+					<textbox id="nameTxb"
+						value="@{ParameterController.entity.name}" width="300px"
+						constraint="no empty" />
+				</row>
+				<row>
+					${c:l('parameter.description')}
+					<textbox id="descriptionTxb"
+						value="@{ParameterController.entity.description}" width="300px"/>
+				</row>
+				<row>
+					${c:l('parameter.area')}
+					<textbox value="@{ParameterController.entity.area}" width="300px" />
+				</row>
+				<row>
+					${c:l('parameter.type')}
+					<textbox value="@{ParameterController.entity.type}" width="300px" />
+				</row>
+				<row>
+					${c:l('parameter.initialValue')}
+					<textbox value="@{ParameterController.entity.initialValue}" width="300px" />
+				</row>
+				<row>
+					${c:l('parameter.value')}
+					<textbox value="@{ParameterController.entity.value}" width="300px" constraint="no empty"/>
+				</row>
+				<row>
+					${c:l('functions')}
+					<hbox>
+						<button id="newBtn" label="${c:l('new')}" />
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@{ParameterController.isLocked}" />
+						<button id="deleteBtn" label="${c:l('delete')}"
+							disabled="@{ParameterController.isEntityNotCreated}" />
+					</hbox>
+				</row>
+
+			</rows>
+		</grid>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul"/>	
+</zk>
