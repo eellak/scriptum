@@ -1,0 +1,53 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('taskTypesPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('taskTypesPage.title')}"
+		border="normal" width="100%"
+		apply="gr.scriptum.ecase.controller.TaskTypesController">
+		<listbox id="entitiesLstbx" rows="10"
+			model="@{TaskTypesController.entities}"
+			selectedItem="@{TaskTypesController.selected}">
+
+			<listhead>
+				<listheader label="${c:l('taskType.id')}" sort="auto"
+					value="id" forward="onSort=onSort" sortDirection="ascending" />
+				<listheader label="${c:l('taskType.name')}" sort="auto"
+					value="name" forward="onSort=onSort" />
+				<listheader label="${c:l('taskType.description')}"
+					sort="auto" value="description" forward="onSort=onSort" />
+			</listhead>
+			<listitem self="@{each='taskTypeRow'}">
+				<listcell label="@{taskTypeRow.id}" />
+				<listcell label="@{taskTypeRow.name}" />
+				<listcell label="@{taskTypeRow.description}" />
+			</listitem>
+		</listbox>
+		<paging id="pgng" pageSize="10" />
+		<separator bar="true" />
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row>
+					${c:l('taskType.name')}
+					<textbox width="300px"
+						value="@{TaskTypesController.entity.name}" />
+				</row>
+				<row>
+					<label value="${c:l('functions')}" />
+					<hbox>
+						<button id="searchBtn" label="${c:l('search')}" />
+						<button id="clearBtn" label="${c:l('clear')}" />
+						<button id="newBtn" label="${c:l('new')}" />
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

@@ -1,0 +1,49 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('taskTypePage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('taskTypePage.title')}"
+		border="normal" width="100%"
+		apply="gr.scriptum.ecase.controller.TaskTypeController">
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row
+					visible="@{TaskTypeController.isEntityCreated}">
+					${c:l('taskType.id')}
+					<label id="idLbl"
+						value="@{TaskTypeController.entity.id}" />
+				</row>
+				<row>
+					${c:l('taskType.name')}
+					<textbox id="nameTxb"
+						value="@{TaskTypeController.entity.name}"
+						width="300px" constraint="no empty" />
+				</row>
+				<row>
+					${c:l('taskType.description')}
+					<textbox id="descriptionTxb"
+						value="@{TaskTypeController.entity.description}"
+						width="300px"/>
+				</row>
+				<row>
+					${c:l('functions')}
+					<hbox>
+						<button id="newBtn" label="${c:l('new')}" />
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@{TaskTypeController.isLocked}" />
+							<button id="deleteBtn" label="${c:l('delete')}"
+							disabled="@{TaskTypeController.isEntityNotCreated}" />
+				</hbox>
+				</row>
+
+			</rows>
+		</grid>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul"/>	
+</zk>

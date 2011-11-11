@@ -249,6 +249,13 @@ taskMessage.createdTs=Ημ/νία
 taskMessage.usersByUserSenderId=Αποστολέας
 taskMessage.usersByUserReceiverId=Παραλήπτης
 
+##TaskType
+taskType=Τύπος Ανάθεσης
+taskType.id=Α/Α
+taskType.name=Όνομα
+taskType.description=Περιγραφή
+
+
 #############
 #pages
 
@@ -263,6 +270,7 @@ menu.administration.departments=Οργανόγραμα
 menu.administration.hierarchy=Ιεραρχία
 menu.administration.users=Χρήστες
 menu.administration.parameters=Παράμετροι Συστήματος
+menu.administration.taskTypes=Τύποι Αναθέσεων
 
 menu.contacts=Επαφές-Οργανισμοί
 menu.contacts.contacts=Επαφές
@@ -362,3 +370,9 @@ incomingTaskPage.nonClosable=Δεν έχετε δικαίωμα να κλείσ�
 messagePage.title=Προβολή/Δημιουργία Μηνύματος
 messagePage.send=Αποστολή
 messagePage.reply=Απάντηση
+
+##taskTypesPage
+taskTypesPage.title=Διαχείριση Τύπων Αναθέσεων
+
+##taskTypePage
+taskTypePage.title=Διαχείριση Τύπου Ανάθεσης
