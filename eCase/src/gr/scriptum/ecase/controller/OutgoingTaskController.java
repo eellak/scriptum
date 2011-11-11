@@ -126,12 +126,12 @@ public class OutgoingTaskController extends TaskController {
 				/* clone task */
 				// copy fields
 				ProjectTask clone = new ProjectTask();
-				clone.setProject(projectTask.getProject());
+//				clone.setProject(projectTask.getProject());
 				clone.setUsersByUserCreatorId(projectTask
 						.getUsersByUserCreatorId());
 				clone.setUsersByUserDispatcherId(projectTask
 						.getUsersByUserDispatcherId());
-				clone.setProjectTask(projectTask.getProjectTask());
+//				clone.setProjectTask(projectTask.getProjectTask());
 				clone.setTaskType(projectTask.getTaskType());
 				clone.setTaskPriority(projectTask.getTaskPriority());
 				clone.setName(projectTask.getName());
@@ -160,9 +160,10 @@ public class OutgoingTaskController extends TaskController {
 							.getContent());
 					taskDocuments.add(cloneTaskDocument);
 				}
-				projects = new ArrayList<Project>();
-				projects.add(clone.getProject());
-
+//				projects = new ArrayList<Project>();
+//				projects.add(clone.getProject());
+				refreshProjects();
+				
 				projectTask = clone;
 
 			} else {
