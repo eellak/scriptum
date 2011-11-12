@@ -3,6 +3,7 @@
  */
 package gr.scriptum.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -38,11 +39,54 @@ public class UserHierarchyDAO extends GenericDAO<UserHierarchy, Integer> {
 		return true;
 	}
 
-	public List<UserHierarchy> findByUser(Users manager) {
+	public List<UserHierarchy> findByUser(Users user) {
 		Query query = getSession().createQuery(
 				"from UserHierarchy uh where uh.users = :user order by uh.id");
-		query.setParameter("user", manager);
+		query.setParameter("user", user);
 		return query.list();
+	}
+
+	public List<UserHierarchy> findByDepartment(Department department) {
+		Query query = getSession()
+				.createQuery(
+						"from UserHierarchy uh where uh.department = :department order by uh.id");
+		query.setParameter("department", department);
+		return query.list();
+	}
+
+	public List<UserHierarchy> findSubordinates(Users user) {
+		List<UserHierarchy> subordinates = new ArrayList<UserHierarchy>();
+		// add the user him/herself
+		List<UserHierarchy> userHierarchies = findByUser(user);
+		subordinates.addAll(userHierarchies);
+
+		// add subordinates within the same department, for each department that
+		// the user belongs to
+		for (UserHierarchy userHierarchy : userHierarchies) {
+			UserHierarchy root = userHierarchy;
+			while (!root.getUserHierarchies().isEmpty()) {
+				for (UserHierarchy child : root.getUserHierarchies()) {
+					root = child;
+					if (!subordinates.contains(child)) {
+						subordinates.add(child);
+					}
+				}
+			}
+		}
+
+		// add users within 'subordinate' departments
+		for (UserHierarchy userHierarchy : userHierarchies) {
+			Department department = userHierarchy.getDepartment();
+			while (!department.getDepartments().isEmpty()) {
+				for (Department childDepartment : department.getDepartments()) {
+					subordinates.addAll(findByDepartment(childDepartment));
+					department = childDepartment;
+				}
+			}
+
+		}
+
+		return subordinates;
 	}
 
 	public List<UserHierarchy> findByUser(Users manager, Project project) {
