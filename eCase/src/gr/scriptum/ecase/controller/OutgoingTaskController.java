@@ -67,7 +67,8 @@ public class OutgoingTaskController extends TaskController {
 		List<UserHierarchy> hierarchies = null;
 		// TODO: figure out if users will be filtered, based on project
 		// participants
-		hierarchies = userHierarchyDAO.findByUser(getUserInSession());
+//		hierarchies = userHierarchyDAO.findSubordinates(getUserInSession());
+		userHierarchies = userHierarchyDAO.findSubordinates(getUserInSession());
 		// if (projectTask.getProject() == null) {
 		// hierarchies = userHierarchyDAO.findByUser(getUserInSession());
 		// } else {
@@ -75,9 +76,9 @@ public class OutgoingTaskController extends TaskController {
 		// projectTask.getProject());
 		// }
 
-		for (UserHierarchy hierarchy : hierarchies) {
-			addHierarchyBranch(hierarchy);
-		}
+//		for (UserHierarchy hierarchy : hierarchies) {
+//			addHierarchyBranch(hierarchy);
+//		}
 	}
 
 	@Override
