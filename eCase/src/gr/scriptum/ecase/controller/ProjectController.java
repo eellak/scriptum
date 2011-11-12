@@ -5,12 +5,15 @@ package gr.scriptum.ecase.controller;
 
 import gr.scriptum.controller.GenericEntityController;
 import gr.scriptum.dao.ProjectDAO;
+import gr.scriptum.dao.UserHierarchyDAO;
 import gr.scriptum.dao.UsersDAO;
 import gr.scriptum.domain.Project;
 import gr.scriptum.domain.ProjectUser;
 import gr.scriptum.domain.ProjectUserId;
+import gr.scriptum.domain.UserHierarchy;
 import gr.scriptum.domain.Users;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -67,8 +70,17 @@ public class ProjectController extends
 	}
 
 	private void refreshUsers() {
-		UsersDAO usersDAO = new UsersDAO();
-		users = usersDAO.findAll();
+//		UsersDAO usersDAO = new UsersDAO();
+		UserHierarchyDAO userHierarchyDAO = new UserHierarchyDAO();
+		List<UserHierarchy> subordinates = userHierarchyDAO.findSubordinates(getUserInSession());
+		users = new ArrayList<Users>();
+		for(UserHierarchy subordinate: subordinates) {
+			Users user = subordinate.getUsers();
+			if(!users.contains(user)) {
+				users.add(user);
+			}
+		}
+//		users = usersDAO.findAll();
 		for (ProjectUser projectUser : ((Project) entity).getProjectUsers()) {
 			log.info(projectUser.getId().getUsers().getId());
 			removeFromUsers(projectUser.getId().getUsers());
