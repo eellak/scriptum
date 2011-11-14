@@ -37,7 +37,7 @@
 						<listhead>
 							<listheader id="incomingTaskIdLsthdr"
 								label="${c:l('projectTask.id')}" sort="auto" value="id"
-								forward="onSort=onSort" width="10%" sortDirection="ascending" />
+								forward="onSort=onSort" width="10%" />
 							<listheader id="incomingTaskNameLsthdr"
 								label="${c:l('projectTask.name')}" sort="auto" value="name"
 								forward="onSort=onSort" />
@@ -51,12 +51,15 @@
 							<listheader id="incomingTaskStartDtLsthdr"
 								label="${c:l('projectTask.startDt')}" sort="auto"
 								value="startDt" forward="onSort=onSort" />
+							<listheader id="incomingTaskStateLsthdr"
+								label="${c:l('projectTask.taskState')}" sort="auto"
+								value="taskState,taskPriority,endDt" forward="onSort=onSort" sortDirection="ascending"/>
+							<listheader id="incomingTaskPriorityLsthdr"
+								label="${c:l('projectTask.taskPriority')}" sort="auto"
+								value="taskPriority" forward="onSort=onSort"/>
 							<listheader id="incomingTaskEndDtLsthdr"
 								label="${c:l('projectTask.endDt')}" sort="auto" value="endDt"
 								forward="onSort=onSort" />
-							<listheader id="incomingTaskStateLsthdr"
-								label="${c:l('projectTask.taskState')}" sort="auto"
-								value="taskState" forward="onSort=onSort" />
 						</listhead>
 						<listitem self="@{each='incomingTaskRow'}">
 							<listcell label="@{incomingTaskRow.id}" />
@@ -79,9 +82,22 @@
 							</listcell>
 							<listcell
 								label="@{incomingTaskRow.startDt}" />
-							<listcell label="@{incomingTaskRow.endDt}" />
 							<listcell
 								label="@{incomingTaskRow.taskState.name}" />
+							<listcell>
+								<label
+									value="@{incomingTaskRow.taskPriority.id}" />
+								-
+								<label
+									value="@{incomingTaskRow.taskPriority.name}" />
+							</listcell>
+							<listcell>
+								<label value="@{incomingTaskRow.endDt}"
+									visible="@{incomingTaskRow.isNotTaskExpired }" />
+								<label value="@{incomingTaskRow.endDt}"
+									style="background:red;color:white;"
+									visible="@{incomingTaskRow.isTaskExpired }" />
+							</listcell>
 						</listitem>
 
 					</listbox>
@@ -132,9 +148,6 @@
 										label="${c:l('search')}" />
 									<button id="clearIncomingTasksBtn"
 										label="${c:l('clear')}" />
-									<!-- 									<button id="newIncomingTaskBtn"
-										label="${c:l('new')}" />
-									-->
 								</hbox>
 							</row>
 						</rows>
@@ -149,7 +162,7 @@
 						<listhead>
 							<listheader id="outgoingTaskIdLsthdr"
 								label="${c:l('projectTask.id')}" sort="auto" value="id"
-								forward="onSort=onSort" width="10%" sortDirection="ascending" />
+								forward="onSort=onSort" width="10%" />
 							<listheader id="outgoingTaskNameLsthdr"
 								label="${c:l('projectTask.name')}" sort="auto" value="name"
 								forward="onSort=onSort" />
@@ -165,14 +178,18 @@
 							<listheader id="outgoingTaskStartDtLsthdr"
 								label="${c:l('projectTask.startDt')}" sort="auto"
 								value="startDt" forward="onSort=onSort" />
+							<listheader id="outgoingTaskStateLsthdr"
+								label="${c:l('projectTask.taskState')}" sort="auto"
+								value="taskState,taskPriority,endDt" forward="onSort=onSort" sortDirection="ascending"/>
+							<listheader id="outgoingTaskPriorityLsthdr"
+								label="${c:l('projectTask.taskPriority')}" sort="auto"
+								value="taskPriority" forward="onSort=onSort"/>
 							<listheader id="outgoingTaskEndDtLsthdr"
 								label="${c:l('projectTask.endDt')}" sort="auto" value="endDt"
 								forward="onSort=onSort" />
-							<listheader id="outgoingTaskStateLsthdr"
-								label="${c:l('projectTask.taskState')}" sort="auto"
-								value="taskState" forward="onSort=onSort" />
 						</listhead>
-						<listitem self="@{each='outgoingTaskRow'}">
+						<listitem id="outgoingTaskLstItm"
+							self="@{each='outgoingTaskRow'}">
 							<listcell label="@{outgoingTaskRow.id}" />
 							<listcell label="@{outgoingTaskRow.name}" />
 							<listcell>
@@ -193,9 +210,22 @@
 							</listcell>
 							<listcell
 								label="@{outgoingTaskRow.startDt}" />
-							<listcell label="@{outgoingTaskRow.endDt}" />
 							<listcell
 								label="@{outgoingTaskRow.taskState.name}" />
+							<listcell>
+								<label
+									value="@{outgoingTaskRow.taskPriority.id}" />
+								-
+								<label
+									value="@{outgoingTaskRow.taskPriority.name}" />
+							</listcell>
+							<listcell>
+								<label value="@{outgoingTaskRow.endDt}"
+									visible="@{outgoingTaskRow.isNotTaskExpired }" />
+								<label value="@{outgoingTaskRow.endDt}"
+									style="background:red;color:white;"
+									visible="@{outgoingTaskRow.isTaskExpired }" />
+							</listcell>
 						</listitem>
 
 					</listbox>

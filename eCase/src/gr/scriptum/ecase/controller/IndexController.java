@@ -12,7 +12,9 @@ import gr.scriptum.domain.ProjectTask;
 import gr.scriptum.domain.TaskMessage;
 import gr.scriptum.ecase.util.IConstants;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -26,6 +28,7 @@ import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.event.SelectEvent;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
+import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Tab;
@@ -58,11 +61,14 @@ public class IndexController extends BaseController {
 	Tab incomingTasksTb;
 	Listbox incomingTasksLstbx;
 	Paging incomingTasksPgng;
+	Listheader incomingTaskStateLsthdr;
 
 	// outgoing tasks tab related
 	Tab outgoingTasksTb;
 	Listbox outgoingTasksLstbx;
 	Paging outgoingTasksPgng;
+	Listitem outgoingTaskLstItm;
+	Listheader outgoingTaskStateLsthdr;
 
 	// projects tab related
 	Tab projectsTb;
@@ -167,6 +173,31 @@ public class IndexController extends BaseController {
 		outgoingMessageDateTo = null;
 	}
 
+	@Override
+	protected List<Order> getSortBy(Listheader header) {
+		
+		if (header.equals(incomingTaskStateLsthdr)
+				|| header.equals(outgoingTaskStateLsthdr)) {
+			// perform custom sorting for these columns
+			String[] tokens = header.getValue().toString()
+					.split(IConstants.SORTING_DELIMITER);
+			List<Order> sortBy = new LinkedList<Order>();
+			if (header.getSortDirection().equals("ascending")) {
+				sortBy.add(Order.asc(tokens[0]));
+				sortBy.add(Order.desc(tokens[1]));
+				sortBy.add(Order.desc(tokens[2]));
+			} else {
+				sortBy.add(Order.desc(tokens[0]));
+				sortBy.add(Order.asc(tokens[1]));
+				sortBy.add(Order.asc(tokens[2]));
+			}
+			return sortBy;
+
+		} else { // perfrorm normal sorting, as defined by super implementation
+			return super.getSortBy(header);
+		}
+	}
+
 	private void searchIncomingTasks(Integer startIndex) {
 		incomingTask = (ProjectTask) trimStringProperties(incomingTask);
 		ProjectTaskDAO projectTaskDAO = new ProjectTaskDAO();
@@ -187,6 +218,20 @@ public class IndexController extends BaseController {
 				incomingTaskEndDateFrom, incomingTaskEndDateTo,
 				getUserInSession(), null, startIndex, pageSize,
 				sortBy.toArray(new Order[0]));
+
+		Date now = new Date();
+		for (ProjectTask incomingTask : incomingTasks) {
+			if (incomingTask.getEndDt() == null) {
+				incomingTask.setIsTaskExpired(false);
+				continue;
+			}
+			if (now.after(incomingTask.getEndDt())) {
+				incomingTask.setIsTaskExpired(true);
+			} else {
+				incomingTask.setIsTaskExpired(false);
+			}
+		}
+
 	}
 
 	private void searchOutgoingTasks(Integer startIndex) {
@@ -203,12 +248,25 @@ public class IndexController extends BaseController {
 		// figure out which header to sort by
 		Listheader header = getSortingListheader(outgoingTasksLstbx);
 		List<Order> sortBy = getSortBy(header);
-
 		outgoingTasks = projectTaskDAO.search(outgoingTask.getName(),
 				outgoingTaskStartDateFrom, outgoingTaskStartDateTo,
 				outgoingTaskEndDateFrom, outgoingTaskEndDateTo, null,
 				getUserInSession(), startIndex, pageSize,
 				sortBy.toArray(new Order[0]));
+
+		Date now = new Date();
+		for (ProjectTask outgoingTask : outgoingTasks) {
+			if (outgoingTask.getEndDt() == null) {
+				outgoingTask.setIsTaskExpired(false);
+				continue;
+			}
+			if (now.after(outgoingTask.getEndDt())) {
+				outgoingTask.setIsTaskExpired(true);
+			} else {
+				outgoingTask.setIsTaskExpired(false);
+			}
+		}
+
 	}
 
 	private void searchProjects(Integer startIndex) {
@@ -377,7 +435,8 @@ public class IndexController extends BaseController {
 		Integer id = selectedIncomingTask.getId();
 
 		Executions.getCurrent().sendRedirect(
-				IncomingTaskController.PAGE_INCOMING + "?" + IConstants.PARAM_KEY_ID + "=" + id);
+				IncomingTaskController.PAGE_INCOMING + "?"
+						+ IConstants.PARAM_KEY_ID + "=" + id);
 	}
 
 	public void onClick$searchIncomingTasksBtn() throws InterruptedException {
@@ -423,7 +482,8 @@ public class IndexController extends BaseController {
 		Integer id = selectedOutgoingTask.getId();
 
 		Executions.getCurrent().sendRedirect(
-				OutgoingTaskController.PAGE + "?" + IConstants.PARAM_KEY_ID + "=" + id);
+				OutgoingTaskController.PAGE + "?" + IConstants.PARAM_KEY_ID
+						+ "=" + id);
 	}
 
 	public void onClick$searchOutgoingTasksBtn() throws InterruptedException {
