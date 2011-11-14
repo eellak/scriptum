@@ -352,6 +352,8 @@ public class TaskController extends BaseController {
 			// clean up
 			taskDocumentsToBeDeleted.clear();
 
+			tx.begin();
+			
 		} catch (Exception e) {
 			log.error(e);
 			if (tx.getStatus() == Status.STATUS_ACTIVE) {
