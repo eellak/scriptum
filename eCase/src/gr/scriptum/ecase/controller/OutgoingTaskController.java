@@ -3,20 +3,30 @@
  */
 package gr.scriptum.ecase.controller;
 
+import gr.scriptum.dao.ParameterDAO;
+import gr.scriptum.dao.ProjectDAO;
 import gr.scriptum.dao.ProjectTaskDAO;
+import gr.scriptum.dao.ProjectUserDAO;
+import gr.scriptum.dao.TaskMessageDAO;
 import gr.scriptum.dao.UserHierarchyDAO;
+import gr.scriptum.dao.UsersDAO;
 import gr.scriptum.domain.Project;
 import gr.scriptum.domain.ProjectTask;
+import gr.scriptum.domain.ProjectUser;
 import gr.scriptum.domain.TaskDocument;
+import gr.scriptum.domain.TaskMessage;
 import gr.scriptum.domain.UserHierarchy;
+import gr.scriptum.domain.Users;
 import gr.scriptum.ecase.util.IConstants;
 import gr.scriptum.eprotocol.ws.ResponseSendDocument;
 import gr.scriptum.util.Callback;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -61,24 +71,36 @@ public class OutgoingTaskController extends TaskController {
 	}
 
 	private void refreshUserHierarchies() {
-		userHierarchies = new ArrayList<UserHierarchy>();
 		UserHierarchyDAO userHierarchyDAO = new UserHierarchyDAO();
-
-		List<UserHierarchy> hierarchies = null;
-		// TODO: figure out if users will be filtered, based on project
-		// participants
-//		hierarchies = userHierarchyDAO.findSubordinates(getUserInSession());
 		userHierarchies = userHierarchyDAO.findSubordinates(getUserInSession());
-		// if (projectTask.getProject() == null) {
-		// hierarchies = userHierarchyDAO.findByUser(getUserInSession());
-		// } else {
-		// hierarchies = userHierarchyDAO.findByUser(getUserInSession(),
-		// projectTask.getProject());
-		// }
+	}
 
-//		for (UserHierarchy hierarchy : hierarchies) {
-//			addHierarchyBranch(hierarchy);
-//		}
+	private void highlightProjectParticipants() {
+		if (projectTask.getProject() == null) {
+			for (UserHierarchy userHierarchy : userHierarchies) {
+				userHierarchy.setIsHighlighted(false);
+			}
+			return;
+		}
+
+		ProjectUserDAO projectUserDAO = new ProjectUserDAO();
+		List<ProjectUser> projectUsers = projectUserDAO
+				.findByProject(projectTask.getProject());
+		// we have to use IDs, instead of objects, because of hibernate's proxy
+		// mechanism
+		List<Integer> participantIds = new ArrayList<Integer>();
+		for (ProjectUser projectUser : projectUsers) {
+			participantIds.add(projectUser.getId().getUsers().getId());
+		}
+		// find & highlight participants in user hierarchies drop down
+		for (UserHierarchy userHierarchy : userHierarchies) {
+			Users user = userHierarchy.getUsers();
+			if (participantIds.contains(user.getId())) {
+				userHierarchy.setIsHighlighted(true);
+			} else {
+				userHierarchy.setIsHighlighted(false);
+			}
+		}
 	}
 
 	@Override
@@ -121,18 +143,20 @@ public class OutgoingTaskController extends TaskController {
 				return;
 			}
 
+			// check if a task is being cloned
 			String cloneString = execution.getParameter(PARAM_KEY_CLONE);
 			if (cloneString != null
-					&& cloneString.equalsIgnoreCase(PARAM_CLONE_TRUE)) {
-				/* clone task */
+					&& cloneString.equalsIgnoreCase(PARAM_CLONE_TRUE)) { // clone
+																			// task
+
 				// copy fields
 				ProjectTask clone = new ProjectTask();
-//				clone.setProject(projectTask.getProject());
+				// clone.setProject(projectTask.getProject());
 				clone.setUsersByUserCreatorId(projectTask
 						.getUsersByUserCreatorId());
 				clone.setUsersByUserDispatcherId(projectTask
 						.getUsersByUserDispatcherId());
-//				clone.setProjectTask(projectTask.getProjectTask());
+				// clone.setProjectTask(projectTask.getProjectTask());
 				clone.setTaskType(projectTask.getTaskType());
 				clone.setTaskPriority(projectTask.getTaskPriority());
 				clone.setName(projectTask.getName());
@@ -161,13 +185,11 @@ public class OutgoingTaskController extends TaskController {
 							.getContent());
 					taskDocuments.add(cloneTaskDocument);
 				}
-//				projects = new ArrayList<Project>();
-//				projects.add(clone.getProject());
 				refreshProjects();
-				
+
 				projectTask = clone;
 
-			} else {
+			} else { // not a cloned task
 
 				projects = new ArrayList<Project>();
 				projects.add(projectTask.getProject());
@@ -184,7 +206,7 @@ public class OutgoingTaskController extends TaskController {
 			// set parent task, if any
 			String idParentTaskString = execution
 					.getParameter(PARAM_KEY_PARENT_TASK);
-			if (idParentTaskString != null) {
+			if (idParentTaskString != null) { // parent task set
 				Integer idParentTask = null;
 				try {
 					idParentTask = Integer.valueOf(idParentTaskString);
@@ -201,7 +223,7 @@ public class OutgoingTaskController extends TaskController {
 				if (parentTask != null) {
 					projectTask.setProjectTask(parentTask);
 					projectTask.setProject(parentTask.getProject());
-
+					highlightProjectParticipants();
 					// copy certain fields
 					projectTask
 							.setName(parentTaskPrefix + parentTask.getName());
@@ -239,6 +261,7 @@ public class OutgoingTaskController extends TaskController {
 
 	public void onSelect$projectCbx(SelectEvent event) {
 		refreshUserHierarchies();
+		highlightProjectParticipants();
 		getBinder(taskWin).loadAll();
 	}
 
@@ -289,6 +312,36 @@ public class OutgoingTaskController extends TaskController {
 				PAGE + "?" + IConstants.PARAM_KEY_ID + "="
 						+ projectTask.getId() + "&" + PARAM_KEY_CLONE + "="
 						+ PARAM_CLONE_TRUE);
+	}
+
+	@Override
+	public void onClick$saveBtn() throws InterruptedException {
+		boolean isExistingTask = projectTask.getId() != null ? true : false;
+
+		super.onClick$saveBtn();
+
+		if (isExistingTask) {
+			// send a notification message to the task assignee, letting him/her
+			// know that the task may have been modified
+
+			ParameterDAO parameterDAO = new ParameterDAO();
+			String subject = parameterDAO
+					.getAsString(IConstants.PARAM_TASK_CHANGE_SUBJECT);
+			String message = parameterDAO
+					.getAsString(IConstants.PARAM_TASK_CHANGE_MESSAGE);
+
+			TaskMessageDAO taskMessageDAO = new TaskMessageDAO();
+			TaskMessage taskMessage = new TaskMessage();
+			taskMessage.setProjectTask(projectTask);
+			taskMessage.setUsersByUserSenderId(getUserInSession());
+			taskMessage.setUsersByUserReceiverId(projectTask
+					.getUsersByUserDispatcherId());
+			taskMessage.setSubject(subject + projectTask.getId());
+			taskMessage.setMessage(message);
+			taskMessage.setCreatedTs(new Date());
+			taskMessageDAO.makePersistent(taskMessage);
+		}
+
 	}
 
 	public boolean isProjectCbxVisible() {

@@ -81,4 +81,8 @@ public interface IConstants {
 	public static final String PARAM_TASK_STATED_CLOSED = "TASK_STATE_CLOSED_ID";
 
 	public static final String PARAM_PARENT_TASK_PREFIX = "PARENT_TASK_PREFIX";
+	
+	public static final String PARAM_TASK_CHANGE_SUBJECT= "TASK_CHANGE_NOTIFICATION_SUBJECT";
+	
+	public static final String PARAM_TASK_CHANGE_MESSAGE= "TASK_CHANGE_NOTIFICATION_MESSAGE";
 }

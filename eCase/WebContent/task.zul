@@ -87,6 +87,13 @@
 									</listhead>
 									<listitem
 										self="@{each='userHierarchyRow'}">
+										<listcell>
+											<label
+												value="@{userHierarchyRow.users.id}" />
+											<label value="${c:l('taskPage.participant')}"
+												style="color:red;"
+												visible="@{userHierarchyRow.isHighlighted}" />
+										</listcell>
 										<listcell
 											label="@{userHierarchyRow.users.id}" />
 										<listcell
