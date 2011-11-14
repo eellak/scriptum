@@ -38,7 +38,10 @@ public class ProjectTask implements java.io.Serializable {
 	private Set<ProjectTask> projectTasks = new HashSet<ProjectTask>(0);
 	private Set<TaskDocument> taskDocuments = new HashSet<TaskDocument>(0);
 	private Set<TaskMessage> taskMessages = new HashSet<TaskMessage>(0);
-
+	
+	/* non persistent fields */
+	private Boolean isTaskExpired;
+	
 	public ProjectTask() {
 	}
 
@@ -330,6 +333,18 @@ public class ProjectTask implements java.io.Serializable {
 
 	public void setEndDt(Date endDt) {
 		this.endDt = endDt;
+	}
+
+	public Boolean getIsTaskExpired() {
+		return isTaskExpired;
+	}
+
+	public void setIsTaskExpired(Boolean isTaskExpired) {
+		this.isTaskExpired = isTaskExpired;
+	}
+	
+	public Boolean getIsNotTaskExpired() {
+		return !getIsTaskExpired();
 	}
 
 }
