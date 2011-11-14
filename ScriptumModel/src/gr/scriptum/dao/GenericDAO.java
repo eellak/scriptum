@@ -87,9 +87,9 @@ public class GenericDAO<T, ID extends Serializable> {
 	}
 
 	public void attachDirty(T instance) {
-		log.info("attaching dirty ApplicationLog instance");
+		log.info("attaching dirty instance");
 		try {
-			sessionFactory.getCurrentSession().saveOrUpdate(instance);
+			getSession().saveOrUpdate(instance);
 			log.info("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -98,9 +98,9 @@ public class GenericDAO<T, ID extends Serializable> {
 	}
 
 	public void attachClean(T instance) {
-		log.info("attaching clean ApplicationLog instance");
+		log.info("attaching clean instance");
 		try {
-			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
+			getSession().lock(instance, LockMode.NONE);
 			log.info("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -239,9 +239,9 @@ public class GenericDAO<T, ID extends Serializable> {
 
 	@SuppressWarnings("unchecked")
 	public T merge(T detachedInstance) {
-		log.info("merging ApplicationLog instance");
+		log.info("merging instance");
 		try {
-			T result = (T) sessionFactory.getCurrentSession().merge(
+			T result = (T) getSession().merge(
 					detachedInstance);
 			log.info("merge successfull");
 			return result;
