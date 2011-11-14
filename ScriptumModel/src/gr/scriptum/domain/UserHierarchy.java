@@ -16,6 +16,9 @@ public class UserHierarchy implements java.io.Serializable {
 	private Users users;
 	private Set<UserHierarchy> userHierarchies = new HashSet<UserHierarchy>(0);
 
+	/* non persistent fields */
+	private Boolean isHighlighted = false;
+	
 	public UserHierarchy() {
 	}
 
@@ -95,6 +98,14 @@ public class UserHierarchy implements java.io.Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Boolean getIsHighlighted() {
+		return isHighlighted;
+	}
+
+	public void setIsHighlighted(Boolean isHighlighted) {
+		this.isHighlighted = isHighlighted;
 	}
 
 }
