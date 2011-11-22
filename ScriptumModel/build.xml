@@ -87,7 +87,7 @@
 
 
 	<target name="deploy" depends="har">
-		<copy file="${app.name}.har" todir="${deploy.dir}" />
+		<copy file="${app.name}.har" todir="../Scriptum/EarContent" />
 	</target>
 
 	<target name="undeploy">
