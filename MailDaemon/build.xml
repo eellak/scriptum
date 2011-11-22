@@ -87,7 +87,7 @@
 
 
 	<target name="deploy" depends="sar">
-		<copy file="${app.name}.sar" todir="${deploy.dir}" />
+		<copy file="maildaemon.sar" todir="../Scriptum/EarContent" />
 	</target>
 
 	<target name="undeploy">
