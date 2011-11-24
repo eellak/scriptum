@@ -144,6 +144,7 @@ incomingProtocol.updateTs=Ημ/νία Τροποποίησης
 incomingProtocol.protocolDocuments=Έγγραφα
 incomingProtocol.isDeleted=Διαγεγραμμένο
 incomingProtocol.relativeProtocol=Σχετικό Πρωτ/λο
+incomingProtocol.protocolBook=Βιβλίο
 
 ##outoing Protocol
 outgoingProtocol=Εξερχόμενο Πρωτόκολλο
@@ -161,6 +162,7 @@ outgoingProtocol.updateTs=Ημ/νία Τροποποίησης
 outgoingProtocol.protocolDocuments=Έγγραφα
 outgoingProtocol.isDeleted=Διαγεγραμμένο
 outgoingProtocol.relativeProtocol=Σχετικό Πρωτ/λο
+outgoingProtocol.protocolBook=Βιβλίο
 
 ##protocol Document
 protocolDocument=Έγγραφο Πρωτ/λου
@@ -183,6 +185,12 @@ diavgeiaSubjectGroup=Θεματική Ενότητα
 diavgeiaSubjectGroup.id=Α/Α
 diavgeiaSubjectGroup.description=Περιγραφή
 
+##ProtocolBook
+protocolBook=Βιβλίο Πρωτοκόλλου
+protocolBook.id=Α/Α
+protocolBook.protocolSeries=Τίτλος
+protocolBook.protocolYear=Έτος
+
 #############
 #pages
 
@@ -197,7 +205,7 @@ menu.administration.users=Χρήστες
 menu.administration.documentTypes=Τύποι Εγγράφων
 menu.administration.distributionMethods=Μέθοδοι Διανομής
 menu.administration.parameters=Παράμετροι Συστήματος
-menu.administration.protocolBook=Βιβλίο Πρωτοκόλλου
+menu.administration.protocolBook=Εξαγωγή Βιβλίου Πρωτοκόλλου
 menu.administration.diavgeia=Ενημέρωση Διαύγειας
 
 menu.contacts=Επαφές-Οργανισμοί
@@ -327,7 +335,7 @@ incomingPrintPage.title=Εκτύπωση Εισερχομένου Πρωτοκό
 outgoingPrintPage.title=Εκτύπωση Εξερχομένου Πρωτοκόλλου
 
 ##protocolBook
-protocolBookPage.title=Βιβλίο Πρωτοκόλλου
+protocolBookPage.title=Εγαγωγή Βιβλίου Πρωτοκόλλου
 protocolBookPage.dates=Ημερομηνίες
 protocolBookPage.sort=Ταξινόμηση
 protocolBookPage.sort.protocolDate=Ημ/νία Πρωτοκόλλου

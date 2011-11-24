@@ -5,6 +5,7 @@ package gr.scriptum.eprotocol.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,8 +15,10 @@ import java.util.TreeMap;
 import gr.scriptum.dao.IncomingProtocolDAO;
 import gr.scriptum.dao.OutgoingProtocolDAO;
 import gr.scriptum.dao.ParameterDAO;
+import gr.scriptum.dao.ProtocolBookDAO;
 import gr.scriptum.domain.IncomingProtocol;
 import gr.scriptum.domain.OutgoingProtocol;
+import gr.scriptum.domain.ProtocolBook;
 import gr.scriptum.domain.ProtocolNode;
 import gr.scriptum.eprotocol.pdf.EProtocolPdfPrinter;
 import gr.scriptum.eprotocol.pdf.ProtocolBookInfo;
@@ -27,6 +30,8 @@ import org.hibernate.criterion.Order;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.SelectEvent;
+import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Messagebox;
@@ -66,10 +71,15 @@ public class ProtocolBookController extends BaseController {
 
 	private String fontFolder = null;
 
+	private List<ProtocolBook> protocolBooks = null;
+
+	private ProtocolBook protocolBook = null;
+
 	/* components */
 	Window win;
 	Combobox sortCbx;
 	Combobox sortOrderCbx;
+	Bandbox protocolBookBndbx;
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
@@ -95,9 +105,17 @@ public class ProtocolBookController extends BaseController {
 		fontFolder = parameterDAO
 				.getAsString(IConstants.PARAM_PROTOCOL_BOOK_FONT_FOLDER);
 
+		ProtocolBookDAO protocolBookDAO = new ProtocolBookDAO();
+		protocolBooks = protocolBookDAO.findAll();
+
 		sortCbx.setSelectedIndex(0);
 		sortOrderCbx.setSelectedIndex(0);
 
+	}
+
+	public void onSelect$protocolBookLstbx(SelectEvent event) {
+		protocolBookBndbx.close();
+		getBinder(win).loadAll();
 	}
 
 	public void onClick$exportBtn(Event event) throws InterruptedException {
@@ -121,16 +139,20 @@ public class ProtocolBookController extends BaseController {
 
 		List<ProtocolNode> protocols = new LinkedList<ProtocolNode>();
 
+		List<ProtocolBook> protocolBooksToSearchIn = new ArrayList<ProtocolBook>();
+		protocolBooksToSearchIn.add(protocolBook);
 		IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
 		List<IncomingProtocol> results = incomingProtocolDAO.search(null, from,
-				to, null, null, null, null, false, false, null, null,
+				to, null, null, null, null, false, false,
+				protocolBooksToSearchIn, null, null,
 				sortBy.toArray(new Order[0]));
 
 		protocols.addAll(results);
 
 		OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
 		List<OutgoingProtocol> outgoingResults = outgoingProtocolDAO.search(
-				null, from, to, null, null, null, null, false, false, null, null,
+				null, from, to, null, null, null, null, false, false,
+				protocolBooksToSearchIn, null, null,
 				sortBy.toArray(new Order[0]));
 
 		protocols.addAll(outgoingResults);
@@ -170,12 +192,26 @@ public class ProtocolBookController extends BaseController {
 	public void onClick$clearBtn(Event event) {
 		from = null;
 		to = null;
+		protocolBook = null;
 
 		getBinder(win).loadAll();
 
 		sortCbx.setSelectedIndex(0);
 		sortOrderCbx.setSelectedIndex(0);
 
+	}
+
+	public String getProtocolBookDescription() {
+		if (protocolBook == null) {
+			return "";
+		}
+
+		return (protocolBook.getId() + "-" + protocolBook.getProtocolSeries()
+				+ "-" + protocolBook.getProtocolYear());
+	}
+
+	public void setProtocolBookDescription(String protocolBookDescription) {
+		// do nothing
 	}
 
 	public Date getFrom() {
@@ -192,6 +228,22 @@ public class ProtocolBookController extends BaseController {
 
 	public void setTo(Date to) {
 		this.to = to;
+	}
+
+	public List<ProtocolBook> getProtocolBooks() {
+		return protocolBooks;
+	}
+
+	public void setProtocolBooks(List<ProtocolBook> protocolBooks) {
+		this.protocolBooks = protocolBooks;
+	}
+
+	public ProtocolBook getProtocolBook() {
+		return protocolBook;
+	}
+
+	public void setProtocolBook(ProtocolBook protocolBook) {
+		this.protocolBook = protocolBook;
 	}
 
 }

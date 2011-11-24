@@ -3,6 +3,9 @@
  */
 package gr.scriptum.eprotocol.controller;
 
+import java.util.List;
+
+import gr.scriptum.domain.ProtocolBook;
 import gr.scriptum.domain.ProtocolDocument;
 import gr.scriptum.eprotocol.util.IConstants;
 import gr.scriptum.eprotocol.ws.OkmProtocolDispatcherImpl;
@@ -24,7 +27,9 @@ public abstract class ProtocolController extends BaseController {
 	private static Log log = LogFactory.getLog(ProtocolController.class);
 
 	protected ProtocolDocument protocolDocument = null;
-
+	
+	protected List<ProtocolBook> protocolBooks = null;
+	
 	protected ResponseSendDocument fetchDocumentFromOpenKM(
 			ProtocolDocument protocolDocument) {
 
@@ -86,6 +91,14 @@ public abstract class ProtocolController extends BaseController {
 
 	public void setProtocolDocument(ProtocolDocument protocolDocument) {
 		this.protocolDocument = protocolDocument;
+	}
+
+	public List<ProtocolBook> getProtocolBooks() {
+		return protocolBooks;
+	}
+
+	public void setProtocolBooks(List<ProtocolBook> protocolBooks) {
+		this.protocolBooks = protocolBooks;
 	}
 
 }

@@ -4,12 +4,14 @@ import gr.scriptum.dao.ContactDAO;
 import gr.scriptum.dao.DistributionMethodDAO;
 import gr.scriptum.dao.IncomingProtocolDAO;
 import gr.scriptum.dao.OutgoingProtocolDAO;
+import gr.scriptum.dao.ProtocolBookDAO;
 import gr.scriptum.domain.Contact;
 import gr.scriptum.domain.DistributionMethod;
 import gr.scriptum.domain.IncomingProtocol;
 import gr.scriptum.domain.OutgoingProtocol;
 import gr.scriptum.domain.OutgoingRecipient;
 import gr.scriptum.domain.OutgoingRecipientId;
+import gr.scriptum.domain.ProtocolBook;
 import gr.scriptum.domain.ProtocolNode;
 import gr.scriptum.domain.OutgoingRecipient.RecipientType;
 import gr.scriptum.eprotocol.util.Callback;
@@ -24,6 +26,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
@@ -83,6 +86,10 @@ public class IndexController extends BaseController {
 	Bandbox toContactBndbx;
 
 	/* data binding */
+
+	/* common */
+	private List<ProtocolBook> activeProtocolBooks = null;
+
 	/* incoming */
 	private IncomingProtocol incomingProtocol = null;
 	private List<IncomingProtocol> incomingProtocols = null;
@@ -113,6 +120,7 @@ public class IndexController extends BaseController {
 	private List<OutgoingProtocol> searchOutgoingProtocols = null;
 	private IncomingProtocol searchSelectedIncomingProtocol = null;
 	private OutgoingProtocol searchSelectedOutgoingProtocol = null;
+	private List<ProtocolBook> protocolBooks = null;
 
 	private void initIncoming() {
 		incomingProtocol = new IncomingProtocol();
@@ -150,7 +158,7 @@ public class IndexController extends BaseController {
 		Integer totalSize = incomingProtocolDAO.countSearch(null,
 				incomingDateFrom, incomingDateTo,
 				incomingProtocol.getSubject(), null, null, null, true,
-				includeDeletedProtocols);
+				includeDeletedProtocols, activeProtocolBooks);
 		incomingPgng.setTotalSize(totalSize);
 		int pageSize = incomingPgng.getPageSize();
 
@@ -160,8 +168,8 @@ public class IndexController extends BaseController {
 
 		incomingProtocols = incomingProtocolDAO.search(null, incomingDateFrom,
 				incomingDateTo, incomingProtocol.getSubject(), null, null,
-				null, true, includeDeletedProtocols, startIndex, pageSize,
-				sortBy.toArray(new Order[0]));
+				null, true, includeDeletedProtocols, activeProtocolBooks,
+				startIndex, pageSize, sortBy.toArray(new Order[0]));
 
 	}
 
@@ -176,7 +184,7 @@ public class IndexController extends BaseController {
 		Integer totalSize = outgoingProtocolDAO.countSearch(null,
 				outgoingDateFrom, outgoingDateTo,
 				outgoingProtocol.getSubject(), null, null, null, true,
-				includeDeletedProtocols);
+				includeDeletedProtocols, activeProtocolBooks);
 		outgoingPgng.setTotalSize(totalSize);
 		int pageSize = outgoingPgng.getPageSize();
 
@@ -186,8 +194,8 @@ public class IndexController extends BaseController {
 
 		outgoingProtocols = outgoingProtocolDAO.search(null, outgoingDateFrom,
 				outgoingDateTo, outgoingProtocol.getSubject(), null, null,
-				null, true, includeDeletedProtocols, startIndex, pageSize,
-				sortBy.toArray(new Order[0]));
+				null, true, includeDeletedProtocols, activeProtocolBooks,
+				startIndex, pageSize, sortBy.toArray(new Order[0]));
 	}
 
 	private void searchIncoming(Integer startIndex) {
@@ -200,7 +208,8 @@ public class IndexController extends BaseController {
 		Integer totalSize = null;
 		totalSize = incomingProtocolDAO.countSearch(protocolNumber,
 				searchDateFrom, searchDateTo, subject, keywords,
-				distributionMethod, contact, false, includeDeletedProtocols);
+				distributionMethod, contact, false, includeDeletedProtocols,
+				protocolBooks);
 		searchIncomingPgng.setTotalSize(totalSize);
 		int pageSize = searchIncomingPgng.getPageSize();
 
@@ -210,7 +219,8 @@ public class IndexController extends BaseController {
 		searchIncomingProtocols = incomingProtocolDAO.search(protocolNumber,
 				searchDateFrom, searchDateTo, subject, keywords,
 				distributionMethod, contact, false, includeDeletedProtocols,
-				startIndex, pageSize, sortBy.toArray(new Order[0]));
+				protocolBooks, startIndex, pageSize,
+				sortBy.toArray(new Order[0]));
 	}
 
 	private void searchOutgoing(Integer startIndex) {
@@ -223,7 +233,8 @@ public class IndexController extends BaseController {
 		// set up paging by counting records first
 		Integer totalSize = outgoingProtocolDAO.countSearch(protocolNumber,
 				searchDateFrom, searchDateTo, subject, keywords,
-				distributionMethod, toContact, false, includeDeletedProtocols);
+				distributionMethod, toContact, false, includeDeletedProtocols,
+				protocolBooks);
 		searchOutgoingPgng.setTotalSize(totalSize);
 		int pageSize = searchOutgoingPgng.getPageSize();
 
@@ -234,7 +245,8 @@ public class IndexController extends BaseController {
 		searchOutgoingProtocols = outgoingProtocolDAO.search(protocolNumber,
 				searchDateFrom, searchDateTo, subject, keywords,
 				distributionMethod, toContact, false, includeDeletedProtocols,
-				startIndex, pageSize, sortBy.toArray(new Order[0]));
+				protocolBooks, startIndex, pageSize,
+				sortBy.toArray(new Order[0]));
 
 	}
 
@@ -249,6 +261,10 @@ public class IndexController extends BaseController {
 
 		DistributionMethodDAO distributionMethodDAO = new DistributionMethodDAO();
 		distributionMethods = distributionMethodDAO.findAll();
+
+		ProtocolBookDAO protocolBookDAO = new ProtocolBookDAO();
+		activeProtocolBooks = protocolBookDAO.findActiveBooks();
+//		protocolBooks = protocolBookDAO.findAll();
 
 		initIncoming();
 		initOutgoing();
@@ -767,6 +783,22 @@ public class IndexController extends BaseController {
 
 	public void setToContact(Contact toContact) {
 		this.toContact = toContact;
+	}
+
+	public List<ProtocolBook> getActiveProtocolBooks() {
+		return activeProtocolBooks;
+	}
+
+	public void setActiveProtocolBooks(List<ProtocolBook> activeProtocolBooks) {
+		this.activeProtocolBooks = activeProtocolBooks;
+	}
+
+	public List<ProtocolBook> getProtocolBooks() {
+		return protocolBooks;
+	}
+
+	public void setProtocolBooks(List<ProtocolBook> protocolBooks) {
+		this.protocolBooks = protocolBooks;
 	}
 
 }

@@ -13,6 +13,37 @@
 				<column width="30%" />
 			</columns>
 			<rows>
+			<row>
+					${c:l('protocolBook')}
+					<bandbox id="protocolBookBndbx" autodrop="true"
+						width="300px" constraint="no empty"
+						value="@{ProtocolBookController.protocolBookDescription }">
+						<bandpopup>
+							<listbox id="protocolBookLstbx"
+								model="@{ProtocolBookController.protocolBooks}"
+								selectedItem="@{ProtocolBookController.protocolBook}"
+								width="100%">
+								<listhead>
+									<listheader
+										label="${c:l('protocolBook.id')}" />
+									<listheader
+										label="${c:l('protocolBook.protocolSeries')}" />
+									<listheader
+										label="${c:l('protocolBook.protocolYear')}" />
+								</listhead>
+								<listitem
+									self="@{each='protocolBookRow'}">
+									<listcell
+										label="@{protocolBookRow.id}" />
+									<listcell
+										label="@{protocolBookRow.protocolSeries}" />
+									<listcell
+										label="@{protocolBookRow.protocolYear}" />
+								</listitem>
+							</listbox>
+						</bandpopup>
+					</bandbox>
+			</row>
 				<row>
 					${c:l('protocolBookPage.dates')}
 					<groupbox width="97%">

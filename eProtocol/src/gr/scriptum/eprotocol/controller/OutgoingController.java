@@ -11,6 +11,7 @@ import gr.scriptum.dao.IncomingProtocolDAO;
 import gr.scriptum.dao.OutgoingProtocolDAO;
 import gr.scriptum.dao.OutgoingRecipientDAO;
 import gr.scriptum.dao.ParameterDAO;
+import gr.scriptum.dao.ProtocolBookDAO;
 import gr.scriptum.dao.ProtocolDocumentDAO;
 import gr.scriptum.dao.ProtocolNumberDAO;
 import gr.scriptum.domain.Contact;
@@ -19,6 +20,7 @@ import gr.scriptum.domain.DiavgeiaSubjectGroup;
 import gr.scriptum.domain.DistributionMethod;
 import gr.scriptum.domain.IncomingProtocol;
 import gr.scriptum.domain.OutgoingProtocol;
+import gr.scriptum.domain.ProtocolBook;
 import gr.scriptum.domain.OutgoingProtocol.DiavgeiaResult;
 import gr.scriptum.domain.OutgoingRecipient;
 import gr.scriptum.domain.OutgoingRecipient.RecipientType;
@@ -171,6 +173,8 @@ public class OutgoingController extends ProtocolController {
 
 	Window contactWin;
 
+	Bandbox protocolBookBndbx;
+	
 	Listbox documentsLstbx;
 
 	Listbox toLstbx;
@@ -351,7 +355,7 @@ public class OutgoingController extends ProtocolController {
 				ProtocolNumber protocolNumber = null;
 
 				protocolNumber = protocolNumberDAO
-						.getNextNumber(ProtocolNumberType.COMMON);
+						.getNextNumber(ProtocolNumberType.COMMON, protocol.getProtocolBook());
 
 				tx.commit();
 				log.info("Got Protocol Number (Commited transaction): " + tx);
@@ -410,6 +414,10 @@ public class OutgoingController extends ProtocolController {
 
 				if (isSubmission) { // final protocol submission
 					requestNewNode.setFolderPath(okmNodeOutgoing
+							+ IConstants.OKM_FOLDER_DELIMITER
+							+ protocol.getProtocolBook().getProtocolSeries()
+							+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
+							+ protocol.getProtocolBook().getProtocolYear()
 							+ IConstants.OKM_FOLDER_DELIMITER
 							+ protocol.getProtocolNumber());
 
@@ -556,7 +564,10 @@ public class OutgoingController extends ProtocolController {
 					requestMoveNode.setOldPath(okmNodePendingOutgoing
 							+ IConstants.OKM_FOLDER_DELIMITER
 							+ protocol.getId());
-					requestMoveNode.setNewPath(okmNodeOutgoing);
+					requestMoveNode.setNewPath(okmNodeOutgoing+ IConstants.OKM_FOLDER_DELIMITER
+							+ protocol.getProtocolBook().getProtocolSeries()
+							+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
+							+ protocol.getProtocolBook().getProtocolYear());
 
 					Response responseMoveNode = okmDispatcher
 							.moveNode(requestMoveNode);
@@ -571,6 +582,10 @@ public class OutgoingController extends ProtocolController {
 							getUserInSession().getId(), getIp(),
 							IConstants.SYSTEM_NAME, getOkmToken());
 					requestRenameNode.setOldName(okmNodeOutgoing
+							+ IConstants.OKM_FOLDER_DELIMITER
+							+ protocol.getProtocolBook().getProtocolSeries()
+							+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
+							+ protocol.getProtocolBook().getProtocolYear()
 							+ IConstants.OKM_FOLDER_DELIMITER
 							+ protocol.getId());
 					requestRenameNode.setNewName(protocol.getProtocolNumber()
@@ -591,6 +606,10 @@ public class OutgoingController extends ProtocolController {
 								okmNodePendingOutgoing
 										+ IConstants.OKM_FOLDER_DELIMITER
 										+ protocol.getId(), okmNodeOutgoing
+										+ IConstants.OKM_FOLDER_DELIMITER
+										+ protocol.getProtocolBook().getProtocolSeries()
+										+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
+										+ protocol.getProtocolBook().getProtocolYear()
 										+ IConstants.OKM_FOLDER_DELIMITER
 										+ protocol.getProtocolNumber());
 						document.setOkmPath(path);
@@ -729,6 +748,9 @@ public class OutgoingController extends ProtocolController {
 		DiavgeiaSubjectGroupDAO diavgeiaSubjectGroupDAO = new DiavgeiaSubjectGroupDAO();
 		diavgeiaSubjectGroups = diavgeiaSubjectGroupDAO.findAll();
 
+		ProtocolBookDAO protocolBookDAO = new ProtocolBookDAO();
+		protocolBooks = protocolBookDAO.findActiveBooks();
+		
 		initData();
 
 		// fetch existing protocol, if any
@@ -772,6 +794,12 @@ public class OutgoingController extends ProtocolController {
 
 	}
 
+	public void onSelect$protocolBookLstbx(SelectEvent event) {
+		protocolBookBndbx.close();
+		getBinder(outgoingWin).loadAll();
+	}
+
+	
 	public void onChanging$toBndbx(InputEvent event) {
 		toTerm = StringUtils.trimToNull(event.getValue());
 		searchToContacts(0);
@@ -1269,7 +1297,7 @@ public class OutgoingController extends ProtocolController {
 		IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
 		List<IncomingProtocol> incomingProtocols = incomingProtocolDAO.search(
 				protocol.getRelativeProtocol(), null, null, null, null, null,
-				null, false, false, null, null, new Order[0]);
+				null, false, false, null, null, null, new Order[0]);
 		if (!incomingProtocols.isEmpty()) {
 			IncomingProtocol relativeProtocol = incomingProtocols.get(0);
 			Executions.getCurrent().sendRedirect(
@@ -1281,7 +1309,7 @@ public class OutgoingController extends ProtocolController {
 		OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
 		List<OutgoingProtocol> outgoingProtocols = outgoingProtocolDAO.search(
 				protocol.getRelativeProtocol(), null, null, null, null, null,
-				null, false, false, null, null, new Order[0]);
+				null, false, false, null, null, null, new Order[0]);
 		if (!outgoingProtocols.isEmpty()) {
 			OutgoingProtocol relativeProtocol = outgoingProtocols.get(0);
 			Executions.getCurrent().sendRedirect(
@@ -1403,6 +1431,20 @@ public class OutgoingController extends ProtocolController {
 
 		return (Labels.getLabel("outgoingPage.diavgeiaLblNA"));
 
+	}
+
+	public String getProtocolBookDescription() {
+		if (protocol.getProtocolBook() == null) {
+			return "";
+		}
+
+		ProtocolBook protocolBook = protocol.getProtocolBook();
+		return (protocolBook.getId() + "-" + protocolBook.getProtocolSeries()
+				+ "-" + protocolBook.getProtocolYear());
+	}
+
+	public void setProtocolBookDescription(String protocolBookDescription) {
+		// do nothing
 	}
 
 	public OutgoingProtocol getProtocol() {

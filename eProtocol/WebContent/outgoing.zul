@@ -31,6 +31,51 @@
 							visible="@{OutgoingController.isProtocolDeleted}" />
 					</hbox>
 				</row>
+				<row
+					visible="@{OutgoingController.isProtocolPending}">
+					${c:l('outgoingProtocol.protocolBook')}
+					<bandbox id="protocolBookBndbx" autodrop="true"
+						width="300px" constraint="no empty"
+						value="@{OutgoingController.protocolBookDescription }">
+						<bandpopup>
+							<listbox id="protocolBookLstbx"
+								model="@{OutgoingController.protocolBooks}"
+								selectedItem="@{OutgoingController.protocol.protocolBook}">
+								<listhead>
+									<listheader
+										label="${c:l('protocolBook.id')}" width="5%" />
+									<listheader
+										label="${c:l('protocolBook.protocolSeries')}" width="75%" />
+									<listheader
+										label="${c:l('protocolBook.protocolYear')}" width="20%" />
+								</listhead>
+								<listitem
+									self="@{each='protocolBookRow'}">
+									<listcell
+										label="@{protocolBookRow.id}" />
+									<listcell
+										label="@{protocolBookRow.protocolSeries}" />
+									<listcell
+										label="@{protocolBookRow.protocolYear}" />
+								</listitem>
+							</listbox>
+						</bandpopup>
+					</bandbox>
+				</row>
+				<row
+					visible="@{OutgoingController.isProtocolSubmitted}">
+					${c:l('outgoingProtocol.protocolBook')}
+					<hbox>
+						<label
+							value="@{OutgoingController.protocol.protocolBook.id}" />
+						-
+						<label
+							value="@{OutgoingController.protocol.protocolBook.protocolSeries}" />
+						-
+						<label
+							value="@{OutgoingController.protocol.protocolBook.protocolYear}" />
+					</hbox>
+				</row>
 				<row>
 					${c:l('outgoingProtocol.subject')}
 					<textbox id="subjectTxb"
