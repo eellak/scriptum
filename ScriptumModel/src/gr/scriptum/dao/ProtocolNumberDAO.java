@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 import org.hibernate.StaleObjectStateException;
 
+import gr.scriptum.domain.ProtocolBook;
 import gr.scriptum.domain.ProtocolNumber;
 import gr.scriptum.domain.ProtocolNumber.ProtocolNumberType;
 
@@ -21,12 +22,13 @@ public class ProtocolNumberDAO extends GenericDAO<ProtocolNumber, Integer> {
 
 	private static Log log = LogFactory.getLog(ProtocolNumberDAO.class);
 
-	public ProtocolNumber getNextNumber(ProtocolNumberType type) {
+	public ProtocolNumber getNextNumber(ProtocolNumberType type, ProtocolBook protocolBook) {
 
 		Query query = getSession()
 				.createQuery(
-						"from ProtocolNumber pn where pn.id = (select max(pn2.id) from ProtocolNumber pn2 where pn2.type =:type)");
+						"from ProtocolNumber pn where pn.id = (select max(pn2.id) from ProtocolNumber pn2 where pn2.type =:type and pn2.protocolBook =:book)");
 		query.setParameter("type", type.ordinal());
+		query.setParameter("book", protocolBook);
 		ProtocolNumber number = (ProtocolNumber) query.uniqueResult();
 
 		Long value = number.getNumber();

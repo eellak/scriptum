@@ -15,6 +15,7 @@ public class ProtocolNumber implements java.io.Serializable {
 
 	private Integer id;
 	private Long version;
+	private ProtocolBook protocolBook;
 	private Long number;
 	private Integer series;
 	private Integer year;
@@ -25,8 +26,13 @@ public class ProtocolNumber implements java.io.Serializable {
 	public ProtocolNumber() {
 	}
 
-	public ProtocolNumber(Long number, Integer series, Integer year,
+	public ProtocolNumber(ProtocolBook protocolBook) {
+		this.protocolBook = protocolBook;
+	}
+
+	public ProtocolNumber(ProtocolBook protocolBook, Long number, Integer series, Integer year,
 			Integer type, Date createDt, Date updateTs) {
+		this.protocolBook = protocolBook;
 		this.number = number;
 		this.series = series;
 		this.year = year;
@@ -101,6 +107,14 @@ public class ProtocolNumber implements java.io.Serializable {
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	public ProtocolBook getProtocolBook() {
+		return protocolBook;
+	}
+
+	public void setProtocolBook(ProtocolBook protocolBook) {
+		this.protocolBook = protocolBook;
 	}
 
 }

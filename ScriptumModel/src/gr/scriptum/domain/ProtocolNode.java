@@ -1,5 +1,7 @@
 package gr.scriptum.domain;
 
+import gr.scriptum.domain.ProtocolBook;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,7 +44,9 @@ public abstract class ProtocolNode implements java.io.Serializable {
 
 	Boolean isDeleted = null;
 	String relativeProtocol;
-	
+
+	ProtocolBook protocolBook;
+
 	// -----------
 	// Constructors
 	// -----------
@@ -54,7 +58,9 @@ public abstract class ProtocolNode implements java.io.Serializable {
 			Integer protocolYear, DistributionMethod distributionMethod,
 			String subject, String comments,
 			Set<ProtocolDocument> protocolDocuments, Integer createUserId,
-			Integer updateUserId, Date createDt, Date updateTs) {
+			Integer updateUserId, Date createDt, Date updateTs,
+			ProtocolBook protocolBook) {
+
 		this.direction = direction;
 		this.id = id;
 		this.protocolNumber = protocolNumber;
@@ -69,6 +75,7 @@ public abstract class ProtocolNode implements java.io.Serializable {
 		this.updateUserId = updateUserId;
 		this.createDt = createDt;
 		this.updateTs = updateTs;
+		this.protocolBook = protocolBook;
 	}
 
 	public ProtocolNode(Direction direction) {
@@ -76,8 +83,8 @@ public abstract class ProtocolNode implements java.io.Serializable {
 	}
 
 	public String getFullNumber() {
-//		return protocolNumber != null ? protocolNumber + NUMBER_DELIMITER
-//				+ protocolSeries + NUMBER_DELIMITER + protocolYear : null;
+		// return protocolNumber != null ? protocolNumber + NUMBER_DELIMITER
+		// + protocolSeries + NUMBER_DELIMITER + protocolYear : null;
 		return protocolNumber != null ? protocolNumber.toString() : null;
 	}
 
@@ -229,5 +236,13 @@ public abstract class ProtocolNode implements java.io.Serializable {
 	public void setRelativeProtocol(String relativeProtocol) {
 		this.relativeProtocol = relativeProtocol;
 	}
-	
+
+	public ProtocolBook getProtocolBook() {
+		return protocolBook;
+	}
+
+	public void setProtocolBook(ProtocolBook protocolBook) {
+		this.protocolBook = protocolBook;
+	}
+
 }

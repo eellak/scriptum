@@ -41,12 +41,12 @@ public class OutgoingProtocol extends ProtocolNode implements
 
 			Date outgoingDate, String author, Integer sentDiaygeia,
 			String relativeProtocol, String outgoingPlace,
-			Set<OutgoingRecipient> outgoingRecipients) {
+			Set<OutgoingRecipient> outgoingRecipients, ProtocolBook protocolBook) {
 
 		super(direction, id, protocolNumber, protocolSeries, protocolDate,
 				protocolYear, distributionMethod, subject, comments,
 				protocolDocuments, createUserId, updateUserId, createDt,
-				updateTs);
+				updateTs,protocolBook);
 
 		this.outgoingDate = outgoingDate;
 		this.author = author;

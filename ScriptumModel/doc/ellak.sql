@@ -368,12 +368,15 @@ CREATE TABLE `incoming_protocol` (
   `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `is_deleted` tinyint(1) DEFAULT NULL,
   `relative_protocol` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `protocol_book_id` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `incoming_protocol_FKIndex1` (`distribution_method_id`),
   KEY `incoming_protocol_FKIndex2` (`contact_sender_id`),
+  KEY `fk_incoming_protocol_protocol_book1` (`protocol_book_id`),
+  CONSTRAINT `fk_incoming_protocol_protocol_book1` FOREIGN KEY (`protocol_book_id`) REFERENCES `protocol_book` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cbbc300-215b-11e0-9059-080027b715d2` FOREIGN KEY (`distribution_method_id`) REFERENCES `distribution_method` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cbdaecc-215b-11e0-9059-080027b715d2` FOREIGN KEY (`contact_sender_id`) REFERENCES `contact` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -382,7 +385,7 @@ CREATE TABLE `incoming_protocol` (
 
 LOCK TABLES `incoming_protocol` WRITE;
 /*!40000 ALTER TABLE `incoming_protocol` DISABLE KEYS */;
-INSERT INTO `incoming_protocol` VALUES (2,1,8,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,'2011-10-07 09:30:31','2011-10-07 06:30:31',NULL,NULL);
+INSERT INTO `incoming_protocol` VALUES (2,1,8,4,'2011-11-24 10:28:14',NULL,NULL,'Book test1',NULL,'1','2011-11-24','Athens',1,1,'2011-10-07 09:30:31','2011-11-24 08:28:14',NULL,NULL,1),(4,1,1,1,'2011-11-24 15:58:25',NULL,NULL,'Book test 2',NULL,'2343','2011-11-25','Greece',1,1,'2011-11-24 15:58:25','2011-11-24 13:58:25',NULL,NULL,3),(5,1,8,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,'2011-11-24 17:43:24','2011-11-24 16:04:37',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `incoming_protocol` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -412,10 +415,13 @@ CREATE TABLE `outgoing_protocol` (
   `create_dt` datetime DEFAULT NULL,
   `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `is_deleted` tinyint(1) DEFAULT NULL,
+  `protocol_book_id` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `outgoing_protocol_FKIndex1` (`distribution_method_id`),
+  KEY `fk_outgoing_protocol_protocol_book1` (`protocol_book_id`),
+  CONSTRAINT `fk_outgoing_protocol_protocol_book1` FOREIGN KEY (`protocol_book_id`) REFERENCES `protocol_book` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cbca1e4-215b-11e0-9059-080027b715d2` FOREIGN KEY (`distribution_method_id`) REFERENCES `distribution_method` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -424,7 +430,7 @@ CREATE TABLE `outgoing_protocol` (
 
 LOCK TABLES `outgoing_protocol` WRITE;
 /*!40000 ALTER TABLE `outgoing_protocol` DISABLE KEYS */;
-INSERT INTO `outgoing_protocol` VALUES (1,8,1,'2011-10-07 09:34:19',NULL,NULL,'Test outgoing',NULL,'2011-10-07 00:00:00',NULL,NULL,NULL,NULL,1,1,'2011-10-07 09:33:07','2011-10-07 06:34:19',NULL);
+INSERT INTO `outgoing_protocol` VALUES (1,8,1,'2011-10-07 09:34:19',NULL,NULL,'Test outgoing',NULL,'2011-10-07 00:00:00',NULL,NULL,NULL,NULL,1,1,'2011-10-07 09:33:07','2011-11-23 08:04:55',NULL,1),(2,8,2,'2011-11-23 14:05:36',NULL,NULL,'Test outgoing 2',NULL,'2011-11-23 00:00:00',NULL,NULL,NULL,NULL,1,1,'2011-11-23 14:04:52','2011-11-23 12:05:36',NULL,1),(3,8,5,'2011-11-24 16:29:09',NULL,NULL,'Test Book outgoing',NULL,'2011-11-24 00:00:00',NULL,NULL,NULL,NULL,1,1,'2011-11-24 16:28:30','2011-11-24 14:29:09',NULL,1),(4,8,2,'2011-11-24 18:06:21',NULL,NULL,'adsfadsf',NULL,'2011-11-24 00:00:00',NULL,NULL,NULL,NULL,1,1,'2011-11-24 18:05:33','2011-11-24 16:06:21',NULL,3);
 /*!40000 ALTER TABLE `outgoing_protocol` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -453,7 +459,7 @@ CREATE TABLE `outgoing_recipient` (
 
 LOCK TABLES `outgoing_recipient` WRITE;
 /*!40000 ALTER TABLE `outgoing_recipient` DISABLE KEYS */;
-INSERT INTO `outgoing_recipient` VALUES (1,1,0);
+INSERT INTO `outgoing_recipient` VALUES (1,1,0),(1,2,0),(1,3,0),(1,4,0);
 /*!40000 ALTER TABLE `outgoing_recipient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -585,7 +591,7 @@ CREATE TABLE `project_task` (
 
 LOCK TABLES `project_task` WRITE;
 /*!40000 ALTER TABLE `project_task` DISABLE KEYS */;
-INSERT INTO `project_task` VALUES (2,NULL,NULL,1,2,1,NULL,3,1,2,'Test task','1 2 three',NULL,'2011-10-17 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-10-17 12:07:39','2011-11-14 12:42:38',1,'2011-11-04 00:00:00'),(4,NULL,NULL,1,3,1,NULL,1,1,5,'Test Task 2','test one two',NULL,'2011-10-17 00:00:00',NULL,'2011-10-31 12:49:33',NULL,NULL,NULL,NULL,'2011-10-17 15:01:52','2011-10-31 10:49:33',0,NULL),(5,NULL,NULL,1,1,NULL,NULL,2,1,3,'Dokimi','one twho three',NULL,'2011-10-17 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-10-17 16:02:56','2011-10-31 10:57:05',1,NULL),(6,NULL,NULL,1,2,NULL,NULL,2,1,3,'Another test','bla bla bla',NULL,'2011-10-17 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-10-17 16:10:42','2011-10-27 09:30:04',1,NULL),(7,NULL,NULL,1,2,NULL,1,3,1,2,'New Task','bla bla bla',NULL,'2011-10-28 00:00:00',NULL,'2011-10-30 11:09:48',NULL,NULL,NULL,NULL,'2011-10-28 21:29:34','2011-11-11 10:06:09',1,NULL),(8,NULL,NULL,1,1,NULL,1,2,2,5,'boolean test','1231231',NULL,'2011-10-28 00:00:00',NULL,'2011-11-11 12:13:55',NULL,NULL,NULL,NULL,'2011-10-28 21:31:39','2011-11-11 10:13:55',0,'2011-11-10 00:00:00'),(9,NULL,NULL,1,2,NULL,1,2,1,5,'boolean3','adsf adf',NULL,'2011-10-28 00:00:00',NULL,'2011-10-30 11:04:03',NULL,NULL,NULL,NULL,'2011-10-28 21:40:08','2011-10-30 09:04:03',0,NULL),(10,NULL,7,2,3,NULL,NULL,2,1,2,'Fwd:New Task','bla bla bla',NULL,'2011-10-30 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-10-30 10:58:43','2011-10-30 09:02:01',0,NULL),(11,NULL,NULL,1,1,1,1,2,1,5,'Recursive1','test',NULL,'2011-10-30 00:00:00',NULL,'2011-10-30 11:17:42',NULL,NULL,NULL,NULL,'2011-10-30 11:11:48','2011-10-30 09:17:42',0,NULL),(12,NULL,11,1,2,1,1,2,1,5,'Fwd:Recursive1','test',NULL,'2011-10-30 00:00:00',NULL,'2011-10-30 11:17:42',NULL,NULL,NULL,NULL,'2011-10-30 11:12:06','2011-10-30 09:12:06',0,NULL),(13,NULL,12,2,3,1,1,2,1,5,'Fwd:Fwd:Recursive1','test',NULL,'2011-10-30 00:00:00',NULL,'2011-10-30 11:17:42',NULL,NULL,NULL,NULL,'2011-10-30 11:12:29','2011-10-30 09:12:29',0,NULL),(14,NULL,12,2,2,1,1,2,1,5,'Fwd:Fwd:Recursive1','test',NULL,'2011-10-30 00:00:00',NULL,'2011-10-30 11:17:42',NULL,NULL,NULL,NULL,'2011-10-30 11:13:06','2011-10-30 09:13:06',0,NULL),(15,NULL,NULL,1,1,NULL,NULL,2,1,2,'Dokimi','one twho three',NULL,'2011-11-02 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-11-01 16:15:14','2011-11-01 14:15:14',1,NULL);
+INSERT INTO `project_task` VALUES (2,NULL,NULL,1,2,1,NULL,3,1,2,'Test task','1 2 three',NULL,'2011-10-17 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-10-17 12:07:39','2011-11-14 12:42:38',1,'2011-11-04 00:00:00'),(4,NULL,NULL,1,3,1,NULL,1,1,5,'Test Task 2','test one two',NULL,'2011-10-17 00:00:00',NULL,'2011-10-31 12:49:33',NULL,NULL,NULL,NULL,'2011-10-17 15:01:52','2011-10-31 10:49:33',0,NULL),(5,NULL,NULL,1,1,NULL,NULL,2,1,3,'Dokimi','one twho three',NULL,'2011-10-17 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-10-17 16:02:56','2011-10-31 10:57:05',1,NULL),(6,NULL,NULL,1,2,NULL,NULL,2,1,3,'Another test','bla bla bla',NULL,'2011-10-17 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-10-17 16:10:42','2011-10-27 09:30:04',1,NULL),(7,NULL,NULL,1,2,NULL,1,3,1,2,'New Task','bla bla bla',NULL,'2011-10-28 00:00:00',NULL,'2011-10-30 11:09:48',NULL,NULL,NULL,NULL,'2011-10-28 21:29:34','2011-11-11 10:06:09',1,NULL),(8,NULL,NULL,1,1,NULL,1,2,2,5,'boolean test','1231231',NULL,'2011-10-28 00:00:00',NULL,'2011-11-11 12:13:55',NULL,NULL,NULL,NULL,'2011-10-28 21:31:39','2011-11-11 10:13:55',0,'2011-11-10 00:00:00'),(9,NULL,NULL,1,2,NULL,1,2,1,5,'boolean3','adsf adf',NULL,'2011-10-28 00:00:00',NULL,'2011-10-30 11:04:03',NULL,NULL,NULL,NULL,'2011-10-28 21:40:08','2011-10-30 09:04:03',0,NULL),(10,NULL,7,2,3,NULL,NULL,2,1,2,'Fwd:New Task','bla bla bla',NULL,'2011-10-30 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-10-30 10:58:43','2011-10-30 09:02:01',0,NULL),(11,NULL,NULL,1,1,1,1,2,1,5,'Recursive1','test',NULL,'2011-10-30 00:00:00',NULL,'2011-10-30 11:17:42',NULL,NULL,NULL,NULL,'2011-10-30 11:11:48','2011-10-30 09:17:42',0,NULL),(12,NULL,11,1,2,1,1,2,1,5,'Fwd:Recursive1','test',NULL,'2011-10-30 00:00:00',NULL,'2011-10-30 11:17:42',NULL,NULL,NULL,NULL,'2011-10-30 11:12:06','2011-10-30 09:12:06',0,NULL),(13,NULL,12,2,3,1,1,2,1,5,'Fwd:Fwd:Recursive1','test',NULL,'2011-10-30 00:00:00',NULL,'2011-10-30 11:17:42',NULL,NULL,NULL,NULL,'2011-10-30 11:12:29','2011-10-30 09:12:29',0,NULL),(14,NULL,12,2,2,1,1,2,1,5,'Fwd:Fwd:Recursive1','test',NULL,'2011-10-30 00:00:00',NULL,'2011-10-30 11:17:42',NULL,NULL,NULL,NULL,'2011-10-30 11:13:06','2011-10-30 09:13:06',0,NULL),(15,NULL,NULL,1,1,NULL,NULL,2,1,2,'Dokimi','one twho three',NULL,'2011-11-02 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,'2011-11-01 16:15:14','2011-11-14 12:50:01',1,NULL);
 /*!40000 ALTER TABLE `project_task` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -630,18 +636,19 @@ DROP TABLE IF EXISTS `protocol_book`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `protocol_book` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `protocol_series` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `protocol_series` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
   `is_incoming` int(1) DEFAULT NULL,
   `protocol_number` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '''o teleytaios arithmos protokolou''',
   `protocol_year` int(4) DEFAULT NULL,
   `protocol_path` varchar(640) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `is_active` int(1) NOT NULL DEFAULT '1' COMMENT 'shows if this protocol book is active',
+  `is_active` int(1) DEFAULT NULL COMMENT 'shows if this protocol book is active',
   `create_user` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `update_user` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `create_dt` datetime DEFAULT NULL,
   `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_preferred` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -650,6 +657,7 @@ CREATE TABLE `protocol_book` (
 
 LOCK TABLES `protocol_book` WRITE;
 /*!40000 ALTER TABLE `protocol_book` DISABLE KEYS */;
+INSERT INTO `protocol_book` VALUES (1,'Test Book 1',NULL,NULL,2011,NULL,1,NULL,NULL,NULL,'2011-11-24 16:09:27',0),(2,'Test Book 2',NULL,NULL,2011,NULL,0,NULL,NULL,NULL,'2011-11-23 08:04:33',0),(3,'Test Book 3',NULL,NULL,2012,NULL,1,NULL,NULL,NULL,'2011-11-23 12:06:37',1);
 /*!40000 ALTER TABLE `protocol_book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -680,7 +688,7 @@ CREATE TABLE `protocol_document` (
   CONSTRAINT `fk_7cbf98ea-215b-11e0-9059-080027b715d2` FOREIGN KEY (`incoming_protocol_id`) REFERENCES `incoming_protocol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cc08868-215b-11e0-9059-080027b715d2` FOREIGN KEY (`outgoing_protocol_id`) REFERENCES `outgoing_protocol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_protocol_document_document_types1` FOREIGN KEY (`document_types_id`) REFERENCES `document_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -689,7 +697,7 @@ CREATE TABLE `protocol_document` (
 
 LOCK TABLES `protocol_document` WRITE;
 /*!40000 ALTER TABLE `protocol_document` DISABLE KEYS */;
-INSERT INTO `protocol_document` VALUES (1,1,NULL,1,'bank.txt',482,'text/plain',1,'key1','/okm:root/OutgoingProtocol/1/bank.txt','cef152b6-90b2-4bee-a0b9-5e834bbf0237',NULL);
+INSERT INTO `protocol_document` VALUES (1,1,NULL,1,'bank.txt',482,'text/plain',1,'key1','/okm:root/OutgoingProtocol/Test Book 1-2011/1/bank.txt','cef152b6-90b2-4bee-a0b9-5e834bbf0237',NULL),(2,2,NULL,1,'spring-data-neo4j-reference.pdf',1512077,'application/pdf',1,'key1 key2','/okm:root/OutgoingProtocol/Test Book 1-2011/2/spring-data-neo4j-reference.pdf','5ed946c3-8c8a-4b3e-b864-002ca8903692',NULL),(4,NULL,2,1,'7673v1.1(G52-76731X5)(P67A-C45_P67A-C43_P67S-C43_P67A-S40).pdf',7595840,'application/pdf',1,'adsf','/okm:root/IncomingProtocol/Test Book 1-2011/4/7673v1.1(G52-76731X5)(P67A-C45_P67A-C43_P67S-C43_P67A-S40).pdf','5a71524e-6c81-4d42-bccd-266109bfedc1',NULL),(5,NULL,4,1,'spring-data-neo4j-reference.pdf',1512077,'application/pdf',1,'test1','/okm:root/IncomingProtocol/Test Book 3-2012/1/spring-data-neo4j-reference.pdf','db292650-1995-434d-8b11-3b9c6453d25d',NULL),(6,3,NULL,1,'SpringDataNeo4j_DeveloperNotes.pdf',642813,'application/pdf',1,'key1','/okm:root/OutgoingProtocol/Test Book 1-2011/5/SpringDataNeo4j_DeveloperNotes.pdf','0e44d3b5-0530-442c-9750-f98837f669ff',NULL),(7,4,NULL,1,'persistence-2_0-final-spec.pdf',3975210,'application/pdf',1,'adsf','/okm:root/OutgoingProtocol/Test Book 3-2012/2/persistence-2_0-final-spec.pdf','0e25c9ed-b224-42da-80b0-ee4dbef8c8ea',NULL);
 /*!40000 ALTER TABLE `protocol_document` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -709,8 +717,11 @@ CREATE TABLE `protocol_number` (
   `type` int(11) DEFAULT NULL,
   `create_dt` datetime DEFAULT NULL,
   `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `protocol_book_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_protocol_number_protocol_book1` (`protocol_book_id`),
+  CONSTRAINT `fk_protocol_number_protocol_book1` FOREIGN KEY (`protocol_book_id`) REFERENCES `protocol_book` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -719,7 +730,7 @@ CREATE TABLE `protocol_number` (
 
 LOCK TABLES `protocol_number` WRITE;
 /*!40000 ALTER TABLE `protocol_number` DISABLE KEYS */;
-INSERT INTO `protocol_number` VALUES (1,2,1,1,2011,2,NULL,'2011-10-07 06:34:19');
+INSERT INTO `protocol_number` VALUES (1,6,5,NULL,NULL,2,NULL,'2011-11-24 14:29:09',1),(2,10,9,NULL,NULL,2,NULL,'2011-11-23 08:06:49',2),(3,3,2,NULL,NULL,2,NULL,'2011-11-24 16:06:21',3);
 /*!40000 ALTER TABLE `protocol_number` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -992,9 +1003,9 @@ CREATE TABLE `user_hierarchy` (
   KEY `fk_user_details_user_details1` (`manager_id`),
   KEY `fk_user_details_users1` (`users_id`),
   KEY `fk_user_details_department1` (`department_id`),
-  CONSTRAINT `fk_user_details_department1` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_details_user_details1` FOREIGN KEY (`manager_id`) REFERENCES `user_hierarchy` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_details_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_details_user_details1` FOREIGN KEY (`manager_id`) REFERENCES `user_hierarchy` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_user_details_department1` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Defines the Hierarchy of each user within a department.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1079,4 +1090,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-11-14 14:48:14
+-- Dump completed on 2011-11-24 18:09:47

@@ -8,9 +8,13 @@
 			<column name="id" />
 			<generator class="identity" />
 		</id>
-		<many-to-one name="distributionMethod"
-			class="gr.scriptum.domain.DistributionMethod" fetch="select">
+		<many-to-one name="distributionMethod" class="gr.scriptum.domain.DistributionMethod"
+			fetch="select">
 			<column name="distribution_method_id" not-null="true" />
+		</many-to-one>
+		<many-to-one name="protocolBook" class="gr.scriptum.domain.ProtocolBook"
+			fetch="select">
+			<column name="protocol_book_id"/>
 		</many-to-one>
 		<property name="protocolNumber" type="java.lang.Integer">
 			<column name="protocol_number" />
@@ -62,9 +66,9 @@
 		<property name="updateTs" type="timestamp">
 			<column name="update_ts" length="19" />
 		</property>
-        <property name="isDeleted" type="java.lang.Boolean">
-            <column name="is_deleted" />
-        </property>
+		<property name="isDeleted" type="java.lang.Boolean">
+			<column name="is_deleted" />
+		</property>
 		<set name="protocolDocuments" table="protocol_document" inverse="true"
 			lazy="true" fetch="select" order-by="document_number">
 			<key>

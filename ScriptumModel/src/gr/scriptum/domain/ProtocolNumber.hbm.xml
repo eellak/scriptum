@@ -11,6 +11,9 @@
         <version name="version" type="java.lang.Long">
             <column name="version" />
         </version>
+        <many-to-one name="protocolBook" class="gr.scriptum.domain.ProtocolBook" fetch="select">
+            <column name="protocol_book_id" not-null="true" />
+        </many-to-one>
         <property name="number" type="java.lang.Long">
             <column name="number" />
         </property>

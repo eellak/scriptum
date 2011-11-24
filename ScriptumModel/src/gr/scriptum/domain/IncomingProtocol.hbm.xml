@@ -11,6 +11,9 @@
         <many-to-one name="distributionMethod" class="gr.scriptum.domain.DistributionMethod" fetch="select">
             <column name="distribution_method_id" not-null="true" />
         </many-to-one>
+        <many-to-one name="protocolBook" class="gr.scriptum.domain.ProtocolBook" fetch="select">
+            <column name="protocol_book_id" />
+        </many-to-one>
         <many-to-one name="contact" class="gr.scriptum.domain.Contact" fetch="select">
             <column name="contact_sender_id" not-null="true" />
         </many-to-one>

@@ -1,0 +1,22 @@
+Database:
+
+1) Table protocol_book: Create row for existing Book. Set columns: id, protocol_series, protocol_year, is_active, is_preferred.
+
+2) Table protocol_number: set column protocol_book_id.
+
+3) Tables incoming_protocol & outgoing_protocol: set column protocol_book_id.
+
+4) Table protocol_document: change column okm_path
+	from	/okm:root/IncomingProtocol/<protocol number>/<filename>
+	to		/okm:root/IncomingProtocol/<protocol book Series>-<protocol book year>/<protocol number>/<filename>
+	and
+	from	/okm:root/OutgoingProtocol/<protocol number>/<filename>
+	to		/okm:root/OutgoingProtocol/<protocol book Series>-<protocol book year>/<protocol number>/<filename>
+	
+OpenKM:
+
+1) Under folder IncomingProtocol, create sub-folder <protocol book series>-<protocol book year>
+2) Move all submitted protocol folders under folder IncomingProtocol, to folder IncomingProtocol/<protocol book series>-<protocol book year>
+
+3) Under folder OutgoingProtocol, create sub-folder <protocol book series>-<protocol book year>
+4) 2) Move all submitted protocol folders under folder OutgoingProtocol, to folder OutgoingProtocol/<protocol book series>-<protocol book year>
