@@ -190,6 +190,9 @@ protocolBook=Βιβλίο Πρωτοκόλλου
 protocolBook.id=Α/Α
 protocolBook.protocolSeries=Τίτλος
 protocolBook.protocolYear=Έτος
+protocolBook.isActive=Ανοικτό
+protocolBook.isPreferred=Προτιμητέο
+
 
 #############
 #pages
@@ -207,6 +210,7 @@ menu.administration.distributionMethods=Μέθοδοι Διανομής
 menu.administration.parameters=Παράμετροι Συστήματος
 menu.administration.protocolBook=Εξαγωγή Βιβλίου Πρωτοκόλλου
 menu.administration.diavgeia=Ενημέρωση Διαύγειας
+menu.administration.books=Βιβλία Πρωτοκόλλου
 
 menu.contacts=Επαφές-Οργανισμοί
 menu.contacts.contacts=Επαφές
@@ -345,3 +349,6 @@ protocolBookPage.sort.order.asc=Αύξουσα
 protocolBookPage.sort.order.desc=Φθίνουσα
 protocolBookPage.exportError=Παρουσιάστηκε σφάλμα κατά την εξαγωγή του Βιβλίου Πρωτοκόλλου
 protocolBookPage.exportSuccess=Η εξαγωγή του Βιβλίου Πρωτοκόλλου ολοκληρώθηκε επιτυχώς
+
+##books
+booksPage.title=Διαχείριση Βιβλίων Πρωτοκόλλου

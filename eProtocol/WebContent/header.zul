@@ -54,6 +54,9 @@
 				<menuitem label="${c:l('menu.administration.users') }"
 					href="users.zul" visible="${sec:isAnyGranted('ROLE_ADMIN')}" />
 				<menuitem
+					label="${c:l('menu.administration.books') }"
+					href="books.zul" />
+				<menuitem
 					label="${c:l('menu.administration.documentTypes') }"
 					href="documentTypes.zul" />
 				<menuitem

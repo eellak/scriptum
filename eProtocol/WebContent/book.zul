@@ -1,0 +1,58 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('bookPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('bookPage.title')}" border="normal"
+		width="100%"
+		apply="gr.scriptum.eprotocol.controller.BookController">
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row visible="@{BookController.isEntityCreated}">
+					${c:l('protocolBook.id')}
+					<label id="idLbl"
+						value="@{BookController.entity.id}" />
+				</row>
+				<row>
+					${c:l('protocolBook.protocolSeries')}
+					<textbox id="protocolSeriesTxb"
+						value="@{BookController.entity.protocolSeries}" width="300px"
+						constraint="no empty" />
+				</row>
+				<row>
+					${c:l('protocolBook.protocolYear')}
+					<textbox id="protocolYearTxb"
+						value="@{BookController.entity.protocolYear}" width="200px"
+						constraint="no empty" />
+				</row>
+				<row>
+					${c:l('protocolBook.isActive')}
+					<checkbox id="isActiveChkbx"
+						checked="@{BookController.entity.isActive,converter=gr.scriptum.eprotocol.util.CheckBoxToIntegerTypeConverter}" />
+				</row>
+				<row>
+					${c:l('protocolBook.isPreferred')}
+					<checkbox id="isPreferredChkbx"
+						checked="@{BookController.entity.isPreferred,converter=gr.scriptum.eprotocol.util.CheckBoxToIntegerTypeConverter}" />
+				</row>
+				<row>
+					${c:l('functions')}
+					<hbox>
+						<button id="newBtn" label="${c:l('new')}" />
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@{BookController.isLocked}" />
+						<button id="deleteBtn" label="${c:l('delete')}"
+							disabled="@{BookController.isEntityNotCreated}" />
+					</hbox>
+				</row>
+
+			</rows>
+		</grid>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

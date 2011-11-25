@@ -1,0 +1,74 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('booksPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('booksPage.title')}" border="normal"
+		width="100%"
+		apply="gr.scriptum.eprotocol.controller.BooksController">
+		<listbox id="entitiesLstbx" rows="10"
+			model="@{BooksController.entities}"
+			selectedItem="@{BooksController.selected}">
+
+			<listhead>
+				<listheader label="${c:l('protocolBook.id')}"
+					sort="auto" value="id" forward="onSort=onSort"
+					sortDirection="ascending" />
+				<listheader
+					label="${c:l('protocolBook.protocolSeries')}" sort="auto"
+					value="protocolSeries" forward="onSort=onSort" />
+				<listheader label="${c:l('protocolBook.protocolYear')}"
+					sort="auto" value="protocolYear" forward="onSort=onSort" />
+				<listheader label="${c:l('protocolBook.isActive')}"
+					sort="auto" value="isActive" forward="onSort=onSort" />
+				<listheader label="${c:l('protocolBook.isPreferred')}"
+					sort="auto" value="isPreferred" forward="onSort=onSort" />
+			</listhead>
+			<listitem self="@{each='protocolBookRow'}">
+				<listcell label="@{protocolBookRow.id}" />
+				<listcell label="@{protocolBookRow.protocolSeries}" />
+				<listcell label="@{protocolBookRow.protocolYear}" />
+				<listcell>
+					<checkbox
+						checked="@{protocolBookRow.isActive,converter=gr.scriptum.eprotocol.util.CheckBoxToIntegerTypeConverter}"
+						disabled="true" />
+				</listcell>
+				<listcell>
+					<checkbox
+						checked="@{protocolBookRow.isPreferred,converter=gr.scriptum.eprotocol.util.CheckBoxToIntegerTypeConverter}"
+						disabled="true" />
+				</listcell>
+			</listitem>
+		</listbox>
+		<paging id="pgng" pageSize="10" />
+		<separator bar="true" />
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row>
+					${c:l('protocolBook.protocolSeries')}
+					<textbox width="300px"
+						value="@{BooksController.entity.protocolSeries}" />
+				</row>
+				<row>
+					${c:l('protocolBook.protocolYear')}
+					<textbox width="300px"
+						value="@{BooksController.entity.protocolYear}" />
+				</row>
+				<row>
+					<label value="${c:l('functions')}" />
+					<hbox>
+						<button id="searchBtn" label="${c:l('search')}" />
+						<button id="clearBtn" label="${c:l('clear')}" />
+						<button id="newBtn" label="${c:l('new')}" />
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>
