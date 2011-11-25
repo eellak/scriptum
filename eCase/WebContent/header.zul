@@ -65,6 +65,17 @@
 			</menupopup>
 		</menu>
 
+		<menu label="${c:l('menu.reports') }">
+			<menupopup>
+				<menuitem label="${c:l('menu.reports.assigner') }"
+					href="reports_assigner.zul" />
+				<menuitem label="${c:l('menu.reports.admin') }"
+					href="reports_admin.zul" />
+			</menupopup>
+		</menu>
+
+
+
 		<menu label="${c:l('menu.help') }">
 			<menupopup>
 				<menuitem label="${c:l('menu.help.links') }"

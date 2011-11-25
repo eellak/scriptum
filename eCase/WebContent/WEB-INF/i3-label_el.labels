@@ -23,6 +23,7 @@ print=Εκτύπωση
 display=Προβολή
 send=Αποστολή
 cancel=Ακύρωση
+create=Δημιουργία
 
 #############
 #general messages
@@ -277,6 +278,10 @@ menu.contacts.contacts=Επαφές
 menu.contacts.companies=Εταιρείες/Οργανισμοί
 menu.contacts.companyTypes=Τυποι Εταιρειών/Οργανισμών
 
+menu.reports=Αναφορές
+menu.reports.assigner=Αναφορές Αναθέτη
+menu.reports.admin=Αναφορές Διαχειριστή
+
 menu.help=Βοήθεια
 menu.help.community=Κοινότητα Χρηστών
 menu.help.links=Χρήσιμοι Σύνδεσμοι
@@ -377,3 +382,8 @@ taskTypesPage.title=Διαχείριση Τύπων Αναθέσεων
 
 ##taskTypePage
 taskTypePage.title=Διαχείριση Τύπου Ανάθεσης
+
+##Reports Assigner
+reportsAssigner.title=Αναφορές Αναθέσεων και Έργων
+
+report1.title=Όλες οι αναθέσεις που έχουν ανατεθεί σε υφισταμένους μου και στον εαυτό μου από έργα που δημιούργησα καθώς και ελεύθερες αναθέσεις.
