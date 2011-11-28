@@ -383,7 +383,8 @@ taskTypesPage.title=Διαχείριση Τύπων Αναθέσεων
 ##taskTypePage
 taskTypePage.title=Διαχείριση Τύπου Ανάθεσης
 
-##Reports Assigner
+##Reports 
+report.results=Αποτελέσματα
 reportsAssigner.title=Αναφορές Αναθέσεων και Έργων
 
 report.taskPerProject.title=Όλες οι αναθέσεις που έχουν ανατεθεί σε υφισταμένους μου και στον εαυτό μου από έργα που δημιούργησα καθώς και ελεύθερες αναθέσεις.
