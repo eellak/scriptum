@@ -252,6 +252,8 @@
 								label="${c:l('delete')}"
 								disabled="@{IncomingController.isDeleteButtonDisabled}"
 								visible="${sec:isAnyGranted('ROLE_ADMIN,ROLE_WRITER')}" />
+							<button id="taskBtn" label="${c:l('incomingPage.task')}"
+								disabled="@{IncomingController.isTaskButtonDisabled}"/>
 						</hbox>
 					</vbox>
 				</row>

@@ -309,7 +309,8 @@ incomingPage.errorSaving=Παρουσιάστηκε σφάλμα κατά την
 incomingPage.errorSubmitting=Παρουσιάστηκε σφάλμα κατά την εισαγωγή του Πρωτ/λου.
 incomingPage.deleteProtocol=Μετά τη διαγραφή του, το πρωτόκολλο δε θα μπορεί να μεταβεί στην αρχική του κατάσταση. Είστε σίγουρος/η πως επιθυμείτε την οριστική διαγραφή του πρωτοκόλλου; 
 incomingPage.deleteProtocol.success=Η διαγραφή πραγματοποιήθηκε επιτυχώς.
- 
+incomingPage.task=Δημιουργία Ανάθεσης
+
 ##outgoingPage
 outgoingPage.title=Εισαγωγή Εξερχομένου Πρωτοκόλλου
 outgoingPage.recipients=Παραλήπτες
@@ -331,6 +332,7 @@ outgoingPage.diavgeiaLblFailed=Μη επιτυχημένη προσπάθεια 
 outgoingPage.diavgeiaLblSuccess=Έχει αποσταλλεί επιτυχώς
 outgoingPage.diavgeiaLblSuccessWithErrors=Έχει αποσταλλεί επιτυχώς, με κάποια σφάλματα
 outgoingPage.diavgeiaLblSuccessNoDocumentsSent=Έχει αποσταλλεί επιτυχώς, χωρίς έγγραφα
+outgoingPage.task=Δημιουργία Ανάθεσης
 
 ##incomingPrint
 incomingPrintPage.title=Εκτύπωση Εισερχομένου Πρωτοκόλλου
