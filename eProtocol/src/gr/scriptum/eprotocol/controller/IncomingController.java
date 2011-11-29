@@ -780,13 +780,10 @@ public class IncomingController extends ProtocolController {
 	}
 
 	public void onClick$taskBtn() {
-		log.info(Executions.getCurrent().getServerName());
-		log.info(Executions.getCurrent().getServerPort());
-		log.info(Executions.getCurrent().getContextPath());
 		Executions.getCurrent().sendRedirect(
 				"http://" + Executions.getCurrent().getServerName() + ":"
 						+ Executions.getCurrent().getServerPort()
-						+ "/eCase/task.zul?", "_blank");
+						+ "/eCase/task.zul?ip="+protocol.getId(), "_blank");
 	}
 
 	public boolean isLocked() {

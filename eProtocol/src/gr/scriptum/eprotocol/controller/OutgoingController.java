@@ -108,14 +108,14 @@ public class OutgoingController extends ProtocolController {
 	private int distributionMethodWebServiceId;
 
 	private String mailServerType = MailDispatcherConfig.IMAP;
-	
+
 	private String smtpHost = null;
 
 	private String smtpUser = null;
 
 	private String smtpPassword = null;
-	
-	private int    smtpPort = MailDispatcherConfig.DEFAULT_SMTP_PORT;
+
+	private int smtpPort = MailDispatcherConfig.DEFAULT_SMTP_PORT;
 
 	private String emailFrom = null;
 
@@ -174,7 +174,7 @@ public class OutgoingController extends ProtocolController {
 	Window contactWin;
 
 	Bandbox protocolBookBndbx;
-	
+
 	Listbox documentsLstbx;
 
 	Listbox toLstbx;
@@ -243,11 +243,11 @@ public class OutgoingController extends ProtocolController {
 
 		List<DiavgeiaReceipt> diavgeiaReceipts = null;
 		try {
-			for(ProtocolDocument protocolDocument: protocolDocuments) {
+			for (ProtocolDocument protocolDocument : protocolDocuments) {
 				ResponseSendDocument responseSendDocument = fetchDocumentFromOpenKM(protocolDocument);
 				protocolDocument.setContent(responseSendDocument.getContent());
 			}
-			
+
 			diavgeiaReceipts = diavgeiaDispatcher.sendOutgoingProtocol(
 					protocol, diavgeiaData);
 		} catch (Exception e) {
@@ -354,8 +354,8 @@ public class OutgoingController extends ProtocolController {
 				ProtocolNumberDAO protocolNumberDAO = new ProtocolNumberDAO();
 				ProtocolNumber protocolNumber = null;
 
-				protocolNumber = protocolNumberDAO
-						.getNextNumber(ProtocolNumberType.COMMON, protocol.getProtocolBook());
+				protocolNumber = protocolNumberDAO.getNextNumber(
+						ProtocolNumberType.COMMON, protocol.getProtocolBook());
 
 				tx.commit();
 				log.info("Got Protocol Number (Commited transaction): " + tx);
@@ -564,7 +564,8 @@ public class OutgoingController extends ProtocolController {
 					requestMoveNode.setOldPath(okmNodePendingOutgoing
 							+ IConstants.OKM_FOLDER_DELIMITER
 							+ protocol.getId());
-					requestMoveNode.setNewPath(okmNodeOutgoing+ IConstants.OKM_FOLDER_DELIMITER
+					requestMoveNode.setNewPath(okmNodeOutgoing
+							+ IConstants.OKM_FOLDER_DELIMITER
 							+ protocol.getProtocolBook().getProtocolSeries()
 							+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
 							+ protocol.getProtocolBook().getProtocolYear());
@@ -602,16 +603,20 @@ public class OutgoingController extends ProtocolController {
 					// update local protocol documents with new path
 					for (ProtocolDocument document : protocolDocuments) {
 						String path = document.getOkmPath();
-						path = path.replaceFirst(
-								okmNodePendingOutgoing
-										+ IConstants.OKM_FOLDER_DELIMITER
-										+ protocol.getId(), okmNodeOutgoing
-										+ IConstants.OKM_FOLDER_DELIMITER
-										+ protocol.getProtocolBook().getProtocolSeries()
-										+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
-										+ protocol.getProtocolBook().getProtocolYear()
-										+ IConstants.OKM_FOLDER_DELIMITER
-										+ protocol.getProtocolNumber());
+						path = path
+								.replaceFirst(
+										okmNodePendingOutgoing
+												+ IConstants.OKM_FOLDER_DELIMITER
+												+ protocol.getId(),
+										okmNodeOutgoing
+												+ IConstants.OKM_FOLDER_DELIMITER
+												+ protocol.getProtocolBook()
+														.getProtocolSeries()
+												+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
+												+ protocol.getProtocolBook()
+														.getProtocolYear()
+												+ IConstants.OKM_FOLDER_DELIMITER
+												+ protocol.getProtocolNumber());
 						document.setOkmPath(path);
 						protocolDocumentDAO.update(document);
 					}
@@ -652,12 +657,12 @@ public class OutgoingController extends ProtocolController {
 		}
 
 		MailDispatcherConfig config = new MailDispatcherConfig();
-		
-		if( mailServerType.equalsIgnoreCase(MailDispatcherConfig.IMAP ))
+
+		if (mailServerType.equalsIgnoreCase(MailDispatcherConfig.IMAP))
 			config.setIMAP();
-		else if( mailServerType.equalsIgnoreCase(MailDispatcherConfig.POP3 ) )
+		else if (mailServerType.equalsIgnoreCase(MailDispatcherConfig.POP3))
 			config.setPOP3();
-		else if ( mailServerType.equalsIgnoreCase(MailDispatcherConfig.IMAPS )){
+		else if (mailServerType.equalsIgnoreCase(MailDispatcherConfig.IMAPS)) {
 			config.setIMAPS();
 			config.setEnableStarttls(true);
 		}
@@ -732,7 +737,8 @@ public class OutgoingController extends ProtocolController {
 		defaultDistributionMethodId = parameterDAO
 				.getAsInteger(IConstants.PARAM_DISTRIBUTION_METHOD_NA_ID);
 
-		mailServerType = parameterDAO.getAsString(IConstants.PARAM_MAIL_SERVER_TYPE);
+		mailServerType = parameterDAO
+				.getAsString(IConstants.PARAM_MAIL_SERVER_TYPE);
 		smtpHost = parameterDAO.getAsString(IConstants.PARAM_SMTP_HOST);
 		smtpPort = parameterDAO.getAsInteger(IConstants.PARAM_SMTP_PORT);
 		smtpUser = parameterDAO.getAsString(IConstants.PARAM_SMTP_USER);
@@ -750,7 +756,7 @@ public class OutgoingController extends ProtocolController {
 
 		ProtocolBookDAO protocolBookDAO = new ProtocolBookDAO();
 		protocolBooks = protocolBookDAO.findActiveBooks();
-		
+
 		initData();
 
 		// fetch existing protocol, if any
@@ -799,7 +805,6 @@ public class OutgoingController extends ProtocolController {
 		getBinder(outgoingWin).loadAll();
 	}
 
-	
 	public void onChanging$toBndbx(InputEvent event) {
 		toTerm = StringUtils.trimToNull(event.getValue());
 		searchToContacts(0);
@@ -1325,6 +1330,13 @@ public class OutgoingController extends ProtocolController {
 
 	}
 
+	public void onClick$taskBtn() {
+		Executions.getCurrent().sendRedirect(
+				"http://" + Executions.getCurrent().getServerName() + ":"
+						+ Executions.getCurrent().getServerPort()
+						+ "/eCase/task.zul?op=" + protocol.getId(), "_blank");
+	}
+
 	public boolean isProtocolSubmitted() {
 
 		if (protocol.getProtocolNumber() != null) {
@@ -1389,6 +1401,10 @@ public class OutgoingController extends ProtocolController {
 		}
 
 		return false;
+	}
+
+	public boolean isTaskButtonDisabled() {
+		return !isProtocolSubmitted();
 	}
 
 	public boolean isDiavgeiaSelectionsDisabled() {
