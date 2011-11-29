@@ -38,30 +38,44 @@ public class GenericEntityController<T, DAO extends GenericDAO> extends
 	private Callback callback = null;
 
 	@SuppressWarnings("unchecked")
-	private T initEntity() throws Exception {
+	protected T initEntity() throws Exception {
 		return (T) Class.forName(entityClass.getName()).newInstance();
 	}
 
 	@SuppressWarnings("unchecked")
-	private DAO initDAO() throws Exception {
+	protected DAO initDAO() throws Exception {
 		return (DAO) Class.forName(daoClass.getName()).newInstance();
 	}
 
 	@SuppressWarnings("unchecked")
-	private void delete() throws Exception {
+	protected void save() throws Exception {
+		
+		Integer id = getEntityId(entity);
+
+		DAO dao = initDAO();
+		if (id == null) { // new entity, create
+			dao.makePersistent(entity);
+		} else {
+			dao.update(entity);
+		}
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected void delete() throws Exception {
 
 		Integer id = getEntityId(entity);
 
 		DAO dao = initDAO();
 		dao.deleteById(id);
 
-		Messagebox.show(Labels.getLabel("delete.success"),
-				Labels.getLabel("success.title"), Messagebox.OK,
-				Messagebox.INFORMATION);
-
-		entity = initEntity();
-		getBinder(win).loadAll();
-		clearValidationMessages(win);
+//		Messagebox.show(Labels.getLabel("delete.success"),
+//				Labels.getLabel("success.title"), Messagebox.OK,
+//				Messagebox.INFORMATION);
+//
+//		entity = initEntity();
+//		getBinder(win).loadAll();
+//		clearValidationMessages(win);
 	}
 
 	protected Integer getEntityId(T entity) throws Exception {
@@ -128,14 +142,8 @@ public class GenericEntityController<T, DAO extends GenericDAO> extends
 
 		validateFields(win);
 
-		Integer id = getEntityId(entity);
-
-		DAO dao = initDAO();
-		if (id == null) { // new entity, create
-			dao.makePersistent(entity);
-		} else {
-			dao.update(entity);
-		}
+		save();
+		
 		getBinder(win).loadAll();
 
 		if (callback != null) { // notify caller
@@ -174,6 +182,15 @@ public class GenericEntityController<T, DAO extends GenericDAO> extends
 						public void onEvent(Event event) throws Exception {
 							if (((Integer) event.getData()).intValue() == Messagebox.YES) {
 								delete();
+								
+								Messagebox.show(Labels.getLabel("delete.success"),
+										Labels.getLabel("success.title"), Messagebox.OK,
+										Messagebox.INFORMATION);
+
+								entity = initEntity();
+								getBinder(win).loadAll();
+								clearValidationMessages(win);
+
 							}
 						}
 					});
