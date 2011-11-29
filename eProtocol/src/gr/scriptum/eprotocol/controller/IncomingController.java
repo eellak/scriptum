@@ -51,6 +51,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.SuspendNotAllowedException;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -336,7 +337,8 @@ public class IncomingController extends ProtocolController {
 					requestMoveNode.setOldPath(okmNodePendingIncoming
 							+ IConstants.OKM_FOLDER_DELIMITER
 							+ protocol.getId());
-					requestMoveNode.setNewPath(okmNodeIncoming+ IConstants.OKM_FOLDER_DELIMITER
+					requestMoveNode.setNewPath(okmNodeIncoming
+							+ IConstants.OKM_FOLDER_DELIMITER
 							+ protocol.getProtocolBook().getProtocolSeries()
 							+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
 							+ protocol.getProtocolBook().getProtocolYear());
@@ -374,16 +376,20 @@ public class IncomingController extends ProtocolController {
 					// update local protocol documents with new path
 					for (ProtocolDocument document : protocolDocuments) {
 						String path = document.getOkmPath();
-						path = path.replaceFirst(
-								okmNodePendingIncoming
-										+ IConstants.OKM_FOLDER_DELIMITER
-										+ protocol.getId(), okmNodeIncoming
-										+ IConstants.OKM_FOLDER_DELIMITER
-										+ protocol.getProtocolBook().getProtocolSeries()
-										+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
-										+ protocol.getProtocolBook().getProtocolYear()
-										+ IConstants.OKM_FOLDER_DELIMITER
-										+ protocol.getProtocolNumber());
+						path = path
+								.replaceFirst(
+										okmNodePendingIncoming
+												+ IConstants.OKM_FOLDER_DELIMITER
+												+ protocol.getId(),
+										okmNodeIncoming
+												+ IConstants.OKM_FOLDER_DELIMITER
+												+ protocol.getProtocolBook()
+														.getProtocolSeries()
+												+ IConstants.OKM_PROTOCOL_NUMBER_DELIMITER
+												+ protocol.getProtocolBook()
+														.getProtocolYear()
+												+ IConstants.OKM_FOLDER_DELIMITER
+												+ protocol.getProtocolNumber());
 						document.setOkmPath(path);
 						protocolDocumentDAO.update(document);
 					}
@@ -773,6 +779,16 @@ public class IncomingController extends ProtocolController {
 
 	}
 
+	public void onClick$taskBtn() {
+		log.info(Executions.getCurrent().getServerName());
+		log.info(Executions.getCurrent().getServerPort());
+		log.info(Executions.getCurrent().getContextPath());
+		Executions.getCurrent().sendRedirect(
+				"http://" + Executions.getCurrent().getServerName() + ":"
+						+ Executions.getCurrent().getServerPort()
+						+ "/eCase/task.zul?", "_blank");
+	}
+
 	public boolean isLocked() {
 		if (protocol == null) {
 			return true;
@@ -850,6 +866,10 @@ public class IncomingController extends ProtocolController {
 		}
 
 		return false;
+	}
+
+	public boolean isTaskButtonDisabled() {
+		return !isProtocolSubmitted();
 	}
 
 	public String getContactFullName() {
