@@ -68,7 +68,9 @@
 		<intercept-url pattern="/users.zul" access="ROLE_ADMIN" />
 		<intercept-url pattern="/user.zul" access="ROLE_ADMIN" />
 		<intercept-url pattern="/protocolBook.zul" access="ROLE_ADMIN" />
-
+		<intercept-url pattern="/books.zul" access="ROLE_ADMIN" />
+		<intercept-url pattern="/book.zul" access="ROLE_ADMIN" />
+		
 		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
 		<form-login login-page="/login.zul" default-target-url="/index.zul"
