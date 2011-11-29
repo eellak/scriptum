@@ -22,13 +22,15 @@
 					${c:l('protocolBook.protocolSeries')}
 					<textbox id="protocolSeriesTxb"
 						value="@{BookController.entity.protocolSeries}" width="300px"
-						constraint="no empty" />
+						constraint="no empty"
+						readonly="@{BookController.isEntityCreated}" />
 				</row>
 				<row>
 					${c:l('protocolBook.protocolYear')}
 					<textbox id="protocolYearTxb"
 						value="@{BookController.entity.protocolYear}" width="200px"
-						constraint="no empty" />
+						constraint="no empty"
+						readonly="@{BookController.isEntityCreated}" />
 				</row>
 				<row>
 					${c:l('protocolBook.isActive')}
