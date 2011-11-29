@@ -22,7 +22,8 @@ public class ProtocolNumberDAO extends GenericDAO<ProtocolNumber, Integer> {
 
 	private static Log log = LogFactory.getLog(ProtocolNumberDAO.class);
 
-	public ProtocolNumber getNextNumber(ProtocolNumberType type, ProtocolBook protocolBook) {
+	public ProtocolNumber getNextNumber(ProtocolNumberType type,
+			ProtocolBook protocolBook) {
 
 		Query query = getSession()
 				.createQuery(
@@ -47,6 +48,18 @@ public class ProtocolNumberDAO extends GenericDAO<ProtocolNumber, Integer> {
 		}
 
 		return number;
+	}
+
+	public ProtocolNumber createProtocolNumber(ProtocolBook protocolBook) {
+		ProtocolNumber protocolNumber = new ProtocolNumber();
+		protocolNumber.setProtocolBook(protocolBook);
+		protocolNumber.setVersion(new Long(1));
+		protocolNumber.setNumber(new Long(0));
+		protocolNumber.setType(ProtocolNumberType.COMMON.ordinal());
+		Date now = new Date();
+		protocolNumber.setCreateDt(now);
+		protocolNumber.setUpdateTs(now);
+		return super.makePersistent(protocolNumber);
 	}
 
 }
