@@ -19,6 +19,7 @@ public class ReportTaskPerProjectDAO extends
 	
 	@Override
 	public Integer countReportRows(Users user) {
+		log.info("countReportRows() started.");
 		Query query = getSession()
 				.createSQLQuery(
 						"SELECT  count(*)"
@@ -28,13 +29,16 @@ public class ReportTaskPerProjectDAO extends
 								+ " WHERE  p.user_creator_id = :myUserId  OR  ( pt.project_id IS NULL AND pt.user_creator_id = :myUserId ) ");
 
 		query.setParameter("myUserId", user.getId());
-		log.info("countTaskPerProjectForUser() finished.");
+		log.info("countReportRows() finished.");
 		return ((BigInteger) query.uniqueResult()).intValue();
 	}
+	
+
 	
 	@Override
 	public List createReport(Users user,
 			Integer firstResult, Integer maxResults) {
+		log.info("createReport() started.");
 		Query query = getSession()
 				.createSQLQuery(
 						"SELECT  pt.project_id, pt.id, usr.name, usr.surname , p.name , pt.name, ts.name "
@@ -46,7 +50,8 @@ public class ReportTaskPerProjectDAO extends
 								+ " LIMIT " + firstResult + "," + maxResults);
 
 		query.setParameter("myUserId", user.getId());
-
+		log.info("createReport() Report fetched : " + query.list().size());
+		
 		List list = query.list();
 		List<TaskPerProject> results = new ArrayList<TaskPerProject>();
 		for (Object result : list) {
@@ -54,14 +59,15 @@ public class ReportTaskPerProjectDAO extends
 			TaskPerProject tp = new TaskPerProject();
 			tp.setProjectId((Integer) row[0]);
 			tp.setTaskId((Integer) row[1]);
-			tp.setTaskDispatcher(row[2] + " " + row[3]);
+			tp.setTaskDispatcher((String) ( row[2] + " " + row[3]));
 			tp.setProjectName( (String) row[4]);
 			tp.setTaskName((String) row[5]);
+			log.info("createReport() Report TaskStateName : " +  row[6]);
 			tp.setTaskState((String) row[6]);
 			results.add(tp);
 		}
 
-		log.info("createTaskPerProjectForUser() finished.");
+		log.info("createReport() finished.");
 		return results;
 	}
 }
