@@ -280,6 +280,7 @@ menu.contacts.companyTypes=Τυποι Εταιρειών/Οργανισμών
 
 menu.reports=Αναφορές
 menu.reports.taskPerProject=Αναθέσεις ανά Έργα
+menu.reports.taskNumberPerUser=Αναθέσεις ανά Χρήστη
 menu.reports.admin=Αναφορές Διαχειριστή
 
 menu.help=Βοήθεια
@@ -384,7 +385,10 @@ taskTypesPage.title=Διαχείριση Τύπων Αναθέσεων
 taskTypePage.title=Διαχείριση Τύπου Ανάθεσης
 
 ##Reports 
+report.report=Αναφορά
 report.results=Αποτελέσματα
 reportsAssigner.title=Αναφορές Αναθέσεων και Έργων
 
 report.taskPerProject.title=Όλες οι αναθέσεις που έχουν ανατεθεί σε υφισταμένους μου και στον εαυτό μου από έργα που δημιούργησα καθώς και ελεύθερες αναθέσεις.
+report.taskPerUser.title=Ο αριθμός των αναθέσεων που έχουν ανατεθεί σε υφισταμένους μου και στον εαυτό μου από έργα που δημιούργησα καθώς και ελεύθερες αναθέσεις ανά χρήστη και κατάσταση ανάθεσης
+report.taskPerUser.taskNumber=Αριθμός
