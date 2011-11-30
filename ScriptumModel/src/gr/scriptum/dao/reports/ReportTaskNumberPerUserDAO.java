@@ -20,16 +20,18 @@ public class ReportTaskNumberPerUserDAO extends
 
 	@Override
 	public Integer countReportRows(Users user) {
+		
+		log.info("countReportRows() started.");
 		Query query = getSession()
 				.createSQLQuery(
 						"SELECT COUNT(*) as rcount FROM ( "
-								+ " SELECT usr.username, usr.name, usr.surname, COUNT(*), ts.name"
+								+ " SELECT usr.username as userName, usr.name as uName, usr.surname as uSurname, COUNT(*) as taskNumber, ts.name as taskState"
 								+ " FROM   project_task pt  LEFT JOIN project p ON pt.project_id = p.id "
 								+ " LEFT JOIN users usr ON pt.user_dispatcher_id  = usr.id "
 								+ " LEFT JOIN task_state ts ON pt.task_state_id = ts.id "
 								+ " WHERE  p.user_creator_id = :myUserId  OR    ( pt.project_id IS NULL AND pt.user_creator_id = :myUserId ) "
 								+ " GROUP BY pt.user_dispatcher_id, pt.task_state_id "
-								+ " ORDER BY pt.user_dispatcher_id ) AS tabl").addScalar("rcount");
+								+ " ORDER BY pt.user_dispatcher_id ) AS tabl");
 
 		query.setParameter("myUserId", user.getId());
 		log.info("countReportRows() finished.");
@@ -39,7 +41,7 @@ public class ReportTaskNumberPerUserDAO extends
 	@Override
 	public List createReport(Users user, Integer firstResult,
 			Integer maxResults) {
-		log.info("createReport() started.");
+		log.info("createReport(1) started.");
 		Query query = getSession()
 				.createSQLQuery( " SELECT usr.username as userName, usr.name as uName, usr.surname as uSurname, COUNT(*) as taskNumber, ts.name as taskState "
 						+ " FROM   project_task pt  LEFT JOIN project p ON pt.project_id = p.id "
@@ -63,7 +65,8 @@ public class ReportTaskNumberPerUserDAO extends
 			String name = (String) row[1];
 			String sname =(String) row[2];
 			tp.setNameSurname( name + " " + sname );
-			tp.setTaskNumber((Integer) row[3]);
+			BigInteger tn = (BigInteger) row[3];
+			tp.setTaskNumber( tn.intValue() );
 			tp.setTaskState((String) row[4]);
 			results.add(tp);
 		}
