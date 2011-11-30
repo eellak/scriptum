@@ -9,9 +9,6 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 
 import gr.scriptum.dao.GenericDAO;
-import gr.scriptum.domain.Project;
-import gr.scriptum.domain.ProjectTask;
-import gr.scriptum.domain.TaskState;
 import gr.scriptum.domain.Users;
 import gr.scriptum.domain.reports.TaskPerProject;
 
@@ -57,13 +54,8 @@ public class ReportTaskPerProjectDAO extends
 		log.info("createReport() Report fetched : " + list.size());
 		
 		List<TaskPerProject> results = new ArrayList<TaskPerProject>();
-		int i=0;
 		for (Object result : list) {
 			Object[] row = (Object[]) result;
-			log.info("createReport() row[" + i + "] has length : " +  row.length );
-			i++;
-			for(int j=0; j< row.length ; j++)
-				log.info("createReport() : " + j + " value " + row[j].toString() );
 			
 			TaskPerProject tp = new TaskPerProject();
 			tp.setProjectId((Integer) row[0]);
@@ -71,7 +63,6 @@ public class ReportTaskPerProjectDAO extends
 			tp.setTaskDispatcher((String) ( row[2] + " " + row[3]));
 			tp.setProjectName( (String) row[4]);
 			tp.setTaskName((String) row[5]);
-			log.info("createReport() Report TaskStateName : " +  row[6]);
 			tp.setTaskState((String) row[6]);
 			results.add(tp);
 		}
