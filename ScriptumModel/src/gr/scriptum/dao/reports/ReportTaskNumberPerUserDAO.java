@@ -22,14 +22,14 @@ public class ReportTaskNumberPerUserDAO extends
 	public Integer countReportRows(Users user) {
 		Query query = getSession()
 				.createSQLQuery(
-						"SELECT COUNT(*) FROM ( "
+						"SELECT COUNT(*) as rcount FROM ( "
 								+ " SELECT usr.username, usr.name, usr.surname, COUNT(*), ts.name"
 								+ " FROM   project_task pt  LEFT JOIN project p ON pt.project_id = p.id "
 								+ " LEFT JOIN users usr ON pt.user_dispatcher_id  = usr.id "
 								+ " LEFT JOIN task_state ts ON pt.task_state_id = ts.id "
 								+ " WHERE  p.user_creator_id = :myUserId  OR    ( pt.project_id IS NULL AND pt.user_creator_id = :myUserId ) "
 								+ " GROUP BY pt.user_dispatcher_id, pt.task_state_id "
-								+ " ORDER BY pt.user_dispatcher_id ) AS t");
+								+ " ORDER BY pt.user_dispatcher_id ) AS tabl").addScalar("rcount");
 
 		query.setParameter("myUserId", user.getId());
 		log.info("countReportRows() finished.");
@@ -41,14 +41,14 @@ public class ReportTaskNumberPerUserDAO extends
 			Integer maxResults) {
 		log.info("createReport() started.");
 		Query query = getSession()
-				.createSQLQuery( " SELECT usr.username as userName, usr.name as name, usr.surname as surname, COUNT(*) as taskNumber, ts.name as taskState "
+				.createSQLQuery( " SELECT usr.username as userName, usr.name as uName, usr.surname as uSurname, COUNT(*) as taskNumber, ts.name as taskState "
 						+ " FROM   project_task pt  LEFT JOIN project p ON pt.project_id = p.id "
 						+ " LEFT JOIN users usr ON pt.user_dispatcher_id  = usr.id "
 						+ " LEFT JOIN task_state ts ON pt.task_state_id = ts.id "
 						+ " WHERE  p.user_creator_id = :myUserId  OR    ( pt.project_id IS NULL AND pt.user_creator_id = :myUserId ) "
 						+ " GROUP BY pt.user_dispatcher_id, pt.task_state_id "
 						+ " ORDER BY pt.user_dispatcher_id  LIMIT " + firstResult + "," + maxResults)
-						.addScalar("userName").addScalar("name").addScalar("surname").addScalar("taskNumber").addScalar("taskState");
+						.addScalar("userName").addScalar("uName").addScalar("uSurname").addScalar("taskNumber").addScalar("taskState");
 
 		query.setParameter("myUserId", user.getId());
 
