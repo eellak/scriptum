@@ -311,79 +311,83 @@ public class OutgoingTaskController extends TaskController {
 					projectTask = null;
 					return;
 				}
-			}
-			String idOutgoingProtocolString = execution
-					.getParameter(PARAM_KEY_PROTOCOL_OUTGOING);
-			Integer idOutgoingProtocol = null;
-			if (idOutgoingProtocolString != null) { // incoming protocol set
-				try {
-					idOutgoingProtocol = Integer
-							.valueOf(idOutgoingProtocolString);
-				} catch (Exception e) {
-					log.error(e);
+				String idOutgoingProtocolString = execution
+						.getParameter(PARAM_KEY_PROTOCOL_OUTGOING);
+				Integer idOutgoingProtocol = null;
+				if (idOutgoingProtocolString != null) { // incoming protocol set
+					try {
+						idOutgoingProtocol = Integer
+								.valueOf(idOutgoingProtocolString);
+					} catch (Exception e) {
+						log.error(e);
+						Messagebox.show(Labels.getLabel("fetch.notFound"),
+								Labels.getLabel("fetch.title"), Messagebox.OK,
+								Messagebox.ERROR);
+						projectTask = null;
+						return;
+					}
+				}
+
+				if ((idIncomingProtocol == null && idOutgoingProtocol == null)
+						|| (idIncomingProtocol != null && idOutgoingProtocol != null)) {
+
 					Messagebox.show(Labels.getLabel("fetch.notFound"),
 							Labels.getLabel("fetch.title"), Messagebox.OK,
 							Messagebox.ERROR);
 					projectTask = null;
 					return;
+
 				}
-			}
 
-			if ((idIncomingProtocol == null && idOutgoingProtocol == null)
-					|| (idIncomingProtocol != null && idOutgoingProtocol != null)) {
+				if (idIncomingProtocol != null) { // incoming protocol
+													// set
 
-				Messagebox.show(Labels.getLabel("fetch.notFound"),
-						Labels.getLabel("fetch.title"), Messagebox.OK,
-						Messagebox.ERROR);
-				projectTask = null;
-				return;
-
-			}
-
-			if (idIncomingProtocol != null) { // incoming protocol
-												// set
-
-				IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
-				IncomingProtocol incomingProtocol = incomingProtocolDAO
-						.findById(idIncomingProtocol, false);
-				if (incomingProtocol == null) {
-					Messagebox.show(Labels.getLabel("fetch.notFound"),
-							Labels.getLabel("fetch.title"), Messagebox.OK,
-							Messagebox.ERROR);
-					projectTask = null;
+					IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
+					IncomingProtocol incomingProtocol = incomingProtocolDAO
+							.findById(idIncomingProtocol, false);
+					if (incomingProtocol == null) {
+						Messagebox.show(Labels.getLabel("fetch.notFound"),
+								Labels.getLabel("fetch.title"), Messagebox.OK,
+								Messagebox.ERROR);
+						projectTask = null;
+						return;
+					}
+					// set task fields
+					ParameterDAO parameterDAO = new ParameterDAO();
+					String name = parameterDAO
+							.getAsString(IConstants.PARAM_TASK_PROTOCOL_INCOMING);
+					projectTask
+							.setName(name + incomingProtocol.getFullNumber());
+					// copy protocol documents (including byte content)
+					copyProtocolDocuments(incomingProtocol
+							.getProtocolDocuments());
 					return;
+
 				}
-				// set task fields
-				ParameterDAO parameterDAO = new ParameterDAO();
-				String name = parameterDAO
-						.getAsString(IConstants.PARAM_TASK_PROTOCOL_INCOMING);
-				projectTask.setName(name+incomingProtocol.getFullNumber());
-				// copy protocol documents (including byte content)
-				copyProtocolDocuments(incomingProtocol.getProtocolDocuments());
-				return;
 
-			}
+				if (idOutgoingProtocol != null) {// outgoing
+													// protocol set
 
-			if (idOutgoingProtocol != null) {// outgoing
-												// protocol set
-
-				OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
-				OutgoingProtocol outgoingProtocol = outgoingProtocolDAO
-						.findById(idOutgoingProtocol, false);
-				if (outgoingProtocol == null) {
-					Messagebox.show(Labels.getLabel("fetch.notFound"),
-							Labels.getLabel("fetch.title"), Messagebox.OK,
-							Messagebox.ERROR);
-					projectTask = null;
-					return;
+					OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
+					OutgoingProtocol outgoingProtocol = outgoingProtocolDAO
+							.findById(idOutgoingProtocol, false);
+					if (outgoingProtocol == null) {
+						Messagebox.show(Labels.getLabel("fetch.notFound"),
+								Labels.getLabel("fetch.title"), Messagebox.OK,
+								Messagebox.ERROR);
+						projectTask = null;
+						return;
+					}
+					// set task fields
+					ParameterDAO parameterDAO = new ParameterDAO();
+					String name = parameterDAO
+							.getAsString(IConstants.PARAM_TASK_PROTOCOL_OUTGOING);
+					projectTask
+							.setName(name + outgoingProtocol.getFullNumber());
+					// copy protocol documents (including byte content)
+					copyProtocolDocuments(outgoingProtocol
+							.getProtocolDocuments());
 				}
-				// set task fields
-				ParameterDAO parameterDAO = new ParameterDAO();
-				String name = parameterDAO
-						.getAsString(IConstants.PARAM_TASK_PROTOCOL_OUTGOING);
-				projectTask.setName(name + outgoingProtocol.getFullNumber());
-				// copy protocol documents (including byte content)
-				copyProtocolDocuments(outgoingProtocol.getProtocolDocuments());
 			}
 		}
 	}
