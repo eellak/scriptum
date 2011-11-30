@@ -6,24 +6,24 @@
 	<include id="ph" sclass="header" src="header.zul" />
 	<window id="win" title="${c:l('reportsAssigner.title')}"
 		border="normal" width="100%"
-		apply="gr.scriptum.ecase.controller.reports.AssignerReportController">
+		apply="gr.scriptum.ecase.controller.reports.TasksPerProjectController">
 
 		<grid>
 			<columns>
-				<column width="30%">Description</column>
-
+				<column width="100%" label="${c:l('report.report')}" />
 			</columns>
 			<rows>
 				<row>
-					<html content="${c:l('report.taskPerProject.title')}" />
-
-					<button id="createBtn" label="${c:l('create')}">
-					</button>
+					<vbox>
+						<html content="${c:l('report.taskPerProject.title')}" />
+						<button id="createBtn" label="${c:l('create')}" />
+					</vbox>
 				</row>
-				<row>
+				<row>	
+				    
 					<vbox>
 						<listbox id="reportLstbx"
-							model="@{AssignerReportController.reportResults}">
+							model="@{TasksPerProjectController.reportResults}">
 							<listhead>
 								<listheader
 									label="${c:l('project.name')}" />
@@ -40,12 +40,13 @@
 								<listcell label="@{reportRow.taskName}" />
 								<listcell
 									label="@{reportRow.taskDispatcher}" />
-								<listcell label="@{reportRow.taskName}" />
+								<listcell
+									label="@{reportRow.taskState}" />
 							</listitem>
 						</listbox>
 						<paging id="reportPgng" pageSize="3" />
+					</vbox>
 				</row>
-				</vbox>
 			</rows>
 		</grid>
 
