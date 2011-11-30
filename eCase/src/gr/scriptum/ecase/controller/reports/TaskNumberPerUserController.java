@@ -35,9 +35,7 @@ public class TaskNumberPerUserController extends BaseController {
 	private List<TaskPerUser> reportResults = null;
 
 	/**
-	 * ola ta tasks poy exoyn anateuei se olous (kai ifistamenous) sta erga poy
-	 * exw dimiourghsei, kathws kai ta eleuyera tasks pou dhmioyrghse o xristis
-	 * pou tin kalei
+	 * Number of tasks from projects I created per user per task state
 	 */
 
 	private void createReport(int startIndex) throws InterruptedException {
