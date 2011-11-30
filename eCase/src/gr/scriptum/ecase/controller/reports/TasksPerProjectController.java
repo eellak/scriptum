@@ -45,15 +45,10 @@ public class TasksPerProjectController extends BaseController {
 		ReportTaskPerProjectDAO dao = new ReportTaskPerProjectDAO();
 
 		// set up paging by counting records first
-		log.info("1");
-		Integer totalSize = dao.countReportRows(getUserInSession());
-		//Integer totalSize = dao.skaseKaiKolympa(getUserInSession());
-		log.info("2");
+		Integer totalSize = dao.countReportRows(getUserInSession());;
 		reportPgng.setTotalSize(totalSize);
-		log.info("3");
 		reportResults = (List<TaskPerProject>)dao.createReport(getUserInSession(),
 				startIndex, reportPgng.getPageSize());
-		log.info("4");
 	}
 
 	@Override
