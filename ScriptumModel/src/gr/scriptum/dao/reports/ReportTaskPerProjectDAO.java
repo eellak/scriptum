@@ -9,6 +9,9 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 
 import gr.scriptum.dao.GenericDAO;
+import gr.scriptum.domain.Project;
+import gr.scriptum.domain.ProjectTask;
+import gr.scriptum.domain.TaskState;
 import gr.scriptum.domain.Users;
 import gr.scriptum.domain.reports.TaskPerProject;
 
@@ -41,18 +44,18 @@ public class ReportTaskPerProjectDAO extends
 		log.info("createReport() started.");
 		Query query = getSession()
 				.createSQLQuery(
-						"SELECT  pt.project_id, pt.id, usr.name, usr.surname , p.name , pt.name, ts.name "
-								+ " FROM   project_task pt  LEFT JOIN project p ON pt.project_id = p.id "
+						"SELECT  pt.project_id as projectId, pt.id as taskId, usr.name as userName, usr.surname as userSurname, p.name as projectName, pt.name as taskName, ts.name as statusName "
+								+ " FROM   project_task pt LEFT JOIN project p ON pt.project_id = p.id "
 								+ " LEFT   JOIN users usr ON pt.user_dispatcher_id  = usr.id "
 								+ " LEFT   JOIN task_state ts ON pt.task_state_id = ts.id "
 								+ " WHERE  p.user_creator_id = :myUserId  OR  ( pt.project_id IS NULL AND pt.user_creator_id = :myUserId ) "
 								+ " ORDER BY pt.project_id DESC, pt.id DESC, usr.id"
-								+ " LIMIT " + firstResult + "," + maxResults);
+								+ " LIMIT " + firstResult + "," + maxResults).addScalar("projectId").addScalar("taskId").addScalar("userName").addScalar("userSurname").addScalar("projectName").addScalar("taskName").addScalar("statusName");
 
 		query.setParameter("myUserId", user.getId());
-		log.info("createReport() Report fetched : " + query.list().size());
-		
 		List list = query.list();
+		log.info("createReport() Report fetched : " + list.size());
+		
 		List<TaskPerProject> results = new ArrayList<TaskPerProject>();
 		int i=0;
 		for (Object result : list) {
