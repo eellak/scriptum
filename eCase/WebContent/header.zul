@@ -67,8 +67,8 @@
 
 		<menu label="${c:l('menu.reports') }">
 			<menupopup>
-				<menuitem label="${c:l('menu.reports.assigner') }"
-					href="reports_assigner.zul" />
+				<menuitem label="${c:l('menu.reports.taskPerProject') }"
+					href="report_task_per_project.zul" />
 				<menuitem label="${c:l('menu.reports.admin') }"
 					href="reports_admin.zul" />
 			</menupopup>
