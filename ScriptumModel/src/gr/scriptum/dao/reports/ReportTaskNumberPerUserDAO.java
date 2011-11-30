@@ -39,18 +39,22 @@ public class ReportTaskNumberPerUserDAO extends
 	@Override
 	public List createReport(Users user, Integer firstResult,
 			Integer maxResults) {
+		log.info("createReport() started.");
 		Query query = getSession()
-				.createSQLQuery( " SELECT usr.username, usr.name, usr.surname, COUNT(*), ts.name"
+				.createSQLQuery( " SELECT usr.username as userName, usr.name as name, usr.surname as surname, COUNT(*) as taskNumber, ts.name as taskState "
 						+ " FROM   project_task pt  LEFT JOIN project p ON pt.project_id = p.id "
 						+ " LEFT JOIN users usr ON pt.user_dispatcher_id  = usr.id "
 						+ " LEFT JOIN task_state ts ON pt.task_state_id = ts.id "
 						+ " WHERE  p.user_creator_id = :myUserId  OR    ( pt.project_id IS NULL AND pt.user_creator_id = :myUserId ) "
 						+ " GROUP BY pt.user_dispatcher_id, pt.task_state_id "
-						+ " ORDER BY pt.user_dispatcher_id  LIMIT " + firstResult + "," + maxResults);
+						+ " ORDER BY pt.user_dispatcher_id  LIMIT " + firstResult + "," + maxResults)
+						.addScalar("userName").addScalar("name").addScalar("surname").addScalar("taskNumber").addScalar("taskState");
 
 		query.setParameter("myUserId", user.getId());
 
 		List list = query.list();
+		log.info("createReport() Report fetched : " + list.size());
+		
 		List<TaskPerUser> results = new ArrayList<TaskPerUser>();
 		for (Object result : list) {
 			Object[] row = (Object[]) result;
@@ -64,7 +68,7 @@ public class ReportTaskNumberPerUserDAO extends
 			results.add(tp);
 		}
 
-		log.info("createTaskPerProjectForUser() finished.");
+		log.info("createReport() finished.");
 		return  results;
 	}
 
