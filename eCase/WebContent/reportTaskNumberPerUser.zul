@@ -1,0 +1,53 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('messagePage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('reportsAssigner.title')}"
+		border="normal" width="100%"
+		apply="gr.scriptum.ecase.controller.reports.TaskNumberPerUserController">
+
+		<grid>
+			<columns>
+				<column width="100%" label="${c:l('report.report')}" />
+			</columns>
+			<rows>
+				<row>
+					<vbox>
+						<html content="${c:l('report.taskPerUser.title')}" />
+						<button id="createBtn" label="${c:l('create')}" />
+					</vbox>
+				</row>
+				<row>	
+				    
+					<vbox>
+						<listbox id="reportLstbx"
+							model="@{TaskNumberPerUserController.reportResults}">
+							<listhead>
+								<listheader
+									label="${c:l('users.username')}" />
+								<listheader
+									label="${c:l('projectTask.usersByUserDispatcherId')}" />
+								<listheader
+									label="${c:l('report.taskPerUser.taskNumber')}" />
+								<listheader
+									label="${c:l('projectTask.taskState')}" />
+							</listhead>
+							<listitem self="@{each='reportRow'}">
+								<listcell label="@{reportRow.userName}" />
+								<listcell label="@{reportRow.nameSurname}" />
+								<listcell label="@{reportRow.taskNumber}" />
+								<listcell label="@{reportRow.taskState}" />
+							</listitem>
+						</listbox>
+						<paging id="reportPgng" pageSize="3" />
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+
+
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>
