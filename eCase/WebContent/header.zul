@@ -69,6 +69,8 @@
 			<menupopup>
 				<menuitem label="${c:l('menu.reports.taskPerProject') }"
 					href="reportTaskPerProject.zul" />
+				<menuitem label="${c:l('menu.reports.taskNumberPerUser') }"
+					href="reportTaskNumberPerUser.zul" />					
 				<menuitem label="${c:l('menu.reports.admin') }"
 					href="reports_admin.zul" />
 			</menupopup>
