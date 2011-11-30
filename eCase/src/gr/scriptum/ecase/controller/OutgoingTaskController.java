@@ -3,6 +3,8 @@
  */
 package gr.scriptum.ecase.controller;
 
+import gr.scriptum.dao.IncomingProtocolDAO;
+import gr.scriptum.dao.OutgoingProtocolDAO;
 import gr.scriptum.dao.ParameterDAO;
 import gr.scriptum.dao.ProjectDAO;
 import gr.scriptum.dao.ProjectTaskDAO;
@@ -10,9 +12,12 @@ import gr.scriptum.dao.ProjectUserDAO;
 import gr.scriptum.dao.TaskMessageDAO;
 import gr.scriptum.dao.UserHierarchyDAO;
 import gr.scriptum.dao.UsersDAO;
+import gr.scriptum.domain.IncomingProtocol;
+import gr.scriptum.domain.OutgoingProtocol;
 import gr.scriptum.domain.Project;
 import gr.scriptum.domain.ProjectTask;
 import gr.scriptum.domain.ProjectUser;
+import gr.scriptum.domain.ProtocolDocument;
 import gr.scriptum.domain.TaskDocument;
 import gr.scriptum.domain.TaskMessage;
 import gr.scriptum.domain.UserHierarchy;
@@ -59,6 +64,10 @@ public class OutgoingTaskController extends TaskController {
 
 	public static final String PARAM_KEY_CLONE = "c";
 
+	public static final String PARAM_KEY_PROTOCOL_INCOMING = "ip";
+
+	public static final String PARAM_KEY_PROTOCOL_OUTGOING = "op";
+
 	public static final String PARAM_CLONE_TRUE = "1";
 
 	private static Log log = LogFactory.getLog(OutgoingTaskController.class);
@@ -100,6 +109,23 @@ public class OutgoingTaskController extends TaskController {
 			} else {
 				userHierarchy.setIsHighlighted(false);
 			}
+		}
+	}
+
+	private void copyProtocolDocuments(Set<ProtocolDocument> protocolDocuments) {
+		for (ProtocolDocument protocolDocument : protocolDocuments) {
+			TaskDocument taskDocument = new TaskDocument();
+			taskDocument.setDocumentName(protocolDocument.getDocumentName());
+			taskDocument.setDocumentType(protocolDocument.getDocumentType());
+			taskDocument.setDocumentKeywords(protocolDocument
+					.getDocumentKeywords());
+			taskDocument.setDocumentSize(protocolDocument.getDocumentSize());
+			taskDocument
+					.setDocumentNumber(protocolDocument.getDocumentNumber());
+			// Document content is stored in OpenKM, fetch and copy
+			ResponseSendDocument responseSendDocument = fetchDocumentFromOpenKM(protocolDocument);
+			taskDocument.setContent(responseSendDocument.getContent());
+			taskDocuments.add(taskDocument);
 		}
 	}
 
@@ -206,21 +232,31 @@ public class OutgoingTaskController extends TaskController {
 			// set parent task, if any
 			String idParentTaskString = execution
 					.getParameter(PARAM_KEY_PARENT_TASK);
+			Integer idParentTask = null;
 			if (idParentTaskString != null) { // parent task set
-				Integer idParentTask = null;
 				try {
 					idParentTask = Integer.valueOf(idParentTaskString);
 				} catch (Exception e) {
 					log.error(e);
+					Messagebox.show(Labels.getLabel("fetch.notFound"),
+							Labels.getLabel("fetch.title"), Messagebox.OK,
+							Messagebox.ERROR);
 					projectTask = null;
 					return;
 				}
+				if (idParentTask != null) {
+					ProjectTaskDAO projectTaskDAO = new ProjectTaskDAO();
+					ProjectTask parentTask = projectTaskDAO.findById(
+							idParentTask, false);
+					// TODO: check if user has access to the given parent task
+					if (parentTask == null) {
+						Messagebox.show(Labels.getLabel("fetch.notFound"),
+								Labels.getLabel("fetch.title"), Messagebox.OK,
+								Messagebox.ERROR);
+						projectTask = null;
+						return;
+					}
 
-				ProjectTaskDAO projectTaskDAO = new ProjectTaskDAO();
-				ProjectTask parentTask = projectTaskDAO.findById(idParentTask,
-						false);
-				// TODO: check if user has access to the given parent task
-				if (parentTask != null) {
 					projectTask.setProjectTask(parentTask);
 					projectTask.setProject(parentTask.getProject());
 					highlightProjectParticipants();
@@ -247,14 +283,107 @@ public class OutgoingTaskController extends TaskController {
 								.getDocumentSize());
 						taskDocument.setDocumentNumber(parentTaskDocument
 								.getDocumentNumber());
-						// Document content is stored in OpenKM, fetch and copy
+						// Document content is stored in OpenKM, fetch and
+						// copy
 						ResponseSendDocument responseSendDocument = fetchDocumentFromOpenKM(parentTaskDocument);
 						taskDocument.setContent(responseSendDocument
 								.getContent());
 						taskDocuments.add(taskDocument);
 					}
-
+					return;
 				}
+			}
+
+			// check if task is being generated based on an existing
+			// protocol
+			String idIncomingProtocolString = execution
+					.getParameter(PARAM_KEY_PROTOCOL_INCOMING);
+			Integer idIncomingProtocol = null;
+			if (idIncomingProtocolString != null) {
+				try {
+					idIncomingProtocol = Integer
+							.valueOf(idIncomingProtocolString);
+				} catch (Exception e) {
+					log.error(e);
+					Messagebox.show(Labels.getLabel("fetch.notFound"),
+							Labels.getLabel("fetch.title"), Messagebox.OK,
+							Messagebox.ERROR);
+					projectTask = null;
+					return;
+				}
+			}
+			String idOutgoingProtocolString = execution
+					.getParameter(PARAM_KEY_PROTOCOL_OUTGOING);
+			Integer idOutgoingProtocol = null;
+			if (idOutgoingProtocolString != null) { // incoming protocol set
+				try {
+					idOutgoingProtocol = Integer
+							.valueOf(idOutgoingProtocolString);
+				} catch (Exception e) {
+					log.error(e);
+					Messagebox.show(Labels.getLabel("fetch.notFound"),
+							Labels.getLabel("fetch.title"), Messagebox.OK,
+							Messagebox.ERROR);
+					projectTask = null;
+					return;
+				}
+			}
+
+			if ((idIncomingProtocol == null && idOutgoingProtocol == null)
+					|| (idIncomingProtocol != null && idOutgoingProtocol != null)) {
+
+				Messagebox.show(Labels.getLabel("fetch.notFound"),
+						Labels.getLabel("fetch.title"), Messagebox.OK,
+						Messagebox.ERROR);
+				projectTask = null;
+				return;
+
+			}
+
+			if (idIncomingProtocol != null) { // incoming protocol
+												// set
+
+				IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
+				IncomingProtocol incomingProtocol = incomingProtocolDAO
+						.findById(idIncomingProtocol, false);
+				if (incomingProtocol == null) {
+					Messagebox.show(Labels.getLabel("fetch.notFound"),
+							Labels.getLabel("fetch.title"), Messagebox.OK,
+							Messagebox.ERROR);
+					projectTask = null;
+					return;
+				}
+				// set task fields
+				ParameterDAO parameterDAO = new ParameterDAO();
+				String name = parameterDAO
+						.getAsString(IConstants.PARAM_TASK_PROTOCOL_INCOMING);
+				projectTask.setName(name+incomingProtocol.getFullNumber());
+				// copy protocol documents (including byte content)
+				copyProtocolDocuments(incomingProtocol.getProtocolDocuments());
+				return;
+
+			}
+
+			if (idOutgoingProtocol != null) {// outgoing
+												// protocol set
+
+				OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
+				OutgoingProtocol outgoingProtocol = outgoingProtocolDAO
+						.findById(idOutgoingProtocol, false);
+				if (outgoingProtocol == null) {
+					Messagebox.show(Labels.getLabel("fetch.notFound"),
+							Labels.getLabel("fetch.title"), Messagebox.OK,
+							Messagebox.ERROR);
+					projectTask = null;
+					return;
+				}
+				// set task fields
+				ParameterDAO parameterDAO = new ParameterDAO();
+				String name = parameterDAO
+						.getAsString(IConstants.PARAM_TASK_PROTOCOL_OUTGOING);
+				projectTask.setName(name + outgoingProtocol.getFullNumber());
+				// copy protocol documents (including byte content)
+				copyProtocolDocuments(outgoingProtocol.getProtocolDocuments());
 			}
 		}
 	}

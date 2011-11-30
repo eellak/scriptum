@@ -18,6 +18,7 @@ import gr.scriptum.domain.Contact;
 import gr.scriptum.domain.Project;
 import gr.scriptum.domain.ProjectTask;
 import gr.scriptum.domain.ProtocolDocument;
+import gr.scriptum.domain.ScriptumDocument;
 import gr.scriptum.domain.TaskDocument;
 import gr.scriptum.domain.TaskPriority;
 import gr.scriptum.domain.TaskResult;
@@ -366,13 +367,13 @@ public class TaskController extends BaseController {
 	}
 
 	protected ResponseSendDocument fetchDocumentFromOpenKM(
-			TaskDocument taskDocument) {
+			ScriptumDocument scriptumDocument) {
 
 		OkmProtocolDispatcherImpl okmDispatcher = getOkmDispatcher();
 		RequestSendDocument requestSendDocument = new RequestSendDocument(
 				getUserInSession().getUsername(), getUserInSession().getId(),
 				getIp(), IConstants.SYSTEM_NAME, getOkmToken());
-		requestSendDocument.setDocumentPath(taskDocument.getOkmPath());
+		requestSendDocument.setDocumentPath(scriptumDocument.getOkmPath());
 		ResponseSendDocument responseSendDocument = okmDispatcher
 				.sendDocument(requestSendDocument);
 		if (responseSendDocument.isError()) {

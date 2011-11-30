@@ -85,4 +85,8 @@ public interface IConstants {
 	public static final String PARAM_TASK_CHANGE_SUBJECT= "TASK_CHANGE_NOTIFICATION_SUBJECT";
 	
 	public static final String PARAM_TASK_CHANGE_MESSAGE= "TASK_CHANGE_NOTIFICATION_MESSAGE";
+
+	public static final String PARAM_TASK_PROTOCOL_INCOMING = "TASK_PROTOCOL_INCOMING";
+	
+	public static final String PARAM_TASK_PROTOCOL_OUTGOING = "TASK_PROTOCOL_OUTGOING";
 }
