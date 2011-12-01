@@ -61,7 +61,7 @@ public class ReportTaskNumberWaitingPerCompanyDAO extends
                                 " AND pt.task_state_id = 3 " +
                                 " GROUP BY p.id, com.name " +
                                 " ORDER BY com.name, co.surname, p.id, pt.expected_dt LIMIT " + firstResult + "," + maxResults)
-						        .addScalar("pName").addScalar("numExtTasks").addScalar("com.name");
+						        .addScalar("pName").addScalar("numExtTasks").addScalar("comName");
 
 		query.setParameter("myUserId", user.getId());
 
