@@ -15,6 +15,17 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.event.PagingEvent;
 
+
+/**
+ * @author Michael Mountrakis mountrakis@uit.gr <br>
+ * Date: Dec 1, 2011 11:05:51 AM <br>
+ * Project: SCRIPTUM http://www.scriptum.gr <br>
+ * http://www.uit.gr <br>
+ * Older controller that does not uses GenericReportController. This class is NOT used within
+ * Scriptum eCase reports, but is left here with the purpose to demonstrate a basic report controller
+ * for the developers that do not wish to use GenericReportController.
+ * This implementation is obsolete and the new one is described in TaskNumberPerUserController
+ */
 public class TaskNumberPerUserControllerOld extends BaseController {
 
 	private static final long serialVersionUID = -4764822453190267965L;

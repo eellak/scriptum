@@ -1,11 +1,5 @@
 package gr.scriptum.ecase.controller.reports;
 
-/**
- * Template ZK Controller for all reports. 
- * @author Mike Mountrakis mountrakis@uit.gr
- */
-
-
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -22,6 +16,16 @@ import gr.scriptum.dao.reports.ReportProducerDAO;
 
 
 
+
+/**
+ * @author Michael Mountrakis mountrakis@uit.gr <br>
+ * Date: Dec 1, 2011 11:03:02 AM <br>
+ * Project: SCRIPTUM http://www.scriptum.gr <br>
+ * http://www.uit.gr <br>
+ * Template ZK Controller to be used for all reports. <br>
+ * @param <T> The Hibernate domain - the Entity to be represented by each report line. 
+ * @param <DAO> The Hibernate Data Access Object (DAO) to be used for the report. 
+ */
 public class GenericReportController< T, DAO extends ReportProducerDAO>  
        extends BaseController   {
 	
