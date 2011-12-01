@@ -13,6 +13,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 
+/**
+ * @author Michael Mountrakis mountrakis@uit.gr
+ * Date: Dec 1, 2011
+ * Project: SCRIPTUM http://www.scriptum.gr
+ * http://www.uit.gr
+ */
 public class ReportTaskNumberPerUserDAO extends
 		GenericDAO<TaskPerProject, Integer> implements ReportProducerDAO {
 
