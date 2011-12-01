@@ -1,5 +1,11 @@
 package gr.scriptum.ecase.controller.reports;
 
+/**
+ * Template ZK Controller for all reports. 
+ * @author Mike Mountrakis mountrakis@uit.gr
+ */
+
+
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
