@@ -72,7 +72,10 @@
 				<menuitem label="${c:l('menu.reports.taskNumberPerUser') }"
 					href="reportTaskNumberPerUser.zul" />	
 				<menuitem label="${c:l('menu.reports.taskWaitingExternal') }"
-					href="reportTasksWaitingExternall.zul" />				
+					href="reportTasksWaitingExternall.zul" />	
+				<menuitem label="${c:l('menu.reports.taskNumberWaitingExternal') }"
+					href="reportTasksNumberWaitingExternall.zul" />	
+								
 				<menuitem label="${c:l('menu.reports.admin') }"
 					href="reports_admin.zul" />
 			</menupopup>
