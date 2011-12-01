@@ -16,7 +16,8 @@ public class TaskPerProject {
 	String contactSurname;
 	String companyName;
 	
-	
+	//used from ReportTaskNumberWaitingPerCompanyDAO
+	Integer taskNumber;
 	
 	public TaskPerProject() {
 
@@ -100,6 +101,14 @@ public class TaskPerProject {
 
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
+	}
+
+	public Integer getTaskNumber() {
+		return taskNumber;
+	}
+
+	public void setTaskNumber(Integer taskNumber) {
+		this.taskNumber = taskNumber;
 	}
 
 }
