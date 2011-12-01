@@ -1,13 +1,23 @@
 package gr.scriptum.domain.reports;
 
+import java.util.Date;
+
 public class TaskPerProject {
 	Integer projectId;
 	Integer taskId;
-	String taskName;
-	String projectName;
-	String taskDispatcher;
-	String taskState;
+	String  taskName;
+	String  projectName;
+	String  taskDispatcher;
+	String  taskState;
 
+	//used from reportTasksWaitingExternalDAO
+	Date   taskStartDt;
+	String contactName;
+	String contactSurname;
+	String companyName;
+	
+	
+	
 	public TaskPerProject() {
 
 	}
@@ -58,6 +68,38 @@ public class TaskPerProject {
 
 	public void setTaskState(String taskState) {
 		this.taskState = taskState;
+	}
+
+	public Date getTaskStartDt() {
+		return taskStartDt;
+	}
+
+	public void setTaskStartDt(Date taskStartDt) {
+		this.taskStartDt = taskStartDt;
+	}
+
+	public String getContactName() {
+		return contactName;
+	}
+
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
+	}
+
+	public String getContactSurname() {
+		return contactSurname;
+	}
+
+	public void setContactSurname(String contactSurname) {
+		this.contactSurname = contactSurname;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
 }
