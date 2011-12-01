@@ -76,9 +76,10 @@ public class ReportTasksWaitingExternalDAO extends
 			tp.setTaskDispatcher((String) (row[2] + " " + row[3]));
 			tp.setProjectName((String) row[4]);
 			tp.setTaskName((String) row[5]);
-			tp.setContactName((String)row[6]);
-			tp.setContactSurname((String) row[7]);
-			tp.setCompanyName((String) row[8]);
+			tp.setTaskState((String) row[6]);
+			tp.setContactName((String)row[7]);
+			tp.setContactSurname((String) row[8]);
+			tp.setCompanyName((String) row[9]);
 			results.add(tp);
 		}
 
