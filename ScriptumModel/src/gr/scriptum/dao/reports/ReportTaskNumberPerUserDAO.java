@@ -20,7 +20,7 @@ import org.hibernate.Query;
  * http://www.uit.gr
  */
 public class ReportTaskNumberPerUserDAO extends
-		GenericDAO<TaskPerProject, Integer> implements ReportProducerDAO {
+		GenericDAO<TaskPerUser, Integer> implements ReportProducerDAO {
 
 	private static Log log = LogFactory.getLog(ReportTaskPerProjectDAO.class);
 
