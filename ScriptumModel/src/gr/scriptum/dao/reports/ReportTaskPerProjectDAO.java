@@ -66,7 +66,6 @@ public class ReportTaskPerProjectDAO extends
 		List<TaskPerProject> results = new ArrayList<TaskPerProject>();
 		for (Object result : list) {
 			Object[] row = (Object[]) result;
-
 			TaskPerProject tp = new TaskPerProject();
 			tp.setProjectId((Integer) row[0]);
 			tp.setTaskId((Integer) row[1]);
