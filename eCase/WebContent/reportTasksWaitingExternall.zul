@@ -32,8 +32,6 @@
 								<listheader
 									label="${c:l('projectTask.usersByUserDispatcherId')}" />
 								<listheader
-									label="${c:l('projectTask.taskState')}" />
-								<listheader
 									label="${c:l('contact.name')}" />	
 								<listheader
 									label="${c:l('contact.surname')}" />										
@@ -42,19 +40,12 @@
 									
 							</listhead>
 							<listitem self="@{each='reportRow'}">
-								<listcell
-									label="@{reportRow.projectName}" />
+								<listcell label="@{reportRow.projectName}" />
 								<listcell label="@{reportRow.taskName}" />
-								<listcell
-									label="@{reportRow.taskDispatcher}" />
-								<listcell
-									label="@{reportRow.taskState}" />
-								<listcell
-									label="@{reportRow.contactName}" />
-								<listcell
-									label="@{reportRow.contactSurname}" />		
-								<listcell
-									label="@{reportRow.companyName}" />																	
+								<listcell label="@{reportRow.taskDispatcher}" />
+								<listcell label="@{reportRow.contactName}" />
+								<listcell label="@{reportRow.contactSurname}" />		
+								<listcell label="@{reportRow.companyName}" />																	
 							</listitem>
 						</listbox>
 						<paging id="reportPgng" pageSize="30" />
