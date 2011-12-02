@@ -1,15 +1,11 @@
 package gr.scriptum.ecase.controller.reports;
 
 import java.util.List;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zul.event.PagingEvent;
+
 
 import gr.scriptum.dao.TaskStateDAO;
 import gr.scriptum.dao.reports.ReportTasksViewDAO;
-import gr.scriptum.dao.reports.ReportTasksWaitingExternalDAO;
 import gr.scriptum.domain.TaskState;
 import gr.scriptum.domain.reports.TaskPerProject;
 
@@ -22,7 +18,6 @@ import gr.scriptum.domain.reports.TaskPerProject;
  */
 public class TasksViewController  extends GenericReportController<TaskPerProject, ReportTasksViewDAO>{
 
-	private static Log log = LogFactory.getLog(TasksViewController.class);
 	private static final long serialVersionUID = 8527048384587364950L;
 	
 	
@@ -45,7 +40,6 @@ public class TasksViewController  extends GenericReportController<TaskPerProject
 	}
 	
 	@Override
-	@SuppressWarnings("unchecked")
 	protected void createReport(int startIndex) throws Exception {
 		// Use the Domain to load the daos.
 		ReportTasksViewDAO dao = new ReportTasksViewDAO();

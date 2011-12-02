@@ -1,7 +1,6 @@
 package gr.scriptum.ecase.controller.reports;
 
 import gr.scriptum.dao.reports.ReportTaskNumberWaitingPerCompanyDAO;
-import gr.scriptum.dao.reports.ReportTasksWaitingExternalDAO;
 import gr.scriptum.domain.reports.TaskPerProject;
 
 
