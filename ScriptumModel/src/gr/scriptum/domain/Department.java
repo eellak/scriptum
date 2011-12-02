@@ -10,10 +10,15 @@ import java.util.Set;
  */
 public class Department implements java.io.Serializable {
 
+	public static final Integer CAN_ASSIGN_ANYWHERE_TRUE = 1;
+	
+	public static final Integer CAN_ASSIGN_ANYWHERE_FALSE = 0;
+	
 	private Integer id;
 	private Department department;
 	private String name;
 	private String description;
+	private Integer canAssignAnywhere;
 	private Set<UserHierarchy> userHierarchies = new HashSet<UserHierarchy>(0);
 	private Set<Department> departments = new HashSet<Department>(0);
 
@@ -25,10 +30,12 @@ public class Department implements java.io.Serializable {
 	}
 
 	public Department(Department department, String name, String description,
-			Set<UserHierarchy> userHierarchies, Set<Department> departments) {
+			Integer canAssignAnywhere, Set<UserHierarchy> userHierarchies,
+			Set<Department> departments) {
 		this.department = department;
 		this.name = name;
 		this.description = description;
+		this.canAssignAnywhere = canAssignAnywhere;
 		this.userHierarchies = userHierarchies;
 		this.departments = departments;
 	}
@@ -104,6 +111,14 @@ public class Department implements java.io.Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Integer getCanAssignAnywhere() {
+		return canAssignAnywhere;
+	}
+
+	public void setCanAssignAnywhere(Integer canAssignAnywhere) {
+		this.canAssignAnywhere = canAssignAnywhere;
 	}
 
 }

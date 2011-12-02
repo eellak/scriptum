@@ -3,31 +3,37 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Oct 5, 2011 7:41:17 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="gr.scriptum.domain.Department" table="department">
-        <id name="id" type="java.lang.Integer">
-            <column name="id" />
-            <generator class="identity" />
-        </id>
-        <many-to-one name="department" class="gr.scriptum.domain.Department" fetch="select">
-            <column name="parent_department_id" />
-        </many-to-one>
-        <property name="name" type="string">
-            <column name="name" length="64" not-null="true" />
-        </property>
-        <property name="description" type="string">
-            <column name="description" length="512" />
-        </property>
-        <set name="userHierarchies" table="user_hierarchy" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="department_id" not-null="true" />
-            </key>
-            <one-to-many class="gr.scriptum.domain.UserHierarchy" />
-        </set>
-        <set name="departments" table="department" inverse="true" lazy="true" fetch="select" order-by="id">
-            <key>
-                <column name="parent_department_id" />
-            </key>
-            <one-to-many class="gr.scriptum.domain.Department" />
-        </set>
-    </class>
+	<class name="gr.scriptum.domain.Department" table="department">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+		<many-to-one name="department" class="gr.scriptum.domain.Department"
+			fetch="select">
+			<column name="parent_department_id" />
+		</many-to-one>
+		<property name="name" type="string">
+			<column name="name" length="64" not-null="true" />
+		</property>
+		<property name="description" type="string">
+			<column name="description" length="512" />
+		</property>
+		<property name="canAssignAnywhere" type="java.lang.Integer">
+			<column name="can_assign_anywhere" />
+		</property>
+		<set name="userHierarchies" table="user_hierarchy" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="department_id" not-null="true" />
+			</key>
+			<one-to-many class="gr.scriptum.domain.UserHierarchy" />
+		</set>
+		<set name="departments" table="department" inverse="true" lazy="true"
+			fetch="select" order-by="id">
+			<key>
+				<column name="parent_department_id" />
+			</key>
+			<one-to-many class="gr.scriptum.domain.Department" />
+		</set>
+	</class>
 </hibernate-mapping>
