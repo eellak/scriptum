@@ -1,0 +1,85 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('messagePage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('reportsAssigner.title')}"
+		border="normal" width="100%"
+		apply="gr.scriptum.ecase.controller.reports.TasksViewController">
+
+		<grid>
+			<columns>
+				<column width="100%" label="${c:l('report.report')}" />
+			</columns>
+			<rows>
+				<row>
+					<vbox>
+						<html
+							content="${c:l('report.reportTasksView.title')}" />
+						<vbox>
+							<hbox>
+								${c:l('projectTask.taskState')}
+								<combobox id="stateCbx" width="300px"
+									model="@{TasksViewController.taskStates}"
+									selectedItem="@{TasksViewController.taskState}"
+									constraint="no empty">
+									<comboitem
+										self="@{each='taskStateRow'}" label="@{taskStateRow.name}" />
+								</combobox>
+							</hbox>
+							<hbox>
+								${c:l('report.reportTasksView.late')}
+								<checkbox
+									checked="@{TasksViewController.showLateTasksOnly,converter=gr.scriptum.util.CheckBoxToBooleanTypeConverter }" />
+							</hbox>
+							<button id="createBtn" label="${c:l('create')}" />
+							<button id="exportBtn" label="${c:l('exportFile')}" />
+						</vbox>
+					</vbox>
+				</row>
+
+				<row>
+					<vbox>
+						<listbox id="reportLstbx"
+							model="@{TasksViewController.reportResults}">
+							<listhead>
+								<listheader
+									label="${c:l('project.name')}" />
+								<listheader
+									label="${c:l('projectTask.name')}" />
+								<listheader
+									label="${c:l('projectTask.usersByUserDispatcherId')}" />
+								<listheader
+									label="${c:l('contact.name')}" />
+								<listheader
+									label="${c:l('contact.surname')}" />
+								<listheader
+									label="${c:l('company.name')}" />
+
+							</listhead>
+							<listitem self="@{each='reportRow'}">
+								<listcell
+									label="@{reportRow.projectName}" />
+								<listcell label="@{reportRow.taskName}" />
+								<listcell
+									label="@{reportRow.taskDispatcher}" />
+								<listcell
+									label="@{reportRow.contactName}" />
+								<listcell
+									label="@{reportRow.contactSurname}" />
+								<listcell
+									label="@{reportRow.companyName}" />
+							</listitem>
+						</listbox>
+						<paging id="reportPgng" pageSize="30" />
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+
+
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>
+

@@ -18,6 +18,7 @@
 					<vbox>
 						<html content="${c:l('report.tasksWaitingExternalNumber.title')}" />
 						<button id="createBtn" label="${c:l('create')}" />
+						<button id="exportBtn" label="${c:l('exportFile')}" />
 					</vbox>
 				</row>
 				<row>	
