@@ -2,7 +2,6 @@ package gr.scriptum.dao.reports;
 
 import gr.scriptum.dao.GenericDAO;
 import gr.scriptum.domain.Users;
-import gr.scriptum.domain.reports.TaskPerProject;
 import gr.scriptum.domain.reports.TaskPerUser;
 
 import java.math.BigInteger;
@@ -45,7 +44,7 @@ public class ReportTaskNumberPerUserDAO extends
 	}
 
 	@Override
-	public List createReport(Users user, Integer firstResult,
+	public List<TaskPerUser> createReport(Users user, Integer firstResult,
 			Integer maxResults) {
 		log.info("createReport(1) started.");
 		Query query = getSession()
@@ -60,7 +59,7 @@ public class ReportTaskNumberPerUserDAO extends
 
 		query.setParameter("myUserId", user.getId());
 
-		List list = query.list();
+		List<?> list = query.list();
 		log.info("createReport() Report fetched : " + list.size());
 		
 		List<TaskPerUser> results = new ArrayList<TaskPerUser>();

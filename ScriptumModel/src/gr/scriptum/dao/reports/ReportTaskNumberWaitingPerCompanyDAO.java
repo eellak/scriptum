@@ -47,7 +47,7 @@ public class ReportTaskNumberWaitingPerCompanyDAO extends
 	}
 
 	@Override
-	public List createReport(Users user, Integer firstResult,
+	public List<TaskPerProject> createReport(Users user, Integer firstResult,
 			Integer maxResults) {
 		log.info("createReport(1) started.");
 		Query query = getSession()
@@ -65,7 +65,7 @@ public class ReportTaskNumberWaitingPerCompanyDAO extends
 
 		query.setParameter("myUserId", user.getId());
 
-		List list = query.list();
+		List<?> list = query.list();
 		log.info("createReport() Report fetched : " + list.size());
 		
 		List<TaskPerProject> results = new ArrayList<TaskPerProject>();

@@ -48,7 +48,7 @@ public class ReportTasksWaitingExternalDAO extends
 	}
 
 	@Override
-	public List createReport(Users user, Integer firstResult, Integer maxResults) {
+	public List<TaskPerProject> createReport(Users user, Integer firstResult, Integer maxResults) {
 		log.info("createReport(1) started.");
 		Query query = getSession()
 				.createSQLQuery( "SELECT  pt.project_id AS pId, pt.id AS ptId, usr.name AS usrName, usr.surname AS usrSurname , p.name AS pName, pt.name  AS ptName , ts.name AS tsName , co.name AS coName,co.surname AS coSurname, com.name AS comName " +  
@@ -64,7 +64,7 @@ public class ReportTasksWaitingExternalDAO extends
 
 		query.setParameter("myUserId", user.getId());
 
-		List list = query.list();
+		List<?> list = query.list();
 		log.info("createReport() Report fetched : " + list.size());
 		
 		List<TaskPerProject> results = new ArrayList<TaskPerProject>();

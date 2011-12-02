@@ -68,7 +68,7 @@ public class ReportTasksViewDAO extends
 	}
 
 	@Override
-	public List createReport(Users user, Integer firstResult, Integer maxResults) {
+	public List<TaskPerProject> createReport(Users user, Integer firstResult, Integer maxResults) {
 		log.info("createReport(1) started.");
 		
 		String select =  setSelectQuery(user);
@@ -82,7 +82,7 @@ public class ReportTasksViewDAO extends
 		if( taskState != null)
 			query.setParameter("taskState", taskState);
 		
-		List list = query.list();
+		List<?> list = query.list();
 		log.info("createReport() Report fetched : " + list.size());
 		
 		List<TaskPerProject> results = new ArrayList<TaskPerProject>();

@@ -43,7 +43,7 @@ public class ReportTaskPerProjectDAO extends
 	}
 
 	@Override
-	public List createReport(Users user, Integer firstResult, Integer maxResults) {
+	public List<TaskPerProject> createReport(Users user, Integer firstResult, Integer maxResults) {
 		log.info("createReport() started.");
 		Query query = getSession()
 				.createSQLQuery(
@@ -60,7 +60,7 @@ public class ReportTaskPerProjectDAO extends
 				.addScalar("statusName");
 
 		query.setParameter("myUserId", user.getId());
-		List list = query.list();
+		List<?> list = query.list();
 		log.info("createReport() Report fetched : " + list.size());
 
 		List<TaskPerProject> results = new ArrayList<TaskPerProject>();
