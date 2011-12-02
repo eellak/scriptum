@@ -111,4 +111,18 @@ public class TaskPerProject {
 		this.taskNumber = taskNumber;
 	}
 
+	@Override
+	public String toString() {
+		return "TaskPerProject [projectId=" + projectId + ", taskId=" + taskId
+				+ ", taskName=" + taskName + ", projectName=" + projectName
+				+ ", taskDispatcher=" + taskDispatcher + ", taskState="
+				+ taskState + ", taskStartDt=" + taskStartDt + ", contactName="
+				+ contactName + ", contactSurname=" + contactSurname
+				+ ", companyName=" + companyName + ", taskNumber=" + taskNumber
+				+ "]";
+	}
+
+
+
+	
 }

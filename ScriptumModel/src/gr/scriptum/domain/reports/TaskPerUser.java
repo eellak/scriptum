@@ -44,4 +44,12 @@ public class TaskPerUser {
 		this.nameSurname = nameSurname;
 	}
 
+	@Override
+	public String toString() {
+		return "[userName=" + userName + ", nameSurname="
+				+ nameSurname + ", taskNumber=" + taskNumber + ", taskState="
+				+ taskState + "]";
+	}
+
+	
 }
