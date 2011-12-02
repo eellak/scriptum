@@ -110,6 +110,39 @@ public class IncomingTaskController extends TaskController {
 		getBinder(taskWin).loadAll();
 	}
 
+	public void onClick$saveBtn() throws InterruptedException {
+
+		validateFields(taskWin);
+
+		if (taskState.getId().intValue() == taskStateClosedId
+				&& taskResult == null) {
+
+			Messagebox.show(Labels.getLabel("taskPage.noResultSet"),
+					Labels.getLabel("error.title"), Messagebox.OK,
+					Messagebox.ERROR);
+			return;
+		}
+
+		try {
+
+			save();
+
+		} catch (Exception e) {
+			log.error(e);
+			Messagebox.show(Labels.getLabel("taskPage.errorSaving"),
+					Labels.getLabel("error.title"), Messagebox.OK,
+					Messagebox.ERROR);
+			getBinder(taskWin).loadAll();
+			return;
+		}
+
+		Messagebox.show(Labels.getLabel("save.OK"),
+				Labels.getLabel("save.title"), Messagebox.OK,
+				Messagebox.INFORMATION);
+		getBinder(taskWin).loadAll();
+
+	}
+	
 	public boolean isTaskClosable() {
 		if (projectTask == null) {
 			return false;

@@ -133,6 +133,7 @@ public class DepartmentsController extends BaseController {
 
 	public void onClick$newBtn() {
 		department = new Department();
+		department.setCanAssignAnywhere(Department.CAN_ASSIGN_ANYWHERE_FALSE);
 		Treeitem selectedItem = departmentsTree.getSelectedItem();
 		if (selectedItem != null) {
 			department.setDepartment((Department) selectedItem.getValue());

@@ -48,20 +48,20 @@
 
 		<menuitem label="${c:l('menu.index') }" href="index.zul" />
 
-		<menu label="${c:l('menu.administration') }">
+		<menu label="${c:l('menu.administration') }" visible="${sec:isAnyGranted('ROLE_CASE_ADMIN')}">
 			<menupopup>
 				<menuitem label="${c:l('menu.administration.users') }"
-					href="users.zul" visible="${sec:isAnyGranted('ROLE_CASE_ADMIN')}" />
+					href="users.zul"/>
 				<menuitem label="${c:l('menu.administration.departments') }"
-					href="departments.zul" visible="${sec:isAnyGranted('ROLE_CASE_ADMIN')}" />
+					href="departments.zul"/>
 				<menuitem label="${c:l('menu.administration.hierarchy') }"
-					href="hierarchy.zul" visible="${sec:isAnyGranted('ROLE_CASE_ADMIN')}" />
+					href="hierarchy.zul" />
 				<menuitem
 					label="${c:l('menu.administration.taskTypes') }"
-					href="taskTypes.zul" visible="${sec:isAnyGranted('ROLE_CASE_ADMIN')}" />
+					href="taskTypes.zul"/>
 				<menuitem
 					label="${c:l('menu.administration.parameters') }"
-					href="parameters.zul" visible="${sec:isAnyGranted('ROLE_CASE_ADMIN')}" />
+					href="parameters.zul"/>
 			</menupopup>
 		</menu>
 
@@ -78,7 +78,7 @@
 				<menuitem label="${c:l('menu.report.reportTasksView') }"
 					href="reportTasksView.zul" />		
 				<menuitem label="${c:l('menu.reports.admin') }"
-					href="reports_admin.zul" />
+					href="reports_admin.zul" visible="${sec:isAnyGranted('ROLE_CASE_ADMIN')}"/>
 			</menupopup>
 		</menu>
 

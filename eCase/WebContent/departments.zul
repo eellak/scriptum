@@ -47,17 +47,22 @@
 							<row>
 								${c:l('department.description')}
 								<textbox id="descriptionTxb"
-									value="@{DepartmentsController.department.description}" width="300px"
-									constraint="no empty" />
+									value="@{DepartmentsController.department.description}"
+									width="300px" constraint="no empty" />
 							</row>
 							<row>
 								${c:l('department.department')}
-								<combobox id="departmentCbx" width="300px"
-									model="@{DepartmentsController.departments}"
+								<combobox id="departmentCbx"
+									width="300px" model="@{DepartmentsController.departments}"
 									selectedItem="@{DepartmentsController.department.department}">
-									<comboitem self="@{each='departmentRow'}"
-										label="@{departmentRow.name}" />
+									<comboitem
+										self="@{each='departmentRow'}" label="@{departmentRow.name}" />
 								</combobox>
+							</row>
+							<row>
+								${c:l('department.canAssignAnywhere')}
+								<checkbox id="canAssignAnywhereChkbx"
+									checked="@{DepartmentsController.department.canAssignAnywhere,converter=gr.scriptum.util.CheckBoxToIntegerTypeConverter}" />
 							</row>
 							<row>
 								${c:l('functions')}
@@ -65,7 +70,8 @@
 									<button id="newBtn"
 										label="${c:l('new')}" />
 									<button id="saveBtn"
-										label="${c:l('save')}" disabled="@{DepartmentsController.isSaveDisabled}" />
+										label="${c:l('save')}"
+										disabled="@{DepartmentsController.isSaveDisabled}" />
 									<button id="deleteBtn"
 										label="${c:l('delete')}"
 										disabled="@{DepartmentsController.isDepartmentNotCreated}" />

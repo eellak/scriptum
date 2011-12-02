@@ -12,6 +12,7 @@ import gr.scriptum.dao.ProjectUserDAO;
 import gr.scriptum.dao.TaskMessageDAO;
 import gr.scriptum.dao.UserHierarchyDAO;
 import gr.scriptum.dao.UsersDAO;
+import gr.scriptum.domain.Department;
 import gr.scriptum.domain.IncomingProtocol;
 import gr.scriptum.domain.OutgoingProtocol;
 import gr.scriptum.domain.Project;
@@ -45,6 +46,7 @@ import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.event.InputEvent;
 import org.zkoss.zk.ui.event.OpenEvent;
 import org.zkoss.zk.ui.event.SelectEvent;
+import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.event.PagingEvent;
@@ -70,18 +72,55 @@ public class OutgoingTaskController extends TaskController {
 
 	public static final String PARAM_CLONE_TRUE = "1";
 
+	public static final Integer AUTO_MANAGED_TASK_YES = 1;
+
+	public static final Integer AUTO_MANAGED_TASK_NO = 0;
+
 	private static Log log = LogFactory.getLog(OutgoingTaskController.class);
 
-	private void addHierarchyBranch(UserHierarchy root) {
-		userHierarchies.add(root);
-		for (UserHierarchy child : root.getUserHierarchies()) {
-			addHierarchyBranch(child);
+	/* Components */
+	Checkbox taskTypeChkbx;
+
+	/* Data binding */
+	private Department department = null;
+	private Integer autoManagedTask = null;
+
+	/**
+	 * A list of subordinate users. If the task creator belongs to a department
+	 * able to assign anywhere, we must distinguish between 'pure' subordinate
+	 * users and those belonging to sibling/higher departments.
+	 */
+	private List<UserHierarchy> subordinates = null;
+
+	private void refreshUserDepartment() {
+		// find which department user belongs to
+		UserHierarchyDAO userHierarchyDAO = new UserHierarchyDAO();
+		List<UserHierarchy> hierarchies = userHierarchyDAO
+				.findByUser(getUserInSession());
+		if (hierarchies.isEmpty()) { // user hasn't been assigned to a
+										// department
+			userHierarchies = new ArrayList<UserHierarchy>();
+			return;
 		}
+		// user should only belong to exactly one department
+		department = hierarchies.get(0).getDepartment();
+
 	}
 
 	private void refreshUserHierarchies() {
 		UserHierarchyDAO userHierarchyDAO = new UserHierarchyDAO();
-		userHierarchies = userHierarchyDAO.findSubordinates(getUserInSession());
+		if (department.getCanAssignAnywhere().equals(
+				Department.CAN_ASSIGN_ANYWHERE_TRUE)) {
+			// fetch all users belonging to all departments
+			userHierarchies = userHierarchyDAO.findAll();
+			subordinates = userHierarchyDAO
+					.findSubordinates(getUserInSession());
+		} else {
+			// only fetch subordinates
+			userHierarchies = userHierarchyDAO
+					.findSubordinates(getUserInSession());
+			subordinates = null;
+		}
 	}
 
 	private void highlightProjectParticipants() {
@@ -132,6 +171,9 @@ public class OutgoingTaskController extends TaskController {
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
+
+		refreshUserDepartment();
+		autoManagedTask = AUTO_MANAGED_TASK_NO;
 
 		String idString = execution.getParameter(IConstants.PARAM_KEY_ID);
 		if (idString != null) { // existing task
@@ -402,6 +444,14 @@ public class OutgoingTaskController extends TaskController {
 		userHierarchyBndbx.close();
 		projectTask
 				.setUsersByUserDispatcherId(selectedUserHierarchy.getUsers());
+
+		if (department.getCanAssignAnywhere().equals(
+				Department.CAN_ASSIGN_ANYWHERE_TRUE)) {
+			autoManagedTask = AUTO_MANAGED_TASK_YES;
+		} else {
+			autoManagedTask = AUTO_MANAGED_TASK_NO;
+		}
+
 		getBinder(taskWin).loadAll();
 	}
 
@@ -447,11 +497,54 @@ public class OutgoingTaskController extends TaskController {
 						+ PARAM_CLONE_TRUE);
 	}
 
-	@Override
 	public void onClick$saveBtn() throws InterruptedException {
+
+		validateFields(taskWin);
+
+		if (taskState.getId().intValue() == taskStateClosedId
+				&& taskResult == null) {
+
+			Messagebox.show(Labels.getLabel("taskPage.noResultSet"),
+					Labels.getLabel("error.title"), Messagebox.OK,
+					Messagebox.ERROR);
+			return;
+		}
+
 		boolean isExistingTask = projectTask.getId() != null ? true : false;
 
-		super.onClick$saveBtn();
+		if (!isExistingTask && autoManagedTask.equals(AUTO_MANAGED_TASK_YES)) {
+			// an auto managed task has the same dispatcher and assignee
+			projectTask.setUsersByUserCreatorId(projectTask
+					.getUsersByUserDispatcherId());
+			projectTask.setDispatcherCloseable(true);
+			ParameterDAO parameterDAO = new ParameterDAO();
+			String prefix = parameterDAO
+					.getAsString(IConstants.PARAM_TASK_AUTOMANAGED_PREFIX);
+			StringBuffer sb = new StringBuffer();
+			sb.append(prefix);
+			sb.append(getUserInSession().getName() + " "
+					+ getUserInSession().getSurname() + "\n");
+			sb.append(projectTask.getComments() != null ? projectTask
+					.getComments() : "");
+			projectTask.setComments(sb.toString());
+		}
+
+		try {
+
+			save();
+
+		} catch (Exception e) {
+			log.error(e);
+			Messagebox.show(Labels.getLabel("taskPage.errorSaving"),
+					Labels.getLabel("error.title"), Messagebox.OK,
+					Messagebox.ERROR);
+			getBinder(taskWin).loadAll();
+			return;
+		}
+
+		Messagebox.show(Labels.getLabel("save.OK"),
+				Labels.getLabel("save.title"), Messagebox.OK,
+				Messagebox.INFORMATION);
 
 		if (isExistingTask) {
 			// send a notification message to the task assignee, letting him/her
@@ -475,6 +568,7 @@ public class OutgoingTaskController extends TaskController {
 			taskMessageDAO.makePersistent(taskMessage);
 		}
 
+		getBinder(taskWin).loadAll();
 	}
 
 	public boolean isProjectCbxVisible() {
@@ -506,6 +600,41 @@ public class OutgoingTaskController extends TaskController {
 		}
 
 		return false;
+	}
+
+	public boolean isTaskTypeChkBxVisible() {
+		if (department.getCanAssignAnywhere().equals(
+				Department.CAN_ASSIGN_ANYWHERE_TRUE) && !isTaskCreated()) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isTaskTypeChkBxDisabled() {
+		if (subordinates != null
+				&& !subordinates.contains(selectedUserHierarchy)) {
+			// selected assignee is either a manager or belongs to a different
+			// hierarchy branch, only one task type allowed
+			return true;
+		}
+		// selected assigne is a subordinate, provide task type option
+		return false;
+	}
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+	public Integer getAutoManagedTask() {
+		return autoManagedTask;
+	}
+
+	public void setAutoManagedTask(Integer autoManagedTask) {
+		this.autoManagedTask = autoManagedTask;
 	}
 
 }

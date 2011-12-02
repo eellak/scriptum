@@ -89,4 +89,6 @@ public interface IConstants {
 	public static final String PARAM_TASK_PROTOCOL_INCOMING = "TASK_PROTOCOL_INCOMING";
 	
 	public static final String PARAM_TASK_PROTOCOL_OUTGOING = "TASK_PROTOCOL_OUTGOING";
+	
+	public static final String PARAM_TASK_AUTOMANAGED_PREFIX= "TASK_AUTO_MANAGED_PREFIX";
 }

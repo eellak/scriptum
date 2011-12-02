@@ -65,49 +65,55 @@
 				<row>
 					${c:l('projectTask.usersByUserDispatcherId')}
 					<hbox>
-						<bandbox id="userHierarchyBndbx" autodrop="true"
-							value="@{OutgoingTaskController.userFullName }"
-							constraint="no empty" width="300px"
-							visible="@{OutgoingTaskController.isTaskNotCreated }">
-							<bandpopup>
-								<listbox id="userHierarchiesLstbx"
-									model="@{OutgoingTaskController.userHierarchies}"
-									selectedItem="@{OutgoingTaskController.selectedUserHierarchy}">
-									<listhead>
-										<listheader
-											label="${c:l('users.id')}" />
-										<listheader
-											label="${c:l('users.name')}" />
-										<listheader
-											label="${c:l('users.surname')}" />
-										<listheader
-											label="${c:l('users.username')}" />
-										<listheader
-											label="${c:l('department')}" />
-									</listhead>
-									<listitem
-										self="@{each='userHierarchyRow'}">
-										<listcell>
-											<label
-												value="@{userHierarchyRow.users.id}" />
-											<label value="${c:l('taskPage.participant')}"
-												style="color:red;"
-												visible="@{userHierarchyRow.isHighlighted}" />
-										</listcell>
-										<listcell
-											label="@{userHierarchyRow.users.id}" />
-										<listcell
-											label="@{userHierarchyRow.users.name}" />
-										<listcell
-											label="@{userHierarchyRow.users.surname}" />
-										<listcell
-											label="@{userHierarchyRow.users.username}" />
-										<listcell
-											label="@{userHierarchyRow.department.name}" />
-									</listitem>
-								</listbox>
-							</bandpopup>
-						</bandbox>
+						<hbox>
+							<bandbox id="userHierarchyBndbx"
+								autodrop="true" value="@{OutgoingTaskController.userFullName }"
+								constraint="no empty" width="300px"
+								visible="@{OutgoingTaskController.isTaskNotCreated }">
+								<bandpopup>
+									<listbox id="userHierarchiesLstbx"
+										model="@{OutgoingTaskController.userHierarchies}"
+										selectedItem="@{OutgoingTaskController.selectedUserHierarchy}">
+										<listhead>
+											<listheader
+												label="${c:l('users.id')}" />
+											<listheader
+												label="${c:l('users.name')}" />
+											<listheader
+												label="${c:l('users.surname')}" />
+											<listheader
+												label="${c:l('users.username')}" />
+											<listheader
+												label="${c:l('department')}" />
+										</listhead>
+										<listitem
+											self="@{each='userHierarchyRow'}">
+											<listcell>
+												<label
+													value="@{userHierarchyRow.users.id}" />
+												<label
+													value="${c:l('taskPage.participant')}" style="color:red;"
+													visible="@{userHierarchyRow.isHighlighted}" />
+											</listcell>
+											<listcell
+												label="@{userHierarchyRow.users.name}" />
+											<listcell
+												label="@{userHierarchyRow.users.surname}" />
+											<listcell
+												label="@{userHierarchyRow.users.username}" />
+											<listcell
+												label="@{userHierarchyRow.department.name}" />
+										</listitem>
+									</listbox>
+								</bandpopup>
+							</bandbox>
+							<checkbox id="taskTypeChkBx"
+								checked="@{OutgoingTaskController.autoManagedTask,converter=gr.scriptum.util.CheckBoxToIntegerTypeConverter }"
+								visible="@{OutgoingTaskController.isTaskTypeChkBxVisible }"
+								disabled="@{OutgoingTaskController.isTaskTypeChkBxDisabled }" />
+							<label value="${c:l('taskPage.taskType')}"
+								visible="@{OutgoingTaskController.isTaskTypeChkBxVisible }" />
+						</hbox>
 						<hbox id="usersByUserDispatcherIdHbx"
 							visible="@{OutgoingTaskController.isTaskCreated }">
 							<label
@@ -182,7 +188,8 @@
 					${c:l('projectTask.endDt')}
 					<datebox compact="true" width="200px"
 						lenient="false" format="dd/MM/yyyy"
-						value="@{OutgoingTaskController.projectTask.endDt }" />
+						value="@{OutgoingTaskController.projectTask.endDt }"
+						constraint="no empty" />
 				</row>
 				<row>
 					${c:l('projectTask.taskType')}
