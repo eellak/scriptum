@@ -2,6 +2,12 @@ package gr.scriptum.domain.reports;
 
 import java.util.Date;
 
+/**
+ * @author Michael Mountrakis mountrakis@uit.gr
+ * Date: Dec 2, 2011
+ * Project: SCRIPTUM http://www.scriptum.gr
+ * http://www.uit.gr
+ */
 public class TaskPerProject extends ReportDomain{
 	Integer projectId;
 	Integer taskId;
@@ -110,19 +116,6 @@ public class TaskPerProject extends ReportDomain{
 	public void setTaskNumber(Integer taskNumber) {
 		this.taskNumber = taskNumber;
 	}
-
-	@Override
-	public String toString() {
-		return "TaskPerProject [projectId=" + projectId + ", taskId=" + taskId
-				+ ", taskName=" + taskName + ", projectName=" + projectName
-				+ ", taskDispatcher=" + taskDispatcher + ", taskState="
-				+ taskState + ", taskStartDt=" + taskStartDt + ", contactName="
-				+ contactName + ", contactSurname=" + contactSurname
-				+ ", companyName=" + companyName + ", taskNumber=" + taskNumber
-				+ "]";
-	}
-
-
 
 	
 }

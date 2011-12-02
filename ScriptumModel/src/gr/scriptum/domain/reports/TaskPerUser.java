@@ -1,7 +1,11 @@
 package gr.scriptum.domain.reports;
 
+
 /**
- * @author Mike Mountrakis mountrakis@uit.gr
+ * @author Michael Mountrakis mountrakis@uit.gr
+ * Date: Dec 2, 2011
+ * Project: SCRIPTUM http://www.scriptum.gr
+ * http://www.uit.gr
  */
 public class TaskPerUser extends ReportDomain{
 	String userName;
@@ -43,13 +47,5 @@ public class TaskPerUser extends ReportDomain{
 	public void setNameSurname(String nameSurname) {
 		this.nameSurname = nameSurname;
 	}
-
-	@Override
-	public String toString() {
-		return "[userName=" + userName + ", nameSurname="
-				+ nameSurname + ", taskNumber=" + taskNumber + ", taskState="
-				+ taskState + "]";
-	}
-
 	
 }

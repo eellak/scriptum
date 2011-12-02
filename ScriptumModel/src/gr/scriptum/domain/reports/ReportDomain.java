@@ -9,11 +9,14 @@ import java.lang.reflect.Field;
  * Project: SCRIPTUM http://www.scriptum.gr
  * http://www.uit.gr
  */
-public class ReportDomain {
+public class ReportDomain implements Reporter{
 
+	public static final String COL_DILIMITER = ",";
+	
+	
 	@Override 
-	public String toString() {
-		final String COL_DILIMITER = ",";
+	public String  getReportLine() {
+
 		StringBuffer buffy = new StringBuffer();
 
 		Class<?> cls = this.getClass();
@@ -26,7 +29,9 @@ public class ReportDomain {
 
 				System.out.println( "Value : " + val );
 				buffy.append(val);
-				buffy.append(COL_DILIMITER);
+				
+				if(i < fieldlist.length - 1 )
+					buffy.append(COL_DILIMITER);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -35,4 +40,22 @@ public class ReportDomain {
 		return buffy.toString();
 	}
 
+	@Override
+	public String getReportHeader() {
+		StringBuffer buffy = new StringBuffer();
+
+		Class<?> cls = this.getClass();
+		Field fieldlist[] = cls.getDeclaredFields();
+		for (int i = 0; i < fieldlist.length; i++) {
+			Field fld = fieldlist[i];
+			buffy.append(fld.getName());
+			if(i < fieldlist.length - 1 )
+				buffy.append(COL_DILIMITER);		
+		}
+		
+		return buffy.toString();
+		
+	}
+
+	
 }
