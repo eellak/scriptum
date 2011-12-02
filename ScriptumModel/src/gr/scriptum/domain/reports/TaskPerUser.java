@@ -3,7 +3,7 @@ package gr.scriptum.domain.reports;
 /**
  * @author Mike Mountrakis mountrakis@uit.gr
  */
-public class TaskPerUser {
+public class TaskPerUser extends ReportDomain{
 	String userName;
 	String nameSurname;
 	Integer taskNumber = 0;

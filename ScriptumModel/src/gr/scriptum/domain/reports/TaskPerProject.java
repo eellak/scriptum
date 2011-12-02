@@ -2,7 +2,7 @@ package gr.scriptum.domain.reports;
 
 import java.util.Date;
 
-public class TaskPerProject {
+public class TaskPerProject extends ReportDomain{
 	Integer projectId;
 	Integer taskId;
 	String  taskName;
