@@ -44,7 +44,7 @@
 		<pathelement location="${build.dir}/eProtocolServices" />
 		<fileset dir="EarContent/lib">
 			<include name="*.jar" />
-			<exclude name="eProtocolServices.jar" />			
+			<exclude name="eProtocolServices.jar" />
 		</fileset>
 	</path>
 
@@ -53,11 +53,29 @@
 		<pathelement location="${build.dir}/eProtocolServices" />
 		<pathelement location="${build.dir}/MailDaemon" />
 		<pathelement location="${build.dir}/eProtocolWebService/WEB-INF/classes" />
+		<fileset dir="../eProtocol/WebContent/WEB-INF/lib/">
+			<include name="*.jar" />
+		</fileset>
 		<fileset dir="EarContent/lib">
 			<include name="*.jar" />
 			<exclude name="eProtocolServices.jar" />
 		</fileset>
 	</path>
+
+	<path id="classpatheCase">
+		<pathelement location="${build.dir}/ScriptumModel" />
+		<pathelement location="${build.dir}/eProtocolServices" />
+		<pathelement location="${build.dir}/MailDaemon" />
+		<pathelement location="${build.dir}/eProtocolWebService/WEB-INF/classes" />
+		<fileset dir="../eCase/WebContent/WEB-INF/lib/">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="EarContent/lib">
+			<include name="*.jar" />
+			<exclude name="eProtocolServices.jar" />
+		</fileset>
+	</path>
+
 
 	<target name="usage">
 		<echo message="+-----------------------------------------------------------------------+" />
@@ -83,6 +101,12 @@
 		<delete includeEmptyDirs="true">
 			<fileset dir="${build.dir}">
 				<include name="**/*.*" />
+			</fileset>
+			<fileset dir=".">
+				<include name="**/*.sar" />
+				<include name="**/*.har" />
+				<include name="**/*.war" />
+				<include name="**/*.ear" />
 			</fileset>
 		</delete>
 	</target>
@@ -206,7 +230,32 @@
 		</jar>
 	</target>
 
-	<target name="ear" depends="wareProtocol">
+	<target name="buildeCase" depends="wareProtocol">
+		<mkdir dir="${build.dir}/eCase" />
+		<mkdir dir="${build.dir}/eCase/WEB-INF" />
+		<mkdir dir="${build.dir}/eCase/WEB-INF/classes" />
+		<javac destdir="${build.dir}/eCase/WEB-INF/classes" debug="true" deprecation="false" optimize="false" failonerror="true">
+			<src path="../eCase/src" />
+			<classpath refid="classpathOpenKM" />
+			<classpath refid="classpatheCase" />
+		</javac>
+
+		<copy todir="${build.dir}/eCase">
+			<fileset dir="../eCase/WebContent">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="wareCase" depends="buildeCase">
+		<jar destfile="eCase.war">
+			<fileset dir="${build.dir}/eCase">
+				<include name="**/*.*" />
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="ear" depends="wareCase">
 		<move file="eProtocolServices.jar" todir="EarContent/lib" />
 		<jar destfile="${app.name}.ear">
 			<fileset dir="EarContent">
@@ -217,6 +266,7 @@
 				<include name="maildaemon.sar" />
 				<include name="eProtocolWebService.war" />
 				<include name="eProtocol.war" />
+				<include name="eCase.war" />
 			</fileset>
 		</jar>
 	</target>
