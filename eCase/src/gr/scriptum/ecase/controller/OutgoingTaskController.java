@@ -6,12 +6,10 @@ package gr.scriptum.ecase.controller;
 import gr.scriptum.dao.IncomingProtocolDAO;
 import gr.scriptum.dao.OutgoingProtocolDAO;
 import gr.scriptum.dao.ParameterDAO;
-import gr.scriptum.dao.ProjectDAO;
 import gr.scriptum.dao.ProjectTaskDAO;
 import gr.scriptum.dao.ProjectUserDAO;
 import gr.scriptum.dao.TaskMessageDAO;
 import gr.scriptum.dao.UserHierarchyDAO;
-import gr.scriptum.dao.UsersDAO;
 import gr.scriptum.domain.Department;
 import gr.scriptum.domain.IncomingProtocol;
 import gr.scriptum.domain.OutgoingProtocol;
@@ -25,13 +23,10 @@ import gr.scriptum.domain.UserHierarchy;
 import gr.scriptum.domain.Users;
 import gr.scriptum.ecase.util.IConstants;
 import gr.scriptum.eprotocol.ws.ResponseSendDocument;
-import gr.scriptum.util.Callback;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -40,15 +35,13 @@ import org.apache.commons.logging.LogFactory;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.SuspendNotAllowedException;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.ForwardEvent;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.InputEvent;
 import org.zkoss.zk.ui.event.OpenEvent;
 import org.zkoss.zk.ui.event.SelectEvent;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Messagebox;
-import org.zkoss.zul.Window;
 import org.zkoss.zul.event.PagingEvent;
 
 /**
@@ -542,10 +535,6 @@ public class OutgoingTaskController extends TaskController {
 			return;
 		}
 
-		Messagebox.show(Labels.getLabel("save.OK"),
-				Labels.getLabel("save.title"), Messagebox.OK,
-				Messagebox.INFORMATION);
-
 		if (isExistingTask) {
 			// send a notification message to the task assignee, letting him/her
 			// know that the task may have been modified
@@ -568,7 +557,26 @@ public class OutgoingTaskController extends TaskController {
 			taskMessageDAO.makePersistent(taskMessage);
 		}
 
-		getBinder(taskWin).loadAll();
+		Messagebox.show(Labels.getLabel("save.OK"),
+				Labels.getLabel("save.title"), Messagebox.OK,
+				Messagebox.INFORMATION, new EventListener() {
+					@Override
+					public void onEvent(Event event) throws Exception {
+						log.info((Integer) event.getData());
+						if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+							Executions
+									.getCurrent()
+									.sendRedirect(
+											IndexController.PAGE
+													+ "?"
+													+ IndexController.PARAM_SELECTED_TAB
+													+ "=outgoingTasksTb");
+							return;
+						} else {
+							getBinder(taskWin).loadAll();
+						}
+					}
+				});
 	}
 
 	public boolean isProjectCbxVisible() {
@@ -604,7 +612,8 @@ public class OutgoingTaskController extends TaskController {
 
 	public boolean isTaskTypeChkBxVisible() {
 		if (department.getCanAssignAnywhere().equals(
-				Department.CAN_ASSIGN_ANYWHERE_TRUE) && !isTaskCreated()) {
+				Department.CAN_ASSIGN_ANYWHERE_TRUE)
+				&& !isTaskCreated()) {
 			return true;
 		}
 		return false;

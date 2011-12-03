@@ -18,6 +18,8 @@ import org.apache.commons.logging.LogFactory;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SelectEvent;
 import org.zkoss.zul.Messagebox;
 
@@ -138,8 +140,24 @@ public class IncomingTaskController extends TaskController {
 
 		Messagebox.show(Labels.getLabel("save.OK"),
 				Labels.getLabel("save.title"), Messagebox.OK,
-				Messagebox.INFORMATION);
-		getBinder(taskWin).loadAll();
+				Messagebox.INFORMATION, new EventListener() {
+					@Override
+					public void onEvent(Event event) throws Exception {
+						log.info((Integer) event.getData());
+						if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+							Executions
+									.getCurrent()
+									.sendRedirect(
+											IndexController.PAGE
+													+ "?"
+													+ IndexController.PARAM_SELECTED_TAB
+													+ "=incomingTasksTb");
+							return;
+						} else {
+							getBinder(taskWin).loadAll();
+						}
+					}
+				});
 
 	}
 	
