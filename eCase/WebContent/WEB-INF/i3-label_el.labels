@@ -400,3 +400,6 @@ report.tasksWaitingExternalNumber.title=Ο αριθμός των αναθέσε�
 report.reportTasksView.title=Ο αριθμός των αναθέσεων που έχουν ανατεθεί σε υφισταμένους μου και στον εαυτό μου από έργα που δημιούργησα καθώς και ελεύθερες αναθέσεις ανάλογα με τα εξής κριτήρια:
 report.reportTasksView.late=Φέρε μόνο τις Αργοπορημένες Αναθέσεις
 report.taskPerUser.taskNumber=Αριθμός
+report.reportSqlQuery.title=Κατασκευή αναφοράς στο πρώτυπο ANSI SQL. Παρακαλώ βαζετε τα ακριβή ονόματα πεδίων AS columnName και όχι * στο SELECT. 
+report.reportSqlQuery.name=Όνομα Αναφοράς
+report.reportSqlQuery.sqlQuery=Πληκτρολογίστε το SQL Query
