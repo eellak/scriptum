@@ -15,6 +15,7 @@ public class TaskPerProject extends ReportDomain{
 	String  projectName;
 	String  taskDispatcher;
 	String  taskState;
+	String  taskResult;
 
 	//used from reportTasksWaitingExternalDAO
 	Date   taskStartDt;
@@ -115,6 +116,14 @@ public class TaskPerProject extends ReportDomain{
 
 	public void setTaskNumber(Integer taskNumber) {
 		this.taskNumber = taskNumber;
+	}
+
+	public String getTaskResult() {
+		return taskResult;
+	}
+
+	public void setTaskResult(String taskResult) {
+		this.taskResult = taskResult;
 	}
 
 	
