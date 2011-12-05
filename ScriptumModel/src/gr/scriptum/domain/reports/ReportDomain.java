@@ -13,7 +13,6 @@ public class ReportDomain implements Reporter{
 
 	public static final String COL_DILIMITER = ",";
 	
-	
 	@Override 
 	public String  getReportLine() {
 
@@ -57,5 +56,5 @@ public class ReportDomain implements Reporter{
 		
 	}
 
-	
+
 }
