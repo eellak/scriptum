@@ -130,7 +130,7 @@ public class GenericReportController<T extends Reporter, DAO extends ReportProdu
 		File file = new File(filename);
 		FileOutputStream fos = new FileOutputStream(file);
 		OutputStreamWriter out = new OutputStreamWriter(fos, ENCODING);
-		// Writer out = new BufferedWriter(new FileWriter(file));
+	
 		try {
 			boolean writeHeader = true;
 			for (T o : instances) {
