@@ -1,0 +1,42 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./win"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('messagePage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('reportsAssigner.title')}"
+		border="normal" width="100%"
+		apply="gr.scriptum.ecase.controller.reports.SqlQueryController">
+
+		<grid>
+			<columns>
+				<column width="100%" label="${c:l('report.report')}" />
+			</columns>
+			<rows>
+				<row>
+					<vbox>
+						<html
+							content="${c:l('report.reportSqlQuery.title')}" />
+	                    <html
+							content="${c:l('report.reportSqlQuery.name')}" />
+						<textbox id="reportTxb"
+							value="@{SqlQueryController.reportName}" width="99%"
+							constraint="no empty" />
+	                    <html
+							content="${c:l('report.reportSqlQuery.sqlQuery')}" />
+						<textbox id="queryTxb"
+							value="@{SqlQueryController.sqlQuery}" rows="10" width="99%"
+							constraint="no empty"/>
+						<button id="exportBtn"
+							label="${c:l('exportFile')}" />
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+
+	<listbox id="listBox" />
+
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>
+
