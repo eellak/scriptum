@@ -25,21 +25,24 @@ public class ReportTasksViewDAO extends
 	
 	private static Log log = LogFactory.getLog(ReportTasksViewDAO.class);
 	private Integer taskState = null;
+	private Integer taskResult = null;
 	protected boolean showLateTasksOnly = false;
 	
 	
 	private String setSelectQuery(Users user ){
 		
-		String selectQ = "SELECT  pt.project_id AS pId, pt.id AS ptId, usr.name AS usrName, usr.surname AS usrSurname , p.name AS pName, pt.name  AS ptName , ts.name AS tsName , co.name AS coName,co.surname AS coSurname, com.name AS comName " +  
+		String selectQ = "SELECT  pt.project_id AS pId, pt.id AS ptId, usr.name AS usrName, usr.surname AS usrSurname , p.name AS pName, pt.name  AS ptName , ts.name AS tsName , co.name AS coName,co.surname AS coSurname, com.name AS comName, tr.name AS trName " +  
 		" FROM project_task pt  LEFT JOIN project p     ON pt.project_id = p.id " + 
-		" LEFT JOIN users usr     ON pt.user_dispatcher_id  = usr.id " +
-		" LEFT JOIN task_state ts ON pt.task_state_id = ts.id " +
-		" LEFT JOIN contact co    ON co.id = pt.contact_id " + 
-		" LEFT JOIN company com   ON com.id = co.company_id " +
+		" LEFT JOIN users usr      ON pt.user_dispatcher_id  = usr.id " +
+		" LEFT JOIN task_state ts  ON pt.task_state_id = ts.id " +
+		" LEFT JOIN contact co     ON co.id = pt.contact_id " + 
+		" LEFT JOIN company com    ON com.id = co.company_id " +
+		" LEFT JOIN task_result tr ON tr.id = pt.task_result_id " +
 		" WHERE  ( p.user_creator_id = :myUserId OR    ( pt.project_id IS NULL AND pt.user_creator_id = :myUserId ) ) ";
 		if( taskState != null)
 			selectQ += " AND pt.task_state_id = :taskState";
-		
+		if( taskResult != null)
+			selectQ += " AND pt.task_result_id = :taskResult";
 		if( showLateTasksOnly == true )
 			selectQ += " AND pt.end_dt IS NOT NULL  AND (pt.closed_dt > pt.end_dt)  OR ( pt.end_dt < NOW() )";
 		
@@ -62,7 +65,8 @@ public class ReportTasksViewDAO extends
 		
 		if( taskState != null)
 			query.setParameter("taskState", taskState);
-		
+		if( taskResult != null)
+			query.setParameter("taskResult", taskResult);
 		log.info("countReportRows() finished.");
 		return ((BigInteger) query.uniqueResult()).intValue();
 	}
@@ -76,12 +80,13 @@ public class ReportTasksViewDAO extends
 		
 		Query query = getSession()
 				.createSQLQuery(select )
-			    .addScalar("pId").addScalar("ptId").addScalar("usrName").addScalar("usrSurname").addScalar("pName").addScalar("ptName").addScalar("tsName").addScalar("coName").addScalar("coSurname").addScalar("comName");
+			    .addScalar("pId").addScalar("ptId").addScalar("usrName").addScalar("usrSurname").addScalar("pName").addScalar("ptName").addScalar("tsName").addScalar("coName").addScalar("coSurname").addScalar("comName").addScalar("trName");
 
 		query.setParameter("myUserId", user.getId());
 		if( taskState != null)
 			query.setParameter("taskState", taskState);
-		
+		if( taskResult != null)
+			query.setParameter("taskResult", taskResult);		
 		List<?> list = query.list();
 		log.info("createReport() Report fetched : " + list.size());
 		
@@ -98,6 +103,7 @@ public class ReportTasksViewDAO extends
 			tp.setContactName((String)row[7]);
 			tp.setContactSurname((String) row[8]);
 			tp.setCompanyName((String) row[9]);
+			tp.setTaskResult((String)row[10]);
 			results.add(tp);
 		}
 
@@ -123,6 +129,18 @@ public class ReportTasksViewDAO extends
 
 	public void setShowLateTasksOnly(boolean showLateTasksOnly) {
 		this.showLateTasksOnly = showLateTasksOnly;
+	}
+
+
+
+	public Integer getTaskResult() {
+		return taskResult;
+	}
+
+
+
+	public void setTaskResult(Integer taskResult) {
+		this.taskResult = taskResult;
 	}
 
 }
