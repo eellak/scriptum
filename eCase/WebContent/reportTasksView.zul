@@ -29,6 +29,16 @@
 								</combobox>
 							</hbox>
 							<hbox>
+								${c:l('projectTask.taskResult')}
+								<combobox id="resultCbx" width="300px"
+									model="@{TasksViewController.taskResults}"
+									selectedItem="@{TasksViewController.taskResult}"
+									constraint="no empty">
+									<comboitem
+										self="@{each='taskResultRow'}" label="@{taskResultRow.name}" />
+								</combobox>
+							</hbox>							
+							<hbox>
 								${c:l('report.reportTasksView.late')}
 								<checkbox
 									checked="@{TasksViewController.showLateTasksOnly,converter=gr.scriptum.util.CheckBoxToBooleanTypeConverter }" />
