@@ -78,7 +78,7 @@
 				<menuitem label="${c:l('menu.report.reportTasksView') }"
 					href="reportTasksView.zul" />		
 				<menuitem label="${c:l('menu.reports.admin') }"
-					href="reportSqlQuery.zul" />
+					href="reportSqlQuery.zul" visible="${sec:isAnyGranted('ROLE_CASE_ADMIN')}"/>
 			</menupopup>
 		</menu>
 
