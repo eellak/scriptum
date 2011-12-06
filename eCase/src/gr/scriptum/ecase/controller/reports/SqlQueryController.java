@@ -3,7 +3,6 @@ package gr.scriptum.ecase.controller.reports;
 
 import java.io.File;
 
-import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Components;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Label;
@@ -59,8 +58,6 @@ public class SqlQueryController extends GenericReportController<ReportSqlDomain,
 	
 	private void createListBox(){
 	
-//		Listbox listBox = new Listbox();
-//		listBox.renderAll();
 		Components.removeAllChildren(listBox);
 		
 		boolean populateHeaders = false;
@@ -89,7 +86,6 @@ public class SqlQueryController extends GenericReportController<ReportSqlDomain,
 			}
 			listBox.appendChild(listItem);
 		}	
-//		win.appendChild(listBox);
 	}
 	
 	
