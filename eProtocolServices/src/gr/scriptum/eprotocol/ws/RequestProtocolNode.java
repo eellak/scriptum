@@ -8,7 +8,7 @@ import gr.scriptum.domain.ProtocolNode;
  *  @author Mike Mountrakis mountrakis@uit.gr
  *
  */
-class RequestProtocolNode extends Request {
+public class RequestProtocolNode extends Request {
 
 	/**
 	 * the new protocol node to be created.
