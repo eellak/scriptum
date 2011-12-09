@@ -45,7 +45,7 @@
 									label="@{reportRow.taskState}" />
 							</listitem>
 						</listbox>
-						<paging id="reportPgng" pageSize="3" />
+						<paging id="reportPgng" pageSize="20" />
 					</vbox>
 				</row>
 			</rows>

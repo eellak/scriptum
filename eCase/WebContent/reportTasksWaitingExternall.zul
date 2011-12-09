@@ -49,7 +49,7 @@
 								<listcell label="@{reportRow.companyName}" />																	
 							</listitem>
 						</listbox>
-						<paging id="reportPgng" pageSize="30" />
+						<paging id="reportPgng" pageSize="20" />
 					</vbox>
 				</row>
 			</rows>
