@@ -17,25 +17,24 @@ public class ReportDomain implements Reporter{
 	public String  getReportLine() {
 
 		StringBuffer buffy = new StringBuffer();
-
+         
 		Class<?> cls = this.getClass();
+		//System.out.println("Record of class --> " + cls.getSimpleName());
 		Field fieldlist[] = cls.getDeclaredFields();
 		for (int i = 0; i < fieldlist.length; i++) {
 			Field fld = fieldlist[i];
 			try {
-				String val = fld.get(this).toString()
-						.replace(COL_DILIMITER, "");
-
-				System.out.println( "Value : " + val );
+				String val = fld.get(this).toString().replace(COL_DILIMITER, "");
+				//System.out.println( "Field " + fld.getName() + "\tValue : [" + val  + "]");
 				buffy.append(val);
-				
-				if(i < fieldlist.length - 1 )
-					buffy.append(COL_DILIMITER);
 			} catch (Exception e) {
-				e.printStackTrace();
+				//System.out.println("Field " + fld.getName() + "\tis null.");
+			}finally{
+				//regardless if val is null put dilimiter after it.
+				if(i < fieldlist.length - 1 )
+					buffy.append(COL_DILIMITER);	
 			}
 		}
-
 		return buffy.toString();
 	}
 
