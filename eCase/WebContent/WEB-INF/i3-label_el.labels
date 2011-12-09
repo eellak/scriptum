@@ -284,7 +284,7 @@ menu.reports.taskNumberPerUser=Αναθέσεις ανά Χρήστη
 menu.reports.taskWaitingExternal=Αναθέσεις σε Εξωτερικούς
 menu.reports.taskNumberWaitingExternal=Αναθέσεις ανά Οργανισμό
 menu.reports.admin=Αναφορές Διαχειριστή
-menu.report.reportTasksView=Αργοπορημένες Αναθέσεις
+menu.report.reportTasksView=Αναθέσεις βάσει κριτηρίων
 
 menu.help=Βοήθεια
 menu.help.community=Κοινότητα Χρηστών
