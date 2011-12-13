@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Schema for database 'ellak'</title>
+<title>Schema for database 'scriptum'</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8">
 <style type="text/css">
 <!--
@@ -17,7 +17,7 @@ BR.page {page-break-after: always}
 <body bgcolor='#ffffff' topmargin="0">
 <table width="100%" border="0" cellspacing="0" cellpadding="5">
 <tr>
-<td class="toptext"><p align="center">ellak</td>
+<td class="toptext"><p align="center">scriptum</td>
 </tr>
 </table>
 <a name="header">&nbsp</a><ul>
@@ -26,6 +26,7 @@ BR.page {page-break-after: always}
 	<li><a href="#company"><p class="normal">company</a></li>
 	<li><a href="#company_type"><p class="normal">company_type</a></li>
 	<li><a href="#contact"><p class="normal">contact</a></li>
+	<li><a href="#department"><p class="normal">department</a></li>
 	<li><a href="#diavgeia_decision_type"><p class="normal">diavgeia_decision_type</a></li>
 	<li><a href="#diavgeia_subject_group"><p class="normal">diavgeia_subject_group</a></li>
 	<li><a href="#distribution_method"><p class="normal">distribution_method</a></li>
@@ -49,6 +50,7 @@ BR.page {page-break-after: always}
 	<li><a href="#task_result"><p class="normal">task_result</a></li>
 	<li><a href="#task_state"><p class="normal">task_state</a></li>
 	<li><a href="#task_type"><p class="normal">task_type</a></li>
+	<li><a href="#user_hierarchy"><p class="normal">user_hierarchy</a></li>
 	<li><a href="#user_to_role"><p class="normal">user_to_role</a></li>
 	<li><a href="#users"><p class="normal">users</a></li>
 </ul>
@@ -733,7 +735,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">0</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -747,7 +749,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">company_type_id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">0</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -913,7 +915,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">3</td>
+	<td align="left" valign="top"><p class="normal">0</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -1243,7 +1245,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">0</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -1257,7 +1259,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">company_id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">0</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -1284,6 +1286,164 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">fk_7cc2855a-215b-11e0-9059-080027b715d2</td>
 	<td align="left" valign="top"><p class="normal">company</td>
 	<td align="left" valign="top"><p class="normal">`company_id`</td>
+	<td align="left" valign="top"><p class="normal">`id`</td>
+	<td align="left" valign="top"><p class="normal"> ON DELETE NO ACTION ON UPDATE NO ACTION</td>
+<tr>
+</table>
+
+
+<a href="#header"><p class="normal">Back</a><br class=page>
+<p><a name='department'>&nbsp</a>
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+<tr>
+	<td class="headtext" width="30%" align="left" valign="top">department</td>
+	<td>&nbsp</td>
+<tr>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+<tr>
+	<td class="fieldheader" width="100%" align="left" valign="top">Fields</td>
+</tr>
+</table>
+<table width="100%" cellspacing="0" cellapdding="2" border="1">
+<tr>
+	<td align="center" valign="top" class="fieldcolumn">Field</td>
+	<td align="center" valign="top" class="fieldcolumn">Type</td>
+	<td align="center" valign="top" class="fieldcolumn">Collation</td>
+	<td align="center" valign="top" class="fieldcolumn">Null</td>
+	<td align="center" valign="top" class="fieldcolumn">Key</td>
+	<td align="center" valign="top" class="fieldcolumn">Default</td>
+	<td align="center" valign="top" class="fieldcolumn">Extra</td>
+	<td align="center" valign="top" class="fieldcolumn">Privileges</td>
+	<td align="center" valign="top" class="fieldcolumn">Comment</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">id</td>
+	<td align="left" valign="top"><p class="normal">int(11)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">NO</td>
+	<td align="left" valign="top"><p class="normal">PRI</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">auto_increment</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">name</td>
+	<td align="left" valign="top"><p class="normal">varchar(64)</td>
+	<td align="left" valign="top"><p class="normal">utf8_unicode_ci</td>
+	<td align="left" valign="top"><p class="normal">NO</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">description</td>
+	<td align="left" valign="top"><p class="normal">varchar(512)</td>
+	<td align="left" valign="top"><p class="normal">utf8_unicode_ci</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">parent_department_id</td>
+	<td align="left" valign="top"><p class="normal">int(11)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
+	<td align="left" valign="top"><p class="normal">MUL</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">can_assign_anywhere</td>
+	<td align="left" valign="top"><p class="normal">int(1)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+<tr>
+	<td class="fieldheader" width="100%" align="left" valign="top">Indexes</td>
+</tr>
+</table>
+<table width="100%" cellspacing="0" cellapdding="2" border="1">
+<tr>
+	<td align="left" valign="top" class="fieldcolumn">Table</td>
+	<td align="left" valign="top" class="fieldcolumn">Non<br>unique</td>
+	<td align="left" valign="top" class="fieldcolumn">Key<br>name</td>
+	<td align="left" valign="top" class="fieldcolumn">Seq<br>in<br>index</td>
+	<td align="left" valign="top" class="fieldcolumn">Column<br>name</td>
+	<td align="left" valign="top" class="fieldcolumn">Collation</td>
+	<td align="left" valign="top" class="fieldcolumn">Cardinality</td>
+	<td align="left" valign="top" class="fieldcolumn">Sub<br>part</td>
+	<td align="left" valign="top" class="fieldcolumn">Packed</td>
+	<td align="left" valign="top" class="fieldcolumn">Null</td>
+	<td align="left" valign="top" class="fieldcolumn">Index<br>type</td>
+	<td align="left" valign="top" class="fieldcolumn">Comment</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">department</td>
+	<td align="left" valign="top"><p class="normal">0</td>
+	<td align="left" valign="top"><p class="normal">PRIMARY</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">id</td>
+	<td align="left" valign="top"><p class="normal">A</td>
+	<td align="left" valign="top"><p class="normal">0</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">BTREE</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">department</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">fk_department_department1</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">parent_department_id</td>
+	<td align="left" valign="top"><p class="normal">A</td>
+	<td align="left" valign="top"><p class="normal">0</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
+	<td align="left" valign="top"><p class="normal">BTREE</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+<tr>
+	<td class="fieldheader" width="100%" align="left" valign="top">Foreign Key Relationships</td>
+</tr>
+</table>
+<table width="100%" cellspacing="0" cellapdding="2" border="1">
+<tr>
+	<td align="left" valign="top" class="fieldcolumn">FK Id</td>
+	<td align="left" valign="top" class="fieldcolumn">Reference Table</td>
+	<td align="left" valign="top" class="fieldcolumn">Source Column</td>
+	<td align="left" valign="top" class="fieldcolumn">Target Column</td>
+	<td align="left" valign="top" class="fieldcolumn">Extra Info</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">fk_department_department1</td>
+	<td align="left" valign="top"><p class="normal">department</td>
+	<td align="left" valign="top"><p class="normal">`parent_department_id`</td>
 	<td align="left" valign="top"><p class="normal">`id`</td>
 	<td align="left" valign="top"><p class="normal"> ON DELETE NO ACTION ON UPDATE NO ACTION</td>
 <tr>
@@ -1511,7 +1671,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">461</td>
+	<td align="left" valign="top"><p class="normal">581</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -1643,7 +1803,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">8</td>
+	<td align="left" valign="top"><p class="normal">2</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -1808,7 +1968,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">0</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -2042,6 +2202,17 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 </tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">protocol_book_id</td>
+	<td align="left" valign="top"><p class="normal">int(11) unsigned</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
+	<td align="left" valign="top"><p class="normal">MUL</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
 </table>
 
 
@@ -2107,6 +2278,20 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">BTREE</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 </tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">incoming_protocol</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">fk_incoming_protocol_protocol_book1</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">protocol_book_id</td>
+	<td align="left" valign="top"><p class="normal">A</td>
+	<td align="left" valign="top"><p class="normal">0</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
+	<td align="left" valign="top"><p class="normal">BTREE</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
 </table>
 
 
@@ -2134,6 +2319,13 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">fk_7cbdaecc-215b-11e0-9059-080027b715d2</td>
 	<td align="left" valign="top"><p class="normal">contact</td>
 	<td align="left" valign="top"><p class="normal">`contact_sender_id`</td>
+	<td align="left" valign="top"><p class="normal">`id`</td>
+	<td align="left" valign="top"><p class="normal"> ON DELETE NO ACTION ON UPDATE NO ACTION,</td>
+<tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">fk_incoming_protocol_protocol_book1</td>
+	<td align="left" valign="top"><p class="normal">protocol_book</td>
+	<td align="left" valign="top"><p class="normal">`protocol_book_id`</td>
 	<td align="left" valign="top"><p class="normal">`id`</td>
 	<td align="left" valign="top"><p class="normal"> ON DELETE NO ACTION ON UPDATE NO ACTION</td>
 <tr>
@@ -2364,6 +2556,17 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 </tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">protocol_book_id</td>
+	<td align="left" valign="top"><p class="normal">int(11) unsigned</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
+	<td align="left" valign="top"><p class="normal">MUL</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
 </table>
 
 
@@ -2394,7 +2597,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">0</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -2408,10 +2611,24 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">distribution_method_id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">0</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">BTREE</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">outgoing_protocol</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">fk_outgoing_protocol_protocol_book1</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">protocol_book_id</td>
+	<td align="left" valign="top"><p class="normal">A</td>
+	<td align="left" valign="top"><p class="normal">0</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
 	<td align="left" valign="top"><p class="normal">BTREE</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 </tr>
@@ -2435,6 +2652,13 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">fk_7cbca1e4-215b-11e0-9059-080027b715d2</td>
 	<td align="left" valign="top"><p class="normal">distribution_method</td>
 	<td align="left" valign="top"><p class="normal">`distribution_method_id`</td>
+	<td align="left" valign="top"><p class="normal">`id`</td>
+	<td align="left" valign="top"><p class="normal"> ON DELETE NO ACTION ON UPDATE NO ACTION,</td>
+<tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">fk_outgoing_protocol_protocol_book1</td>
+	<td align="left" valign="top"><p class="normal">protocol_book</td>
+	<td align="left" valign="top"><p class="normal">`protocol_book_id`</td>
 	<td align="left" valign="top"><p class="normal">`id`</td>
 	<td align="left" valign="top"><p class="normal"> ON DELETE NO ACTION ON UPDATE NO ACTION</td>
 <tr>
@@ -2530,7 +2754,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">contact_id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">0</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -2544,7 +2768,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">2</td>
 	<td align="left" valign="top"><p class="normal">outgoing_protocol_id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">0</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -2558,7 +2782,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">contact_id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">0</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -2572,7 +2796,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">outgoing_protocol_id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">0</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -2789,7 +3013,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">36</td>
+	<td align="left" valign="top"><p class="normal">45</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -3064,7 +3288,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">contact_id</td>
 	<td align="left" valign="top"><p class="normal">int(11) unsigned</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">NO</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
 	<td align="left" valign="top"><p class="normal">MUL</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -3075,7 +3299,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">parent_task_id</td>
 	<td align="left" valign="top"><p class="normal">int(11) unsigned</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">NO</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
 	<td align="left" valign="top"><p class="normal">MUL</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -3108,18 +3332,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">project_id</td>
 	<td align="left" valign="top"><p class="normal">int(11) unsigned</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">NO</td>
-	<td align="left" valign="top"><p class="normal">MUL</td>
-	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">&nbsp;</td>
-	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
-	<td align="left" valign="top"><p class="normal">&nbsp;</td>
-</tr>
-<tr>
-	<td align="left" valign="top"><p class="normal">task_document_id</td>
-	<td align="left" valign="top"><p class="normal">int(11) unsigned</td>
-	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">NO</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
 	<td align="left" valign="top"><p class="normal">MUL</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -3130,7 +3343,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">task_result_id</td>
 	<td align="left" valign="top"><p class="normal">int(11) unsigned</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">NO</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
 	<td align="left" valign="top"><p class="normal">MUL</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -3302,6 +3515,28 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 </tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">dispatcher_closeable</td>
+	<td align="left" valign="top"><p class="normal">tinyint(1)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">end_dt</td>
+	<td align="left" valign="top"><p class="normal">datetime</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
 </table>
 
 
@@ -3349,7 +3584,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">0</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
 	<td align="left" valign="top"><p class="normal">BTREE</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 </tr>
@@ -3405,21 +3640,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">0</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">&nbsp;</td>
-	<td align="left" valign="top"><p class="normal">BTREE</td>
-	<td align="left" valign="top"><p class="normal">&nbsp;</td>
-</tr>
-<tr>
-	<td align="left" valign="top"><p class="normal">project_task</td>
-	<td align="left" valign="top"><p class="normal">1</td>
-	<td align="left" valign="top"><p class="normal">project_tasks_FKIndex6</td>
-	<td align="left" valign="top"><p class="normal">1</td>
-	<td align="left" valign="top"><p class="normal">task_document_id</td>
-	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">0</td>
-	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
 	<td align="left" valign="top"><p class="normal">BTREE</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 </tr>
@@ -3461,7 +3682,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">0</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
 	<td align="left" valign="top"><p class="normal">BTREE</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 </tr>
@@ -3475,7 +3696,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">0</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
 	<td align="left" valign="top"><p class="normal">BTREE</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 </tr>
@@ -3527,13 +3748,6 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">fk_7cb42b18-215b-11e0-9059-080027b715d2</td>
 	<td align="left" valign="top"><p class="normal">task_result</td>
 	<td align="left" valign="top"><p class="normal">`task_result_id`</td>
-	<td align="left" valign="top"><p class="normal">`id`</td>
-	<td align="left" valign="top"><p class="normal"> ON DELETE NO ACTION ON UPDATE NO ACTION,</td>
-<tr>
-<tr>
-	<td align="left" valign="top"><p class="normal">fk_7cb5d6b6-215b-11e0-9059-080027b715d2</td>
-	<td align="left" valign="top"><p class="normal">task_document</td>
-	<td align="left" valign="top"><p class="normal">`task_document_id`</td>
 	<td align="left" valign="top"><p class="normal">`id`</td>
 	<td align="left" valign="top"><p class="normal"> ON DELETE NO ACTION ON UPDATE NO ACTION,</td>
 <tr>
@@ -3811,7 +4025,7 @@ BR.page {page-break-after: always}
 </tr>
 <tr>
 	<td align="left" valign="top"><p class="normal">protocol_series</td>
-	<td align="left" valign="top"><p class="normal">varchar(45)</td>
+	<td align="left" valign="top"><p class="normal">varchar(256)</td>
 	<td align="left" valign="top"><p class="normal">utf8_unicode_ci</td>
 	<td align="left" valign="top"><p class="normal">YES</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -3868,9 +4082,9 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">is_active</td>
 	<td align="left" valign="top"><p class="normal">int(1)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">NO</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
 	<td align="left" valign="top"><p class="normal">shows if this protocol book is active</td>
@@ -3919,6 +4133,17 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 </tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">is_preferred</td>
+	<td align="left" valign="top"><p class="normal">int(1)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
 </table>
 
 
@@ -3949,7 +4174,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">0</td>
+	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -4147,7 +4372,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">2</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -4161,7 +4386,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">incoming_protocol_id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">2</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">YES</td>
@@ -4175,7 +4400,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">outgoing_protocol_id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">2</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">YES</td>
@@ -4189,7 +4414,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">document_types_id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">2</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -4350,6 +4575,17 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 </tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">protocol_book_id</td>
+	<td align="left" valign="top"><p class="normal">int(11) unsigned</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">NO</td>
+	<td align="left" valign="top"><p class="normal">MUL</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
 </table>
 
 
@@ -4387,6 +4623,43 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">BTREE</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 </tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">protocol_number</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">fk_protocol_number_protocol_book1</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">protocol_book_id</td>
+	<td align="left" valign="top"><p class="normal">A</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">BTREE</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+<tr>
+	<td class="fieldheader" width="100%" align="left" valign="top">Foreign Key Relationships</td>
+</tr>
+</table>
+<table width="100%" cellspacing="0" cellapdding="2" border="1">
+<tr>
+	<td align="left" valign="top" class="fieldcolumn">FK Id</td>
+	<td align="left" valign="top" class="fieldcolumn">Reference Table</td>
+	<td align="left" valign="top" class="fieldcolumn">Source Column</td>
+	<td align="left" valign="top" class="fieldcolumn">Target Column</td>
+	<td align="left" valign="top" class="fieldcolumn">Extra Info</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">fk_protocol_number_protocol_book1</td>
+	<td align="left" valign="top"><p class="normal">protocol_book</td>
+	<td align="left" valign="top"><p class="normal">`protocol_book_id`</td>
+	<td align="left" valign="top"><p class="normal">`id`</td>
+	<td align="left" valign="top"><p class="normal"> ON DELETE NO ACTION ON UPDATE NO ACTION</td>
+<tr>
 </table>
 
 
@@ -4589,7 +4862,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">3</td>
+	<td align="left" valign="top"><p class="normal">2</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -4809,8 +5082,8 @@ BR.page {page-break-after: always}
 </tr>
 <tr>
 	<td align="left" valign="top"><p class="normal">document_size</td>
-	<td align="left" valign="top"><p class="normal">varchar(11)</td>
-	<td align="left" valign="top"><p class="normal">utf8_unicode_ci</td>
+	<td align="left" valign="top"><p class="normal">bigint(20)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">NO</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
@@ -4864,10 +5137,21 @@ BR.page {page-break-after: always}
 </tr>
 <tr>
 	<td align="left" valign="top"><p class="normal">okm_uuid</td>
-	<td align="left" valign="top"><p class="normal">varchar(32)</td>
+	<td align="left" valign="top"><p class="normal">varchar(256)</td>
 	<td align="left" valign="top"><p class="normal">utf8_unicode_ci</td>
 	<td align="left" valign="top"><p class="normal">YES</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">project_task_id</td>
+	<td align="left" valign="top"><p class="normal">int(11) unsigned</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">NO</td>
+	<td align="left" valign="top"><p class="normal">MUL</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
@@ -4924,6 +5208,20 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">BTREE</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 </tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">task_document</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">fk_task_document_project_task1</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">project_task_id</td>
+	<td align="left" valign="top"><p class="normal">A</td>
+	<td align="left" valign="top"><p class="normal">0</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">BTREE</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
 </table>
 
 
@@ -4944,6 +5242,13 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">fk_task_document_document_type1</td>
 	<td align="left" valign="top"><p class="normal">document_type</td>
 	<td align="left" valign="top"><p class="normal">`document_type_id`</td>
+	<td align="left" valign="top"><p class="normal">`id`</td>
+	<td align="left" valign="top"><p class="normal"> ON DELETE NO ACTION ON UPDATE NO ACTION,</td>
+<tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">fk_task_document_project_task1</td>
+	<td align="left" valign="top"><p class="normal">project_task</td>
+	<td align="left" valign="top"><p class="normal">`project_task_id`</td>
 	<td align="left" valign="top"><p class="normal">`id`</td>
 	<td align="left" valign="top"><p class="normal"> ON DELETE NO ACTION ON UPDATE NO ACTION</td>
 <tr>
@@ -5261,7 +5566,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">0</td>
+	<td align="left" valign="top"><p class="normal">3</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -5360,7 +5665,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">0</td>
+	<td align="left" valign="top"><p class="normal">2</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -5459,7 +5764,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">0</td>
+	<td align="left" valign="top"><p class="normal">2</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -5635,6 +5940,195 @@ BR.page {page-break-after: always}
 
 
 <a href="#header"><p class="normal">Back</a><br class=page>
+<p><a name='user_hierarchy'>&nbsp</a>
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+<tr>
+	<td class="headtext" width="30%" align="left" valign="top">user_hierarchy</td>
+	<td>&nbsp</td>
+<tr>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+<tr>
+	<td class="fieldheader" width="100%" align="left" valign="top">Fields</td>
+</tr>
+</table>
+<table width="100%" cellspacing="0" cellapdding="2" border="1">
+<tr>
+	<td align="center" valign="top" class="fieldcolumn">Field</td>
+	<td align="center" valign="top" class="fieldcolumn">Type</td>
+	<td align="center" valign="top" class="fieldcolumn">Collation</td>
+	<td align="center" valign="top" class="fieldcolumn">Null</td>
+	<td align="center" valign="top" class="fieldcolumn">Key</td>
+	<td align="center" valign="top" class="fieldcolumn">Default</td>
+	<td align="center" valign="top" class="fieldcolumn">Extra</td>
+	<td align="center" valign="top" class="fieldcolumn">Privileges</td>
+	<td align="center" valign="top" class="fieldcolumn">Comment</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">id</td>
+	<td align="left" valign="top"><p class="normal">int(11)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">NO</td>
+	<td align="left" valign="top"><p class="normal">PRI</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">auto_increment</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">manager_id</td>
+	<td align="left" valign="top"><p class="normal">int(11)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
+	<td align="left" valign="top"><p class="normal">MUL</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">users_id</td>
+	<td align="left" valign="top"><p class="normal">int(10) unsigned</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">NO</td>
+	<td align="left" valign="top"><p class="normal">MUL</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">department_id</td>
+	<td align="left" valign="top"><p class="normal">int(11)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">NO</td>
+	<td align="left" valign="top"><p class="normal">MUL</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+<tr>
+	<td class="fieldheader" width="100%" align="left" valign="top">Indexes</td>
+</tr>
+</table>
+<table width="100%" cellspacing="0" cellapdding="2" border="1">
+<tr>
+	<td align="left" valign="top" class="fieldcolumn">Table</td>
+	<td align="left" valign="top" class="fieldcolumn">Non<br>unique</td>
+	<td align="left" valign="top" class="fieldcolumn">Key<br>name</td>
+	<td align="left" valign="top" class="fieldcolumn">Seq<br>in<br>index</td>
+	<td align="left" valign="top" class="fieldcolumn">Column<br>name</td>
+	<td align="left" valign="top" class="fieldcolumn">Collation</td>
+	<td align="left" valign="top" class="fieldcolumn">Cardinality</td>
+	<td align="left" valign="top" class="fieldcolumn">Sub<br>part</td>
+	<td align="left" valign="top" class="fieldcolumn">Packed</td>
+	<td align="left" valign="top" class="fieldcolumn">Null</td>
+	<td align="left" valign="top" class="fieldcolumn">Index<br>type</td>
+	<td align="left" valign="top" class="fieldcolumn">Comment</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">user_hierarchy</td>
+	<td align="left" valign="top"><p class="normal">0</td>
+	<td align="left" valign="top"><p class="normal">PRIMARY</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">id</td>
+	<td align="left" valign="top"><p class="normal">A</td>
+	<td align="left" valign="top"><p class="normal">0</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">BTREE</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">user_hierarchy</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">fk_user_details_user_details1</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">manager_id</td>
+	<td align="left" valign="top"><p class="normal">A</td>
+	<td align="left" valign="top"><p class="normal">0</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
+	<td align="left" valign="top"><p class="normal">BTREE</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">user_hierarchy</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">fk_user_details_users1</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">users_id</td>
+	<td align="left" valign="top"><p class="normal">A</td>
+	<td align="left" valign="top"><p class="normal">0</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">BTREE</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">user_hierarchy</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">fk_user_details_department1</td>
+	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">department_id</td>
+	<td align="left" valign="top"><p class="normal">A</td>
+	<td align="left" valign="top"><p class="normal">0</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">BTREE</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+<tr>
+	<td class="fieldheader" width="100%" align="left" valign="top">Foreign Key Relationships</td>
+</tr>
+</table>
+<table width="100%" cellspacing="0" cellapdding="2" border="1">
+<tr>
+	<td align="left" valign="top" class="fieldcolumn">FK Id</td>
+	<td align="left" valign="top" class="fieldcolumn">Reference Table</td>
+	<td align="left" valign="top" class="fieldcolumn">Source Column</td>
+	<td align="left" valign="top" class="fieldcolumn">Target Column</td>
+	<td align="left" valign="top" class="fieldcolumn">Extra Info</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">fk_user_details_department1</td>
+	<td align="left" valign="top"><p class="normal">department</td>
+	<td align="left" valign="top"><p class="normal">`department_id`</td>
+	<td align="left" valign="top"><p class="normal">`id`</td>
+	<td align="left" valign="top"><p class="normal"> ON DELETE NO ACTION ON UPDATE NO ACTION,</td>
+<tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">fk_user_details_users1</td>
+	<td align="left" valign="top"><p class="normal">users</td>
+	<td align="left" valign="top"><p class="normal">`users_id`</td>
+	<td align="left" valign="top"><p class="normal">`id`</td>
+	<td align="left" valign="top"><p class="normal"> ON DELETE NO ACTION ON UPDATE NO ACTION,</td>
+<tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">fk_user_details_user_details1</td>
+	<td align="left" valign="top"><p class="normal">user_hierarchy</td>
+	<td align="left" valign="top"><p class="normal">`manager_id`</td>
+	<td align="left" valign="top"><p class="normal">`id`</td>
+	<td align="left" valign="top"><p class="normal"> ON DELETE NO ACTION ON UPDATE NO ACTION</td>
+<tr>
+</table>
+
+
+<a href="#header"><p class="normal">Back</a><br class=page>
 <p><a name='user_to_role'>&nbsp</a>
 <table width="100%" border="0" cellspacing="0" cellpadding="3">
 <tr>
@@ -5712,7 +6206,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">users_id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">2</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -5726,7 +6220,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">2</td>
 	<td align="left" valign="top"><p class="normal">role_id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">2</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -5740,7 +6234,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">users_id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">2</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -5754,7 +6248,7 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">1</td>
 	<td align="left" valign="top"><p class="normal">role_id</td>
 	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
+	<td align="left" valign="top"><p class="normal">2</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
@@ -5828,17 +6322,6 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">PRI</td>
 	<td align="left" valign="top"><p class="normal">(NULL)</td>
 	<td align="left" valign="top"><p class="normal">auto_increment</td>
-	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
-	<td align="left" valign="top"><p class="normal">&nbsp;</td>
-</tr>
-<tr>
-	<td align="left" valign="top"><p class="normal">users_manager_id</td>
-	<td align="left" valign="top"><p class="normal">int(11) unsigned</td>
-	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">YES</td>
-	<td align="left" valign="top"><p class="normal">MUL</td>
-	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 </tr>
@@ -5941,6 +6424,28 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 </tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">address</td>
+	<td align="left" valign="top"><p class="normal">varchar(256)</td>
+	<td align="left" valign="top"><p class="normal">utf8_unicode_ci</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
+<tr>
+	<td align="left" valign="top"><p class="normal">email</td>
+	<td align="left" valign="top"><p class="normal">varchar(256)</td>
+	<td align="left" valign="top"><p class="normal">utf8_unicode_ci</td>
+	<td align="left" valign="top"><p class="normal">YES</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">(NULL)</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+	<td align="left" valign="top"><p class="normal">select,insert,update,references</td>
+	<td align="left" valign="top"><p class="normal">&nbsp;</td>
+</tr>
 </table>
 
 
@@ -5978,43 +6483,6 @@ BR.page {page-break-after: always}
 	<td align="left" valign="top"><p class="normal">BTREE</td>
 	<td align="left" valign="top"><p class="normal">&nbsp;</td>
 </tr>
-<tr>
-	<td align="left" valign="top"><p class="normal">users</td>
-	<td align="left" valign="top"><p class="normal">1</td>
-	<td align="left" valign="top"><p class="normal">users_FKIndex1</td>
-	<td align="left" valign="top"><p class="normal">1</td>
-	<td align="left" valign="top"><p class="normal">users_manager_id</td>
-	<td align="left" valign="top"><p class="normal">A</td>
-	<td align="left" valign="top"><p class="normal">1</td>
-	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">(NULL)</td>
-	<td align="left" valign="top"><p class="normal">YES</td>
-	<td align="left" valign="top"><p class="normal">BTREE</td>
-	<td align="left" valign="top"><p class="normal">&nbsp;</td>
-</tr>
-</table>
-
-
-<table width="100%" border="0" cellspacing="0" cellpadding="3">
-<tr>
-	<td class="fieldheader" width="100%" align="left" valign="top">Foreign Key Relationships</td>
-</tr>
-</table>
-<table width="100%" cellspacing="0" cellapdding="2" border="1">
-<tr>
-	<td align="left" valign="top" class="fieldcolumn">FK Id</td>
-	<td align="left" valign="top" class="fieldcolumn">Reference Table</td>
-	<td align="left" valign="top" class="fieldcolumn">Source Column</td>
-	<td align="left" valign="top" class="fieldcolumn">Target Column</td>
-	<td align="left" valign="top" class="fieldcolumn">Extra Info</td>
-</tr>
-<tr>
-	<td align="left" valign="top"><p class="normal">fk_7cc17c3c-215b-11e0-9059-080027b715d2</td>
-	<td align="left" valign="top"><p class="normal">users</td>
-	<td align="left" valign="top"><p class="normal">`users_manager_id`</td>
-	<td align="left" valign="top"><p class="normal">`id`</td>
-	<td align="left" valign="top"><p class="normal"> ON DELETE NO ACTION ON UPDATE NO ACTION</td>
-<tr>
 </table>
 
 
