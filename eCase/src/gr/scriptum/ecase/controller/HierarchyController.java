@@ -211,7 +211,7 @@ public class HierarchyController extends BaseController {
 	}
 
 	public boolean isAddDisabled() {
-		if (user != null) {
+		if (user != null && department !=null) {
 			return false;
 		}
 		return true;
