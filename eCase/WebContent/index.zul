@@ -81,7 +81,9 @@
 									value="@{incomingTaskRow.usersByUserCreatorId.surname}" />
 							</listcell>
 							<listcell
-								label="@{incomingTaskRow.startDt}" />
+								label="@{incomingTaskRow.startDt, converter=gr.scriptum.eprotocol.util.DateCustom}" >
+								<custom-attributes format="dd/mm/yyyy"/>
+								</listcell>
 							<listcell
 								label="@{incomingTaskRow.taskState.name}" />
 							<listcell>
