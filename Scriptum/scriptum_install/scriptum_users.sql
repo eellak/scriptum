@@ -9,8 +9,8 @@ CREATE USER openkm@localhost IDENTIFIED BY 'scriptum';
 GRANT ALL ON okm_repo.* TO openkm@localhost WITH GRANT OPTION;
 GRANT ALL ON okm_app.* TO openkm@localhost WITH GRANT OPTION;
 
-CREATE USER ellak@localhost IDENTIFIED BY 'scriptum';
-GRANT ALL ON ellak.* TO ellak@localhost WITH GRANT OPTION;
+CREATE USER scriptum@localhost IDENTIFIED BY 'scriptum';
+GRANT ALL ON scriptum.* TO scriptum@localhost WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
