@@ -1,75 +1,126 @@
-/*
-SQLyog Community- MySQL GUI v8.22 
-MySQL - 5.1.48-community : Database - okm_repo
-*********************************************************************
-*/
+-- MySQL dump 10.13  Distrib 5.1.58, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: okm_repo
+-- ------------------------------------------------------
+-- Server version	5.1.58-1ubuntu1
 
-
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-
-/*!40101 SET SQL_MODE=''*/;
-
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`okm_repo` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
 
-USE `okm_repo`;
 
-/*Table structure for table `VERSION_BINVAL` */
+CREATE DATABASE `okm_repo` DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_bin;
 
+use `okm_repo`;
+
+
+--
+-- Table structure for table `VERSION_BINVAL`
+--
 DROP TABLE IF EXISTS `VERSION_BINVAL`;
-
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `VERSION_BINVAL` (
   `BINVAL_ID` varchar(64) COLLATE utf8_bin NOT NULL,
   `BINVAL_DATA` longblob NOT NULL,
   UNIQUE KEY `VERSION_BINVAL_IDX` (`BINVAL_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Data for the table `VERSION_BINVAL` */
+--
+-- Dumping data for table `VERSION_BINVAL`
+--
 
-/*Table structure for table `VERSION_BUNDLE` */
+LOCK TABLES `VERSION_BINVAL` WRITE;
+/*!40000 ALTER TABLE `VERSION_BINVAL` DISABLE KEYS */;
+/*!40000 ALTER TABLE `VERSION_BINVAL` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `VERSION_BUNDLE`
+--
 
 DROP TABLE IF EXISTS `VERSION_BUNDLE`;
-
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `VERSION_BUNDLE` (
   `NODE_ID` varbinary(16) NOT NULL,
   `BUNDLE_DATA` longblob NOT NULL,
   UNIQUE KEY `VERSION_BUNDLE_IDX` (`NODE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Data for the table `VERSION_BUNDLE` */
+--
+-- Dumping data for table `VERSION_BUNDLE`
+--
 
-insert  into `VERSION_BUNDLE`(`NODE_ID`,`BUNDLE_DATA`) values ('U—ù/ïEb»õÙë—v”T','\0\0\0\0\0Þ­¾ïúÎº¾Êþº¾Êþº¾\0\0ÿÿÿÿÿÿÿÿ\0éÐ´\r0<Nw»Z•%ÝÄPþ\0\0\0\020\0\0\0\0'),('WÍ;\"Ï˜NM»Æ°Ñ™œ:','\0\0\0\0\0éÐ´\r0<Nw»Z•%ÝÄPþ\0\0ÿÿÿÿÿÿÿÿ\0\0\0\0'),('Þ­¾ïúÎº¾Êþº¾Êþº¾','\0\0\0\0\0Þ­¾ïÊþº¾Êþº¾Êþº¾\0\0ÿÿÿÿÿÿÿÿ\0U—ù/ïEb»õÙë—v”T\0\0\0\0ba\0\0\0'),('éÐ´\r0<Nw»Z•%ÝÄPþ','\0\0\0\0\0U—ù/ïEb»õÙë—v”T\0\0ÿÿÿÿÿÿÿÿ\0WÍ;\"Ï˜NM»Æ°Ñ™œ:\0\0\0\05e\0\0\0\0');
+LOCK TABLES `VERSION_BUNDLE` WRITE;
+/*!40000 ALTER TABLE `VERSION_BUNDLE` DISABLE KEYS */;
+INSERT INTO `VERSION_BUNDLE` VALUES ('Uï¿½ï¿½/ï¿½Ebï¿½ï¿½ï¿½ï¿½vï¿½T','\0\0\0\0\0Þ­ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\0\0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\0ï¿½Ð´\r0<Nwï¿½Zï¿½%ï¿½ï¿½Pï¿½\0\0\0\020\0\0\0\0'),('Wï¿½;\"Ï˜NMï¿½Æ°Ñ™ï¿½:','\0\0\0\0\0ï¿½Ð´\r0<Nwï¿½Zï¿½%ï¿½ï¿½Pï¿½\0\0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\0\0\0\0'),('Þ­ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','\0\0\0\0\0Þ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\0\0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\0Uï¿½ï¿½/ï¿½Ebï¿½ï¿½ï¿½ï¿½vï¿½T\0\0\0\0ba\0\0\0'),('ï¿½Ð´\r0<Nwï¿½Zï¿½%ï¿½ï¿½Pï¿½','\0\0\0\0\0Uï¿½ï¿½/ï¿½Ebï¿½ï¿½ï¿½ï¿½vï¿½T\0\0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\0Wï¿½;\"Ï˜NMï¿½Æ°Ñ™ï¿½:\0\0\0\05e\0\0\0\0');
+/*!40000 ALTER TABLE `VERSION_BUNDLE` ENABLE KEYS */;
+UNLOCK TABLES;
 
-/*Table structure for table `VERSION_NAMES` */
+--
+-- Table structure for table `VERSION_NAMES`
+--
 
 DROP TABLE IF EXISTS `VERSION_NAMES`;
-
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `VERSION_NAMES` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `NAME` varchar(255) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Data for the table `VERSION_NAMES` */
+--
+-- Dumping data for table `VERSION_NAMES`
+--
 
-insert  into `VERSION_NAMES`(`ID`,`NAME`) values (1,'versionStorage'),(2,'versionLabels'),(3,'version'),(4,'predecessors'),(5,'created'),(6,'successors'),(7,'frozenNode'),(8,'frozenUuid'),(9,'frozenPrimaryType'),(10,'versionHistory'),(11,'versionableUuid'),(12,'versionComment'),(13,'data'),(14,'author'),(15,'mimeType'),(16,'size');
+LOCK TABLES `VERSION_NAMES` WRITE;
+/*!40000 ALTER TABLE `VERSION_NAMES` DISABLE KEYS */;
+INSERT INTO `VERSION_NAMES` VALUES (1,'versionStorage'),(2,'versionLabels'),(3,'version'),(4,'predecessors'),(5,'created'),(6,'successors'),(7,'frozenNode'),(8,'frozenUuid'),(9,'frozenPrimaryType'),(10,'versionHistory'),(11,'versionableUuid'),(12,'versionComment'),(13,'data'),(14,'author'),(15,'mimeType'),(16,'size');
+/*!40000 ALTER TABLE `VERSION_NAMES` ENABLE KEYS */;
+UNLOCK TABLES;
 
-/*Table structure for table `VERSION_REFS` */
+--
+-- Table structure for table `VERSION_REFS`
+--
 
 DROP TABLE IF EXISTS `VERSION_REFS`;
-
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `VERSION_REFS` (
   `NODE_ID` varbinary(16) NOT NULL,
   `REFS_DATA` longblob NOT NULL,
   UNIQUE KEY `VERSION_REFS_IDX` (`NODE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Data for the table `VERSION_REFS` */
+--
+-- Dumping data for table `VERSION_REFS`
+--
+
+LOCK TABLES `VERSION_REFS` WRITE;
+/*!40000 ALTER TABLE `VERSION_REFS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `VERSION_REFS` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2011-12-13 13:18:38
