@@ -53,10 +53,11 @@
 								value="startDt" forward="onSort=onSort" />
 							<listheader id="incomingTaskStateLsthdr"
 								label="${c:l('projectTask.taskState')}" sort="auto"
-								value="taskState,taskPriority,endDt" forward="onSort=onSort" sortDirection="ascending"/>
+								value="taskState,taskPriority,endDt" forward="onSort=onSort"
+								sortDirection="ascending" />
 							<listheader id="incomingTaskPriorityLsthdr"
 								label="${c:l('projectTask.taskPriority')}" sort="auto"
-								value="taskPriority" forward="onSort=onSort"/>
+								value="taskPriority" forward="onSort=onSort" />
 							<listheader id="incomingTaskEndDtLsthdr"
 								label="${c:l('projectTask.endDt')}" sort="auto" value="endDt"
 								forward="onSort=onSort" />
@@ -81,9 +82,9 @@
 									value="@{incomingTaskRow.usersByUserCreatorId.surname}" />
 							</listcell>
 							<listcell
-								label="@{incomingTaskRow.startDt, converter=gr.scriptum.eprotocol.util.DateCustom}" >
-								<custom-attributes format="dd/mm/yyyy"/>
-								</listcell>
+								label="@{incomingTaskRow.startDt, converter=gr.scriptum.util.DateCustom}">
+								<custom-attributes format="dd/MM/yyyy" />
+							</listcell>
 							<listcell
 								label="@{incomingTaskRow.taskState.name}" />
 							<listcell>
@@ -94,11 +95,19 @@
 									value="@{incomingTaskRow.taskPriority.name}" />
 							</listcell>
 							<listcell>
-								<label value="@{incomingTaskRow.endDt}"
-									visible="@{incomingTaskRow.isNotTaskExpired }" />
-								<label value="@{incomingTaskRow.endDt}"
-									style="background:red;color:white;"
-									visible="@{incomingTaskRow.isTaskExpired }" />
+								<label
+									value="@{incomingTaskRow.endDt, converter=gr.scriptum.util.DateCustom}"
+									visible="@{incomingTaskRow.isNotTaskExpired }">
+									<custom-attributes
+										format="dd/MM/yyyy" />
+								</label>
+								<label
+									value="@{incomingTaskRow.endDt, converter=gr.scriptum.util.DateCustom}"
+									style="color:red;"
+									visible="@{incomingTaskRow.isTaskExpired }">
+									<custom-attributes
+										format="dd/MM/yyyy" />
+								</label>
 							</listcell>
 						</listitem>
 
@@ -182,10 +191,11 @@
 								value="startDt" forward="onSort=onSort" />
 							<listheader id="outgoingTaskStateLsthdr"
 								label="${c:l('projectTask.taskState')}" sort="auto"
-								value="taskState,taskPriority,endDt" forward="onSort=onSort" sortDirection="ascending"/>
+								value="taskState,taskPriority,endDt" forward="onSort=onSort"
+								sortDirection="ascending" />
 							<listheader id="outgoingTaskPriorityLsthdr"
 								label="${c:l('projectTask.taskPriority')}" sort="auto"
-								value="taskPriority" forward="onSort=onSort"/>
+								value="taskPriority" forward="onSort=onSort" />
 							<listheader id="outgoingTaskEndDtLsthdr"
 								label="${c:l('projectTask.endDt')}" sort="auto" value="endDt"
 								forward="onSort=onSort" />
@@ -211,7 +221,9 @@
 									value="@{outgoingTaskRow.usersByUserDispatcherId.surname}" />
 							</listcell>
 							<listcell
-								label="@{outgoingTaskRow.startDt}" />
+								label="@{outgoingTaskRow.startDt, converter=gr.scriptum.util.DateCustom}" >
+								<custom-attributes format="dd/MM/yyyy"/>
+								</listcell>
 							<listcell
 								label="@{outgoingTaskRow.taskState.name}" />
 							<listcell>
@@ -222,11 +234,15 @@
 									value="@{outgoingTaskRow.taskPriority.name}" />
 							</listcell>
 							<listcell>
-								<label value="@{outgoingTaskRow.endDt}"
-									visible="@{outgoingTaskRow.isNotTaskExpired }" />
-								<label value="@{outgoingTaskRow.endDt}"
-									style="background:red;color:white;"
-									visible="@{outgoingTaskRow.isTaskExpired }" />
+								<label value="@{outgoingTaskRow.endDt, converter=gr.scriptum.util.DateCustom}"
+									visible="@{outgoingTaskRow.isNotTaskExpired }" >
+									<custom-attributes format="dd/MM/yyyy"/>
+									</label>
+								<label value="@{outgoingTaskRow.endDt, converter=gr.scriptum.util.DateCustom}"
+									style="color:red;"
+									visible="@{outgoingTaskRow.isTaskExpired }" >
+									<custom-attributes format="dd/MM/yyyy"/>
+									</label>
 							</listcell>
 						</listitem>
 
