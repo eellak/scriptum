@@ -7,7 +7,7 @@
  
 CREATE USER openkm@localhost IDENTIFIED BY 'scriptum';
 GRANT ALL ON okm_repo.* TO openkm@localhost WITH GRANT OPTION;
-GRANT ALL ON okm_app.* TO openkm@localhost WITH GRANT OPTION;
+GRANT ALL ON okm_app.*  TO openkm@localhost WITH GRANT OPTION;
 
 CREATE USER scriptum@localhost IDENTIFIED BY 'scriptum';
 GRANT ALL ON scriptum.* TO scriptum@localhost WITH GRANT OPTION;
