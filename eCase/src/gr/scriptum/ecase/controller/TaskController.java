@@ -106,6 +106,7 @@ public class TaskController extends BaseController {
 	protected String okmNodeTask = null;
 	protected String parentTaskPrefix = null;
 	protected Integer taskStateClosedId = null;
+	protected Integer reminderDays = null;
 
 	protected TaskState taskState = null;
 	protected TaskResult taskResult = null;
@@ -114,6 +115,7 @@ public class TaskController extends BaseController {
 		projectTask = new ProjectTask();
 		projectTask.setDispatcherCloseable(false);
 		projectTask.setUsersByUserCreatorId(getUserInSession());
+		projectTask.setReminderDays(reminderDays);
 	}
 
 	protected void initContacts() {
@@ -353,8 +355,9 @@ public class TaskController extends BaseController {
 			// clean up
 			taskDocumentsToBeDeleted.clear();
 
-			tx.begin(); //begin a transaction, which will be automatically committed by the jta interceptor
-			
+			tx.begin(); // begin a transaction, which will be automatically
+						// committed by the jta interceptor
+
 		} catch (Exception e) {
 			log.error(e);
 			if (tx.getStatus() == Status.STATUS_ACTIVE) {
@@ -395,6 +398,8 @@ public class TaskController extends BaseController {
 				.getAsString(IConstants.PARAM_PARENT_TASK_PREFIX);
 		taskStateClosedId = parameterDAO
 				.getAsInteger(IConstants.PARAM_TASK_STATED_CLOSED);
+		reminderDays = parameterDAO
+				.getAsInteger(IConstants.PARAM_TASK_REMINDER_DAYS);
 
 		initContacts();
 		initDocuments();
