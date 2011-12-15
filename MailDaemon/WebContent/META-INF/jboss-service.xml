@@ -8,4 +8,9 @@
 </mbean>
 
 
+<mbean name="mailclients.eprotocol.scriptum.gr:service=MailNotificationDaemon"
+       code="gr.scriptum.eprotocol.mailclients.MailNotificationDaemon"
+       description="SMTP Mail Notification Daemon for SCRIPTUM eCase">    
+</mbean>
+
 </server>
