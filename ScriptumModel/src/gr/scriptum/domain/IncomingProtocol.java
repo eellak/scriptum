@@ -53,12 +53,13 @@ public class IncomingProtocol extends ProtocolNode implements
 			Integer updateUserId, Date createDt, Date updateTs,
 
 			Contact contact, String incomingProtocolNumber, Date incomingDate,
-			String incomingPlace, ProtocolBook protocolBook) {
+			String incomingPlace, ProtocolBook protocolBook,
+			Integer relativeTask) {
 
 		super(direction, id, protocolNumber, protocolSeries, protocolDate,
 				protocolYear, distributionMethod, subject, comments,
 				protocolDocuments, createUserId, updateUserId, createDt,
-				updateTs,protocolBook);
+				updateTs, protocolBook, relativeTask);
 
 		this.contact = contact;
 		this.incomingProtocolNumber = incomingProtocolNumber;

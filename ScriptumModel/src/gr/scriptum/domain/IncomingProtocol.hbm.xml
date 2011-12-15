@@ -68,6 +68,9 @@
 				<comment>to sxetiko - otidipote</comment>
 			</column>
 		</property>
+        <property name="relativeTask" type="java.lang.Integer">
+            <column name="relative_task" />
+        </property>
         <set name="protocolDocuments" table="protocol_document" inverse="true" lazy="true" fetch="select" order-by="document_number">
             <key>
                 <column name="incoming_protocol_id" />

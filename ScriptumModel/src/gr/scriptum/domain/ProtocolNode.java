@@ -46,6 +46,8 @@ public abstract class ProtocolNode implements java.io.Serializable {
 	String relativeProtocol;
 
 	ProtocolBook protocolBook;
+	Integer relativeTask;
+
 
 	// -----------
 	// Constructors
@@ -59,7 +61,7 @@ public abstract class ProtocolNode implements java.io.Serializable {
 			String subject, String comments,
 			Set<ProtocolDocument> protocolDocuments, Integer createUserId,
 			Integer updateUserId, Date createDt, Date updateTs,
-			ProtocolBook protocolBook) {
+			ProtocolBook protocolBook,Integer relativeTask) {
 
 		this.direction = direction;
 		this.id = id;
@@ -76,6 +78,7 @@ public abstract class ProtocolNode implements java.io.Serializable {
 		this.createDt = createDt;
 		this.updateTs = updateTs;
 		this.protocolBook = protocolBook;
+		this.relativeTask = relativeTask;
 	}
 
 	public ProtocolNode(Direction direction) {
@@ -243,6 +246,14 @@ public abstract class ProtocolNode implements java.io.Serializable {
 
 	public void setProtocolBook(ProtocolBook protocolBook) {
 		this.protocolBook = protocolBook;
+	}
+
+	public Integer getRelativeTask() {
+		return relativeTask;
+	}
+
+	public void setRelativeTask(Integer relativeTask) {
+		this.relativeTask = relativeTask;
 	}
 
 }

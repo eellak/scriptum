@@ -69,6 +69,9 @@
 		<property name="isDeleted" type="java.lang.Boolean">
 			<column name="is_deleted" />
 		</property>
+        <property name="relativeTask" type="java.lang.Integer">
+            <column name="relative_task" />
+        </property>
 		<set name="protocolDocuments" table="protocol_document" inverse="true"
 			lazy="true" fetch="select" order-by="document_number">
 			<key>
