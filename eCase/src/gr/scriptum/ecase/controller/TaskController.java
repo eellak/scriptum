@@ -353,7 +353,7 @@ public class TaskController extends BaseController {
 			// clean up
 			taskDocumentsToBeDeleted.clear();
 
-			tx.begin();
+			tx.begin(); //begin a transaction, which will be automatically committed by the jta interceptor
 			
 		} catch (Exception e) {
 			log.error(e);
