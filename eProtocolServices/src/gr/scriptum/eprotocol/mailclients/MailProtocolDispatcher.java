@@ -6,6 +6,7 @@ import javax.mail.MessagingException;
 
 import gr.scriptum.domain.IncomingProtocol;
 import gr.scriptum.domain.OutgoingProtocol;
+import gr.scriptum.domain.ProjectTask;
 /**
  * Interface that must be followed by all Implementation classes need to dispatch mail requests for SCRIPTUM API
  * @author mike
@@ -33,5 +34,12 @@ public interface MailProtocolDispatcher {
      * @return
      */
     SendMailReceipt [] sendAllOutgoingProtocols( OutgoingProtocol [] outProtocol);
+    
+    /**
+     * Send a task 
+     * @param outTask the task
+     * @return
+     */
+    SendMailReceipt sendOutgoingTask(ProjectTask outTask);
 
 }
