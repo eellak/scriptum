@@ -143,7 +143,7 @@ incmoingProtocol.createTs=Ημ/νία Δημιουργίας
 incomingProtocol.updateTs=Ημ/νία Τροποποίησης
 incomingProtocol.protocolDocuments=Έγγραφα
 incomingProtocol.isDeleted=Διαγεγραμμένο
-incomingProtocol.relativeProtocol=Σχετικό Πρωτ/λο
+incomingProtocol.relativeProtocol=Σχετικό Πρωτ/λο (Εσωτ. Α/Α)
 incomingProtocol.protocolBook=Βιβλίο
 
 ##outoing Protocol
@@ -161,7 +161,7 @@ incmoingProtocol.createTs=Ημ/νία Δημιουργίας
 outgoingProtocol.updateTs=Ημ/νία Τροποποίησης
 outgoingProtocol.protocolDocuments=Έγγραφα
 outgoingProtocol.isDeleted=Διαγεγραμμένο
-outgoingProtocol.relativeProtocol=Σχετικό Πρωτ/λο
+outgoingProtocol.relativeProtocol=Σχετικό Πρωτ/λο (Εσωτ. Α/Α)
 outgoingProtocol.protocolBook=Βιβλίο
 
 ##protocol Document
