@@ -10,6 +10,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
@@ -116,5 +118,23 @@ public class ProjectTaskDAO extends GenericDAO<ProjectTask, Integer> {
 		return results;
 
 	}
+	
+	
+	public List<ProjectTask> findTaskAboutToExpire( Integer defaultDaysNum ){
+	
+	    Session session=getSession();
+	   
+	      Query q1 =session.createQuery("from ProjectTask pt where  pt.endDt > current_date() " + 
+	    		                        " and  (day(pt.endDt) - day(current_date()) < NVL(pt.reminderDays,:defaultReminderDays)");
+	      q1.setInteger("defaultReminderDays", defaultDaysNum);
+	      List<ProjectTask> results = q1.list();
+	      if( results != null )
+	    	  log.info("Rows fetched:" + results.size());
+	      else
+	    	  log.info("Rows fetched: resultSet is null");
+	      return results;
+	}
+	
+	
 
 }
