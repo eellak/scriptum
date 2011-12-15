@@ -5,6 +5,8 @@ import gr.scriptum.domain.OutgoingProtocol;
 import gr.scriptum.domain.OutgoingRecipient;
 import gr.scriptum.domain.OutgoingRecipientId;
 import gr.scriptum.domain.OutgoingRecipient.RecipientType;
+import gr.scriptum.domain.ProjectTask;
+import gr.scriptum.domain.Users;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,6 +65,31 @@ public class SendMailReceipt {
         sentCc = new String[addressesCc.size()];
         sentCc = addressesTo.toArray(sentCc);
 	}
+	
+	
+	public SendMailReceipt( ProjectTask  outTask){
+		super();
+		outProtocolId = outTask.getId();
+		subject = outTask.getName();
+		//outProtocolNumber = outProtocol.getProtocolNumber();
+		
+		Users assigner   = outTask.getUsersByUserCreatorId();
+		Users dispatcher = outTask.getUsersByUserDispatcherId();
+		
+        ArrayList<String> addressesTo = new ArrayList<String>();
+        ArrayList<String> addressesCc = new ArrayList<String>();
+        addressesTo.add( assigner.getEmail());
+        addressesTo.add( dispatcher.getEmail());
+        
+        sentTo = new String[addressesTo.size()];
+        sentTo = addressesTo.toArray(sentTo);
+        sentCc = new String[addressesCc.size()];
+        sentCc = addressesTo.toArray(sentCc);		
+	}
+	
+	
+	
+	
 	
 	public void appendError( Throwable t ){
 		eMessage = t.getMessage();
