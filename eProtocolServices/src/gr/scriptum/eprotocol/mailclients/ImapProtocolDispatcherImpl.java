@@ -5,9 +5,11 @@ import gr.scriptum.domain.IncomingProtocol;
 import gr.scriptum.domain.OutgoingProtocol;
 import gr.scriptum.domain.OutgoingRecipient;
 import gr.scriptum.domain.OutgoingRecipientId;
+import gr.scriptum.domain.ProjectTask;
 import gr.scriptum.domain.ProtocolDocument;
 import gr.scriptum.domain.ScriptumDocument;
 import gr.scriptum.domain.OutgoingRecipient.RecipientType;
+import gr.scriptum.domain.TaskDocument;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -414,6 +416,49 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 	}
 
 	/**
+	 * Send a mail when task state changes
+	 * @param outTask The task this mail concerns about....
+	 * @return the SendMailReceipt 
+	 */
+	public SendMailReceipt sendOutgoingTask(ProjectTask outTask){
+		SendMailReceipt mailReceipt = new SendMailReceipt(outTask);
+		
+		String[] addressesToArray = mailReceipt.getSentTo();
+		String[] addressesCcArray = mailReceipt.getSentCc();
+		
+		// Attachments: create temporary files
+		Set<TaskDocument> documents = outTask.getTaskDocuments();
+		File[] attachements = new File[documents.size()];
+		int i = 0;
+		for (ScriptumDocument document : documents) {
+			attachements[i++] = getFileFromBytes(document.getContent(),
+					document.getDocumentName());
+		}
+		// send the email
+		mailReceipt = sendOutgoingMail(addressesToArray, addressesCcArray,
+				addressesToArray[0], outTask.getName(),outTask.getDescription(),
+				attachements);
+
+		// delete all temporary files created during the operation
+		for (int j = 0; i < attachements.length; j++) {
+			try {
+				if (attachements[j] != null)
+					attachements[j].delete();
+			} catch (Exception e) {
+				log.warn("Could not delete temporary attachment ("
+						+ attachements[j].getName() + " reason " + e.toString());
+			}
+		}
+
+		return mailReceipt;		
+	}
+	
+	
+	
+	
+	
+	
+	/**
 	 * Simple Send Mail Method vi SMTP protocol
 	 * @param to
 	 * @param cc
@@ -423,6 +468,7 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 	 * @param attachements
 	 * @return
 	 */
+
 	public SendMailReceipt sendOutgoingMail(String[] to, String[] cc,
 			String from, String subject, String text, File[] attachements) {
 
@@ -648,7 +694,7 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 			props.setProperty("mail.transport.protocol", "smtp");
 			props.setProperty("mail.host", "mail.illumine.gr");
 			props.setProperty("mail.user", "mountrakis@illumine.gr");
-			props.setProperty("mail.password", "XINU666+1");
+			props.setProperty("mail.password", "o gnwstos");
 
 			Session mailSession = Session.getDefaultInstance(props, null);
 			Transport transport = mailSession.getTransport();
