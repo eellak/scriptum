@@ -77,6 +77,9 @@
         <property name="endDt" type="timestamp">
             <column name="end_dt" length="19" />
         </property>
+        <property name="reminderDays" type="java.lang.Integer">
+            <column name="reminder_days" />
+        </property>
         <set name="projectTasks" table="project_task" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="parent_task_id" />

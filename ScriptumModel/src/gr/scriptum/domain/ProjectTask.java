@@ -35,13 +35,14 @@ public class ProjectTask implements java.io.Serializable {
 	private Date updateTs;
 	private Boolean dispatcherCloseable;
 	private Date endDt;
+	private Integer reminderDays;
 	private Set<ProjectTask> projectTasks = new HashSet<ProjectTask>(0);
 	private Set<TaskDocument> taskDocuments = new HashSet<TaskDocument>(0);
 	private Set<TaskMessage> taskMessages = new HashSet<TaskMessage>(0);
-	
+
 	/* non persistent fields */
 	private Boolean isTaskExpired;
-	
+
 	public ProjectTask() {
 	}
 
@@ -64,8 +65,8 @@ public class ProjectTask implements java.io.Serializable {
 			Date closedDt, String comments, Integer timesRevised,
 			Integer timesContactExternal, Integer reviewerScore, Date createDt,
 			Date updateTs, Boolean dispatcherCloseable, Date endDt,
-			Set<ProjectTask> projectTasks, Set<TaskDocument> taskDocuments,
-			Set<TaskMessage> taskMessages) {
+			Integer reminderDays, Set<ProjectTask> projectTasks,
+			Set<TaskDocument> taskDocuments, Set<TaskMessage> taskMessages) {
 		this.project = project;
 		this.usersByUserDispatcherId = usersByUserDispatcherId;
 		this.taskResult = taskResult;
@@ -88,7 +89,8 @@ public class ProjectTask implements java.io.Serializable {
 		this.createDt = createDt;
 		this.updateTs = updateTs;
 		this.dispatcherCloseable = dispatcherCloseable;
-		this.endDt=endDt;
+		this.endDt = endDt;
+		this.reminderDays = reminderDays;
 		this.projectTasks = projectTasks;
 		this.taskDocuments = taskDocuments;
 		this.taskMessages = taskMessages;
@@ -342,9 +344,17 @@ public class ProjectTask implements java.io.Serializable {
 	public void setIsTaskExpired(Boolean isTaskExpired) {
 		this.isTaskExpired = isTaskExpired;
 	}
-	
+
 	public Boolean getIsNotTaskExpired() {
 		return !getIsTaskExpired();
+	}
+
+	public Integer getReminderDays() {
+		return reminderDays;
+	}
+
+	public void setReminderDays(Integer reminderDays) {
+		this.reminderDays = reminderDays;
 	}
 
 }
