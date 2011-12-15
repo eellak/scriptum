@@ -192,6 +192,12 @@
 						constraint="no empty" />
 				</row>
 				<row>
+					${c:l('projectTask.reminderDays')}
+					<intbox id="reminderDaysIntb"
+						value="@{OutgoingTaskController.projectTask.reminderDays}"
+						width="50px" readonly="@{OutgoingTaskController.isTaskClosed }" />
+				</row>
+				<row>
 					${c:l('projectTask.taskType')}
 					<combobox id="typeCbx" width="300px"
 						model="@{OutgoingTaskController.taskTypes}"

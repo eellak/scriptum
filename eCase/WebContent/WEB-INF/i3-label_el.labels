@@ -232,6 +232,7 @@ projectTask.timesRevised=Αριθμός Ελέγχων απο Αναθέτη
 projectTask.timesContactExternal=Βαθμολογία Επικοινωνίας με Εξωτερικούς
 projectTask.dispatcherCloseable=Μπορεί να κλείσει από Διεκπεραιωτή
 projectTask.taskResult=Αποτέλεσμα
+projectTask.reminderDays=Αριθμός Ημερών Υπενθύμησης 
 
 ##TaskDocument
 taskDocument=Έγγραφο Ανάθεσης
