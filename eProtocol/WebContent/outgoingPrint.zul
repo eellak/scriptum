@@ -13,7 +13,7 @@
 			</columns>
 
 			<rows>
-				<row visible="false">
+				<row visible="true">
 					${c:l('outgoingProtocol.id')}
 					<label id="idLbl"
 						value="@{OutgoingController.protocol.id}" />
