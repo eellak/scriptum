@@ -788,6 +788,15 @@ public class IncomingController extends ProtocolController {
 
 	}
 
+	public void onClick$relativeTaskBtn() throws InterruptedException {
+
+		Executions.getCurrent().sendRedirect(
+				"http://" + Executions.getCurrent().getServerName() + ":"
+						+ Executions.getCurrent().getServerPort()
+						+ "/eCase/task.zul?id=" + protocol.getRelativeTask(), "_blank");
+	}
+
+	
 	public void onClick$taskBtn() {
 		Executions.getCurrent().sendRedirect(
 				"http://" + Executions.getCurrent().getServerName() + ":"
@@ -874,6 +883,16 @@ public class IncomingController extends ProtocolController {
 		return false;
 	}
 
+	public boolean isRelativeTaskButtonDisabled() {
+
+		if (protocol.getRelativeTask() == null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	
 	public boolean isTaskButtonDisabled() {
 		return !isProtocolSubmitted();
 	}

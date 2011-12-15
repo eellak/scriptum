@@ -214,6 +214,17 @@
 					</hbox>
 				</row>
 				<row>
+					${c:l('incomingProtocol.relativeTask')}
+					<hbox>
+						<textbox id="relativeTaskTxb"
+							value="@{IncomingController.protocol.relativeTask}"
+							width="300px" />
+						<button id="relativeTaskBtn"
+							label="${c:l('display')}"
+							disabled="@{IncomingController.isRelativeTaskButtonDisabled}" />
+					</hbox>
+				</row>
+				<row>
 					${c:l('distributionMethod')}
 					<combobox id="distributionMethodCbx" width="300px"
 						model="@{IncomingController.distributionMethods}"

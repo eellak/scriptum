@@ -631,8 +631,9 @@ public class OutgoingController extends ProtocolController {
 			toListToBeDeleted.clear();
 			ccListToBeDeleted.clear();
 
-			tx.begin(); //begin a transaction, which will be automatically committed by the jta interceptor
-			
+			tx.begin(); // begin a transaction, which will be automatically
+						// committed by the jta interceptor
+
 		} catch (Exception e) {
 			log.error(e);
 			if (tx.getStatus() == Status.STATUS_ACTIVE) {
@@ -1310,7 +1311,6 @@ public class OutgoingController extends ProtocolController {
 			return;
 		}
 
-
 		IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
 		IncomingProtocol relativeIncomingProtocol = incomingProtocolDAO
 				.findById(id, false);
@@ -1336,6 +1336,15 @@ public class OutgoingController extends ProtocolController {
 						Labels.getLabel("fetch.title"), Messagebox.OK,
 						Messagebox.ERROR);
 
+	}
+
+	public void onClick$relativeTaskBtn() throws InterruptedException {
+
+		Executions.getCurrent().sendRedirect(
+				"http://" + Executions.getCurrent().getServerName() + ":"
+						+ Executions.getCurrent().getServerPort()
+						+ "/eCase/task.zul?id=" + protocol.getRelativeTask(),
+				"_blank");
 	}
 
 	public void onClick$taskBtn() {
@@ -1405,6 +1414,15 @@ public class OutgoingController extends ProtocolController {
 	public boolean isRelativeButtonDisabled() {
 
 		if (StringUtils.trimToNull(protocol.getRelativeProtocol()) == null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isRelativeTaskButtonDisabled() {
+
+		if (protocol.getRelativeTask() == null) {
 			return true;
 		}
 

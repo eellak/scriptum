@@ -145,6 +145,7 @@ incomingProtocol.protocolDocuments=Έγγραφα
 incomingProtocol.isDeleted=Διαγεγραμμένο
 incomingProtocol.relativeProtocol=Σχετικό Πρωτ/λο (Εσωτ. Α/Α)
 incomingProtocol.protocolBook=Βιβλίο
+incomingProtocol.relativeTask=Σχετική Ανάθεση (Α/Α)
 
 ##outoing Protocol
 outgoingProtocol=Εξερχόμενο Πρωτόκολλο
@@ -163,6 +164,7 @@ outgoingProtocol.protocolDocuments=Έγγραφα
 outgoingProtocol.isDeleted=Διαγεγραμμένο
 outgoingProtocol.relativeProtocol=Σχετικό Πρωτ/λο (Εσωτ. Α/Α)
 outgoingProtocol.protocolBook=Βιβλίο
+incomingProtocol.relativeTask=Σχετική Ανάθεση (Α/Α)
 
 ##protocol Document
 protocolDocument=Έγγραφο Πρωτ/λου
