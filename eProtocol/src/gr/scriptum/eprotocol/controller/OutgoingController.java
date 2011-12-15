@@ -631,6 +631,8 @@ public class OutgoingController extends ProtocolController {
 			toListToBeDeleted.clear();
 			ccListToBeDeleted.clear();
 
+			tx.begin(); //begin a transaction, which will be automatically committed by the jta interceptor
+			
 		} catch (Exception e) {
 			log.error(e);
 			if (tx.getStatus() == Status.STATUS_ACTIVE) {
@@ -1298,28 +1300,34 @@ public class OutgoingController extends ProtocolController {
 	}
 
 	public void onClick$relativeBtn() throws InterruptedException {
+		Integer id = null;
+		try {
+			id = Integer.parseInt(protocol.getRelativeProtocol());
+		} catch (NumberFormatException e) {
+			Messagebox.show(Labels.getLabel("fetch.notFound"),
+					Labels.getLabel("fetch.title"), Messagebox.OK,
+					Messagebox.ERROR);
+			return;
+		}
+
 
 		IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
-		List<IncomingProtocol> incomingProtocols = incomingProtocolDAO.search(
-				protocol.getRelativeProtocol(), null, null, null, null, null,
-				null, false, false, null, null, null, new Order[0]);
-		if (!incomingProtocols.isEmpty()) {
-			IncomingProtocol relativeProtocol = incomingProtocols.get(0);
+		IncomingProtocol relativeIncomingProtocol = incomingProtocolDAO
+				.findById(id, false);
+		if (relativeIncomingProtocol != null) {
 			Executions.getCurrent().sendRedirect(
 					IncomingController.PAGE + "?" + IConstants.PARAM_KEY_ID
-							+ "=" + relativeProtocol.getId());
+							+ "=" + relativeIncomingProtocol.getId());
 			return;
 		}
 
 		OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
-		List<OutgoingProtocol> outgoingProtocols = outgoingProtocolDAO.search(
-				protocol.getRelativeProtocol(), null, null, null, null, null,
-				null, false, false, null, null, null, new Order[0]);
-		if (!outgoingProtocols.isEmpty()) {
-			OutgoingProtocol relativeProtocol = outgoingProtocols.get(0);
+		OutgoingProtocol relativeOutgoingProtocol = outgoingProtocolDAO
+				.findById(id, false);
+		if (relativeOutgoingProtocol != null) {
 			Executions.getCurrent().sendRedirect(
 					OutgoingController.PAGE + "?" + IConstants.PARAM_KEY_ID
-							+ "=" + relativeProtocol.getId());
+							+ "=" + relativeOutgoingProtocol.getId());
 			return;
 		}
 
