@@ -77,6 +77,8 @@ public class OutgoingTaskController extends TaskController {
 	/* Data binding */
 	private Department department = null;
 	private Integer autoManagedTask = null;
+	private Integer incomingProtocolId = null;
+	private Integer outgoingProtocolId = null;
 
 	/**
 	 * A list of subordinate users. If the task creator belongs to a department
@@ -392,11 +394,18 @@ public class OutgoingTaskController extends TaskController {
 				ParameterDAO parameterDAO = new ParameterDAO();
 				String name = parameterDAO
 						.getAsString(IConstants.PARAM_TASK_PROTOCOL_INCOMING);
-				projectTask.setName(name + incomingProtocol.getFullNumber());
+				projectTask.setName(name
+						+ incomingProtocol.getFullNumber()
+						+ " ("
+						+ incomingProtocol.getProtocolBook()
+								.getProtocolSeries() + "-"
+						+ incomingProtocol.getProtocolBook().getProtocolYear()
+						+ ")");
 				// copy protocol documents (including byte content)
 				copyProtocolDocuments(incomingProtocol.getProtocolDocuments());
+				incomingProtocolId = idIncomingProtocol; // store for later use
+															// (when saving)
 				return;
-
 			}
 
 			if (idOutgoingProtocol != null) {// outgoing
@@ -416,9 +425,17 @@ public class OutgoingTaskController extends TaskController {
 				ParameterDAO parameterDAO = new ParameterDAO();
 				String name = parameterDAO
 						.getAsString(IConstants.PARAM_TASK_PROTOCOL_OUTGOING);
-				projectTask.setName(name + outgoingProtocol.getFullNumber());
+				projectTask.setName(name
+						+ outgoingProtocol.getFullNumber()
+						+ " ("
+						+ outgoingProtocol.getProtocolBook()
+								.getProtocolSeries() + "-"
+						+ outgoingProtocol.getProtocolBook().getProtocolYear()
+						+ ")");
 				// copy protocol documents (including byte content)
 				copyProtocolDocuments(outgoingProtocol.getProtocolDocuments());
+				outgoingProtocolId = idOutgoingProtocol;// store for later use
+														// (when saving)
 			}
 		}
 	}
@@ -551,6 +568,24 @@ public class OutgoingTaskController extends TaskController {
 			taskMessage.setMessage(message);
 			taskMessage.setCreatedTs(new Date());
 			taskMessageDAO.makePersistent(taskMessage);
+		} else {
+			/*
+			 * mark corresponding related protocol (only for newly created
+			 * tasks)
+			 */
+			if (incomingProtocolId != null) {
+				IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
+				IncomingProtocol incomingProtocol = incomingProtocolDAO
+						.findById(incomingProtocolId, false);
+				incomingProtocol.setRelativeTask(projectTask.getId());
+				incomingProtocolDAO.makePersistent(incomingProtocol);
+			} else if (outgoingProtocolId != null) {
+				OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
+				OutgoingProtocol outgoingProtocol = outgoingProtocolDAO
+						.findById(outgoingProtocolId, false);
+				outgoingProtocol.setRelativeTask(projectTask.getId());
+				outgoingProtocolDAO.makePersistent(outgoingProtocol);
+			}
 		}
 
 		Messagebox.show(Labels.getLabel("save.OK"),
