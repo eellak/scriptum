@@ -22,6 +22,9 @@ import gr.scriptum.domain.TaskMessage;
 import gr.scriptum.domain.UserHierarchy;
 import gr.scriptum.domain.Users;
 import gr.scriptum.ecase.util.IConstants;
+import gr.scriptum.eprotocol.mailclients.ImapProtocolDispatcherImpl;
+import gr.scriptum.eprotocol.mailclients.MailDispatcherConfig;
+import gr.scriptum.eprotocol.mailclients.SendMailReceipt;
 import gr.scriptum.eprotocol.ws.ResponseSendDocument;
 
 import java.util.ArrayList;
@@ -331,7 +334,7 @@ public class OutgoingTaskController extends TaskController {
 				}
 			}
 
-			// check if task is being generated based on an existing
+			// check if task is being generated based on an existing incoming
 			// protocol
 			String idIncomingProtocolString = execution
 					.getParameter(PARAM_KEY_PROTOCOL_INCOMING);
@@ -348,38 +351,7 @@ public class OutgoingTaskController extends TaskController {
 					projectTask = null;
 					return;
 				}
-			}
-			String idOutgoingProtocolString = execution
-					.getParameter(PARAM_KEY_PROTOCOL_OUTGOING);
-			Integer idOutgoingProtocol = null;
-			if (idOutgoingProtocolString != null) { // outgoing protocol set
-				try {
-					idOutgoingProtocol = Integer
-							.valueOf(idOutgoingProtocolString);
-				} catch (Exception e) {
-					log.error(e);
-					Messagebox.show(Labels.getLabel("fetch.notFound"),
-							Labels.getLabel("fetch.title"), Messagebox.OK,
-							Messagebox.ERROR);
-					projectTask = null;
-					return;
-				}
-			}
-
-			if ((idIncomingProtocol == null && idOutgoingProtocol == null)
-					|| (idIncomingProtocol != null && idOutgoingProtocol != null)) {
-
-				Messagebox.show(Labels.getLabel("fetch.notFound"),
-						Labels.getLabel("fetch.title"), Messagebox.OK,
-						Messagebox.ERROR);
-				projectTask = null;
-				return;
-
-			}
-
-			if (idIncomingProtocol != null) { // incoming protocol
-												// set
-
+				
 				IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
 				IncomingProtocol incomingProtocol = incomingProtocolDAO
 						.findById(idIncomingProtocol, false);
@@ -407,10 +379,25 @@ public class OutgoingTaskController extends TaskController {
 															// (when saving)
 				return;
 			}
-
-			if (idOutgoingProtocol != null) {// outgoing
-												// protocol set
-
+			
+			// check if task is being generated based on an existing outgoing
+			// protocol
+			String idOutgoingProtocolString = execution
+					.getParameter(PARAM_KEY_PROTOCOL_OUTGOING);
+			Integer idOutgoingProtocol = null;
+			if (idOutgoingProtocolString != null) { // outgoing protocol set
+				try {
+					idOutgoingProtocol = Integer
+							.valueOf(idOutgoingProtocolString);
+				} catch (Exception e) {
+					log.error(e);
+					Messagebox.show(Labels.getLabel("fetch.notFound"),
+							Labels.getLabel("fetch.title"), Messagebox.OK,
+							Messagebox.ERROR);
+					projectTask = null;
+					return;
+				}
+				
 				OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
 				OutgoingProtocol outgoingProtocol = outgoingProtocolDAO
 						.findById(idOutgoingProtocol, false);
@@ -436,6 +423,7 @@ public class OutgoingTaskController extends TaskController {
 				copyProtocolDocuments(outgoingProtocol.getProtocolDocuments());
 				outgoingProtocolId = idOutgoingProtocol;// store for later use
 														// (when saving)
+
 			}
 		}
 	}
@@ -588,6 +576,34 @@ public class OutgoingTaskController extends TaskController {
 			}
 		}
 
+		/* send a notification email */
+		MailDispatcherConfig config = new MailDispatcherConfig();
+
+		if (mailServerType.equalsIgnoreCase(MailDispatcherConfig.IMAP))
+			config.setIMAP();
+		else if (mailServerType.equalsIgnoreCase(MailDispatcherConfig.POP3))
+			config.setPOP3();
+		else if (mailServerType.equalsIgnoreCase(MailDispatcherConfig.IMAPS)) {
+			config.setIMAPS();
+			config.setEnableStarttls(true);
+		}
+		config.setSmtpHost(smtpHost);
+		config.setSmtpPort(smtpPort);
+		config.setSmtpUser(smtpUser);
+		config.setSmtpPassword(smtpPassword);
+		config.setMessageFrom(emailFrom);
+		config.setDebug(false);
+
+		ProjectTaskDAO projectTaskDAO = new ProjectTaskDAO();
+		projectTaskDAO.attachClean(projectTask);
+		
+		ImapProtocolDispatcherImpl disp = new ImapProtocolDispatcherImpl(config);
+		SendMailReceipt sendMailReceipt = disp.sendOutgoingTask(projectTask);
+		if (sendMailReceipt.isError()) {
+			log.error(sendMailReceipt.geteCode() + ":"
+					+ sendMailReceipt.geteMessage());
+		}
+		
 		Messagebox.show(Labels.getLabel("save.OK"),
 				Labels.getLabel("save.title"), Messagebox.OK,
 				Messagebox.INFORMATION, new EventListener() {

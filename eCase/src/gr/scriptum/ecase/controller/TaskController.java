@@ -26,6 +26,7 @@ import gr.scriptum.domain.TaskState;
 import gr.scriptum.domain.TaskType;
 import gr.scriptum.domain.UserHierarchy;
 import gr.scriptum.ecase.util.IConstants;
+import gr.scriptum.eprotocol.mailclients.MailDispatcherConfig;
 import gr.scriptum.eprotocol.ws.OkmProtocolDispatcherImpl;
 import gr.scriptum.eprotocol.ws.RequestAddDocumentToNode;
 import gr.scriptum.eprotocol.ws.RequestDelete;
@@ -111,6 +112,13 @@ public class TaskController extends BaseController {
 	protected TaskState taskState = null;
 	protected TaskResult taskResult = null;
 
+	protected String mailServerType = MailDispatcherConfig.IMAP;
+	protected String smtpHost = null;
+	protected String smtpUser = null;
+	protected String smtpPassword = null;
+	protected int smtpPort = MailDispatcherConfig.DEFAULT_SMTP_PORT;
+	protected String emailFrom = null;
+	
 	protected void initTask() {
 		projectTask = new ProjectTask();
 		projectTask.setDispatcherCloseable(false);
@@ -355,9 +363,6 @@ public class TaskController extends BaseController {
 			// clean up
 			taskDocumentsToBeDeleted.clear();
 
-			tx.begin(); // begin a transaction, which will be automatically
-						// committed by the jta interceptor
-
 		} catch (Exception e) {
 			log.error(e);
 			if (tx.getStatus() == Status.STATUS_ACTIVE) {
@@ -365,6 +370,9 @@ public class TaskController extends BaseController {
 				log.info("Rolled back transaction: " + tx);
 			}
 			throw e;
+		}finally {
+			tx.begin(); // begin a transaction, which will be automatically
+			// committed by the jta interceptor
 		}
 
 	}
@@ -393,6 +401,7 @@ public class TaskController extends BaseController {
 		page.setAttribute(this.getClass().getSimpleName(), this);
 
 		ParameterDAO parameterDAO = new ParameterDAO();
+		/* init task parameters */
 		okmNodeTask = parameterDAO.getAsString(IConstants.PARAM_OKM_NODE_TASKS);
 		parentTaskPrefix = parameterDAO
 				.getAsString(IConstants.PARAM_PARENT_TASK_PREFIX);
@@ -400,7 +409,16 @@ public class TaskController extends BaseController {
 				.getAsInteger(IConstants.PARAM_TASK_STATED_CLOSED);
 		reminderDays = parameterDAO
 				.getAsInteger(IConstants.PARAM_TASK_REMINDER_DAYS);
-
+		
+		/*init mail parameters */
+		mailServerType = parameterDAO
+				.getAsString(IConstants.PARAM_MAIL_SERVER_TYPE);
+		smtpHost = parameterDAO.getAsString(IConstants.PARAM_SMTP_HOST);
+		smtpPort = parameterDAO.getAsInteger(IConstants.PARAM_SMTP_PORT);
+		smtpUser = parameterDAO.getAsString(IConstants.PARAM_SMTP_USER);
+		smtpPassword = parameterDAO.getAsString(IConstants.PARAM_SMTP_PASSWORD);
+		emailFrom = parameterDAO.getAsString(IConstants.PARAM_EMAIL_FROM);
+		
 		initContacts();
 		initDocuments();
 		initDocumentsToBeDeleted();

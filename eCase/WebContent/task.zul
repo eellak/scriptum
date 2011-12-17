@@ -195,7 +195,7 @@
 					${c:l('projectTask.reminderDays')}
 					<intbox id="reminderDaysIntb"
 						value="@{OutgoingTaskController.projectTask.reminderDays}"
-						width="50px" readonly="@{OutgoingTaskController.isTaskClosed }" />
+						width="50px" readonly="@{OutgoingTaskController.isTaskClosed }" constraint="no empty"/>
 				</row>
 				<row>
 					${c:l('projectTask.taskType')}
