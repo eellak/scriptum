@@ -403,8 +403,6 @@ public class IncomingController extends ProtocolController {
 			// clean up
 			protocolDocumentsToBeDeleted.clear();
 
-			tx.begin(); // begin a transaction, which will be automatically
-						// committed by the jta interceptor
 
 		} catch (Exception e) {
 			log.error(e);
@@ -413,6 +411,9 @@ public class IncomingController extends ProtocolController {
 				log.info("Rolled back transaction: " + tx);
 			}
 			throw e;
+		}finally {
+			tx.begin(); // begin a transaction, which will be automatically
+			// committed by the jta interceptor
 		}
 
 	}

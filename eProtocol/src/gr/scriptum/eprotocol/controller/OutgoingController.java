@@ -631,9 +631,6 @@ public class OutgoingController extends ProtocolController {
 			toListToBeDeleted.clear();
 			ccListToBeDeleted.clear();
 
-			tx.begin(); // begin a transaction, which will be automatically
-						// committed by the jta interceptor
-
 		} catch (Exception e) {
 			log.error(e);
 			if (tx.getStatus() == Status.STATUS_ACTIVE) {
@@ -641,8 +638,10 @@ public class OutgoingController extends ProtocolController {
 				log.info("Rolled back transaction: " + tx);
 			}
 			throw e;
+		}finally {
+			tx.begin(); // begin a transaction, which will be automatically
+			// committed by the jta interceptor
 		}
-
 	}
 
 	private void delete() {
