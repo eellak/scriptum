@@ -118,23 +118,20 @@ public class ProjectTaskDAO extends GenericDAO<ProjectTask, Integer> {
 		return results;
 
 	}
-	
-	
-	public List<ProjectTask> findTaskAboutToExpire( Integer defaultDaysNum ){
-	
-	    Session session=getSession();
-	   
-	      Query q1 =session.createQuery("from ProjectTask pt where  pt.endDt > current_date() " + 
-	    		                        " and  (day(pt.endDt) - day(current_date()) < NVL(pt.reminderDays,:defaultReminderDays)");
-	      q1.setInteger("defaultReminderDays", defaultDaysNum);
-	      List<ProjectTask> results = q1.list();
-	      if( results != null )
-	    	  log.info("Rows fetched:" + results.size());
-	      else
-	    	  log.info("Rows fetched: resultSet is null");
-	      return results;
+
+	public List<ProjectTask> findTaskAboutToExpire(Integer defaultDaysNum) {
+
+		Session session = getSession();
+
+		Query q1 = session
+				.createQuery("from ProjectTask pt where  pt.endDt > current_date() and (day(pt.endDt) - day(current_date()))<pt.reminderDays");
+//		q1.setInteger("defaultReminderDays", defaultDaysNum);
+		List<ProjectTask> results = q1.list();
+		if (results != null)
+			log.info("Rows fetched:" + results.size());
+		else
+			log.info("Rows fetched: resultSet is null");
+		return results;
 	}
-	
-	
 
 }
