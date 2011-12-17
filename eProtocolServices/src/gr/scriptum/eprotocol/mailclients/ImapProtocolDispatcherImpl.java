@@ -45,9 +45,11 @@ class YourAuthenticator extends Authenticator {
 }
 
 /**
- * Mail Dispatcher. Handles sending and receiving Emails. Can cope with protocols IMAP, POP3, IMAPS for Google.
+ * Mail Dispatcher. Handles sending and receiving Emails. Can cope with
+ * protocols IMAP, POP3, IMAPS for Google.
+ * 
  * @author Mike Mountrakis mountrakis@uit.gr
- *
+ * 
  */
 
 public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
@@ -79,7 +81,7 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 	 * Authenticates <br>
 	 * Retrieves incoming mail <br>
 	 * Parses incoming mail <br>
-	 * Creates  Incoming Protoccols <br>
+	 * Creates Incoming Protoccols <br>
 	 * Returns an array of InconingProtocols
 	 */
 	public synchronized IncomingProtocol[] receiveIncomingProtocols()
@@ -417,49 +419,50 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 
 	/**
 	 * Send a mail when task state changes
-	 * @param outTask The task this mail concerns about....
-	 * @return the SendMailReceipt 
+	 * 
+	 * @param outTask
+	 *            The task this mail concerns about....
+	 * @return the SendMailReceipt
 	 */
-	public SendMailReceipt sendOutgoingTask(ProjectTask outTask){
+	public SendMailReceipt sendOutgoingTask(ProjectTask outTask) {
 		SendMailReceipt mailReceipt = new SendMailReceipt(outTask);
-		
+
 		String[] addressesToArray = mailReceipt.getSentTo();
 		String[] addressesCcArray = mailReceipt.getSentCc();
-		
+
 		// Attachments: create temporary files
 		Set<TaskDocument> documents = outTask.getTaskDocuments();
-		File[] attachements = new File[documents.size()];
-		int i = 0;
-		for (ScriptumDocument document : documents) {
-			attachements[i++] = getFileFromBytes(document.getContent(),
-					document.getDocumentName());
-		}
+		File[] attachements = null; // do not send document content
+		// File[] attachements = new File[documents.size()];
+		// int i = 0;
+		// for (ScriptumDocument document : documents) {
+		// attachements[i++] = getFileFromBytes(document.getContent(),
+		// document.getDocumentName());
+		// }
 		// send the email
 		mailReceipt = sendOutgoingMail(addressesToArray, addressesCcArray,
-				addressesToArray[0], outTask.getName(),outTask.getDescription(),
-				attachements);
+				addressesToArray[0], outTask.getName(),
+				outTask.getDescription(), attachements);
 
 		// delete all temporary files created during the operation
-		for (int j = 0; i < attachements.length; j++) {
-			try {
-				if (attachements[j] != null)
-					attachements[j].delete();
-			} catch (Exception e) {
-				log.warn("Could not delete temporary attachment ("
-						+ attachements[j].getName() + " reason " + e.toString());
+		if (attachements != null) {
+			for (int j = 0; j < attachements.length; j++) {
+				try {
+					if (attachements[j] != null)
+						attachements[j].delete();
+				} catch (Exception e) {
+					log.warn("Could not delete temporary attachment ("
+							+ attachements[j].getName() + " reason "
+							+ e.toString());
+				}
 			}
 		}
-
-		return mailReceipt;		
+		return mailReceipt;
 	}
-	
-	
-	
-	
-	
-	
+
 	/**
 	 * Simple Send Mail Method vi SMTP protocol
+	 * 
 	 * @param to
 	 * @param cc
 	 * @param from
@@ -483,8 +486,8 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 			props.setProperty("mail.transport.protocol", "smtp");
 			props.setProperty("mail.user", config.getSmtpUser());
 			props.setProperty("mail.password", config.getSmtpPassword());
-			if(config.getEnableStarttls())
-				props.put("mail.smtp.starttls.enable","true");
+			if (config.getEnableStarttls())
+				props.put("mail.smtp.starttls.enable", "true");
 			props.put("mail.smtp.auth", "true");
 			Authenticator auth = new YourAuthenticator(config.getSmtpUser(),
 					config.getSmtpPassword());
@@ -505,29 +508,30 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 			for (int i = 0; i < to.length; i++) {
 				try {
 					toAddresses[i] = new InternetAddress(to[i]);
-					msg1.setRecipients(Message.RecipientType.TO, toAddresses);
 				} catch (Exception e) {
 					log.warn("Problem with TO mail address : " + e.getMessage());
 				}
 			}
+			msg1.setRecipients(Message.RecipientType.TO, toAddresses);
 			System.out
 					.println("sendOutgoingMail()--> Message TO Addresses set.");
 
+			
 			if (cc != null) {
 				InternetAddress[] ccAddresses = new InternetAddress[cc.length];
 				for (int i = 0; i < cc.length; i++) {
 					try {
 						ccAddresses[i] = new InternetAddress(cc[i]);
-						msg1.setRecipients(Message.RecipientType.CC,
-								ccAddresses);
 					} catch (Exception e) {
 						log.warn("Problem with CC mail address : "
 								+ e.getMessage());
 					}
 				}
+				msg1.setRecipients(Message.RecipientType.CC,
+						ccAddresses);
+				System.out
+				.println("sendOutgoingMail()--> Message CC Addresses set.");
 			}
-			System.out
-					.println("sendOutgoingMail()--> Message CC Addresses set.");
 
 			msg1.setSubject(subject);
 
@@ -549,10 +553,10 @@ public class ImapProtocolDispatcherImpl implements MailProtocolDispatcher {
 						multiPart.addBodyPart(attachmentPart);
 					}
 				}
+				System.out
+						.println("sendOutgoingMail()--> Message Attachements finished for all "
+								+ attachements.length + " files.");
 			}
-			System.out
-					.println("sendOutgoingMail()--> Message Attachements finished for all "
-							+ attachements.length + " files.");
 			// add the Multipart to the message
 			msg1.setContent(multiPart);
 
