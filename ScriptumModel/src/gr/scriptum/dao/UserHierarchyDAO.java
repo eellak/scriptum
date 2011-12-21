@@ -76,19 +76,47 @@ public class UserHierarchyDAO extends GenericDAO<UserHierarchy, Integer> {
 
 		// add users within 'subordinate' departments
 		for (UserHierarchy userHierarchy : userHierarchies) {
-			Department department = userHierarchy.getDepartment();
-			while (!department.getDepartments().isEmpty()) {
-				for (Department childDepartment : department.getDepartments()) {
-					subordinates.addAll(findByDepartment(childDepartment));
-					department = childDepartment;
-				}
-			}
-
+//			Department department = userHierarchy.getDepartment();
+//			while (department!=null) {
+//				for (Department childDepartment : department.getDepartments()) {
+//					subordinates.addAll(findByDepartment(childDepartment));
+//					department = childDepartment;
+//				}
+//				department = null;
+//			}
+			getUserHierarchies(userHierarchy.getDepartment(), subordinates);
 		}
 
 		return subordinates;
 	}
 
+	private List<UserHierarchy> getUserHierarchies(Department department, List<UserHierarchy> subordinates){
+		Department dept = department;
+		for(Department child: dept.getDepartments()) {
+			List<UserHierarchy> findByDepartment = findByDepartment(child);
+			for(UserHierarchy userHierarchy: findByDepartment) {
+				Integer id = userHierarchy.getId();
+				boolean found = false;
+				for(UserHierarchy subordinate: subordinates) {
+					if(subordinate.getId().intValue()==id.intValue()) {
+						found = true;
+						break;
+					}
+				}
+				if(!found) {
+					subordinates.add(userHierarchy);
+				}
+//				if(!subordinates.contains(userHierarchy)) {
+//					subordinates.add(userHierarchy);
+//				}
+			}
+			if(!child.getDepartments().isEmpty()) {
+				getUserHierarchies(child, subordinates);
+			}
+		}
+		return subordinates;
+	}
+	
 	public List<UserHierarchy> findByUser(Users manager, Project project) {
 		Query query = getSession()
 				.createQuery(
