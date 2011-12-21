@@ -106,6 +106,9 @@ public class OutgoingTaskController extends TaskController {
 	}
 
 	private void refreshUserHierarchies() {
+		if (department == null) {
+			return;
+		}
 		UserHierarchyDAO userHierarchyDAO = new UserHierarchyDAO();
 		if (department.getCanAssignAnywhere().equals(
 				Department.CAN_ASSIGN_ANYWHERE_TRUE)) {
@@ -351,7 +354,7 @@ public class OutgoingTaskController extends TaskController {
 					projectTask = null;
 					return;
 				}
-				
+
 				IncomingProtocolDAO incomingProtocolDAO = new IncomingProtocolDAO();
 				IncomingProtocol incomingProtocol = incomingProtocolDAO
 						.findById(idIncomingProtocol, false);
@@ -379,7 +382,7 @@ public class OutgoingTaskController extends TaskController {
 															// (when saving)
 				return;
 			}
-			
+
 			// check if task is being generated based on an existing outgoing
 			// protocol
 			String idOutgoingProtocolString = execution
@@ -397,7 +400,7 @@ public class OutgoingTaskController extends TaskController {
 					projectTask = null;
 					return;
 				}
-				
+
 				OutgoingProtocolDAO outgoingProtocolDAO = new OutgoingProtocolDAO();
 				OutgoingProtocol outgoingProtocol = outgoingProtocolDAO
 						.findById(idOutgoingProtocol, false);
@@ -438,9 +441,9 @@ public class OutgoingTaskController extends TaskController {
 		userHierarchyBndbx.close();
 		projectTask
 				.setUsersByUserDispatcherId(selectedUserHierarchy.getUsers());
-
-		if (department.getCanAssignAnywhere().equals(
-				Department.CAN_ASSIGN_ANYWHERE_TRUE)) {
+		if (department != null
+				&& department.getCanAssignAnywhere().equals(
+						Department.CAN_ASSIGN_ANYWHERE_TRUE)) {
 			autoManagedTask = AUTO_MANAGED_TASK_YES;
 		} else {
 			autoManagedTask = AUTO_MANAGED_TASK_NO;
@@ -596,14 +599,14 @@ public class OutgoingTaskController extends TaskController {
 
 		ProjectTaskDAO projectTaskDAO = new ProjectTaskDAO();
 		projectTaskDAO.attachClean(projectTask);
-		
+
 		ImapProtocolDispatcherImpl disp = new ImapProtocolDispatcherImpl(config);
 		SendMailReceipt sendMailReceipt = disp.sendOutgoingTask(projectTask);
 		if (sendMailReceipt.isError()) {
 			log.error(sendMailReceipt.geteCode() + ":"
 					+ sendMailReceipt.geteMessage());
 		}
-		
+
 		Messagebox.show(Labels.getLabel("save.OK"),
 				Labels.getLabel("save.title"), Messagebox.OK,
 				Messagebox.INFORMATION, new EventListener() {
@@ -658,8 +661,9 @@ public class OutgoingTaskController extends TaskController {
 	}
 
 	public boolean isTaskTypeChkBxVisible() {
-		if (department.getCanAssignAnywhere().equals(
-				Department.CAN_ASSIGN_ANYWHERE_TRUE)
+		if (department != null
+				&& department.getCanAssignAnywhere().equals(
+						Department.CAN_ASSIGN_ANYWHERE_TRUE)
 				&& !isTaskCreated()) {
 			return true;
 		}
