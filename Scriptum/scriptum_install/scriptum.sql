@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.1.58, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: ellak
+-- Host: localhost    Database: scriptum
 -- ------------------------------------------------------
 -- Server version	5.1.58-1ubuntu1
 
@@ -15,7 +15,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`scriptum`  /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
 USE `scriptum`;
 
@@ -27,19 +26,19 @@ DROP TABLE IF EXISTS `application_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `application_log` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `appuser` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `system` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `class` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `level` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `message` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `msg_data` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `appuser` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `system` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `class` VARCHAR(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `level` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `message` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `msg_data` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `application_log_index1752` (`created`),
   KEY `application_log_index1753` (`appuser`),
   KEY `application_log_index1754` (`system`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -59,18 +58,18 @@ DROP TABLE IF EXISTS `application_parameter`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `application_parameter` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `domain` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `application_parameter_type` int(11) unsigned DEFAULT NULL,
-  `parameter_value` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `default_value` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `last_value` int(11) unsigned DEFAULT NULL,
-  `create_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `update_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
-  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `domain` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `application_parameter_type` INT(11) UNSIGNED DEFAULT NULL,
+  `parameter_value` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `default_value` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_value` INT(11) UNSIGNED DEFAULT NULL,
+  `create_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `update_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
+  `update_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,33 +89,33 @@ DROP TABLE IF EXISTS `company`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `company` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `address` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `is_goverment` tinyint(1) DEFAULT NULL,
-  `create_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `update_user` int(11) unsigned DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
-  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `street` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `streetNo` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `city` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `prefecture` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `postcode` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `vatNo` varchar(9) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `irs` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `telephone` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `mobile` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `fax` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `web` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `web_service` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `company_type_id` int(10) unsigned NOT NULL,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `is_goverment` TINYINT(1) DEFAULT NULL,
+  `create_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `update_user` INT(11) UNSIGNED DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
+  `update_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `street` VARCHAR(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `streetNo` VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `city` VARCHAR(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `prefecture` VARCHAR(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `postcode` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `vatNo` VARCHAR(9) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `irs` VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `telephone` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mobile` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fax` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `web` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `web_service` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `company_type_id` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_company_company_type1` (`company_type_id`),
   CONSTRAINT `fk_company_company_type1` FOREIGN KEY (`company_type_id`) REFERENCES `company_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,15 +135,15 @@ DROP TABLE IF EXISTS `company_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `company_type` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
-  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `crate_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `update_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
+  `update_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `crate_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `update_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=INNODB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,34 +163,34 @@ DROP TABLE IF EXISTS `contact`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `contact` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `company_id` int(11) unsigned NOT NULL,
-  `name` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `surname` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `organization` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `department` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `job` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `address` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `postcode` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `city` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `country` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `telephone` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `fax` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `mobile` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `update_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
-  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `middlename` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `street` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `streetNo` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `prefecture` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `web` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `company_id` INT(11) UNSIGNED NOT NULL,
+  `name` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `surname` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `organization` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `department` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `job` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `postcode` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `city` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `country` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `telephone` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fax` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mobile` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `update_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
+  `update_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `middlename` VARCHAR(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `street` VARCHAR(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `streetNo` VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `prefecture` VARCHAR(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `web` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `contact_FKIndex1` (`company_id`),
   CONSTRAINT `fk_7cc2855a-215b-11e0-9059-080027b715d2` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,15 +210,15 @@ DROP TABLE IF EXISTS `department`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `department` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `description` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `parent_department_id` int(11) DEFAULT NULL,
-  `can_assign_anywhere` int(1) DEFAULT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(64) COLLATE utf8_unicode_ci NOT NULL,
+  `description` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `parent_department_id` INT(11) DEFAULT NULL,
+  `can_assign_anywhere` INT(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_department_department1` (`parent_department_id`),
   CONSTRAINT `fk_department_department1` FOREIGN KEY (`parent_department_id`) REFERENCES `department` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Defines an organization/department/section etc.';
+) ENGINE=INNODB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Defines an organization/department/section etc.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -239,13 +238,13 @@ DROP TABLE IF EXISTS `diavgeia_decision_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `diavgeia_decision_type` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8_unicode_ci,
-  `supported` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `uid` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` TEXT COLLATE utf8_unicode_ci,
+  `supported` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=INNODB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -266,12 +265,12 @@ DROP TABLE IF EXISTS `diavgeia_subject_group`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `diavgeia_subject_group` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8_unicode_ci,
-  `create_dt` datetime DEFAULT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `uid` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` TEXT COLLATE utf8_unicode_ci,
+  `create_dt` DATETIME DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1163 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=INNODB AUTO_INCREMENT=1163 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -292,14 +291,14 @@ DROP TABLE IF EXISTS `distribution_method`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `distribution_method` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `description` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `update_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
-  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `description` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `update_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
+  `update_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -320,17 +319,17 @@ DROP TABLE IF EXISTS `document_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `document_type` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `is_periodic` int(11) unsigned DEFAULT '0',
-  `days` int(11) unsigned DEFAULT NULL,
-  `create_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `update_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
-  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `is_periodic` INT(11) UNSIGNED DEFAULT '0',
+  `days` INT(11) UNSIGNED DEFAULT NULL,
+  `create_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `update_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
+  `update_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -350,26 +349,26 @@ DROP TABLE IF EXISTS `incoming_protocol`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `incoming_protocol` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `contact_sender_id` int(11) unsigned NOT NULL,
-  `distribution_method_id` int(11) unsigned NOT NULL,
-  `protocol_number` int(11) unsigned DEFAULT NULL,
-  `protocol_date` datetime DEFAULT NULL,
-  `protocol_series` int(11) unsigned DEFAULT NULL,
-  `protocol_year` int(11) unsigned DEFAULT NULL,
-  `subject` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `comments` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `incoming_protocol_number` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'ar. prot. eggrafou',
-  `incoming_date` date DEFAULT NULL COMMENT 'hmerominia eggrafou',
-  `incoming_place` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_user_id` int(11) DEFAULT NULL,
-  `update_user_id` int(11) DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
-  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `is_deleted` tinyint(1) DEFAULT NULL,
-  `relative_protocol` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `protocol_book_id` int(11) unsigned DEFAULT NULL,
-  `relative_task` int(11) DEFAULT NULL,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `contact_sender_id` INT(11) UNSIGNED NOT NULL,
+  `distribution_method_id` INT(11) UNSIGNED NOT NULL,
+  `protocol_number` INT(11) UNSIGNED DEFAULT NULL,
+  `protocol_date` DATETIME DEFAULT NULL,
+  `protocol_series` INT(11) UNSIGNED DEFAULT NULL,
+  `protocol_year` INT(11) UNSIGNED DEFAULT NULL,
+  `subject` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `comments` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `incoming_protocol_number` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'ar. prot. eggrafou',
+  `incoming_date` DATE DEFAULT NULL COMMENT 'hmerominia eggrafou',
+  `incoming_place` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_user_id` INT(11) DEFAULT NULL,
+  `update_user_id` INT(11) DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
+  `update_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` TINYINT(1) DEFAULT NULL,
+  `relative_protocol` VARCHAR(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `protocol_book_id` INT(11) UNSIGNED DEFAULT NULL,
+  `relative_task` INT(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `incoming_protocol_FKIndex1` (`distribution_method_id`),
   KEY `incoming_protocol_FKIndex2` (`contact_sender_id`),
@@ -377,7 +376,7 @@ CREATE TABLE `incoming_protocol` (
   CONSTRAINT `fk_7cbbc300-215b-11e0-9059-080027b715d2` FOREIGN KEY (`distribution_method_id`) REFERENCES `distribution_method` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cbdaecc-215b-11e0-9059-080027b715d2` FOREIGN KEY (`contact_sender_id`) REFERENCES `contact` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_incoming_protocol_protocol_book1` FOREIGN KEY (`protocol_book_id`) REFERENCES `protocol_book` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -397,32 +396,32 @@ DROP TABLE IF EXISTS `outgoing_protocol`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `outgoing_protocol` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `distribution_method_id` int(11) unsigned NOT NULL,
-  `protocol_number` int(11) unsigned DEFAULT NULL,
-  `protocol_date` datetime DEFAULT NULL,
-  `protocol_series` int(11) unsigned DEFAULT NULL,
-  `protocol_year` int(11) unsigned DEFAULT NULL,
-  `subject` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `comments` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `outgoing_date` datetime DEFAULT NULL COMMENT 'imerominia diekperaiwsis',
-  `relative_protocol` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'to sxetiko - otidipote',
-  `author` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `outgoing_place` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sent_diaygeia` int(1) unsigned DEFAULT NULL,
-  `create_user_id` int(11) DEFAULT NULL,
-  `update_user_id` int(11) DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
-  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `is_deleted` tinyint(1) DEFAULT NULL,
-  `protocol_book_id` int(11) unsigned DEFAULT NULL,
-  `relative_task` int(11) DEFAULT NULL,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `distribution_method_id` INT(11) UNSIGNED NOT NULL,
+  `protocol_number` INT(11) UNSIGNED DEFAULT NULL,
+  `protocol_date` DATETIME DEFAULT NULL,
+  `protocol_series` INT(11) UNSIGNED DEFAULT NULL,
+  `protocol_year` INT(11) UNSIGNED DEFAULT NULL,
+  `subject` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `comments` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `outgoing_date` DATETIME DEFAULT NULL COMMENT 'imerominia diekperaiwsis',
+  `relative_protocol` VARCHAR(64) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'to sxetiko - otidipote',
+  `author` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `outgoing_place` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sent_diaygeia` INT(1) UNSIGNED DEFAULT NULL,
+  `create_user_id` INT(11) DEFAULT NULL,
+  `update_user_id` INT(11) DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
+  `update_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` TINYINT(1) DEFAULT NULL,
+  `protocol_book_id` INT(11) UNSIGNED DEFAULT NULL,
+  `relative_task` INT(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `outgoing_protocol_FKIndex1` (`distribution_method_id`),
   KEY `fk_outgoing_protocol_protocol_book1` (`protocol_book_id`),
   CONSTRAINT `fk_7cbca1e4-215b-11e0-9059-080027b715d2` FOREIGN KEY (`distribution_method_id`) REFERENCES `distribution_method` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_outgoing_protocol_protocol_book1` FOREIGN KEY (`protocol_book_id`) REFERENCES `protocol_book` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -442,15 +441,15 @@ DROP TABLE IF EXISTS `outgoing_recipient`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `outgoing_recipient` (
-  `contact_id` int(11) unsigned NOT NULL,
-  `outgoing_protocol_id` int(11) unsigned NOT NULL,
-  `is_cc` int(11) unsigned DEFAULT NULL,
+  `contact_id` INT(11) UNSIGNED NOT NULL,
+  `outgoing_protocol_id` INT(11) UNSIGNED NOT NULL,
+  `is_cc` INT(11) UNSIGNED DEFAULT NULL,
   PRIMARY KEY (`contact_id`,`outgoing_protocol_id`),
   KEY `outgoing_recipients_FKIndex1` (`contact_id`),
   KEY `outgoing_recipients_FKIndex2` (`outgoing_protocol_id`),
   CONSTRAINT `fk_7cadf144-215b-11e0-9059-080027b715d2` FOREIGN KEY (`contact_id`) REFERENCES `contact` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7caeb0d4-215b-11e0-9059-080027b715d2` FOREIGN KEY (`outgoing_protocol_id`) REFERENCES `outgoing_protocol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -470,19 +469,19 @@ DROP TABLE IF EXISTS `parameter`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `parameter` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `area` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `type` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `name` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `initial_value` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `value` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `update_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
-  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `area` VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type` VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `initial_value` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `value` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `update_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
+  `update_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=INNODB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -491,7 +490,7 @@ CREATE TABLE `parameter` (
 
 LOCK TABLES `parameter` WRITE;
 /*!40000 ALTER TABLE `parameter` DISABLE KEYS */;
-INSERT INTO `parameter` VALUES (1,'CORE','Integer','DISTRIBUTION_METHOD_EMAIL_ID','Το ID της μεθόδου διανομής με email. ΝΑ ΜΗΝ ΑΛΛΑΞΕΙ','3','3',NULL,NULL,NULL,NULL),(2,'CORE','Integer','DISTRIBUTION_METHOD_WEBSERVICE_ID','Το ID της μεθόδου διανομής Web Service. ΝΑ ΜΗΝ ΑΛΛΑΞΕΙ','7','7',NULL,NULL,NULL,NULL),(3,'MAIL','String','SMTP_HOST','Η διέυθυνση του  SMTP Host','mail.illumine.gr','mail.illumine.gr',NULL,NULL,NULL,NULL),(4,'MAIL','String','SMTP_PASSWORD','Το συνθηματικό του  SMTP','my_password','my_password',NULL,NULL,NULL,NULL),(5,'MAIL','String','SMTP_USER','Ο Χρήστης SMTP','info@uit.gr','info@uit.gr',NULL,NULL,NULL,NULL),(6,'MAIL','String','EMAIL_FROM','Η διέυθυνση email με την οποία αποστέλλονται από εσάς τα μυνήματα','info@uit.gr','info@uit.gr',NULL,NULL,NULL,NULL),(7,'CORE','String','OKM_NODE_PENDING_INCOMING','Ο φάκελος του OpenKM Taxonomy που αποθηκεύονται τα προσωρινά εισερχόμενα','/okm:root/PendingIncoming','/okm:root/PendingIncoming',NULL,NULL,NULL,NULL),(8,'CORE','String','OKM_NODE_INCOMING','Ο φάκελος του OpenKM Taxonomy στον οποίον αποθηκεύονται τα εισερχόμενα','/okm:root/IncomingProtocol','/okm:root/IncomingProtocol',NULL,NULL,NULL,NULL),(9,'CORE','String','OKM_NODE_PENDING_OUTGOING','Ο φάκελος του OpenKM Taxonomy στον οποίον αποθηκεύονται τα προσορινά εξερχόμενα','/okm:root/PendingOutgoing','/okm:root/PendingOutgoing',NULL,NULL,NULL,NULL),(10,'CORE','String','OKM_NODE_OUTGOING','Ο φάκελος του OpenKM Taxonomy στον οποίον αποθηκεύονται τα εξερχόμενα','/okm:root/OutgoingProtocol','/okm:root/OutgoingProtocol',NULL,NULL,NULL,NULL),(11,'Protocol Book','String','PROTOCOL_BOOK_COMPANY','Ο Τίτλος του οργανισμού σας που εμφανίζεται στο έντυπο του πρωτοκόλλου','ΕΛΛΑΚ','ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(12,'Protocol Book','String','PROTOCOL_BOOK_AUTHOR','Ο Υπευθυνος Συγγραφέας  που εμφανίζεται στο έντυπο του πρωτοκόλλου','ΕΛΛΑΚ','ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(13,'Protocol Book','String','PROTOCOL_BOOK_CREATOR','Ο υπεύθυνος για την εκτύπωση του έντυπου του πρωτοκόλλου','ΕΛΛΑΚ','ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(14,'Protocol Book','String','PROTOCOL_BOOK_KEYWORDS','Οι λέξεις κλειδιά του βιβλίου πρωτοκόλλου που θα μπαίνουν στο παραγόμενο PDF','Βιβλίο, Πρωτοκόλλου','Βιβλίο, Πρωτοκόλλου',NULL,NULL,NULL,NULL),(15,'Protocol Book','String','PROTOCOL_BOOK_SUBJECT','Το θέμα του παραγόμενου βιβλίου πρωτοκόλλου που εμφανίζεται στο PDF','Βιβλίο Πρωτοκόλλου','Βιβλίο Πρωτοκόλλου',NULL,NULL,NULL,NULL),(16,'Protocol Book','String','PROTOCOL_BOOK_TITLE','Ο Τίτλος που θα εμφανίζεται στο PDF βιβλίο πρωτοκόλλου ','String','Βιβλίο Πρωτοκόλλου',NULL,NULL,NULL,NULL),(17,'Protocol Book','String','PROTOCOL_BOOK_FILE','Το όνομα του PDF αρχείου στο οποίο θα σωζεται τι βιβλίο πρωτοκόλλου',NULL,'protocol_book.pdf',NULL,NULL,NULL,NULL),(18,'Protocol Book','String','PROTOCOL_BOOK_FONT_FOLDER','Ο φάκελος στον οποίον αποθηκευονται τα fonts για την παραγωγή του PDF','../fonts','../fonts',NULL,NULL,NULL,NULL),(19,'CORE','Integer','DISTRIBUTION_METHOD_NA_ID','Προκαθορισμένο ID για not applicable τρόπο διακίνησης. ΝΑ ΜΗΝ ΑΛΛΑΞΕΙ','8','8',NULL,NULL,NULL,NULL),(20,'CORE','String','OKM_AUTH_PORT_ADDRESS','URL for OpenKM Web Service authentication','http://localhost:8080/OpenKM/OKMAuth','http://localhost:8080/OpenKM/OKMAuth',NULL,NULL,NULL,NULL),(21,'CORE','String','OKM_DOCUMENT_PORT_ADDRESS','URL for OpenKM Web Service Document','http://localhost:8080/OpenKM/OKMDocument','http://localhost:8080/OpenKM/OKMDocument',NULL,NULL,NULL,NULL),(22,'CORE','String','OKM_FOLDER_PORT_ADDRESS','URL for OpenKM Web Service for Folder ','http://localhost:8080/OpenKM/OKMFolder','http://localhost:8080/OpenKM/OKMFolder',NULL,NULL,NULL,NULL),(23,'CORE','String','OKM_SEARCH_PORT_ADDRESS','URL for OpenKM Web Service for Document Search','http://localhost:8080/OpenKM/OKMSearch','http://localhost:8080/OpenKM/OKMSearch',NULL,NULL,NULL,NULL),(24,'DIAVGEIA Interface','String','DIAVGEIA_BASE_URL','Η Βασική διυθυνση της DIAVGEIA.GOV.GR API URL','https://193.105.109.110/apofaseis-dokimes','https://193.105.109.110/apofaseis-dokimes',NULL,NULL,NULL,NULL),(25,'DIAVGEIA Interface','Integer','DIAVGEIA_TIMEOUT','Ο Χρόνος σε Milliseconds στον οποίον θα κάνει timeout τα post στη διαύγεια','60000','60000',NULL,NULL,NULL,NULL),(26,'DIAVGEIA Interface','String','DIAVGEIA_TRUSTSTORE_FILE','Το truststore στο οποίο εγκαθιστούμε το ψηφιακό πιστοποιητικό της Διαύγειας','/my-linux/path/DIAVGEIA.cer','c:\\\\my-windows\\\\path\\\\DIAVGEIA.cer',NULL,NULL,NULL,NULL),(27,'DIAVGEIA Interface','String','DIAVGEIA_TRUSTSTORE_PASS','Το συνθηματικό για να ανοίξει το truststore','changeit','changeit',NULL,NULL,NULL,NULL),(28,'DIAVGEIA Interface','String','DIAVGEIA_USER','Ο χρήστης της διαυγειας. Αντοστοιχεί στο πεδίο edUser','366_admin','366_admin',NULL,NULL,NULL,NULL),(29,'DIAVGEIA Interface','String','DIAVGEIA_PASSWORD','Το συνθηματικό της ΔΙΑΥΓΕΙΑΣ. Αντιστοιχεί στο πεδίο edPassword','366','366',NULL,NULL,NULL,NULL),(30,'DIAVGEIA Interface','String','DIAVGEIA_EMAIL','Το email του που θα λάβει την απάντηση από τη Διαυγεια.  Πεδίο field_syntaktis_email','someone@your-organization.gr','someone@your-organization.gr',NULL,NULL,NULL,NULL),(31,'DIAVGEIA Interface','Integer','DIAVGEIA_ORGANIZATION_ID','To UID του οργανισμού σας στη Διαυγεια. Αντιστοιχεί στο πεδίο field_level2_text','366','366',NULL,NULL,NULL,NULL),(32,'DIAVGEIA Interface','String','DIAVGEIA_UNIT_ID','Το UID της μονάδος στον οργανισμό όπως το δίνει η Διαυγεια. Πεδίο field_monades_text','2111','2111',NULL,NULL,NULL,NULL),(33,'DIAVGEIA Interface','Integer','DIAVGEIA_SIGNS','Field_telikos_ypografwn in Diavgeia API','16','16',NULL,NULL,NULL,NULL),(34,'DIAVGEIA Interface','String','DIAVGEIA_TMP_FILES','Φάκελος στον οποίον αποθηκευονται προσωρινά τα PDF αρχεία που αποστέλλονται.','/tmp','/tmp',NULL,NULL,NULL,NULL),(35,'DIAVGEIA Interface','String','DIAVGEIA_URL_EIDOS_APOFASIS','Το URL από το οποίο ενημερώνουμε τα είδη των αποφάσεων','http://193.105.109.185/api/types.xml','http://193.105.109.185/api/types.xml',NULL,NULL,NULL,NULL),(36,'DIAVGEIA Interface','String','DIAVGEIA_URL_EIDOS_THEMATIK','To URL που ενημερώνει τα είδη των θεματικών ενοτήτων','http://193.105.109.185/api/tags.xml','http://193.105.109.185/api/tags.xml',NULL,NULL,NULL,NULL),(37,'MAIL','Integer','SMTP_PORT','Η πόρτα SMTP','25','25',NULL,NULL,NULL,'2011-10-07 06:32:59'),(38,'CORE','String','OKM_NODE_TASKS','Ο φάκελος του OpenKM Taxonomy που αποθηκεύονται οι αναθέσεις','/okm:root/Tasks','/okm:root/Tasks',NULL,NULL,NULL,'2011-10-17 11:57:19'),(39,'CORE','Integer','TASK_STATE_CLOSED_ID','Το ID της Κατάστασης Ανάθεσης που υποδηλώνει το κλέισιμο της','5','5',NULL,NULL,NULL,'2011-10-25 12:22:40'),(40,'CORE','String','PARENT_TASK_PREFIX','Το λεκτικό που μπαίνει ως πρόθεμα σε κάποια πεδία που αντιγράφονται από μια ανάθεση-πατέρα','Fwd:','Fwd:',NULL,NULL,NULL,'2011-10-29 09:28:01'),(41,'CORE','String','TASK_CHANGE_NOTIFICATION_SUBJECT','Το λεκτικό που μπαίνει ως θέμα στα μηνύματα ενημέρωσης για την αλλαγή μιας Ανάθεσης','Αλλαγή Ανάθεσης με Α/Α:','Αλλαγή Ανάθεσης με Α/Α:',NULL,NULL,NULL,'2011-11-14 12:29:26'),(42,'CORE','String','TASK_CHANGE_NOTIFICATION_MESSAGE','Το λεκτικό που μπαίνει ως κείμενο στα μηνύματα ενημέρωσης για την αλλαγή μιας Ανάθεσης','Η Ανάθεση έχει τροποποιηθεί και ενδεχομένως περιέχει αλλαγές. Παρακαλούμε για τις ενέργειες σας.','Η Ανάθεση έχει τροποποιηθεί και ενδεχομένως περιέχει αλλαγές. Παρακαλούμε για τις ενέργειες σας.',NULL,NULL,NULL,'2011-11-14 12:29:26'),(43,'CORE','String','TASK_PROTOCOL_INCOMING','Το λεκτικό που μπαίνει στο όνομα μιας Ανάθεσης που προέρχεται από εισερχόμενο πρωτόκολλο','Fwd: Από Εισερχόμενο Πρωτόκολλο με Αριθμό:','Fwd: Από Εισερχόμενο Πρωτόκολλο με Αριθμό:',NULL,NULL,NULL,'2011-11-30 08:50:50'),(44,'CORE','String','TASK_PROTOCOL_OUTGOING','Το λεκτικό που μπαίνει στο όνομα μιας Ανάθεσης που προέρχεται από εξερχόμενο πρωτόκολλο','Fwd: Από Εξερχόμενο Πρωτόκολλο με Αριθμό:','Fwd: Από Εξερχόμενο Πρωτόκολλο με Αριθμό:',NULL,NULL,NULL,'2011-11-30 08:50:50'),(45,'CORE','String','TASK_AUTO_MANAGED_PREFIX','Το λεκτικό που μπαίνει ως πρόθεμα σε κάποια πεδία μιας αυτοδιαχειριζόμενης ανάθεσης','Fwd: Αυτοδιαχειριζόμενη Ανάθεση από το Χρήστη:','Fwd: Αυτοδιαχειριζόμενη Ανάθεση από το Χρήστη:',NULL,NULL,NULL,'2011-12-02 15:32:22'),(46,'CORE','Integer','TASK_REMINDER_DAYS','Ο αριθμός ημερών πριν την προγραμματισμένη λήξη μιας ανάθεσης, για υπενθύμηση μέσω Email','2','2',NULL,NULL,NULL,'2011-12-15 10:43:09');
+INSERT INTO `parameter` VALUES (1,'CORE','Integer','DISTRIBUTION_METHOD_EMAIL_ID','Το ID της μεθόδου διανομής με email. ΝΑ ΜΗΝ ΑΛΛΑΞΕΙ','3','3',NULL,NULL,NULL,NULL),(2,'CORE','Integer','DISTRIBUTION_METHOD_WEBSERVICE_ID','Το ID της μεθόδου διανομής Web Service. ΝΑ ΜΗΝ ΑΛΛΑΞΕΙ','7','7',NULL,NULL,NULL,NULL),(3,'MAIL','String','SMTP_HOST','Η διέυθυνση του  SMTP Host','mail.illumine.gr','mail.illumine.gr',NULL,NULL,NULL,NULL),(4,'MAIL','String','SMTP_PASSWORD','Το συνθηματικό του  SMTP','my_password','my_password',NULL,NULL,NULL,NULL),(5,'MAIL','String','SMTP_USER','Ο Χρήστης SMTP','info@uit.gr','info@uit.gr',NULL,NULL,NULL,NULL),(6,'MAIL','String','EMAIL_FROM','Η διέυθυνση email με την οποία αποστέλλονται από εσάς τα μυνήματα','info@uit.gr','info@uit.gr',NULL,NULL,NULL,NULL),(7,'CORE','String','OKM_NODE_PENDING_INCOMING','Ο φάκελος του OpenKM Taxonomy που αποθηκεύονται τα προσωρινά εισερχόμενα','/okm:root/PendingIncoming','/okm:root/PendingIncoming',NULL,NULL,NULL,NULL),(8,'CORE','String','OKM_NODE_INCOMING','Ο φάκελος του OpenKM Taxonomy στον οποίον αποθηκεύονται τα εισερχόμενα','/okm:root/IncomingProtocol','/okm:root/IncomingProtocol',NULL,NULL,NULL,NULL),(9,'CORE','String','OKM_NODE_PENDING_OUTGOING','Ο φάκελος του OpenKM Taxonomy στον οποίον αποθηκεύονται τα προσορινά εξερχόμενα','/okm:root/PendingOutgoing','/okm:root/PendingOutgoing',NULL,NULL,NULL,NULL),(10,'CORE','String','OKM_NODE_OUTGOING','Ο φάκελος του OpenKM Taxonomy στον οποίον αποθηκεύονται τα εξερχόμενα','/okm:root/OutgoingProtocol','/okm:root/OutgoingProtocol',NULL,NULL,NULL,NULL),(11,'Protocol Book','String','PROTOCOL_BOOK_COMPANY','Ο Τίτλος του οργανισμού σας που εμφανίζεται στο έντυπο του πρωτοκόλλου','ΕΛΛΑΚ','ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(12,'Protocol Book','String','PROTOCOL_BOOK_AUTHOR','Ο Υπευθυνος Συγγραφέας  που εμφανίζεται στο έντυπο του πρωτοκόλλου','ΕΛΛΑΚ','ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(13,'Protocol Book','String','PROTOCOL_BOOK_CREATOR','Ο υπεύθυνος για την εκτύπωση του έντυπου του πρωτοκόλλου','ΕΛΛΑΚ','ΕΛΛΑΚ',NULL,NULL,NULL,NULL),(14,'Protocol Book','String','PROTOCOL_BOOK_KEYWORDS','Οι λέξεις κλειδιά του βιβλίου πρωτοκόλλου που θα μπαίνουν στο παραγόμενο PDF','Βιβλίο, Πρωτοκόλλου','Βιβλίο, Πρωτοκόλλου',NULL,NULL,NULL,NULL),(15,'Protocol Book','String','PROTOCOL_BOOK_SUBJECT','Το θέμα του παραγόμενου βιβλίου πρωτοκόλλου που εμφανίζεται στο PDF','Βιβλίο Πρωτοκόλλου','Βιβλίο Πρωτοκόλλου',NULL,NULL,NULL,NULL),(16,'Protocol Book','String','PROTOCOL_BOOK_TITLE','Ο Τίτλος που θα εμφανίζεται στο PDF βιβλίο πρωτοκόλλου ','String','Βιβλίο Πρωτοκόλλου',NULL,NULL,NULL,NULL),(17,'Protocol Book','String','PROTOCOL_BOOK_FILE','Το όνομα του PDF αρχείου στο οποίο θα σωζεται τι βιβλίο πρωτοκόλλου',NULL,'protocol_book.pdf',NULL,NULL,NULL,NULL),(18,'Protocol Book','String','PROTOCOL_BOOK_FONT_FOLDER','Ο φάκελος στον οποίον αποθηκευονται τα fonts για την παραγωγή του PDF','../fonts','../fonts',NULL,NULL,NULL,NULL),(19,'CORE','Integer','DISTRIBUTION_METHOD_NA_ID','Προκαθορισμένο ID για not applicable τρόπο διακίνησης. ΝΑ ΜΗΝ ΑΛΛΑΞΕΙ','8','8',NULL,NULL,NULL,NULL),(20,'CORE','String','OKM_AUTH_PORT_ADDRESS','URL for OpenKM Web Service authentication','http://localhost:8080/OpenKM/OKMAuth','http://localhost:8080/OpenKM/OKMAuth',NULL,NULL,NULL,NULL),(21,'CORE','String','OKM_DOCUMENT_PORT_ADDRESS','URL for OpenKM Web Service Document','http://localhost:8080/OpenKM/OKMDocument','http://localhost:8080/OpenKM/OKMDocument',NULL,NULL,NULL,NULL),(22,'CORE','String','OKM_FOLDER_PORT_ADDRESS','URL for OpenKM Web Service for Folder ','http://localhost:8080/OpenKM/OKMFolder','http://localhost:8080/OpenKM/OKMFolder',NULL,NULL,NULL,NULL),(23,'CORE','String','OKM_SEARCH_PORT_ADDRESS','URL for OpenKM Web Service for Document Search','http://localhost:8080/OpenKM/OKMSearch','http://localhost:8080/OpenKM/OKMSearch',NULL,NULL,NULL,NULL),(24,'DIAVGEIA Interface','String','DIAVGEIA_BASE_URL','Η Βασική διυθυνση της DIAVGEIA.GOV.GR API URL','https://193.105.109.110/apofaseis-dokimes','https://193.105.109.110/apofaseis-dokimes',NULL,NULL,NULL,NULL),(25,'DIAVGEIA Interface','Integer','DIAVGEIA_TIMEOUT','Ο Χρόνος σε Milliseconds στον οποίον θα κάνει timeout τα post στη διαύγεια','60000','60000',NULL,NULL,NULL,NULL),(26,'DIAVGEIA Interface','String','DIAVGEIA_TRUSTSTORE_FILE','Το truststore στο οποίο εγκαθιστούμε το ψηφιακό πιστοποιητικό της Διαύγειας','/my-linux/path/DIAVGEIA.cer','c:\\\\my-windows\\\\path\\\\DIAVGEIA.cer',NULL,NULL,NULL,NULL),(27,'DIAVGEIA Interface','String','DIAVGEIA_TRUSTSTORE_PASS','Το συνθηματικό για να ανοίξει το truststore','changeit','changeit',NULL,NULL,NULL,NULL),(28,'DIAVGEIA Interface','String','DIAVGEIA_USER','Ο χρήστης της διαυγειας. Αντοστοιχεί στο πεδίο edUser','366_admin','366_admin',NULL,NULL,NULL,NULL),(29,'DIAVGEIA Interface','String','DIAVGEIA_PASSWORD','Το συνθηματικό της ΔΙΑΥΓΕΙΑΣ. Αντιστοιχεί στο πεδίο edPassword','366','366',NULL,NULL,NULL,NULL),(30,'DIAVGEIA Interface','String','DIAVGEIA_EMAIL','Το email του που θα λάβει την απάντηση από τη Διαυγεια.  Πεδίο field_syntaktis_email','someone@your-organization.gr','someone@your-organization.gr',NULL,NULL,NULL,NULL),(31,'DIAVGEIA Interface','Integer','DIAVGEIA_ORGANIZATION_ID','To UID του οργανισμού σας στη Διαυγεια. Αντιστοιχεί στο πεδίο field_level2_text','366','366',NULL,NULL,NULL,NULL),(32,'DIAVGEIA Interface','String','DIAVGEIA_UNIT_ID','Το UID της μονάδος στον οργανισμό όπως το δίνει η Διαυγεια. Πεδίο field_monades_text','2111','2111',NULL,NULL,NULL,NULL),(33,'DIAVGEIA Interface','Integer','DIAVGEIA_SIGNS','Field_telikos_ypografwn in Diavgeia API','16','16',NULL,NULL,NULL,NULL),(34,'DIAVGEIA Interface','String','DIAVGEIA_TMP_FILES','Φάκελος στον οποίον αποθηκευονται προσωρινά τα PDF αρχεία που αποστέλλονται.','/tmp','/tmp',NULL,NULL,NULL,NULL),(35,'DIAVGEIA Interface','String','DIAVGEIA_URL_EIDOS_APOFASIS','Το URL από το οποίο ενημερώνουμε τα είδη των αποφάσεων','http://193.105.109.185/api/types.xml','http://193.105.109.185/api/types.xml',NULL,NULL,NULL,NULL),(36,'DIAVGEIA Interface','String','DIAVGEIA_URL_EIDOS_THEMATIK','To URL που ενημερώνει τα είδη των θεματικών ενοτήτων','http://193.105.109.185/api/tags.xml','http://193.105.109.185/api/tags.xml',NULL,NULL,NULL,NULL),(37,'MAIL','Integer','SMTP_PORT','Η πόρτα SMTP','25','25',NULL,NULL,NULL,'2011-10-07 06:32:59'),(38,'CORE','String','OKM_NODE_TASKS','Ο φάκελος του OpenKM Taxonomy που αποθηκεύονται οι αναθέσεις','/okm:root/Tasks','/okm:root/Tasks',NULL,NULL,NULL,'2011-10-17 11:57:19'),(39,'CORE','Integer','TASK_STATE_CLOSED_ID','Το ID της Κατάστασης Ανάθεσης που υποδηλώνει το κλέισιμο της','5','5',NULL,NULL,NULL,'2011-10-25 12:22:40'),(40,'CORE','String','PARENT_TASK_PREFIX','Το λεκτικό που μπαίνει ως πρόθεμα σε κάποια πεδία που αντιγράφονται από μια ανάθεση-πατέρα','Fwd:','Fwd:',NULL,NULL,NULL,'2011-10-29 09:28:01'),(41,'CORE','String','TASK_CHANGE_NOTIFICATION_SUBJECT','Το λεκτικό που μπαίνει ως θέμα στα μηνύματα ενημέρωσης για την αλλαγή μιας Ανάθεσης','Αλλαγή Ανάθεσης με Α/Α:','Αλλαγή Ανάθεσης με Α/Α:',NULL,NULL,NULL,'2011-11-14 12:29:26'),(42,'CORE','String','TASK_CHANGE_NOTIFICATION_MESSAGE','Το λεκτικό που μπαίνει ως κείμενο στα μηνύματα ενημέρωσης για την αλλαγή μιας Ανάθεσης','Η Ανάθεση έχει τροποποιηθεί και ενδεχομένως περιέχει αλλαγές. Παρακαλούμε για τις ενέργειες σας.','Η Ανάθεση έχει τροποποιηθεί και ενδεχομένως περιέχει αλλαγές. Παρακαλούμε για τις ενέργειες σας.',NULL,NULL,NULL,'2011-11-14 12:29:26'),(43,'CORE','String','TASK_PROTOCOL_INCOMING','Το λεκτικό που μπαίνει στο όνομα μιας Ανάθεσης που προέρχεται από εισερχόμενο πρωτόκολλο','Fwd: Από Εισερχόμενο Πρωτόκολλο με Αριθμό:','Fwd: Από Εισερχόμενο Πρωτόκολλο με Αριθμό:',NULL,NULL,NULL,'2011-11-30 08:50:50'),(44,'CORE','String','TASK_PROTOCOL_OUTGOING','Το λεκτικό που μπαίνει στο όνομα μιας Ανάθεσης που προέρχεται από εξερχόμενο πρωτόκολλο','Fwd: Από Εξερχόμενο Πρωτόκολλο με Αριθμό:','Fwd: Από Εξερχόμενο Πρωτόκολλο με Αριθμό:',NULL,NULL,NULL,'2011-11-30 08:50:50'),(45,'CORE','String','TASK_AUTO_MANAGED_PREFIX','Το λεκτικό που μπαίνει ως πρόθεμα σε κάποια πεδία μιας αυτοδιαχειριζόμενης ανάθεσης','Fwd: Αυτοδιαχειριζόμενη Ανάθεση από το Χρήστη:','Fwd: Αυτοδιαχειριζόμενη Ανάθεση από το Χρήστη:',NULL,NULL,NULL,'2011-12-02 15:32:22'),(46,'CORE','Integer','TASK_REMINDER_DAYS','Ο αριθμός ημερών πριν την προγραμματισμένη λήξη μιας ανάθεσης, για υπενθύμηση μέσω Email','2','2',NULL,NULL,NULL,'2011-12-15 10:43:09'),(47,'MAIL','String','MAIL_SERVER_TYPE','Ο τύπος του διακομιστή Email (imap, pop3, imaps)','imap','imap',NULL,NULL,NULL,'2011-12-17 11:03:39');
 /*!40000 ALTER TABLE `parameter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -503,21 +502,21 @@ DROP TABLE IF EXISTS `project`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `project` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_creator_id` int(11) unsigned NOT NULL,
-  `name` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `start_dt` datetime DEFAULT NULL,
-  `expected_dt` datetime DEFAULT NULL,
-  `end_dt` datetime DEFAULT NULL,
-  `create_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `update_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
-  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_creator_id` INT(11) UNSIGNED NOT NULL,
+  `name` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `start_dt` DATETIME DEFAULT NULL,
+  `expected_dt` DATETIME DEFAULT NULL,
+  `end_dt` DATETIME DEFAULT NULL,
+  `create_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `update_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
+  `update_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `project_FKIndex1` (`user_creator_id`),
   CONSTRAINT `fk_7cb85cba-215b-11e0-9059-080027b715d2` FOREIGN KEY (`user_creator_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -537,31 +536,31 @@ DROP TABLE IF EXISTS `project_task`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `project_task` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `contact_id` int(11) unsigned DEFAULT NULL,
-  `parent_task_id` int(11) unsigned DEFAULT NULL,
-  `user_creator_id` int(11) unsigned NOT NULL,
-  `user_dispatcher_id` int(11) unsigned NOT NULL,
-  `project_id` int(11) unsigned DEFAULT NULL,
-  `task_result_id` int(11) unsigned DEFAULT NULL,
-  `task_priority_id` int(11) unsigned NOT NULL,
-  `task_type_id` int(11) unsigned NOT NULL,
-  `task_state_id` int(11) unsigned NOT NULL,
-  `name` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `task_no` int(11) unsigned DEFAULT NULL,
-  `start_dt` datetime DEFAULT NULL,
-  `expected_dt` datetime DEFAULT NULL,
-  `closed_dt` datetime DEFAULT NULL,
-  `comments` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `times_revised` int(11) unsigned DEFAULT '0',
-  `times_contact_external` int(11) unsigned DEFAULT '0',
-  `reviewer_score` int(11) unsigned DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
-  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `dispatcher_closeable` tinyint(1) DEFAULT NULL,
-  `end_dt` datetime DEFAULT NULL,
-  `reminder_days` int(11) DEFAULT NULL,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `contact_id` INT(11) UNSIGNED DEFAULT NULL,
+  `parent_task_id` INT(11) UNSIGNED DEFAULT NULL,
+  `user_creator_id` INT(11) UNSIGNED NOT NULL,
+  `user_dispatcher_id` INT(11) UNSIGNED NOT NULL,
+  `project_id` INT(11) UNSIGNED DEFAULT NULL,
+  `task_result_id` INT(11) UNSIGNED DEFAULT NULL,
+  `task_priority_id` INT(11) UNSIGNED NOT NULL,
+  `task_type_id` INT(11) UNSIGNED NOT NULL,
+  `task_state_id` INT(11) UNSIGNED NOT NULL,
+  `name` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `task_no` INT(11) UNSIGNED DEFAULT NULL,
+  `start_dt` DATETIME DEFAULT NULL,
+  `expected_dt` DATETIME DEFAULT NULL,
+  `closed_dt` DATETIME DEFAULT NULL,
+  `comments` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `times_revised` INT(11) UNSIGNED DEFAULT '0',
+  `times_contact_external` INT(11) UNSIGNED DEFAULT '0',
+  `reviewer_score` INT(11) UNSIGNED DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
+  `update_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `dispatcher_closeable` TINYINT(1) DEFAULT NULL,
+  `end_dt` DATETIME DEFAULT NULL,
+  `reminder_days` INT(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `project_tasks_FKIndex1` (`project_id`),
   KEY `project_tasks_FKIndex2` (`task_state_id`),
@@ -581,7 +580,7 @@ CREATE TABLE `project_task` (
   CONSTRAINT `fk_7cb7739a-215b-11e0-9059-080027b715d2` FOREIGN KEY (`user_dispatcher_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cb931e4-215b-11e0-9059-080027b715d2` FOREIGN KEY (`parent_task_id`) REFERENCES `project_task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cc393e6-215b-11e0-9059-080027b715d2` FOREIGN KEY (`contact_id`) REFERENCES `contact` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -601,18 +600,18 @@ DROP TABLE IF EXISTS `project_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `project_user` (
-  `project_id` int(11) unsigned NOT NULL,
-  `users_id` int(11) unsigned NOT NULL,
-  `create_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `update_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
-  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `project_id` INT(11) UNSIGNED NOT NULL,
+  `users_id` INT(11) UNSIGNED NOT NULL,
+  `create_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `update_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
+  `update_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`project_id`,`users_id`),
   KEY `project_users_FKIndex1` (`project_id`),
   KEY `project_users_FKIndex2` (`users_id`),
   CONSTRAINT `fk_7cb27d0e-215b-11e0-9059-080027b715d2` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cb369ee-215b-11e0-9059-080027b715d2` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -632,20 +631,20 @@ DROP TABLE IF EXISTS `protocol_book`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `protocol_book` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `protocol_series` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `is_incoming` int(1) DEFAULT NULL,
-  `protocol_number` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '''o teleytaios arithmos protokolou''',
-  `protocol_year` int(4) DEFAULT NULL,
-  `protocol_path` varchar(640) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `is_active` int(1) DEFAULT NULL COMMENT 'shows if this protocol book is active',
-  `create_user` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `update_user` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
-  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `is_preferred` int(1) DEFAULT NULL,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `protocol_series` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `is_incoming` INT(1) DEFAULT NULL,
+  `protocol_number` VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '''o teleytaios arithmos protokolou''',
+  `protocol_year` INT(4) DEFAULT NULL,
+  `protocol_path` VARCHAR(640) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `is_active` INT(1) DEFAULT NULL COMMENT 'shows if this protocol book is active',
+  `create_user` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `update_user` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
+  `update_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_preferred` INT(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -665,18 +664,18 @@ DROP TABLE IF EXISTS `protocol_document`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `protocol_document` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `outgoing_protocol_id` int(11) unsigned DEFAULT NULL,
-  `incoming_protocol_id` int(11) unsigned DEFAULT NULL,
-  `document_types_id` int(11) unsigned NOT NULL,
-  `document_name` varchar(256) COLLATE utf8_unicode_ci NOT NULL COMMENT 'the filename',
-  `document_size` bigint(20) NOT NULL COMMENT 'the filesize OPEN KM ASSIGNS THIS!',
-  `document_mime` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `document_number` int(11) NOT NULL COMMENT 'the index in protocol node',
-  `document_keywords` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'GUI Assigns',
-  `okm_path` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'OpenKM path for document OPEN KM ASSIGNS THIS!',
-  `okm_uuid` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'OpenKM internal id. OPEN KM ASSIGNS THIS!',
-  `diavgeia_ada_code` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `outgoing_protocol_id` INT(11) UNSIGNED DEFAULT NULL,
+  `incoming_protocol_id` INT(11) UNSIGNED DEFAULT NULL,
+  `document_types_id` INT(11) UNSIGNED NOT NULL,
+  `document_name` VARCHAR(256) COLLATE utf8_unicode_ci NOT NULL COMMENT 'the filename',
+  `document_size` BIGINT(20) NOT NULL COMMENT 'the filesize OPEN KM ASSIGNS THIS!',
+  `document_mime` VARCHAR(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `document_number` INT(11) NOT NULL COMMENT 'the index in protocol node',
+  `document_keywords` VARCHAR(1024) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'GUI Assigns',
+  `okm_path` VARCHAR(1024) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'OpenKM path for document OPEN KM ASSIGNS THIS!',
+  `okm_uuid` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'OpenKM internal id. OPEN KM ASSIGNS THIS!',
+  `diavgeia_ada_code` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `protocol_document_FKIndex1` (`incoming_protocol_id`),
   KEY `protocol_document_FKIndex2` (`outgoing_protocol_id`),
@@ -684,7 +683,7 @@ CREATE TABLE `protocol_document` (
   CONSTRAINT `fk_7cbf98ea-215b-11e0-9059-080027b715d2` FOREIGN KEY (`incoming_protocol_id`) REFERENCES `incoming_protocol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cc08868-215b-11e0-9059-080027b715d2` FOREIGN KEY (`outgoing_protocol_id`) REFERENCES `outgoing_protocol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_protocol_document_document_types1` FOREIGN KEY (`document_types_id`) REFERENCES `document_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -705,19 +704,19 @@ DROP TABLE IF EXISTS `protocol_number`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `protocol_number` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `version` bigint(20) DEFAULT NULL,
-  `number` bigint(20) DEFAULT NULL,
-  `series` int(11) DEFAULT NULL,
-  `year` int(11) DEFAULT NULL,
-  `type` int(11) DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
-  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `protocol_book_id` int(11) unsigned NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `version` BIGINT(20) DEFAULT NULL,
+  `number` BIGINT(20) DEFAULT NULL,
+  `series` INT(11) DEFAULT NULL,
+  `year` INT(11) DEFAULT NULL,
+  `type` INT(11) DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
+  `update_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `protocol_book_id` INT(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_protocol_number_protocol_book1` (`protocol_book_id`),
   CONSTRAINT `fk_protocol_number_protocol_book1` FOREIGN KEY (`protocol_book_id`) REFERENCES `protocol_book` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=INNODB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -737,11 +736,11 @@ DROP TABLE IF EXISTS `resource`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `resource` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `description` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `resource` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `description` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `resource` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -761,12 +760,12 @@ DROP TABLE IF EXISTS `role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `role` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `is_protocol` int(1) DEFAULT NULL,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `is_protocol` INT(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -787,14 +786,14 @@ DROP TABLE IF EXISTS `role_to_resource`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `role_to_resource` (
-  `role_id` int(11) unsigned NOT NULL,
-  `resource_id` int(11) unsigned NOT NULL,
+  `role_id` INT(11) UNSIGNED NOT NULL,
+  `resource_id` INT(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`role_id`,`resource_id`),
   KEY `roles_to_resource_FKIndex1` (`role_id`),
   KEY `roles_to_resource_FKIndex2` (`resource_id`),
   CONSTRAINT `fk_7cac7e54-215b-11e0-9059-080027b715d2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_7cad2692-215b-11e0-9059-080027b715d2` FOREIGN KEY (`resource_id`) REFERENCES `resource` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -814,21 +813,21 @@ DROP TABLE IF EXISTS `task_document`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `task_document` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `document_name` varchar(256) COLLATE utf8_unicode_ci NOT NULL COMMENT '''the filename''',
-  `document_size` bigint(20) NOT NULL COMMENT '''the filesize''',
-  `document_number` int(11) NOT NULL COMMENT 'the index of doc in task',
-  `document_keywords` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '''comma sep keywirds''',
-  `document_type_id` int(11) unsigned NOT NULL,
-  `okm_path` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `okm_uuid` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `project_task_id` int(11) unsigned NOT NULL,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `document_name` VARCHAR(256) COLLATE utf8_unicode_ci NOT NULL COMMENT '''the filename''',
+  `document_size` BIGINT(20) NOT NULL COMMENT '''the filesize''',
+  `document_number` INT(11) NOT NULL COMMENT 'the index of doc in task',
+  `document_keywords` VARCHAR(1024) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '''comma sep keywirds''',
+  `document_type_id` INT(11) UNSIGNED NOT NULL,
+  `okm_path` VARCHAR(1024) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `okm_uuid` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `project_task_id` INT(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_task_document_document_type1` (`document_type_id`),
   KEY `fk_task_document_project_task1` (`project_task_id`),
   CONSTRAINT `fk_task_document_document_type1` FOREIGN KEY (`document_type_id`) REFERENCES `document_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_task_document_project_task1` FOREIGN KEY (`project_task_id`) REFERENCES `project_task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -848,13 +847,13 @@ DROP TABLE IF EXISTS `task_message`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `task_message` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_receiver_id` int(11) unsigned NOT NULL,
-  `user_sender_id` int(11) unsigned NOT NULL,
-  `project_task_id` int(11) unsigned NOT NULL,
-  `subject` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `message` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_receiver_id` INT(11) UNSIGNED NOT NULL,
+  `user_sender_id` INT(11) UNSIGNED NOT NULL,
+  `project_task_id` INT(11) UNSIGNED NOT NULL,
+  `subject` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `message` VARCHAR(1024) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `task_messages_FKIndex1` (`project_task_id`),
   KEY `task_message_FKIndex2` (`user_sender_id`),
@@ -862,7 +861,7 @@ CREATE TABLE `task_message` (
   CONSTRAINT `fk_7cb4f340-215b-11e0-9059-080027b715d2` FOREIGN KEY (`project_task_id`) REFERENCES `project_task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cba0a42-215b-11e0-9059-080027b715d2` FOREIGN KEY (`user_sender_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_7cbad8e6-215b-11e0-9059-080027b715d2` FOREIGN KEY (`user_receiver_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -882,11 +881,11 @@ DROP TABLE IF EXISTS `task_priority`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `task_priority` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -907,11 +906,11 @@ DROP TABLE IF EXISTS `task_result`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `task_result` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -932,11 +931,11 @@ DROP TABLE IF EXISTS `task_state`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `task_state` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -957,17 +956,17 @@ DROP TABLE IF EXISTS `task_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `task_type` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `is_periodic` int(11) unsigned DEFAULT '0',
-  `day_period` int(11) unsigned DEFAULT NULL,
-  `create_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `update_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
-  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` VARCHAR(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `is_periodic` INT(11) UNSIGNED DEFAULT '0',
+  `day_period` INT(11) UNSIGNED DEFAULT NULL,
+  `create_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `update_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
+  `update_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -987,10 +986,10 @@ DROP TABLE IF EXISTS `user_hierarchy`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_hierarchy` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `manager_id` int(11) DEFAULT NULL,
-  `users_id` int(10) unsigned NOT NULL,
-  `department_id` int(11) NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `manager_id` INT(11) DEFAULT NULL,
+  `users_id` INT(10) UNSIGNED NOT NULL,
+  `department_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_user_details_user_details1` (`manager_id`),
   KEY `fk_user_details_users1` (`users_id`),
@@ -998,7 +997,7 @@ CREATE TABLE `user_hierarchy` (
   CONSTRAINT `fk_user_details_department1` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_details_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_details_user_details1` FOREIGN KEY (`manager_id`) REFERENCES `user_hierarchy` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Defines the Hierarchy of each user within a department.';
+) ENGINE=INNODB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Defines the Hierarchy of each user within a department.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1018,14 +1017,14 @@ DROP TABLE IF EXISTS `user_to_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_to_role` (
-  `users_id` int(11) unsigned NOT NULL,
-  `role_id` int(11) unsigned NOT NULL,
+  `users_id` INT(11) UNSIGNED NOT NULL,
+  `role_id` INT(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`users_id`,`role_id`),
   KEY `users_to_roles_FKIndex1` (`users_id`),
   KEY `users_to_roles_FKIndex2` (`role_id`),
   CONSTRAINT `fk_7cab0434-215b-11e0-9059-080027b715d2` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_7cabb168-215b-11e0-9059-080027b715d2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1046,20 +1045,20 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `password` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `surname` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `is_disabled` tinyint(1) DEFAULT NULL,
-  `create_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `update_user` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_dt` datetime DEFAULT NULL,
-  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `address` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `password` VARCHAR(45) COLLATE utf8_unicode_ci NOT NULL,
+  `name` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `surname` VARCHAR(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `is_disabled` TINYINT(1) DEFAULT NULL,
+  `create_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `update_user` VARCHAR(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_dt` DATETIME DEFAULT NULL,
+  `update_ts` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `address` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` VARCHAR(256) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+) ENGINE=INNODB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1081,4 +1080,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-12-15 12:43:43
+-- Dump completed on 2011-12-17 13:04:12
