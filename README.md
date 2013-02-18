@@ -28,12 +28,14 @@ _Scriptum_ στα Λατινικά σημαίνει Γραπτό.
 
 license
 -------
-This software is licensed under the [European Union Public License][EUPL]. For more
-information, read the file ``LICENSE.pdf``.
+Το λογισμικό διανέμεται με την άδεια [European Union Public License][EUPL].
+Για περισσότερες πληροφορίες, δείτε το αρχείο ``LICENSE.pdf``.
 
 [EUPL]: http://joinup.ec.europa.eu/software/page/eupl/licence-eupl
 
 
 documentation
 -------------
-See the wiki for documentation.
+Το μεγαλύτερο μέρος τεκμηρίωσης βρίσκεται στο [επίσημο site][docs].
+
+[docs]: http://www.scriptum.gr/index.php?option=com_content&view=article&id=18&Itemid=38&lang=el
