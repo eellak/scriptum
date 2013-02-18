@@ -20,6 +20,12 @@ scriptum
 [eellak]: http://eellak.gr
 
 
+όνομα
+-----
+_Scriptum_ στα Λατινικά σημαίνει Γραπτό.
+πχ. Jus Scriptum μεταφράζεται σε Γραπτό Δίκαιο.
+
+
 license
 -------
 This software is licensed under the [European Union Public License][EUPL]. For more
