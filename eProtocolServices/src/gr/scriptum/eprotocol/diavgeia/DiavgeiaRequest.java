@@ -6,7 +6,7 @@ import java.util.Date;
 
 /**
 Class that represents the Request sent to diavgeia.gov.gr
-* @author mike
+* @author Michael Mountrakis mountrakis@uit.gr
 *
 */
 
