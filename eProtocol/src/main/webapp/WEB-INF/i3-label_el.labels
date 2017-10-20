@@ -1,0 +1,718 @@
+#############
+#general labels
+new=Νέα Εγγραφή
+addNew=Νέα Εγγραφή
+clear=Καθαρισμός
+insert=Εισαγωγή
+save=Αποθήκευση
+update=Αποθήκευση Αλλαγών
+delete=Διαγραφή
+functions=Λειτουργίες
+result=Αποτέλεσμα
+search=Αναζήτηση
+selectAll=Όλα
+noSelection=(Χωρίς επιλογή)
+upload=Μεταφόρτωση...
+add=Προσθήκη
+remove=Αφαίρεση
+removeAll=Αφαίρεση Όλων
+importFile=Εισαγωγή Αρχείου
+exportFile=Εξαγωγή Αρχείου
+confirm=Επιβεβαίωση
+login=Είσοδος
+from=Από
+to=Εώς
+download=Μεταφόρτωση
+print=Εκτύπωση
+display=Προβολή
+send=Αποστολή
+cancel=Ακύρωση
+activate=Ενεργοποίηση
+INCOMING=Εισερχόμενο
+OUTGOING=Εξερχόμενο
+DOCUMENT=Επισυναπτόμενο
+PUBLIC=Κοινό
+SECRET=Εμπιστευτικό
+TO=Ενέργεια
+CC=Κοινοποίηση
+RELATIVE=Σχετικό
+IDENTICAL_NUMBER=Ταυτάριθμο
+NEW_NUMBER=Νέος Αριθμός
+true=ΝΑΙ
+false=ΟΧΙ
+CREATOR_REPORT=Πρωτ/να Έγγραφα Μονάδας Χρήστη
+RECIPIENT_REPORT=Πρωτ/να Έγγραφα από άλλες Μονάδες
+ROUTING_REPORT=Χρεώσεις προς Κεντρικές Υπηρεσίες
+ASSIGNEES_REPORT=Πρωτ/να Έγγραφα για αρμόδιους Μονάδας
+ok=OK
+
+#############
+#general messages
+success.title=Επιτυχής Ενέργεια
+success=Η ενέργεια ολοκληρώθηκε επιτυχώς.
+warning.title=Προσοχή
+error.title=Σφάλμα
+confirm.title=Επιβεβαίωση
+error=Παρουσιάστηκε σφάλμα κατά τη συγκεκριμένη ενέργεια. Παρακαλούμε προσπαθήστε ξανά και σε περίπτωση αποτυχίας επικοινωνήστε με το διαχειριστή του συστήματος.
+save.title=Αποτέλεσμα Αποθήκευσης
+save.OK=Η εγγραφή αποθηκεύθηκε επιτυχώς.
+search.title=Αποτελέσματα Αναζήτησης
+search.notFound=Δε βρέθηκαν εγγραφές που να πληρούν τα συγκεκριμένα κριτήρια.
+search.content.tooManyLocalResults=Προκειμένου να εκτελεστεί αναζήτηση στο Περιεχόμενο Εγγράφων, πρέπει να τροποποιήσετε τα υπόλοιπα κριτήρια αναζήτησης, ώστε να επιστραφούν λιγότερα αποτελέσματα.
+search.content.tooManyResults=Η αναζήτηση στο περιεχόμενο εγγράφων επέστρεψε περισσότερα από {0} αποτελέσματα. Παρακαλούμε τροποποιήστε το κριτήριο 'Περ/νο Εγγράφων', προκειμένου να ελαττώσετε τον αριθμό αποτελεσμάτων.
+search.import.invalidFile=Το αρχείο που προσπαθείτε να εισάγετε δεν είναι έγκυρης μορφής.
+search.import.success=Η εισαγωγή πραγματοποιήθηκε επιτυχώς. Εισήχθησαν {0} εγγραφές.
+fetch.title=Αποτέλεσμα Ανάκτησης
+fetch.notFound=Η συγκεκριμένη εγγραφή δε βρέθηκε.
+delete.title=Αποτέλεσμα Διαγραφής  
+delete.notDeletable=Η εγγραφή δεν μπορεί να διαγραφεί, καθώς έχει ήδη χρησιμοποιηθεί σε άλλες λειτουργίες του συστήματος.
+delete.confirm=Είστε σίγουρος/η πως επιθυμείτε την οριστική διαγραφή της εγγραφής;
+delete.success=Η εγγραφή διεγράφη επιτυχώς.
+error.openKM=Παρουσιάστηκε σφάλμα στην επικοινωνία με το αποθετήριο εγγράφων! Παρακαλούμε επικοινωνήστε με το διαχειριστή του συστήματος.
+error.openKM.documentNotFound=Το έγγραφο δε βρέθηκε στο αποθετήριο εγγράφων!  Παρακαλούμε επικοινωνήστε με το διαχειριστή του συστήματος.
+error.login.badCredentials=Τα στοιχεία σύνδεσης είναι λανθασμένα!
+error.login.userDisabled=Ο λογαριασμός χρήστη είναι απενεργοποιημένος! Παρακαλώ επικοινωνήστε με το διαχειριστή του συστήματος.
+error.login.noSearchBooksAssignedToUser=Ο λογαριασμός του χρήστη που χρησιμοποιείτε δεν έχει δικαιώματα αναζήτησης σε κανένα Βιβλίο Πρωτ/λου! Παρακαλούμε επικοινωνήστε με το διαχειριστή του συστήματος.
+error.login.noBooksAssignedToUser=Ο λογαριασμός του χρήστη που χρησιμοποιείτε δεν έχει δικαιώματα εγγραφής σε κανένα Βιβλίο Πρωτ/λου! Παρακαλούμε επικοινωνήστε με το διαχειριστή του συστήματος.
+error.login.invalidUserDepartment=Ο λογαριασμός του χρήστη που χρησιμοποιείτε δεν ανήκει σε καμία Μονάδα Πρωτ/λου! Παρακαλώ επικοινωνήστε με το διαχειριστή του συστήματος.
+error.login.maxUsers=Η εφαρμογή έχει υπερβεί το μέγιστο αριθμό ταυτόχρονα συδεδεμένων χρηστών! Παρακαλώ επικοινωνήστε με το διαχειριστή του συστήματος.
+error.login.maxSessions=Ο λογαριασμός του χρήστη που χρησιμοποιείτε είναι ήδη συνδεδεμένος στο σύστημα! Παρακαλώ επικοινωνήστε με το διαχειριστή του συστήματος.
+
+#############
+#entities
+
+##contact
+contact.id=Α/Α
+contact.code=Κωδικός
+contact.name=Όνομα
+contact.middlename=Πατρώνυμο
+contact.surname=Επώνυμο
+contact.organization=Επωνυμία
+contact.postcode=T.K.
+contact.city=Πόλη
+contact.telephone=Τηλέφωνο
+contact.mobile=Κινητό
+contact.fax=Fax
+contact.email=Email
+contact.street=Οδός
+contact.streetNo=Αριθμός
+contact.prefecture=Νομός
+contact.web=Ιστοσελίδα
+contact.vatNumber=ΑΦΜ
+contact.ssn=ΑΜΚΑ
+contact.description=Περιγραφή
+
+##company
+company=Εταιρεία/Οργανισμός
+company.id=Α/Α
+company.code=Κωδικός
+company.name=Επωνυμία
+company.description=Περιγραφή
+company.isGoverment=Κρατικός Φορέας
+company.vatNo=ΑΦΜ
+company.irs=ΔΟΥ
+company.postcode=T.K.
+company.city=Πόλη
+company.telephone=Τηλέφωνο
+company.mobile=Κινητό
+company.fax=Fax
+company.email=Email
+company.street=Οδός
+company.streetNo=Αριθμός
+company.prefecture=Νομός
+company.web=Ιστοσελίδα
+company.webService=Web Service
+
+##company Type
+companyType=Τύπος Εταιρείας/Οργανισμού
+companyType.id=Α/Α
+companyType.name=Τύπος
+companyType.description=Περιγραφή
+
+##document Type
+documentType=Είδος Εγγράφου
+documentType.id=Α/Α
+documentType.code=Κωδικός
+documentType.name=Περιγραφή
+documentType.description=Περιγραφή 2
+documentType.isPeriodic=Περιοδικό
+documentType.days=Περιοδικότητα (ημέρες)
+documentType.applicableTo=Τύπος Εγγράφου
+documentType.protocolBooks=Βιβλία Πρωτ/λου
+documentType.allowOutgoingFromIncoming=Δημιουργία Εξ/νου από Εισ/νο
+##parameter
+parameter=Παράμετρος
+parameter.id=Α/Α
+parameter.area=Περιοχή
+parameter.type=Τύπος
+parameter.name=Όνομα
+parameter.description=Περιγραφή
+parameter.initialValue=Αρχική Τιμή
+parameter.value=Τιμή
+
+##distribution Method
+distributionMethod=Μέθοδος Διακίνησης
+distributionMethod.id=Α/Α
+distributionMethod.code=Κωδικός
+distributionMethod.description=Περιγραφή
+distributionMethod.requiresDescription=Απαιτεί Διευκρίνιση
+distributionMethod.autoFillRoutingDate=Αυτόματη Συμπλήρωση Ημ/νίας Δρομολόγησης
+##users
+users=Χρήστης
+users.id=Α/Α
+users.username=Όνομα Χρήστη
+users.password=Συνθηματικό
+users.name=Όνομα
+users.middleName=Πατρώνυμο
+users.surname=Επώνυμο
+users.code=Αριθμός Μητρώου
+users.isDisabled=Απενεργοποιημένος
+users.roles=Ρόλοι
+users.userAssignments=Δικαιώματα
+users.createDt=Ημ/νία Δημιουργίας
+
+##role
+role=Ρόλος
+role.id=Α/Α
+role.name=Όνομα
+role.description=Περιγραφή
+
+##Permission
+Permission=Δικαίωμα
+Permission.name=Όνομα
+Permission.description=Περιγραφή
+
+##Protocol
+protocol=Πρωτόκολλο
+protocol.protocolNumber=Αριθμός
+protocol.protocolYear=Έτος
+protocol.subject=Θέμα
+protocol.protocolDate=Ημ/νία Πρωτ/σης
+protocol.contact=Αποστολέας
+protocol.direction=Τύπος
+protocol.attachedNumber=Αριθμός συνημμένων
+protocol.attachedDescription=Περιγραφή συννημμένων
+protocol.protocolRelations=Σχετικά Πρωτ/λα
+
+##incoming Protocol
+incomingProtocol=Εισερχόμενο Πρωτόκολλο
+incomingProtocol.id=Α/Α (Εσωτ.)
+incomingProtocol.protocolNumber=Αριθμός
+incomingProtocol.protocolYear=Έτος
+incomingProtocol.subject=Θέμα
+incomingProtocol.protocolDate=Ημ/νία Πρωτ/σης
+incomingProtocol.contact=Αποστολέας
+incomingProtocol.incomingProtocolNumber=Αρ. Πρωτ. Αποστ.
+incomingProtocol.incomingDate=Ημ/νία Εγγράφου
+incomingProtocol.incomingPlace=Τόπος Έκδοσης
+incomingProtocol.comments=Σχόλια/Παρατηρήσεις
+incmoingProtocol.createTs=Ημ/νία Δημιουργίας
+incomingProtocol.updateTs=Ημ/νία Τροποποίησης
+incomingProtocol.protocolDocuments=Έγγραφα
+incomingProtocol.isDeleted=***ΑΚΥΡΟ***
+incomingProtocol.relativeProtocol=Σχετικό Πρωτ/λο (Εσωτ. Α/Α)
+incomingProtocol.protocolRelationsAsSource=Σχετικά Πρωτ/λα (Από)
+incomingProtocol.protocolRelationsAsTarget=Σχετικά Πρωτ/λα (Προς)
+incomingProtocol.protocolBook=Βιβλίο
+incomingProtocol.dossier=Φάκελος
+incomingProtocol.relativeTask=Σχετική Ανάθεση (Α/Α)
+
+##outoing Protocol
+outgoingProtocol=Εξερχόμενο Πρωτόκολλο
+outgoingProtocol.id=Α/Α (Εσωτ.)
+outgoingProtocol.protocolNumber=Αριθμός
+outgoingProtocol.protocolYear=Έτος
+outgoingProtocol.subject=Θέμα
+outgoingProtocol.protocolDate=Ημ/νία Πρωτ/σης
+outgoingProtocol.outgoingProtocolNumber=Αρ. Πρωτ.  Δ/σης
+outgoingProtocol.outgoingPlace=Τόπος Έκδοσης
+outgoingProtocol.author=Συντάκτης Εγγράφου
+outgoingProtocol.comments=Παρατηρήσεις
+incmoingProtocol.createTs=Ημ/νία Δημιουργίας
+outgoingProtocol.updateTs=Ημ/νία Τροποποίησης
+outgoingProtocol.protocolDocuments=Έγγραφα
+outgoingProtocol.isDeleted=***ΑΚΥΡΟ***
+outgoingProtocol.relativeProtocol=Σχετικό Πρωτ/λο (Εσωτ. Α/Α)
+outgoingProtocol.protocolRelationsAsSource=Σχετικά Πρωτ/λα (Από)
+outgoingProtocol.protocolRelationsAsTarget=Σχετικά Πρωτ/λα (Προς)
+outgoingProtocol.protocolBook=Βιβλίο
+outgoingProtocol.dossier=Φάκελος
+incomingProtocol.relativeTask=Σχετική Ανάθεση (Α/Α)
+
+##protocol Document
+protocolDocument=Έγγραφο Πρωτ/λου
+protocolDocument.documentNumber=Αριθμός
+protocolDocument.documentName=Όνομα
+protocolDocument.documentSize=Μέγεθος
+protocolDocument.documentKeywords=Λέξεις Κλειδιά
+protocolDocument.diavgeiaAdaCode=Κωδικός Διαύγειας
+protocolDocument.incomingProtocol=Εισ/νο Πρωτ/λο (Εσωτ. Α/Α)
+protocolDocument.outgoingProtocol=Εξ/νο Πρωτ/λο (Εσωτ. Α/Α)
+
+##outgoing recipient
+outgoingRecipient=Παραλήπτης
+outgoingRecipient.isCc=Κοινοποίηση
+
+##DiavgeiaDecisionType
+diavgeiaDecisionType=Είδος Απόφασης
+diavgeiaDecisionType.id=Α/Α
+diavgeiaDecisionType.description=Περιγραφή
+
+##DiavgeiaSubjectGroup
+diavgeiaSubjectGroup=Θεματική Ενότητα
+diavgeiaSubjectGroup.id=Α/Α
+diavgeiaSubjectGroup.description=Περιγραφή
+
+##Department
+department=Οργανική Μονάδα
+department.department=Ανώτερη Οργανική Μονάδα
+department.id=Α/Α
+department.code=Κωδικός
+department.name=Ονομασία
+department.description=Περιγραφή
+department.canAssignAnywhere=Επιτρέπεται Ανάθεση προς όλα τα Τμήματα
+department.departmentType=Τύπος
+
+##ProtocolBook
+protocolBook=Βιβλίο Πρωτοκόλλου
+protocolBook.id=Α/Α
+protocolBook.type=Τύπος
+protocolBook.protocolSeries=Τίτλος
+protocolBook.protocolYear=Έτος
+protocolBook.isActive=Ανοικτό
+protocolBook.isPreferred=Προτιμητέο
+
+##Dossier
+dossier=Φάκελος Πρωτοκόλλου
+dossier.id=Α/Α
+dossier.name=Τίτλος
+dossier.protocolYear=Έτος
+dossier.isActive=Ανοικτός
+dossier.isPreferred=Προτιμητέος
+
+##Subject
+subject=Θέμα
+subject.id=Α/Α
+subject.code=Κωδικός
+subject.description=Περιγραφή
+
+##ProtocolRelation
+protocolRelation=Συσχέτιση Πρωτοκόλλων
+protocolRelation.id=Α/Α
+protocolRelation.sourceProtocol=Από
+protocolRelation.targetProtocol=Προς
+protocolRelation.relationType=Τύπος
+protocolRelation.createDt=Ημ/νία
+
+##UserToRole
+UserToRole=Συσχέτιση Χρήστη-Ρόλου-Πόρου
+UserToRole.permission=Δικαίωμα
+UserToRole.user=Χρήστης
+UserToRole.resource=Πόρος
+
+##ProtocolCorrespondent
+protocolCorrespondent.direction.sender=Αποστολέας
+protocolCorrespondent.direction.transactor=Συναλλασσόμενος
+protocolCorrespondent.direction.creator=Δημιουργός
+protocolCorrespondent.direction.internalRecipient=Εσωτερικός Παραλήπτης
+protocolCorrespondent.direction.author=Συγγραφέας
+protocolCorrespondent.direction.recipient=Παραλήπτης
+protocolCorrespondent.type=Τύπος
+protocolCorrespondent.description=Περιγραφή
+protocolCorrespondent.code=Κωδικός
+protocolCorrespondent.vatNumber=ΑΦΜ
+protocolCorrespondent.ssn=ΑΜΚΑ
+protocolCorrespondent.department=Οργανική Μονάδα
+protocolCorrespondent.action=Ενέργεια
+protocolCorrespondent.distributionMethod=Τρόπος
+protocolCorrespondent.dispatchDate=Αποστολή
+protocolCorrespondent.routingDate=Δρομ/ση-Χρέωση
+protocolCorrespondent.deliveryDate=Λήψη
+protocolCorrespondent.attachedDeliveryDate=Παραλαβή Συν/νων
+
+##CorrespondentDirection
+SENDER=Αποστολέας
+TRANSACTOR=Συναλλασσόμενος
+CREATOR=Δημιουργός
+INTERNAL_RECIPIENT=Εσωτερικός Παραλήπτης
+RECIPIENT=Παραλήπτης
+AUTHOR=Συγγραφέας
+ASSIGNEE=Αρμόδιος
+
+##CorrespondentGroup
+correspondentGroup=Ομάδα Παραληπτών
+correspondentGroup.id=Α/Α
+correspondentGroup.code=Κωδικός
+correspondentGroup.name=Όνομα
+correspondentGroup.applicableTo=Τύπος παραληπτών
+correspondentGroup.active=Ενεργή
+
+
+#############
+#pages
+
+##header
+headerPage.title=Σύστημα Ηλεκτρονικού Πρωτοκόλλου
+
+##menu
+menu.index=Αρχική
+
+menu.administration=Διαχείριση
+menu.administration.users=Χρήστες
+menu.administration.roles=Ρόλοι Χρηστών
+menu.administration.structure=Οργανόγραμα
+menu.administration.documentTypes=Είδη Εγγράφων
+menu.administration.distributionMethods=Μέθοδοι Διανομής
+menu.administration.parameters=Παράμετροι Συστήματος
+menu.administration.protocolBook=Εξαγωγή Βιβλίου Πρωτοκόλλου
+menu.administration.reports=Αναφορές-Στατιστικά
+menu.administration.diavgeia=Ενημέρωση Διαύγειας
+menu.administration.books=Βιβλία Πρωτοκόλλου
+menu.administration.dossiers=Φάκελοι Πρωτοκόλλου
+menu.administration.correspondentGroups=Ομάδες Παραληπτών
+
+menu.contacts=Επαφές-Φορείς
+menu.contacts.contacts=Επαφές
+menu.contacts.companies=Φορείς/Οργανισμοί
+menu.contacts.companyTypes=Τυποι Φορέων/Οργανισμών
+
+menu.help=Βοήθεια
+menu.help.community=Κοινότητα Χρηστών
+menu.help.links=Χρήσιμοι Σύνδεσμοι
+menu.help.about=Σχετικά
+menu.help.reloadLabels=Φόρτωμα Λεκτικών
+
+menu.exit=Έξοδος
+
+
+##loginPage
+loginPage.title=Scriptum 
+loginPage.error=Εσφαλμένη προσπάθεια εισόδου
+loginPage.changePassword=Αλλαγή συνθηματικού
+
+##indexPage
+indexPage.title=Σύστημα Ηλεκτρονικού Πρωτοκόλλου
+indexPage.incoming=Εισερχόμενα
+indexPage.incoming.correspondentDirection=Φίλτρο Μονάδας Χρήστη
+indexPage.incoming.correspondentDirection.creator=Ως δημιουργός
+indexPage.incoming.correspondentDirection.recipient=Ως παραλήπτης/εσωτερικός παραλήπτης
+indexPage.incoming.routingDate=Ημ/νια Δρομολόγησης συμπληρωμένη
+indexPage.incoming.dates=Ημερομηνίες πρωτοκόλλησης
+indexPage.incoming.from=Ημ/νία (Από)
+indexPage.incoming.to=Ημ/νία (Εώς)
+indexPage.incoming.receiveProtocols=Λήψη Πρωτ/λων
+indexPage.outgoing=Εξερχόμενα
+indexPage.outgoing.dates=Ημερομηνίες πρωτοκόλλησης
+indexPage.outgoing.from=Ημ/νία (Από)
+indexPage.outgoing.to=Ημ/νία (Εώς)
+indexPage.search=Αναζήτηση
+indexPage.search.criteria=Κριτήρια Αναζήτησης
+indexPage.search.direction.incoming=Εισ/νο
+indexPage.search.direction.outgoing=Εξ/νο
+indexPage.search.recipient=Παρ/της-Εσωτ. παρ.
+indexPage.search.transactor=Αφορά συν/νο
+indexPage.search.transactor.type=Τύπος
+indexPage.search.transactor.value=Τιμή
+indexPage.search.recipient.type=Τυπος
+indexPage.search.recipient.value=Τιμή
+indexPage.search.content=Περ/νο Εγγράφων
+indexPage.search.protocolNumber=Αριθμός
+indexPage.search.dates=Ημ/νίες Πρωτ/σης
+indexPage.search.subject=Θέμα
+indexPage.search.keywords=Λέξεις Κλειδιά 
+ indexPage.search.keywords.tooltip=Πληκτρολογήστε λέξεις-κλειδιά, χωρισμένες με κόμμα
+indexPage.invalidUserDepartment=Ο λογαριασμός του χρήστη που χρησιμοποιείτε δεν ανήκει σε καμία Μονάδα Πρωτ/λου. Αυτό θα επηρεάσει τα πρωτόκολλα στα οποία έχετε πρόσβαση. Παρακαλούμε επικοινωνήστε με το διαχειριστή του συστήματος.
+indexPage.noSearchBooksAssignedToUser=Ο λογαριασμός του χρήστη που χρησιμοποιείτε δεν έχει δικαιώματα αναζήτησης σε κανένα Βιβλίο Πρωτ/λου. Παρακαλούμε επικοινωνήστε με το διαχειριστή του συστήματος.
+indexPage.batchRoute=Μαζική Δρομολόγηση
+indexPage.batchRoute.recipient=Μονάδα-Παραλήπτης
+indexPage.batchRoute.route=Δρομολόγηση
+
+##contactPage
+contactPage.title=Διαχείριση Επαφής
+contactPage.phones=Τηλέφωνα
+contactPage.comms=Ηλεκτρονική Επικοινωνία
+contactPage.commInfo=Στοιχεία Επικοινωνίας
+contactPage.address=Διεύθυνση
+contactPage.addressDetails=Στοιχεία Διεύθυνσης
+
+##contactsPage
+contactsPage.title=Διαχείριση Επαφών
+
+##companyPage
+companyPage.title=Διαχείριση Φορέα/Οργανισμού
+companyPage.address=Διεύθυνση
+companyPage.addressDetails=Στοιχεία Διεύθυνσης
+companyPage.phones=Τηλέφωνα
+companyPage.comms=Ηλεκτρονική Επικοινωνία
+companyPage.commInfo=Στοιχεία Επικοινωνίας
+companyPage.codeAlreadyExists=Ο κωδικός που συμπληρώσατε χρησιμοποιείται ήδη! Παρακαλώ ορίστε ένα διαφορετικό.
+companyPage.nameAlreadyExists=Η επωνυμία που συμπληρώσατε χρησιμοποιείται ήδη! Παρακαλώ ορίστε μία διαφορετική.
+
+##companiesPage
+companiesPage.title=Διαχείριση Φορέων/Οργανισμών
+
+##companyTypePage
+companyTypePage.title=Διαχείριση Τύπου Φορέα/Οργανισμού
+
+##companyTypesPage
+companyTypesPage.title=Διαχείριση Τύπων Φορέων/Οργανισμών
+
+##documentTypePage
+documentTypePage.title=Διαχείριση Είδους Εγγράφου
+documentTypePage.codeAlreadyExists=Ο κωδικός που συμπληρώσατε χρησιμοποιείται ήδη! Παρακαλώ ορίστε ένα διαφορετικό.
+
+##documentTypesPage
+documentTypesPage.title=Διαχείριση Ειδών Εγγράφων
+
+##parameterPage
+parameterPage.title=Διαχείριση Παραμέτρου
+
+##parametersPage
+parametersPage.title=Διαχείριση Παραμέτρων
+
+##distributionMethodPage
+distributionMethodPage.title=Διαχείριση Μεθόδου Διανομής
+distributionMethodPage.codeAlreadyExists=Ο κωδικός που συμπληρώσατε χρησιμοποιείται ήδη! Παρακαλώ ορίστε ένα διαφορετικό.
+
+##distributionMethodsPage
+distributionMethodsPage.title=Διαχείριση Μεθόδων Διανομής
+
+##userPage
+userPage.title=Διαχείριση Χρήστη
+userPage.usernameAlreadyExists=Το όνομα χρήστη που συμπληρώσατε χρησιμοποιείται ήδη! Παρακαλώ ορίστε ένα διαφορετικό.
+userPage.noRolesAdded=Πρέπει να επιλέξετε τουλάχιστον ένα ρόλο για το χρήστη.
+userPage.noAssignmentsSelected=Πρέπει να επιλέξετε τουλάχιστον ένα δικαίωμα για το χρήστη.
+userPage.protocolBookAssignments=Δικαιώματα Βιβλίων Πρωτ/λου
+userPage.invalidUsername=Το όνομα χρήστη πρέπει να έχει μήκος μεταξύ 4 και 30 χαρακτήρες και να περιέχει μόνο λατινικούς χαρακτήρες ή αριθμούς.
+userPage.invalidPassword=Το συνθηματικό πρέπει να έχει μήκος μεταξύ 4 και 30 χαρακτήρες και να περιέχει μόνο λατινικούς χαρακτήρες αριθμούς ή τα σύμβολα !@^*=-#_+.()%&
+##usersPage
+usersPage.title=Διαχείριση Χρηστών
+usersPage.disabled=Ανενεργός
+usersPage.statusFilter=Κατάσταση
+usersPage.statusFilter.enabled=Ενεργοί
+usersPage.statusFilter.disabled=Ανενεργοί
+
+##protocol (common between incoming & outgoing) page
+protocolPage.department=Μονάδα Πρωτ/λου
+protocolPage.invalidUserDepartment=Ο λογαριασμός του χρήστη που χρησιμοποιείτε δεν ανήκει σε καμία Μονάδα Πρωτ/λου. Παρακαλούμε επικοινωνήστε με το διαχειριστή του συστήματος.
+protocolPage.invalidDepartment=Το πρωτόκολλο πρέπει να ανήκει σε μία και μόνο μία Μονάδα Πρωτοκόλλου. Παρακαλούμε επικοινωνήστε με το διαχειριστή του συστήματος.
+protocolPage.noBooksAssignedToUser=Ο λογαριασμός του χρήστη που χρησιμοποιείτε δεν έχει δικαιώματα εγγραφής σε κανένα Βιβλίο Πρωτ/λου. Παρακαλούμε επικοινωνήστε με το διαχειριστή του συστήματος.
+protocolPage.noProtocolBookSelected=Πρέπει να επιλέξετε ένα Βιβλίο Πρωτ/λου.
+protocolPage.invalidDocumentType=Πρέπει να επιλέξετε ένα 'Είδος Εγγράφου' από τη λίστα των διαθέσιμων.
+protocolPage.removeProtocolRelation=Αποσυσχέτιση
+protocolPage.removeProtocolRelation.prompt=Πρόκειται να αποσυσχετιστεί το επιλεγμένο πρωτόκολλο από το τρέχων. Επιβεβαιώνετε την οριστική αποσυσχέτιση του πρωτοκόλλου;
+protocolPage.removeProtocolRelation.success=Η αποσυσχέτιση πραγματοποιήθηκε επιτυχώς.
+protocolPage.routeProtocol=Δρομολόγηση
+protocolPage.receiveProtocol=Λήψη Πρωτ/λου
+protocolPage.assignees=Αρμόδια Τμήματα/Υπάλληλοι
+protocolPage.protocolDirty=Πιέστε το πλήκτρο 'Αποθήκευση Αλλαγών' για να σώσετε τις αλλαγές σας!  
+protocolPage.errorOpenKM=Παρουσιάστηκε σφάλμα κατά την αποθήκευση των εγγράφων. Παρακαλούμε επικοινωνήστε με το διαχειριστή του συστήματος.
+protocolPage.errorOpenKM.retry=Παρουσιάστηκε σφάλμα κατά την αποθήκευση των εγγράφων. Επιθυμείτε να προσπαθήσετε ξανά;
+protocolPage.protocolCannotBeRelatedToSelf=Το πρωτόκολλο δε μπορεί να συσχετισθεί με τον εαυτό του!
+protocolPage.insert=Καταχώριση
+protocolPage.protocolSubmitted=Η καταχώριση πραγματοποιήθηκε επιτυχώς. Αποδόθηκε Αριθμός Πρωτοκόλλου : {0} .
+protocolPage.errorGettingProtocolNumber=Ο προσωρινός σας δείκτης προς αριθμό πρωτοκόλλου δεσμεύτηκε από άλλον χρήστη που καταχωρούσε ταυτόχρονα με εσάς. Παρακαλώ προσπαθήσετε ξανά για να είναι έγκυρη η καταχώρησή σας.
+protocolPage.organization=Φορέας
+
+##incomingPage
+incomingPage.title=Εισερχόμενο Πρωτόκολλο
+incomingPage.documents=Έγγραφα
+incomingPage.documents.prompt=Επιλέξτε τα αρχεία, αρχίζοντας από το κύριο έγγραφο.
+incomingPage.upload.title=Μεταφόρτωση Αρχείου
+incomingPage.department=Μονάδα Πρωτοκόλλου
+incomingPage.attached=Συνημμένα
+incomingPage.attached.number=Αριθμός
+incomingPage.attached.description=Περιγραφή
+incomingPage.distributionMethoDetails=Λεπτομέρειες (π.χ. Αρ. Συστημένου)
+ incomingPage.sender=Αποστολέας
+ incomingPage.sender.type=Τύπος
+ incomingPage.sender.value=Τιμή
+ incomingPage.noSenderSelected=Πρέπει να επιλέξετε/συμπληρώσετε έναν Αποστολέα.
+ incomingPage.noDistributionMethodSelected=Πρέπει να επιλέξετε μία Μέθοδο Διακίνησης.
+incomingPage.noDocumentsAdded=Πρέπει να προσθέσετε τουλάχιστον ένα αρχείο, προτού εισάγετε το Πρωτόκολλο.
+incomingPage.noInternalRecipientsAssigned=Πρέπει να επιλέξετε τουλάχιστον ένα Εσωτερικό Παραλήπτη.
+incomingPage.protocolAlreadyRelated=Το συγκεκριμένο πρωτόκολλο έχει ήδη συσχετισθεί.
+incomingPage.protocolAlreadySubmitted=Το συγκεκριμένο πρωτόκολλο έχει ήδη λάβει αριθμό και δεν επιδέχεται περαιτέρω τροποποιήσεις.
+incomingPage.protocolAlreadyExists=Η πρωτοκόλληση δεν μπορεί να πραγματοποιηθεί, καθώς υπάρχει ήδη  πρωτοκολλημένο εισερχόμενο έγγραφο με αριθμό {0} και ημ/νία πρωτοκόλλησης {1}. Επιθυμείτε την προβολή του; 
+incomingPage.protocolSubmitted=Το πρωτόκολλο εισήχθη επιτυχώς με Αριθμό Πρωτ/λου {0} . Επιθυμείτε εκτύπωση;
+incomingPage.protocolSubmitted.outgoing=Η καταχώριση πραγματοποιήθηκε επιτυχώς. Αποδόθηκε Αριθμός Πρωτοκόλλου : {0} . Θα μεταβείτε τώρα αυτόματα στη σελίδα δημιουργίας Εξερχομένου.
+incomingPage.errorSaving=Παρουσιάστηκε σφάλμα κατά την αποθήκευση του Πρωτ/λου. Παρακαλούμε επικοινωνήστε με το διαχειριστή του συστήματος.
+incomingPage.errorRefreshing=Παρουσιάστηκε σφάλμα κατά την ανάκτηση του Πρωτ/λου από τη βάση δεδομένων. Παρακαλούμε προσπαθήστε ξανά. Εάν το πρόβλημα συνεχιστεί, επικοινωνήστε με το διαχειριστή του συστήματος.
+incomingPage.errorSubmitting=Παρουσιάστηκε σφάλμα κατά την εισαγωγή του Πρωτ/λου. Παρακαλούμε προσπαθήστε ξανά. Εάν το πρόβλημα συνεχιστεί, επικοινωνήστε με το διαχειριστή του συστήματος.
+incomingPage.deleteProtocol=Μετά την ακύρωση του, το πρωτόκολλο δε θα μπορεί να μεταβεί στην αρχική του κατάσταση. Είστε σίγουρος/η πως επιθυμείτε την οριστική ακύρωση του πρωτοκόλλου; 
+incomingPage.deleteProtocol.success=Η ακύρωση πραγματοποιήθηκε επιτυχώς.
+incomingPage.task=Δημιουργία Ανάθεσης
+incomingPage.pertainsTo=Αφορά Συναλλασσόμενο
+incomingPage.pertainsTo.type=Τύπος
+incomingPage.pertainsTo.value=Τιμή
+incomingPage.internalRecipients=Εσωτερικοί Παραλήπτες
+incomingPage.internalRecipients.department=Μονάδα
+incomingPage.internalRecipients.group=Ομάδα παρ/τών
+incomingPage.sameProtocolNumber=Δημιουργία Ταυτάριθμου
+incomingPage.createOutgoing=Δημιουργία Εξερχομένου
+
+
+##outgoingPage
+outgoingPage.title=Εξερχόμενο Πρωτόκολλο
+outgoingPage.documents=Έγγραφα
+outgoingPage.documents.prompt=Επιλέξτε τα αρχεία, αρχίζοντας από το κύριο έγγραφο.
+outgoingPage.attached=Συνημμένα
+outgoingPage.attached.number=Αριθμός
+outgoingPage.attached.description=Περιγραφή
+outgoingPage.recipients=Παραλήπτες
+outgoingPage.recipients.type=Τύπος
+outgoingPage.recipients.value=Τιμή
+outgoingPage.recipients.group=Ομάδα
+outgoingPage.recipients.prompt=Επιλέξτε τους Παραλήπτες
+outgoingPage.cc=Κοινοποίηση προς
+outgoingPage.cc.prompt=Επιλέξτε τους Παραλήπτες Κοινοποίησης
+outgoingPage.noToAdded=Πρέπει να προσθέσετε τουλάχιστον ένα Παραλήπτη, προτού εισάγετε το Πρωτόκολλο.
+outgoingPage.errorSendingEmail=Το πρωτόκολλο εισήχθη επιτυχώς με Αριθμό Πρωτ/λου {0} . Παρ' όλα αυτά, παρουσιάστηκε σφάλμα κατά την αποστολή του Email.
+outgoingPage.errorSendingWebService=Το πρωτόκολλο εισήχθη επιτυχώς με Αριθμό Πρωτ/λου {0} . Παρ' όλα αυτά, παρουσιάστηκε σφάλμα κατά την αποστολή του στο Web Service.
+outgoingPage.diavgeia=Αποστολή στη Διαύγεια
+outgoingPage.diavgeiaNotSelected=Πρέπει να επιλέξετε Είδος Απόφασης και Θεματική Ενότητα για τη Διαύγεια.
+outgoingPage.diavgeiaResultFailed=Παρουσιάστηκε σφάλμα κατά την αποστολή στη Διαύγεια. Παρακαλούμε προσπαθήστε πάλι αργότερα.
+outgoingPage.diavgeiaResultSuccessNoDocumentsSent=Η αποστολή στη Διαύγεια πραγματοποιήθηκε. Δεν απεστάλησαν έγγραφα, καθώς αυτά δεν πληρούσαν τις προϋποθέσεις.
+outgoingPage.diavgeiaResultSuccessWithErrors=Η αποστολή στη Διαύγεια πραγματοποιήθηκε με κάποια σφάλματα. Τα αναλυτικά αποτελέσματα είναι τα ακόλουθα.
+outgoingPage.diavgeiaResultSuccess=Η αποστολή στη Διαύγεια πραγματοποιήθηκε επιτυχώς. Τα αναλυτικά αποτελέσματα είναι τα ακόλουθα.
+outgoingPage.errorSavingDiavgeiaResults=Η αποστολή στη Διαύγεια πραγματοποιήθηκε, αλλά παρουσιάστηκε σφάλμα κατά την αποθήκευση των αποτελεσμάτων στη βάση του Πρωτοκόλλου.
+outgoingPage.diavgeiaLblNA=Δεν έχει αποσταλλεί
+outgoingPage.diavgeiaLblFailed=Μη επιτυχημένη προσπάθεια αποστολής
+outgoingPage.diavgeiaLblSuccess=Έχει αποσταλλεί επιτυχώς
+outgoingPage.diavgeiaLblSuccessWithErrors=Έχει αποσταλλεί επιτυχώς, με κάποια σφάλματα
+outgoingPage.diavgeiaLblSuccessNoDocumentsSent=Έχει αποσταλλεί επιτυχώς, χωρίς έγγραφα
+outgoingPage.task=Δημιουργία Ανάθεσης
+outgoingPage.numberAllocation=Απόδοση Αριθμού
+outgoingPage.numberAllocation.identical=Ταυτάριθμο
+outgoingPage.numberAllocation.newNumber=Νέος Αριθμός
+outgoingPage.bookNotAssignedToUser=Ο λογαριασμός του χρήστη που χρησιμοποιείτε δεν έχει δικαιώματα εγγραφής εξερχομένου εγγράφου στο Βιβλίο Πρωτ/λου όπου ανήκει το εισερχόμενο έγγραφο. Παρακαλούμε επικοινωνήστε με το διαχειριστή του συστήματος.
+
+##incomingPrint
+incomingPrintPage.title=Εκτύπωση Εισερχομένου Πρωτοκόλλου
+
+##outgoingPrint
+outgoingPrintPage.title=Εκτύπωση Εξερχομένου Πρωτοκόλλου
+
+##Reports page
+reportsPage.title=Εξαγωγή Αναφορών/Στατιστικών
+reportsPage.reports=Αναφορές
+reportsPage.statistics=Στατιστικά
+reportsPage.statistics.allDepartments=Επιλογή Όλων
+reportsPage.statistics.direction=Τύπος Εγγράφου
+reportsPage.statistics.datesGrouping=Ομαδοποίηση ανά έτος και ανά μήνα
+reportsPage.statistics.header.year=Έτος
+reportsPage.statistics.header.month=Μήνας
+reportsPage.statistics.header.direction=Τύπος
+reportsPage.statistics.header.count=Πλήθος
+reportsPage.type=Είδος Αναφοράς
+reportsPage.number=Αριθμός Πρωτ/λου
+reportsPage.date=Ημερομηνία Πρωτ/σης
+reportsPage.deliveryDate=Ημερομηνία Λήψης
+reportsPage.routingDate=Ημερομηνία Δρομ/σης
+reportsPage.department=Μονάδα Κεντρικής Υπ/σίας
+reportsPage.departmentAssignee=Αρμόδιο Τμήμα
+reportsPage.employeeAssignee=Αρμόδιος Υπάλληλος
+reportsPage.sort=Ταξινόμηση
+reportsPage.sort.protocolDate=Ημ/νία Πρωτοκόλλου
+reportsPage.sort.protocolNumber=Αριθμός Πρωτοκόλλου
+reportsPage.sort.order=Σειρά
+reportsPage.sort.order.asc=Αύξουσα
+reportsPage.sort.order.desc=Φθίνουσα
+reportsPage.invalidAssigneeSelection=Πρέπει να επιλέξετε ένα αρμόδιο τμήμα ή έναν αρμόδιο υπάλληλο!
+reportsPage.exportError=Παρουσιάστηκε σφάλμα κατά την εξαγωγή της αναφοράς!
+reportsPage.exportSuccess=Η εξαγωγή της αναφοράς ολοκληρώθηκε επιτυχώς!
+StatisticDirection.INCOMING=Εισερχόμενα (ως Δημιουργός)
+StatisticDirection.OUTGOING=Εξερχόμενα (ως Δημιουργός)
+StatisticDirection.RECIPIENT=Από άλλες μονάδες (ως Παραλήπτης/Εσωτ. Παραλήπτης)
+StatisticDirection.ALL=Όλα
+
+##books
+booksPage.title=Διαχείριση Βιβλίων Πρωτοκόλλου
+
+##book
+bookPage.title=Διαχείριση Βιβλίου Πρωτοκόλλου
+bookPage.userAssignment=Ανάθεση Χρηστών
+bookPage.userAssignment.prompt=Δημιουργήστε το Βιβλίο Πρωτοκόλλου, προκειμένου να μπορείτε να αναθέσετε σε αυτό χρήστες.
+bookPage.noAssignmentSelected=Πρέπει να επιλέξετε τουλάχιστον ένα χρήστη και ένα ρόλο, προτού κάνετε την ανάθεση.
+bookPage.errorOpenKM=Παρουσιάστηκε σφάλμα κατά την επικοινωνία με το αποθετήριο εγγράφων. Παρακαλούμε επικοινωνήστε με το διαχειριστή του συστήματος.
+bookPage.titleAlreadyExists=Ο τίτλος που συμπληρώσατε χρησιμοποιείται ήδη! Παρακαλώ ορίστε ένα διαφορετικό.
+
+##dossier
+dossierPage.title=Εγαγωγή Φακέλου Πρωτοκόλλου
+dossierPage.dates=Ημερομηνίες
+dossierPage.sort=Ταξινόμηση
+dossierPage.sort.protocolDate=Ημ/νία Πρωτοκόλλου
+dossierPage.sort.protocolNumber=Αριθμός Πρωτοκόλλου
+dossierPage.sort.order=Σειρά
+dossierPage.sort.order.asc=Αύξουσα
+dossierPage.sort.order.desc=Φθίνουσα
+dossierPage.exportError=Παρουσιάστηκε σφάλμα κατά την εξαγωγή του Φακέλου Πρωτοκόλλου
+dossierPage.exportSuccess=Η εξαγωγή του Φακέλου Πρωτοκόλλου ολοκληρώθηκε επιτυχώς
+
+##dossiers
+dossiersPage.title=Διαχείριση Φακέλων Πρωτοκόλλου
+
+##upload
+uploadPage.title=Μεταφόρτωση Αρχείου
+uploadPage.scan=Σάρωση
+uploadPage.noFileUploaded=Πρέπει να μεταφορτώσετε ένα αρχείο προτού επιβεβαιώσετε την ενέργεια.
+
+##roles
+rolesPage.title=Διαχείριση Ρόλων Χρηστών
+
+##role
+rolePage.title=Διαχείριση Ρόλου Χρήστών
+
+##structure Page
+structurePage.title=Διαχείριση Οργανογράμματος
+structurePage.tree=Δένδρο Οργανογράμματος
+structurePage.userAssignment=Ανάθεση Χρήστών
+structurePage.userAssignment.filter=Φίλτρο αναζήτησης
+structurePage.contactAssignment=Ανάθεση Υπαλλήλων
+structurePage.codeAlreadyExists=Ο κωδικός που συμπληρώσατε χρησιμοποιείται ήδη! Παρακαλώ ορίστε ένα διαφορετικό.
+
+##batchRoute Page
+batchRoutePage.title=Μαζική Δρομολόγηση
+batchRoutePage.prompt=Επιλέξτε μια ημ/νία μεγαλύτερη ή ίση της τρέχουσας.
+batchRoutePage.recipients=Μονάδες-Παραλήπτες
+
+##reception Page
+receptionPage.title=Λήψη  Εγγράφου(-ων) - Αρμόδια Τμήματα/Υπάλληλοι
+receptionPage.recipients=Στοιχεία Παραλαβής
+receptionPage.setDate=Λήψη
+receptionPage.setAttachedDate=Λήψη Συνημμένων
+receptionPage.noAttached=Χωρίς Συν/να
+receptionPage.assignees=Αρμόδια Τμήματα/Υπάλληλοι
+receptionPage.assignees.type=Τύπος
+receptionPage.assignees.value=Τιμή
+receptionPage.assignees.description=Περιγραφή
+
+##correspondentGroups Page
+correspondentGroupsPage.title=Διαχείριση Ομάδων Παραληπτών
+
+##correspondentGroup Page
+correspondentGroupPage.title=Διαχείριση Ομάδας Παραληπτών
+correspondentGroupPage.protocolCorrespondents=Μέλη
+correspondentGroupPage.protocolCorrespondents.type=Τύπος
+correspondentGroupPage.protocolCorrespondents.value=Τιμή
+correspondentGroupPage.protocolCorrespondent=Μέλος
+
+##scanning Page
+scanningPage.title=Σάρωση Εγγράφων
+
+##passwordChange Page
+passwordChangePage.title=Αλλαγή συνθηματικού χρήστη
+passwordChangePage.prompt=Συμπληρώστε τα στοιχεία σύνδεσης που ήδη έχετε (όνομα χρήστη, συνθηματικό), καθώς και το νέο συνθηματικό που επιθυμείτε. Το νέο συνθηματικό πρέπει να έχει μήκος 4-30 χαρακτήρες, να περιέχει τουλάχιστον ένα χαρακτήρα, έναν αριθμό, ένα σύμβολο και να είναι διαφορετικό του ΑΜ σας.
+passwordChangePage.expired=Το συνθηματικό σας έχει λήξει! Παρακαλώ προχωρήστε στην αλλαγή του.
+passwordChangePage.username=Όνομα Χρήστη
+passwordChangePage.password.old=Υφιστάμενο Συνθηματικό
+passwordChangePage.password.change=Νέο Συνθηματικό
+passwordChangePage.password.repeat=Επιβεβαίωση Νέου Συνθηματικού
+passwordChangePage.change=Αλλαγή
+passwordChangePage.error.invalidUsername=Το όνομα χρήστη που πληκτρολογήσατε είναι λανθασμένο!
+passwordChangePage.error.invalidOldPassword=Το υφιστάμενο συνθηματικό που πληκτρολογήσατε είναι λανθασμένο!
+passwordChangePage.error.passwordMismatch=Τα πεδία 'Νέο συνθηματικό' και 'Επιβεβαίωση Νέου Συνθηματικού' πρέπει να έχουν ίδιες τιμές μεταξύ τους!
+ passwordChangePage.error.oldNewMatch=Το νέο συνθηματικό πρέπει να είναι διαφορετικό του υφισταμένου!
+ passwordChangePage.error.codePasswordMatch=Το νέο συνθηματικό πρέπει να είναι διαφορετικό από το ΑΜ του χρήστη!
+ passwordChangePage.success=Το νέο συνθηματικό ορίστηκε επιτυχώς! Θα μεταφερθείτε άμεσα στην οθόνη εισόδου της εφαρμογής, όπου μπορείτε να εισάγετε τα νέα σας στοιχεία σύνδεσης.
+ 

@@ -1,0 +1,10 @@
+<zk>
+	<window title="${labels.scanningPage.title }" border="normal"
+		width="100%" closable="true">
+		<applet code="scanning.class" height="800px" width="100%"
+			cache_option="plugin"
+			cache_archive="scanning.jar,ij.jar,plugin.jar,twain.jar"
+			cache_version="1.0.0.0">
+		</applet>
+	</window>
+</zk>

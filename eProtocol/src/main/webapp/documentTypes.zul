@@ -1,0 +1,82 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('documentTypesPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('documentTypesPage.title')}"
+		width="100%"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.DocumentTypesVM')">
+
+		<listbox id="entitiesLstbx" rows="@load(vm.pageSize)"
+			model="@load(vm.entities)" selectedItem="@bind(vm.selected)"
+			onSelect="@command('selectEntity')">
+			<listhead>
+				<listheader label="${c:l('documentType.id')}"
+					sort="auto" value="id" onSort="@command('sort')"
+					sortDirection="ascending" hflex="1"/>
+				<listheader label="${c:l('documentType.code')}"
+					sort="auto" value="code" onSort="@command('sort')" hflex="1"/>
+				<listheader label="${c:l('documentType.name')}"
+					sort="auto" value="name" onSort="@command('sort')" hflex="4"/>
+				<listheader label="${labels.documentType.applicableTo }"
+					sort="auto" value="applicableTo" onSort="@command('sort')" hflex="3"/>
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="@load(each.id)" />
+					<listcell label="@load(each.code)" />
+					<listcell label="@load(each.name)" />
+					<listcell
+						label="@load(each.applicableTo)  @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+				</listitem>
+			</template>
+		</listbox>
+		<paging id="pgng" pageSize="@load(vm.pageSize)"
+			totalSize="@load(vm.totalSize)" activePage="@bind(vm.activePage)"
+			onPaging="@command('page')" />
+
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row>
+					${c:l('documentType.name')}
+					<textbox width="300px"
+						value="@bind(vm.entity.name)" />
+				</row>
+				<row>
+					${labels.documentType.applicableTo }
+					<combobox model="@load(vm.applicableTypes)"
+						selectedItem="@bind(vm.entity.applicableTo)">
+						<template name="model">
+							<comboitem
+								label="@load(each) @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+						</template>
+					</combobox>
+				</row>
+				<row>
+					<label value="${c:l('functions')}" />
+					<hbox>
+						<button id="searchBtn" label="${c:l('search')}"
+							onClick="@command('searchEntities')" />
+						<button id="clearBtn" label="${c:l('clear')}"
+							onClick="@command('clearSearch')" />
+						<button id="newBtn" label="${c:l('new')}"
+							onClick="@command('addNewEntity')" />
+						<!-- 						<button id="importBtn"
+							label="${c:l('importFile')}"
+							visible="${sec:isAnyGranted('ADMINISTER')}" upload="true" />
+							<button id="exportBtn"
+							label="${c:l('exportFile')}"
+							visible="${sec:isAnyGranted('ADMINISTER')}" />
+						-->
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

@@ -1,0 +1,103 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="/WEB-INF/security.tld" prefix="sec"?>
+<?page title="Page Header" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<style src="style.css"/>
+	<html>
+		<![CDATA[ <style type="text/css">
+
+		#mask { position:absolute; left:0; top:0; z-index:9000;
+		background-color:#000; display:none; }
+
+		#boxes .window { left:0; top:0; width:440px; height:200px;
+		display:none; z-index:9999; padding:20px; position:absolute; }
+
+		#boxes #dialog { width:375px; height:203px; padding:10px;
+		background-color:#ffffff; } </style>
+		]]>
+	</html>
+
+	<menubar width="100%"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.MenuVM')">
+		<menuitem image="img/scriptum_logo.png" href="index.zul"
+			sclass="header-image">
+		</menuitem>
+
+		<menuitem label="${c:l('menu.index') }" href="index.zul" />
+
+		<menu label="${c:l('menu.administration') }" id="menu"
+			visible="${sec:isAnyGranted('ADMINISTER')}">
+			<menupopup>
+				<menuitem label="${c:l('menu.administration.users') }"
+					href="users.zul" visible="${sec:isAnyGranted('ADMINISTER')}" />
+				<menuitem label="${c:l('menu.administration.roles') }"
+					href="roles.zul" visible="${sec:isAnyGranted('ADMINISTER')}" />
+				<menuitem
+					label="${c:l('menu.administration.structure') }"
+					href="structure.zul" visible="${sec:isAnyGranted('ADMINISTER')}" />
+				<menuitem label="${c:l('menu.administration.books') }"
+					href="books.zul" visible="${sec:isAnyGranted('ADMINISTER')}" />
+				<menuitem
+					label="${c:l('menu.administration.dossiers') }" href="dossiers.zul"
+					visible="@load(vm.isDossierFunctionalityEnabled)" />
+				<menuitem
+					label="${c:l('menu.administration.documentTypes') }"
+					href="documentTypes.zul"
+					visible="${sec:isAnyGranted('ADMINISTER')}" />
+				<menuitem
+					label="${c:l('menu.administration.distributionMethods') }"
+					href="distributionMethods.zul"
+					visible="${sec:isAnyGranted('ADMINISTER')}" />
+				<menuitem
+					label="${c:l('menu.administration.correspondentGroups') }"
+					href="correspondentGroups.zul"
+					visible="${sec:isAnyGranted('ADMINISTER')}" />
+				<menuitem
+					label="${c:l('menu.administration.parameters') }"
+					href="parameters.zul" visible="${sec:isAnyGranted('ADMINISTER')}" />
+				<menuseparator
+					visible="${sec:isAnyGranted('ADMINISTER')}" />
+				<!-- 				<menuitem id="diavgeiaMnItm"
+					label="${c:l('menu.administration.diavgeia') }"
+					visible="${sec:isAnyGranted('ADMINISTER')}" />
+				-->
+			</menupopup>
+		</menu>
+
+		<menu label="${c:l('menu.contacts') }"
+			visible="${sec:isAnyGranted('ADD_CONTACT,EDIT_CONTACT, ADD_COMPANY,EDIT_COMPANY,ADMINISTER')}">
+			<menupopup>
+				<menuitem label="${c:l('menu.contacts.contacts') }"
+					href="contacts.zul"
+					visible="${sec:isAnyGranted('ADD_CONTACT,EDIT_CONTACT')}" />
+				<menuitem label="${c:l('menu.contacts.companies') }"
+					href="companies.zul"
+					visible="${sec:isAnyGranted('ADD_COMPANY,EDIT_COMPANY')}" />
+				<menuitem label="${c:l('menu.contacts.companyTypes') }"
+					href="companyTypes.zul"
+					visible="${sec:isAnyGranted('ADMINISTER')}" />
+			</menupopup>
+		</menu>
+
+		<menuitem label="${c:l('menu.administration.reports') }"
+			href="reports.zul" />
+
+		<menu label="${c:l('menu.help') }">
+			<menupopup>
+				<!--<menuitem label="${c:l('menu.help.community') }" />
+				-->
+				<menuitem label="${c:l('menu.help.links') }"
+					href="links.zul" />
+				<menuitem label="${c:l('menu.help.about') }"
+					href="about.zul" />
+				<menuitem label="${labels.menu.help.reloadLabels }"
+					onClick="@command('reloadLabels')" visible="${sec:isAnyGranted('ADMINISTER')}" />
+			</menupopup>
+		</menu>
+
+		<menuitem label="@load(vm.logoutLabel)" href="/logout" />
+
+	</menubar>
+	<div height="5px;"></div>
+
+</zk>

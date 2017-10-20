@@ -1,0 +1,95 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('contactsPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('contactsPage.title')}" width="100%"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.ContactsVM')">
+
+		<listbox id="entitiesLstbx" rows="@load(vm.pageSize)"
+			model="@load(vm.entities)" selectedItem="@bind(vm.selected)"
+			onSelect="@command('selectEntity')">
+			<listhead>
+				<listheader label="${c:l('contact.id')}" sort="auto"
+					value="id" onSort="@command('sort')" sortDirection="ascending" />
+				<listheader label="${c:l('contact.name')}" sort="auto"
+					value="name" onSort="@command('sort')" />
+				<listheader label="${c:l('contact.surname')}"
+					sort="auto" value="surname" onSort="@command('sort')" />
+				<listheader label="${c:l('contact.organization')}"
+					sort="auto" value="organization" onSort="@command('sort')" />
+				<listheader label="${c:l('contact.email')}" sort="auto"
+					value="email" onSort="@command('sort')" />
+				<listheader label="${c:l('contact.telephone')}" />
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="@load(each.id)" />
+					<listcell label="@load(each.name)" />
+					<listcell label="@load(each.surname)" />
+					<listcell label="@load(each.organization)" />
+					<listcell label="@load(each.email)" />
+					<listcell label="@load(each.telephone)" />
+				</listitem>
+			</template>
+		</listbox>
+		<paging id="pgng" pageSize="@load(vm.pageSize)"
+			totalSize="@load(vm.totalSize)" activePage="@bind(vm.activePage)"
+			onPaging="@command('page')" />
+
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row>
+					${c:l('contact.name')}
+					<textbox width="300px"
+						value="@bind(vm.entity.name)" />
+				</row>
+				<row>
+					${c:l('contact.surname')}
+					<textbox width="300px"
+						value="@bind(vm.entity.surname)" />
+				</row>
+				<row>
+					${c:l('contact.organization')}
+					<textbox width="300px"
+						value="@bind(vm.entity.organization)" />
+				</row>
+				<row>
+					${c:l('contact.email')}
+					<textbox width="300px"
+						value="@bind(vm.entity.email)" />
+				</row>
+				<row>
+					${c:l('contact.telephone')}
+					<textbox width="300px"
+						value="@bind(vm.entity.telephone)" />
+				</row>
+				<row>
+					<label value="${c:l('functions')}" />
+					<hbox>
+						<button id="searchBtn" label="${c:l('search')}"
+							onClick="@command('searchEntities')" />
+						<button id="clearBtn" label="${c:l('clear')}"
+							onClick="@command('clearSearch')" />
+						<button id="newBtn" label="${c:l('new')}"
+							onClick="@command('addNewEntity')"
+							disabled="${sec:isNoneGranted('ADD_CONTACT')}" />
+						<!-- 						<button id="importBtn"
+							label="${c:l('importFile')}"
+							visible="${sec:isAnyGranted('ADMINISTER')}" upload="true" />
+							<button id="exportBtn"
+							label="${c:l('exportFile')}"
+							visible="${sec:isAnyGranted('ADMINISTER')}" />
+						-->
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

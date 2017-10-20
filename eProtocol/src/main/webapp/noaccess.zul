@@ -1,0 +1,21 @@
+<?page title="Λήξη της Σύνδεσης" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<style src="style_login.css" />
+	<window width="80%"  title="Ελλειπή Δικαιώματα Πρόσβασης" border="normal"
+		mode="overlapped" position="center,center" draggable="false" style="padding:50px">
+			<div>
+				Η Σελίδα που ζητάτε δεν έιναι διαθέσιμη,καθώς δε
+				διαθέτετε την απαιτούμενη άδεια πρόσβασης.
+			</div>
+			<div>
+				<div>
+					Παρακαλούμε συνδεθείτε ξανά στην εφαρμογή με
+					λογαριασμό χρήστη που διαθέτει τα κατάλληλα
+					δικαιώματα, κάνοντας κλικ
+					<a href="/login.zul">εδώ</a>
+					.
+				</div>
+			</div>
+	</window>
+</zk>

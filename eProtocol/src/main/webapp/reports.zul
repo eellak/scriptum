@@ -1,0 +1,439 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('reportsPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('reportsPage.title')}" width="100%"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.ReportsVM')"
+		ctrlKeys="#f2" onCtrlKey="@command('handleKeystroke')">
+
+		<tabbox>
+			<tabs>
+				<tab label="${labels.reportsPage.reports}" />
+				<tab label="${labels.reportsPage.statistics.$}" />
+			</tabs>
+
+			<tabpanels>
+				<tabpanel>
+					<grid>
+						<columns>
+							<column width="30%" />
+						</columns>
+						<rows>
+							<row>
+								${labels.reportsPage.type }
+								<combobox model="@load(vm.types)"
+									selectedItem="@bind(vm.type)" width="300px"
+									onSelect="@command('selectReportType')">
+									<template name="model">
+										<comboitem
+											label="@load(each) @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')">
+										</comboitem>
+									</template>
+								</combobox>
+							</row>
+							<row
+								visible="@load(vm.type eq 'CREATOR_REPORT' or vm.type eq 'RECIPIENT_REPORT' or vm.type eq 'ASSIGNEES_REPORT')">
+								${c:l('protocolBook')}
+								<bandbox id="protocolBookBndbx"
+									autodrop="true" width="300px"
+									constraint="@load(vm.type eq 'CREATOR_REPORT' or vm.type eq 'RECIPIENT_REPORT' or vm.type eq 'ASSIGNEES_REPORT' ? 'no empty' : '')"
+									value="@load(vm.protocolBook.protocolSeries)">
+									<bandpopup height="100%">
+										<listbox id="protocolBookLstbx"
+											model="@load(vm.protocolBooks)"
+											selectedItem="@bind(vm.protocolBook)" width="600px"
+											onSelect="@command('selectProtocolBook')">
+											<listhead>
+												<listheader
+													label="${c:l('protocolBook.id')}" />
+												<listheader
+													label="${c:l('protocolBook.protocolSeries')}" />
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell
+														label="@load(each.id)" />
+													<listcell
+														label="@load(each.protocolSeries)" />
+												</listitem>
+											</template>
+										</listbox>
+									</bandpopup>
+								</bandbox>
+							</row>
+							<row
+								visible="@load(vm.type eq 'ROUTING_REPORT')">
+								${labels.reportsPage.department }
+								<bandbox width="400px"
+									value="@load(vm.entitySelection.selectedEntity) @converter('gr.scriptum.eprotocol.converter.DepartmentStringConverter')"
+									onChanging="@command('searchEntitiesByTerm')"
+									open="@load(not empty vm.entitySelection.entites)"
+									onOpen="@command('listEntities')"
+									onBlur="@command('clearEntities')"
+									disabled="@load(vm.type ne 'ROUTING_REPORT')"
+									constraint="@load(vm.type eq 'ROUTING_REPORT' ? 'no empty' : '')">
+									<bandpopup width="900px" height="100%">
+										<paging
+											pageSize="@load(vm.entitySelection.pageSize)"
+											totalSize="@load(vm.entitySelection.totalSize)"
+											activePage="@bind(vm.entitySelection.activePage)"
+											onPaging="@command('pageEntities')" />
+										<listbox
+											model="@load(vm.type eq 'ROUTING_REPORT' ? vm.entitySelection.entites : null)"
+											selectedItem="@bind(vm.entitySelection.selectedEntity)"
+											onSelect="@command('selectEntity')">
+											<listhead>
+												<listheader
+													label="${c:l('department.code')}" hflex="2" />
+												<listheader
+													label="${c:l('department.name')}" hflex="8" />
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell
+														label="@load(each.code)" />
+													<listcell
+														label="@load(each.name)" />
+												</listitem>
+											</template>
+										</listbox>
+									</bandpopup>
+								</bandbox>
+							</row>
+							<row
+								visible="@load(vm.type eq 'ASSIGNEES_REPORT')">
+								${labels.reportsPage.departmentAssignee}
+								<bandbox width="400px"
+									value="@load(vm.unitDepartmentSelection.selectedEntity) @converter('gr.scriptum.eprotocol.converter.DepartmentStringConverter')"
+									onChanging="@command('searchUnitDepartmentsByTerm')"
+									open="@load(not empty vm.unitDepartmentSelection.entites)"
+									onOpen="@command('listUnitDepartments')"
+									onBlur="@command('clearUnitDepartments')">
+									<bandpopup width="900px" height="100%">
+										<paging
+											pageSize="@load(vm.unitDepartmentSelection.pageSize)"
+											totalSize="@load(vm.unitDepartmentSelection.totalSize)"
+											activePage="@bind(vm.unitDepartmentSelection.activePage)"
+											onPaging="@command('pageUnitDepartments')" />
+										<listbox
+											model="@load(vm.unitDepartmentSelection.entites)"
+											selectedItem="@bind(vm.unitDepartmentSelection.selectedEntity)"
+											onSelect="@command('selectUnitDepartment')">
+											<listhead>
+												<listheader
+													label="${c:l('department.code')}" hflex="2" />
+												<listheader
+													label="${c:l('department.name')}" hflex="8" />
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell
+														label="@load(each.code)" />
+													<listcell
+														label="@load(each.name)" />
+												</listitem>
+											</template>
+										</listbox>
+									</bandpopup>
+								</bandbox>
+							</row>
+							<row
+								visible="@load(vm.type eq 'ASSIGNEES_REPORT')">
+								${labels.reportsPage.employeeAssignee}
+								<bandbox width="400px"
+									value="@load(vm.employeeSelection.selectedEntity) @converter('gr.scriptum.eprotocol.converter.UserHierarchyStringConverter')"
+									onChanging="@command('searchEmployeesByTerm')"
+									open="@load(not empty vm.employeeSelection.entites)"
+									onOpen="@command('listEmployees')"
+									onBlur="@command('clearEmployees')">
+									<bandpopup width="600px" height="100%">
+										<paging
+											pageSize="@load(vm.employeeSelection.pageSize)"
+											totalSize="@load(vm.employeeSelection.totalSize)"
+											activePage="@bind(vm.employeeSelection.activePage)"
+											onPaging="@command('pageEmployees')" />
+										<listbox
+											model="@load(vm.employeeSelection.entites)"
+											selectedItem="@bind(vm.employeeSelection.selectedEntity)"
+											onSelect="@command('selectEmployee')">
+											<listhead>
+												<listheader
+													label="${c:l('contact.name')}" hflex="1" />
+												<listheader
+													label="${c:l('contact.surname')}" hflex="2" />
+												<listheader
+													label="${labels.contact.code }" hflex="1" />
+												<listheader
+													label="${labels.department.$ }" hflex="1" />
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell
+														label="@load(each.contact.name)" />
+													<listcell
+														label="@load(each.contact.surname)" />
+													<listcell
+														label="@load(each.contact.code)" />
+													<listcell
+														label="@load(each.department.code)" />
+												</listitem>
+											</template>
+										</listbox>
+									</bandpopup>
+								</bandbox>
+							</row>
+							<row
+								visible="@load(vm.type eq 'CREATOR_REPORT')">
+								${labels.reportsPage.number }
+								<hlayout>
+									(${labels.from })
+									<intbox value="@bind(vm.numberFrom)"
+										constraint="no negative,no zero" />
+									(${labels.to })
+									<intbox value="@bind(vm.numberTo)"
+										constraint="no negative,no zero" />
+								</hlayout>
+							</row>
+							<row>
+								${c:l('reportsPage.date')}
+								<hlayout width="100%">
+									(${c:l('from')})
+									<datebox compact="true"
+										lenient="false" format="dd/MM/yyyy" value="@bind(vm.from)"
+										constraint="@load(vm.type eq 'ROUTING_REPORT' or vm.type eq 'RECIPIENT_REPORT' or vm.type eq 'ASSIGNEES_REPORT' ? '' : 'no empty')" />
+									(${c:l('to')})
+									<datebox compact="true"
+										lenient="false" format="dd/MM/yyyy" value="@bind(vm.to)"
+										constraint="@load(vm.type eq 'ROUTING_REPORT' or vm.type eq 'RECIPIENT_REPORT' or vm.type eq 'ASSIGNEES_REPORT' ? '' : 'no empty')" />
+								</hlayout>
+							</row>
+							<row
+								visible="@load(vm.type eq 'RECIPIENT_REPORT' or vm.type eq 'ASSIGNEES_REPORT')">
+								${labels.reportsPage.deliveryDate }
+								<hlayout width="100%">
+									(${c:l('from')})
+									<datebox compact="true"
+										lenient="false" format="dd/MM/yyyy"
+										value="@bind(vm.deliveryDateFrom)"
+										constraint="@load(vm.type eq 'RECIPIENT_REPORT' or vm.type eq 'ASSIGNEES_REPORT' ? 'no empty' : '')" />
+									(${c:l('to')})
+									<datebox compact="true"
+										lenient="false" format="dd/MM/yyyy"
+										value="@bind(vm.deliveryDateTo)"
+										constraint="@load(vm.type eq 'RECIPIENT_REPORT' or vm.type eq 'ASSIGNEES_REPORT' ? 'no empty' : '')" />
+								</hlayout>
+							</row>
+							<row
+								visible="@load(vm.type eq 'ROUTING_REPORT')">
+								${labels.reportsPage.routingDate }
+								<hlayout width="100%">
+									(${c:l('from')})
+									<datebox compact="true"
+										lenient="false" format="dd/MM/yyyy"
+										value="@bind(vm.routingDateFrom)"
+										constraint="@load(vm.type eq 'ROUTING_REPORT' ? 'no empty' : '')" />
+									(${c:l('to')})
+									<datebox compact="true"
+										lenient="false" format="dd/MM/yyyy"
+										value="@bind(vm.routingDateTo)"
+										constraint="@load(vm.type eq 'ROUTING_REPORT' ? 'no empty' : '')" />
+								</hlayout>
+							</row>
+							<row
+								visible="@load(vm.type eq 'CREATOR_REPORT' or vm.type eq 'RECIPIENT_REPORT' or vm.type eq 'ASSIGNEES_REPORT')">
+								${labels.protocol.direction }
+								<hlayout>
+									<checkbox
+										label="${labels.indexPage.search.direction.incoming}"
+										checked="@bind(vm.incoming)" />
+									<checkbox
+										label="${labels.indexPage.search.direction.outgoing}"
+										checked="@bind(vm.outgoing)" />
+								</hlayout>
+							</row>
+							<row>
+								${c:l('reportsPage.sort')}
+								<combobox id="sortCbx"
+									selectedItem="@bind(vm.sortBy)" constraint="no empty">
+									<comboitem
+										label="${c:l('reportsPage.sort.protocolDate')}"
+										value="protocolDate" />
+									<comboitem
+										label="${c:l('reportsPage.sort.protocolNumber')}"
+										value="protocolYear,protocolNumber" />
+								</combobox>
+							</row>
+							<row>
+								${c:l('reportsPage.sort.order')}
+								<combobox id="sortOrderCbx"
+									constraint="no empty" selectedItem="@bind(vm.sortOrder)">
+									<comboitem
+										label="${c:l('reportsPage.sort.order.asc')}"
+										value="ascending" />
+									<comboitem
+										label="${c:l('reportsPage.sort.order.desc')}"
+										value="descending" />
+								</combobox>
+							</row>
+							<row>
+								<label value="${c:l('functions')}" />
+								<hbox>
+									<button id="exportBtn"
+										label="${c:l('exportFile')}"
+										onClick="@command('exportProtocolBook')"
+										disabled="@load(empty vm.protocolBooks)" />
+									<button id="clearBtn"
+										label="${c:l('clear')}" onClick="@command('clear')" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+				<tabpanel>
+					<grid>
+						<columns>
+							<column width="30%" />
+						</columns>
+						<rows>
+							<row>
+								${c:l('protocolBook')}
+								<bandbox autodrop="true" width="300px"
+									constraint="no empty"
+									value="@load(vm.statisticsProtocolBook.protocolSeries)">
+									<bandpopup height="100%">
+										<listbox
+											model="@load(vm.protocolBooks)"
+											selectedItem="@bind(vm.statisticsProtocolBook)" width="600px"
+											onSelect="@command('selectStatisticsProtocolBook')">
+											<listhead>
+												<listheader
+													label="${c:l('protocolBook.id')}" />
+												<listheader
+													label="${c:l('protocolBook.protocolSeries')}" />
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell
+														label="@load(each.id)" />
+													<listcell
+														label="@load(each.protocolSeries)" />
+												</listitem>
+											</template>
+										</listbox>
+									</bandpopup>
+								</bandbox>
+							</row>
+							<row>
+								${labels.department.$ }
+								<hlayout>
+									<bandbox width="400px"
+										value="@load(vm.statisticsDepartmentSelection.selectedEntity) @converter('gr.scriptum.eprotocol.converter.DepartmentStringConverter')"
+										onChanging="@command('searchStatisticsDepartmentsByTerm')"
+										open="@load(vm.statisticsDepartmentSelection.active)"
+										onOpen="@command('listStatisticsDepartments')"
+										onBlur="@command('clearStatisticsDepartments')"
+										disabled="@load(not vm.statisticsDepartmentSelectionEnabled)">
+										<bandpopup width="900px" height="100%">
+											<paging
+												pageSize="@load(vm.statisticsDepartmentSelection.pageSize)"
+												totalSize="@load(vm.statisticsDepartmentSelection.totalSize)"
+												activePage="@bind(vm.statisticsDepartmentSelection.activePage)"
+												onPaging="@command('pageStatisticsDepartments')" />
+											<listbox
+												model="@load(vm.statisticsDepartmentSelection.entites)"
+												selectedItem="@bind(vm.statisticsDepartmentSelection.selectedEntity)"
+												onSelect="@command('selectStatisticsDepartment')">
+												<listhead>
+													<listheader
+														label="${c:l('department.code')}" hflex="2" />
+													<listheader
+														label="${c:l('department.name')}" hflex="8" />
+												</listhead>
+												<template
+													name="model">
+													<listitem>
+														<listcell
+															label="@load(each.code)" />
+														<listcell
+															label="@load(each.name)" />
+													</listitem>
+												</template>
+											</listbox>
+										</bandpopup>
+									</bandbox>
+									<button
+										label="${labels.reportsPage.statistics.allDepartments }"
+										onClick="@command('clearStatisticsDepartment')"
+										disabled="@load(not vm.statisticsDepartmentSelectionEnabled)" />
+								</hlayout>
+							</row>
+							<row>
+								${labels.documentType.$ }
+								<hlayout>
+									<combobox width="400px"
+										model="@load(vm.statisticDocumentTypeSelection.entites)"
+										selectedItem="@bind(vm.statisticDocumentTypeSelection.selectedEntity)"
+										disabled="@load(not vm.statisticDocumentTypeSelection.active)">
+										<template name="model">
+											<comboitem
+												label="@load(each) @converter('gr.scriptum.eprotocol.converter.DocumentTypeStringConverter2')" />
+										</template>
+									</combobox>
+									<checkbox
+										label="${labels.activate }"
+										checked="@bind(vm.statisticDocumentTypeSelection.active)" />
+								</hlayout>
+							</row>
+							<row>
+								${labels.reportsPage.statistics.direction}
+								<hlayout>
+									<combobox
+										model="@load(vm.statisticsDirectionSelection.entites)"
+										selectedItem="@bind(vm.statisticsDirectionSelection.selectedEntity)"
+										disabled="@load(not vm.statisticsDirectionSelection.active)">
+										<template name="model">
+											<comboitem
+												label="@load(each) @converter('gr.scriptum.eprotocol.converter.EnumStringConverter')" />
+										</template>
+									</combobox>
+									<checkbox
+										label="${labels.activate }"
+										checked="@bind(vm.statisticsDirectionSelection.active)" />
+								</hlayout>
+							</row>
+							<row>
+								${c:l('reportsPage.date')}
+								<hlayout width="100%">
+									(${c:l('from')})
+									<datebox compact="true"
+										lenient="false" format="dd/MM/yyyy"
+										value="@bind(vm.statisticsFrom)" constraint="no empty" />
+									(${c:l('to')})
+									<datebox compact="true"
+										lenient="false" format="dd/MM/yyyy"
+										value="@bind(vm.statisticsTo)" constraint="no empty" />
+									<checkbox
+										label="${labels.reportsPage.statistics.datesGrouping}"
+										checked="@bind(vm.statisticsFromToGrouping)" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="${c:l('functions')}" />
+								<hbox>
+									<button label="${c:l('exportFile')}"
+										onClick="@command('exportStatistics')"
+										disabled="@load(empty vm.protocolBooks)" />
+									<button label="${c:l('clear')}"
+										onClick="@command('clearStatistics')" />
+								</hbox>
+							</row>
+
+						</rows>
+					</grid>
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

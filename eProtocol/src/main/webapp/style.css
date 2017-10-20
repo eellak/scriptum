@@ -1,0 +1,307 @@
+body {
+	background: rgb(225, 225, 225);
+}
+
+.z-window {
+	background: rgb(225, 225, 225);
+	border: 1px solid #e3e3e3;
+}
+
+.z-window-modal{
+	border: 1px solid rgb(200, 200, 200);
+}
+
+.z-window-content {
+	background: rgb(225, 225, 225);
+}
+
+.z-row .z-row-inner, .z-row .z-cell {
+	background: rgb(225, 225, 225);
+}
+
+.z-listitem .z-listcell {
+	background: rgb(225, 225, 225);
+}
+
+.z-tabpanel {
+	border: none;
+	background: rgb(225, 225, 225);
+}
+
+.z-tab-selected {
+	background: rgb(225, 225, 225);
+}
+
+.z-borderlayout {
+	background: rgb(225, 225, 225);
+}
+
+.z-north, .z-south, .z-west, .z-center, .z-east{
+		background: rgb(225, 225, 225);
+}
+
+.z-north-header, .z-south-header, .z-west-header, .z-center-header,
+	.z-east-header {
+	background: #ebebeb;
+}
+
+.z-south-body {
+	background: rgb(225, 225, 225);
+}
+
+.z-row-content, .z-group-content, .z-groupfoot-content,
+	.z-footer-content {
+	color: #111;
+}
+
+.z-textbox, .z-decimalbox, .z-intbox, .z-longbox, .z-doublebox {
+	color: #111;
+}
+
+.z-label, .z-radio-content, .z-checkbox-content {
+	font-size: 12px;
+}
+
+.z-combobox-disabled *, .z-bandbox-disabled *, .z-datebox-disabled *,
+	.z-timebox-disabled *, .z-spinner-disabled *, .z-doublespinner-disabled *
+	{
+	color: #333 !important;
+}
+
+.z-combobox-input, .z-bandbox-input, .z-datebox-input, .z-timebox-input,
+	.z-spinner-input, .z-doublespinner-input {
+	font-size: 12px;
+	height: 28px;
+}
+
+.z-combobox-popup, .z-bandbox-popup, .z-datebox-popup, .z-timebox-popup
+	{
+	font-size: 12px;
+}
+
+.z-combobox-button, .z-bandbox-button, .z-datebox-button,
+	.z-timebox-button, .z-spinner-button, .z-doublespinner-button {
+	width: 28px;
+	height: 28px;
+}
+
+.z-combobox-icon, .z-bandbox-icon, .z-datebox-icon, .z-timebox-icon,
+	.z-spinner-icon, .z-doublespinner-icon {
+	width: 26px;
+	line-height: 26px;
+}
+
+.z-textbox, .z-decimalbox, .z-intbox, .z-longbox, .z-doublebox {
+	min-height: 28px;
+	height: 28px;
+}
+
+.z-listcell-content, .z-listgroup-content, .z-listgroupfoot-content,
+	.z-listfooter-content {
+	font-size: 12px;
+	color: #111;
+}
+
+.z-listitem-selected>.z-listcell>.z-listcell-content {
+	color: #111;
+}
+
+.z-combobox-input, .z-bandbox-input, .z-datebox-input, .z-timebox-input,
+	.z-spinner-input, .z-doublespinner-input {
+	color: #111;
+}
+
+.z-grid-body .z-cell {
+	color: #111;
+}
+
+.z-button {
+	min-height: 28px;
+	font-size: 12px;
+}
+
+.z-tab-text {
+	font-size: 12px;
+}
+
+.z-menu-content, .z-menuitem-content {
+	font-size: 13px;
+}
+
+.z-menupopup .z-menu-content, .z-menupopup .z-menuitem-content {
+	font-size: 13px;
+}
+
+.z-paging{
+	background: rgb(218,218,218);
+}
+
+.z-paging-text {
+	font-size: 12px;
+}
+
+.z-textbox, .z-decimalbox, .z-intbox, .z-longbox, .z-doublebox {
+	font-size: 12px;
+}
+
+.header-image .z-menuitem-image {
+	height: 40px;
+	vertical-align: top;
+}
+
+.header-image .z-menuitem-content {
+	padding: 0px 0px 5px 5px;
+}
+
+tbody>tr.z-row:hover>td.z-row-inner {
+	background: rgb(225, 225, 225);
+}
+
+tbody>tr.z-row:hover>td.z-cell {
+	background: rgb(225, 225, 225);
+}
+
+tbody tr.z-row:hover>td.z-row-inner>div.z-row-content {
+	color: #111;
+}
+
+.z-listheader-content {
+	font-size: 12px;
+	padding: 0px 8px;
+	line-height: 25px;
+}
+
+.z-north-header, .z-south-header, .z-west-header, .z-center-header,
+	.z-east-header {
+	font-size: 12px;
+}
+
+.z-calendar-selected {
+	background: #ae312e;
+	color: white;
+}
+
+.z-button {
+	padding: 0px 10px;
+	min-height:
+}
+
+.z-tabbox-top>.z-tabs .z-tab {
+	padding-bottom: 0px;
+}
+
+.z-tab {
+	padding: 2px 7px;
+}
+
+.z-listheader-sort .z-listheader-sorticon {
+	left: 90%
+}
+
+.z-listitem-selected>.z-listcell {
+	background: rgb(210, 210, 210);
+}
+
+.z-window-header {
+	font-size: 1em;
+	padding: 0px 15px;
+	padding-top: 2px;
+	color: #111;
+}
+
+
+.z-row .z-row-inner, .z-row .z-cell {
+	border-top: 1px solid rgb(220, 220, 220);
+}
+
+.z-grid {
+	border: none;
+	margin-top: 2px;
+}
+
+.z-grid-body .z-cell {
+	line-height: 28px;
+}
+
+.z-grid-body table th, .z-grid-body table td {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.z-listbox {
+	border: none;
+}
+
+.listbox-noscroll .z-listbox-body {
+	overflow: hidden !important;
+}
+
+/*  .listbox-scrollable .z-listbox-body{
+	overflow: auto !important;
+}
+
+
+.z-listbox-body {
+	overflow: hidden !important;
+}
+ */
+.z-listheader-checkable {
+	width: 14px;
+	height: 14px;
+}
+
+.z-listitem-checkable {
+	width: 14px;
+	height: 14px;
+}
+
+.z-tabbox-top>.z-tabs .z-tabs-content {
+	border-bottom: none;
+}
+
+.z-north-header, .z-south-header, .z-west-header, .z-center-header,
+	.z-east-header {
+	height: 28px;
+	padding-top: 3px;
+	padding-bottom: 0px;
+}
+
+.z-north-collapsed, .z-south-collapsed, .z-west-collapsed,
+	.z-center-collapsed, .z-east-collapsed {
+	width: 28px;
+	padding: 1px;
+	background-color: #ebebeb;
+}
+
+.z-treecol-content {
+	font-size: 12px;
+}
+
+.z-treecell-content, .z-treefooter-content {
+	font-size: 12px;
+}
+
+.z-borderlayout-icon {
+	width: 100%;
+	line-height: 28px;
+}
+
+.z-north-header, .z-south-header, .z-west-header, .z-center-header,
+	.z-east-header {
+	padding: 0px;
+	padding-left: 5px;
+}
+
+.z-north-collapsed, .z-south-collapsed, .z-west-collapsed,
+	.z-center-collapsed, .z-east-collapsed {
+	height: 28px !important;
+}
+
+.dark-button {
+	background: #314d60;
+}
+
+.deleted{
+	color: red;
+	font-weight: bold;
+}

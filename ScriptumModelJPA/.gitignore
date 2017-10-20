@@ -1,0 +1,7 @@
+/target/classes/
+/**/*.class
+/target/maven-archiver/
+/target/maven-status/
+/target/surefire-reports/
+/target/ScriptumModelJPA-1.0.jar
+

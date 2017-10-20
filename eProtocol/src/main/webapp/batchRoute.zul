@@ -1,0 +1,82 @@
+<window title="${c:l('batchRoutePage.title')}"
+	border="normal" width="@load(not empty vm.batchRouteRecipients ? '90%' : '40%')" position="center,center"
+	viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.BatchRouteVM')">
+	<grid width="99%">
+		<columns>
+			<column width="15%" />
+			<column />
+		</columns>
+		<rows>
+			<row>
+				<cell colspan="2">
+					${labels.batchRoutePage.prompt }
+				</cell>
+			</row>
+			<row>
+				${labels.protocolCorrespondent.routingDate }
+				<datebox width="200px" compact="true" showTodayLink="true"
+					lenient="false" format="dd/MM/yyyy" constraint="no past, no empty"
+					value="@bind(vm.routingDate)" />
+			</row>
+			<row visible="@load(not empty vm.batchRouteRecipients)">
+				${labels.batchRoutePage.recipients }
+				<listbox width="100%" sclass="listbox-noscroll"
+					model="@bind(vm.batchRouteRecipients)" checkmark="true"
+					multiple="true"
+					selectedItems="@bind(vm.selectedBatchRouteRecipients)">
+					<listhead>
+						<listheader
+							label="${labels.protocolCorrespondent.department}" hflex="2" />
+						<listheader
+							label="${labels.protocolCorrespondent.action}" hflex="2" />
+						<listheader
+							label="${labels.protocolCorrespondent.distributionMethod}"
+							hflex="2" />
+						<listheader
+							label="${labels.protocolCorrespondent.routingDate}" hflex="2" />
+						<listheader
+							label="${labels.protocolCorrespondent.deliveryDate}" hflex="2" />
+						<listheader
+							label="${labels.protocolCorrespondent.attachedDeliveryDate}"
+							hflex="2" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell
+								label="@load(each.department)  @converter('gr.scriptum.eprotocol.converter.DepartmentStringConverter')" />
+							<listcell
+								label="@load(each.action)  @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+							<listcell
+								label="@load(each.distributionMethod) @converter('gr.scriptum.eprotocol.converter.DistributionMethodStringConverter')" />
+							<listcell>
+								<datebox width="100%" compact="true"
+									showTodayLink="true" lenient="false" format="dd/MM/yyyy"
+									value="@bind(each.routingDate)" disabled="true"
+									readonly="true" />
+							</listcell>
+							<listcell>
+								<datebox width="100%" compact="true"
+									showTodayLink="true" buttonVisible="true" lenient="false"
+									format="dd/MM/yyyy" value="@bind(each.deliveryDate)"
+									disabled="true" readonly="true" />
+							</listcell>
+							<listcell>
+								<datebox width="100%" compact="true"
+									showTodayLink="true" lenient="false" format="dd/MM/yyyy"
+									value="@bind(each.attachedDeliveryDate)" disabled="true"
+									readonly="true" />
+							</listcell>
+						</listitem>
+					</template>
+				</listbox>
+			</row>
+			<row>
+				${labels.functions }
+				<hlayout>
+					<button id="confirmBtn" label="${c:l('confirm')}"
+						onClick="@command('confirmBatchRoute')" />
+				</hlayout>
+			</row>
+		</rows>
+	</grid>
+</window>

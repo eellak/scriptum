@@ -1,0 +1,1475 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="/WEB-INF/security.tld" prefix="sec"?>
+<?page title="${c:l('indexPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<script type="text/javascript">
+		<![CDATA[ zk.afterLoad("zul.inp", function () {
+		zul.inp.InputWidget.onChangingDelay=500; }); ]]>
+	</script>
+	<style>
+		.z-south-collapsed{
+		background-image:url("img/search_form_grey.png");
+		background-position:left; background-repeat:no-repeat; } }
+	</style>
+
+	<include id="ph" sclass="header" src="header.zul" />
+
+	<window id="indexWin" border="none" width="100%"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.IndexVM')"
+		ctrlKeys="#f2" onCtrlKey="@command('handleKeystroke')">
+
+		<tabbox id="indexTbx">
+			<tabs>
+				<tab label="${c:l('indexPage.incoming') }"
+					id="incomingTb"
+					onSelect="@global-command('refreshIncomingProtocols')" />
+				<tab label="${c:l('indexPage.outgoing') }"
+					id="outgoingTb"
+					onSelect="@global-command('refreshOutgoingProtocols')" />
+				<tab label="${c:l('indexPage.search') }" id="searchTb"
+					visible="${sec:isAnyGranted('SEARCH_BOOK')}" />
+				<tab label="${labels.indexPage.batchRoute.$}"
+					id="batchRouteTb" visible="${sec:isAnyGranted('BATCH_ROUTE')}"
+					onSelect="@command('refreshBatchRouteProtocols')" />
+			</tabs>
+
+			<tabpanels>
+				<tabpanel id="incomingTbPnl">
+					<listbox id="incomingLstbx" height="300px"
+						checkmark="@load(not vm.incomingCreator and vm.incomingRoutingDate ? 'true' : 'false')"
+						onSelect="@command('updateIncomingProtocols')" multiple="true"
+						model="@load(vm.incomingProtocols)"
+						selectedItems="@bind(vm.selectedIncomingProtocols)">
+						<listhead>
+							<listheader id="incomingNumberLsthdr"
+								label="${c:l('incomingProtocol.protocolNumber')}" sort="auto"
+								value="protocolYear,protocolNumber"
+								onSort="@command('sortIncomingProtocols')" width="7%"
+								sortDirection="descending" />
+							<listheader id="incomingYearLsthdr"
+								label="${c:l('incomingProtocol.protocolYear')}" sort="auto"
+								value="protocolYear,protocolNumber"
+								onSort="@command('sortIncomingProtocols')" width="7%" />
+							<listheader id="incomingIdLsthdr"
+								label="${c:l('incomingProtocol.id')}" sort="auto" value="id"
+								onSort="@command('sortIncomingProtocols')" width="5%"
+								visible="@load(vm.isPendingFunctionalityEnabled)" />
+							<listheader id="incomingBookLsthdr"
+								label="${c:l('incomingProtocol.protocolBook')}" sort="auto"
+								value="protocolBook" onSort="@command('sortIncomingProtocols')"
+								width="7%" />
+							<listheader id="incomingDossierLsthdr"
+								label="${c:l('incomingProtocol.dossier')}" sort="auto"
+								value="dossier" onSort="@command('sortIncomingProtocols')"
+								width="10%" visible="@load(vm.isDossierFunctionalityEnabled)" />
+							<listheader
+								label="${labels.protocol.direction }" sort="auto"
+								value="direction" onSort="@command('sortIncomingProtocols')"
+								width="10%" />
+							<listheader
+								label="${c:l('incomingProtocol.subject')}" sort="auto"
+								value="subject" onSort="@command('sortIncomingProtocols')"
+								width="25%" />
+							<listheader
+								label="${c:l('incomingProtocol.contact')}" width="10%" />
+							<listheader
+								label="${c:l('distributionMethod')}" width="10%" />
+							<listheader id="incomingUpdateTsLsthdr"
+								label="${c:l('incomingProtocol.updateTs')}" sort="auto"
+								value="updateTs" onSort="@command('sortIncomingProtocols')"
+								width="10%" />
+						</listhead>
+						<template name="model">
+							<listitem>
+								<listcell
+									onClick="@command('selectIncomingProtocol', protocol=each)">
+									<label
+										value="@load(each.fullNumber)" />
+									<label
+										value="${c:l('incomingProtocol.isDeleted')}"
+										visible="@load(each.isDeleted)" sclass="deleted" />
+								</listcell>
+								<listcell
+									onClick="@command('selectIncomingProtocol', protocol=each)">
+									<label
+										value="@load(each.protocolYear)" />
+								</listcell>
+								<listcell label="@load(each.id)"
+									visible="@load(vm.isPendingFunctionalityEnabled)"
+									onClick="@command('selectIncomingProtocol', protocol=each)" />
+								<listcell
+									label="@load(each.protocolBook.protocolSeries)  @converter('gr.scriptum.eprotocol.converter.SummaryConverter', words=2)"
+									onClick="@command('selectIncomingProtocol', protocol=each)" />
+								<listcell
+									visible="@load(vm.isDossierFunctionalityEnabled)"
+									label="@load(each.dossier.name)"
+									onClick="@command('selectIncomingProtocol', protocol=each)" />
+								<listcell
+									label="@load(each.direction) @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')"
+									onClick="@command('selectIncomingProtocol', protocol=each)" />
+								<listcell
+									label="@load(each.subject) @converter('gr.scriptum.eprotocol.converter.SummaryConverter', words=10)"
+									onClick="@command('selectIncomingProtocol', protocol=each)" />
+								<listcell
+									label="@load(each.sender)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter', summary=true, words=2)"
+									onClick="@command('selectIncomingProtocol', protocol=each)" />
+								<listcell
+									label="@load(each.distributionMethod) @converter('gr.scriptum.eprotocol.converter.DistributionMethodStringConverter')"
+									onClick="@command('selectIncomingProtocol', protocol=each)" />
+								<listcell
+									label="@load(each.updateTs) @converter('formattedDate', format='dd/MM/yyyy')"
+									onClick="@command('selectIncomingProtocol', protocol=each)" />
+							</listitem>
+						</template>
+					</listbox>
+					<paging id="incomingPgng"
+						pageSize="@load(vm.incomingProtocolsPageSize)"
+						totalSize="@load(vm.incomingProtocolsTotalSize)"
+						activePage="@bind(vm.incomingProtocolsActivePage)"
+						onPaging="@command('pageIncomingProtocols')" />
+					<grid>
+						<columns>
+							<column width="30%" />
+						</columns>
+						<rows>
+							<row>
+								${labels.indexPage.incoming.correspondentDirection.$}
+								<radiogroup
+									selectedItem="@bind(vm.incomingCreator)"
+									onCheck="@command('searchIncomingProtocols')">
+									<radio
+										label="${labels.indexPage.incoming.correspondentDirection.creator}"
+										value="true" checked="@load(vm.incomingCreator)" />
+									<radio
+										label="${labels.indexPage.incoming.correspondentDirection.recipient}"
+										value="false" checked="@load(not vm.incomingCreator)" />
+								</radiogroup>
+							</row>
+							<row>
+								${labels.indexPage.incoming.routingDate}
+								<checkbox
+									checked="@bind(vm.incomingRoutingDate)"
+									disabled="@load(vm.incomingCreator)"
+									onCheck="@command('searchIncomingProtocols')" />
+							</row>
+							<row>
+								${c:l('indexPage.incoming.dates')}
+								<hlayout>
+									${labels.indexPage.incoming.from }
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@bind(vm.incomingDateFrom)" />
+									${labels.indexPage.incoming.to }
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@bind(vm.incomingDateTo)" />
+								</hlayout>
+							</row>
+							<!-- 							<row>
+								${c:l('incomingProtocol.subject')}
+								<textbox width="300px"
+								value="@bind(vm.incomingProtocol.subject)" />
+								</row>
+							-->
+							<row>
+								<label value="${c:l('functions')}" />
+								<hlayout>
+									<button
+										id="searchIncomingPendingBtn" label="${c:l('search')}"
+										onClick="@command('searchIncomingProtocols')" />
+									<button id="clearIncomingPendingBtn"
+										label="${c:l('clear')}"
+										onClick="@command('clearIncomingProtocolsSearch')" />
+									<button id="newIncomingBtn"
+										label="${c:l('new')}"
+										onClick="@command('addNewIncomingProtocol')"
+										disabled="@load(not vm.addIncomingProtocolEnabled)"
+										visible="@load(vm.incomingCreator)" />
+									<button
+										label="${labels.indexPage.incoming.receiveProtocols}"
+										onClick="@command('receiveProtocols')"
+										disabled="@load(not vm.protocolReceptionEnabled)"
+										visible="@load(not vm.incomingCreator)" />
+								</hlayout>
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+
+				<tabpanel id="outgoingTbPnl">
+
+					<listbox id="outgoingLstbx" height="300px"
+						model="@load(vm.outgoingProtocols)"
+						selectedItem="@bind(vm.selectedOutgoingProtocol)"
+						onSelect="@command('selectOutgoingProtocol')">
+						<listhead>
+							<listheader
+								label="${c:l('outgoingProtocol.id')}" width="5%" sort="auto"
+								value="id" onSort="@command('sortOutgoingProtocols')"
+								visible="@load(vm.isPendingFunctionalityEnabled)" />
+							<listheader id="outgoingNumberLsthdr"
+								label="${c:l('outgoingProtocol.protocolNumber')}" sort="auto"
+								value="protocolYear,protocolNumber"
+								onSort="@command('sortOutgoingProtocols')" width="5%"
+								sortDirection="descending" />
+							<listheader id="outgoingYearLsthdr"
+								label="${c:l('outgoingProtocol.protocolYear')}" sort="auto"
+								value="protocolYear,protocolNumber"
+								onSort="@command('sortOutgoingProtocols')" width="5%" />
+							<listheader id="outgoingBookLsthdr"
+								label="${c:l('outgoingProtocol.protocolBook')}" sort="auto"
+								value="protocolBook" onSort="@command('sortOutgoingProtocols')"
+								width="5%" />
+							<listheader id="outgoingDossierLsthdr"
+								label="${c:l('outgoingProtocol.dossier')}" sort="auto"
+								value="dossier" onSort="@command('sortOutgoingProtocols')"
+								width="10%" visible="@load(vm.isDossierFunctionalityEnabled)" />
+							<listheader
+								label="${c:l('outgoingProtocol.subject')}" sort="auto"
+								value="subject" onSort="@command('sortOutgoingProtocols')"
+								width="20%" />
+							<listheader
+								label="${c:l('outgoingProtocol.updateTs')}" sort="auto"
+								value="updateTs" onSort="@command('sortOutgoingProtocols')"
+								width="10%" />
+						</listhead>
+						<template name="model">
+							<listitem>
+								<listcell label="@load(each.id)"
+									visible="@load(vm.isPendingFunctionalityEnabled)" />
+								<listcell>
+									<label
+										value="@load(each.fullNumber)" />
+									<label
+										value="${c:l('outgoingProtocol.isDeleted')}"
+										visible="@load(each.isDeleted)" sclass="deleted" />
+								</listcell>
+								<listcell>
+									<label
+										value="@load(each.protocolYear)" />
+								</listcell>
+								<listcell
+									label="@load(each.protocolBook.protocolSeries)  @converter('gr.scriptum.eprotocol.converter.SummaryConverter', words=2)" />
+								<listcell
+									visible="@load(vm.isDossierFunctionalityEnabled)">
+									<label
+										value="@load(each.dossier.id)" />
+									-
+									<label
+										value="@load(each.dossier.name)" />
+								</listcell>
+								<listcell
+									label="@load(each.subject) @converter('gr.scriptum.eprotocol.converter.SummaryConverter', words=10)" />
+								<listcell
+									label="@load(each.updateTs) @converter('formattedDate', format='dd/MM/yyyy')" />
+							</listitem>
+						</template>
+					</listbox>
+					<paging id="outgoingPgng"
+						pageSize="@load(vm.outgoingProtocolsPageSize)"
+						totalSize="@load(vm.outgoingProtocolsTotalSize)"
+						activePage="@bind(vm.outgoingProtocolsActivePage)"
+						onPaging="@command('pageOutgoingProtocols')" />
+
+					<grid>
+						<columns>
+							<column width="30%" />
+						</columns>
+						<rows>
+							<row>
+								${c:l('indexPage.outgoing.dates')}
+								<hlayout>
+									${labels.indexPage.outgoing.from }
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@bind(vm.outgoingDateFrom)" />
+									${labels.indexPage.outgoing.to }
+									<datebox compact="true"
+										width="200px" lenient="false" format="dd/MM/yyyy"
+										value="@bind(vm.outgoingDateTo)" />
+								</hlayout>
+							</row>
+							<!-- 							<row>
+								${c:l('outgoingProtocol.subject')}
+								<textbox width="300px"
+								value="@bind(vm.outgoingProtocol.subject)" />
+								</row>
+							-->
+							<row>
+								<label value="${c:l('functions')}" />
+								<hbox>
+									<button
+										id="searchOutgoingPendingBtn" label="${c:l('search')}"
+										onClick="@command('searchOutgoingProtocols')" />
+									<button id="clearOutgoingPendingBtn"
+										label="${c:l('clear')}"
+										onClick="@command('clearOutgoingProtocolsSearch')" />
+									<button id="newOutgoingBtn"
+										label="${c:l('new')}"
+										onClick="@command('addNewOutgoingProtocol')"
+										disabled="@load(not vm.addOutgoingProtocolEnabled)" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+
+				</tabpanel>
+
+				<tabpanel id="searchTbPnl" height="500px">
+					<borderlayout>
+						<south
+							title="${labels.indexPage.search.criteria }" size="100%"
+							collapsible="true" autoscroll="true"
+							open="@bind(vm.searchCriteriaEnabled)">
+							<grid>
+								<columns>
+									<column width="15%" />
+									<column />
+									<column width="15%" />
+									<column />
+									<column width="15%" />
+									<column />
+								</columns>
+								<rows>
+									<row>
+										${labels.protocol.direction }
+										<hlayout>
+											<checkbox
+												id="searchIncomingChkBx"
+												label="${labels.indexPage.search.direction.incoming}"
+												checked="@bind(vm.searchIncoming)" />
+											<checkbox
+												id="searchOutgoingChkBx"
+												label="${labels.indexPage.search.direction.outgoing}"
+												checked="@bind(vm.searchOutgoing)" />
+										</hlayout>
+										${c:l('indexPage.search.dates')}
+										<cell colspan="3">
+											<hlayout>
+												(${c:l('from')})
+												<datebox compact="true"
+													lenient="false" format="dd/MM/yyyy"
+													value="@bind(vm.searchDateFrom)" />
+												(${c:l('to')})
+												<datebox compact="true"
+													lenient="false" format="dd/MM/yyyy"
+													value="@bind(vm.searchDateTo)" />
+											</hlayout>
+										</cell>
+									</row>
+									<row>
+										<cell colspan="6">
+											<hlayout>
+												${c:l('indexPage.search.protocolNumber')}
+												<intbox width="150px"
+													value="@bind(vm.protocolNumber)" />
+												${labels.protocolPage.department}
+												<!-- Creator Department -->
+												<bandbox
+													value="@load(vm.searchDepartmentSelection.selectedEntity)  @converter('gr.scriptum.eprotocol.converter.DepartmentStringConverter')"
+													width="400px"
+													onChanging="@command('searchSearchDepartmentsByTerm')"
+													open="@bind(vm.searchDepartmentSelection.active)"
+													onOpen="@command('listSearchDepartments')"
+													onBlur="@command('clearSearchDepartments')"
+													disabled="@load(not vm.searchDepartmentSelectionEnabled)">
+													<bandpopup
+														width="900px" height="100%">
+														<paging
+															pageSize="@load(vm.searchDepartmentSelection.pageSize)"
+															totalSize="@load(vm.searchDepartmentSelection.totalSize)"
+															activePage="@bind(vm.searchDepartmentSelection.activePage)"
+															onPaging="@command('pageSearchDepartments')" />
+														<listbox
+															model="@load(vm.searchDepartmentSelection.entites)"
+															selectedItem="@bind(vm.searchDepartmentSelection.selectedEntity)"
+															onSelect="@command('selectSearchDepartment')">
+															<listhead>
+																<listheader
+																	label="${c:l('department.code')}" hflex="2" />
+																<listheader
+																	label="${c:l('department.name')}" hflex="8" />
+															</listhead>
+															<template
+																name="model">
+																<listitem>
+																	<listcell
+																		label="@load(each.code)" />
+																	<listcell
+																		label="@load(each.name)" />
+																</listitem>
+															</template>
+														</listbox>
+													</bandpopup>
+												</bandbox>
+												${labels.incomingProtocol.protocolBook}
+												<bandbox hflex="1"
+													open="@bind(vm.searchProtocolBookSelectionActive)"
+													value="@load(vm.searchProtocolBook.protocolSeries)"
+													constraint="no empty">
+													<bandpopup
+														width="600px" height="100%">
+														<listbox
+															id="protocolBookLstbx"
+															model="@load(vm.searchProtocolBooks)"
+															selectedItem="@bind(vm.searchProtocolBook)" width="100%"
+															onSelect="@command('selectSearchProtocolBook')">
+															<listhead>
+																<listheader
+																	label="${c:l('protocolBook.id')}" />
+																<listheader
+																	label="${c:l('protocolBook.protocolSeries')}" />
+															</listhead>
+															<template
+																name="model">
+																<listitem>
+																	<listcell
+																		label="@load(each.id)" />
+																	<listcell
+																		label="@load(each.protocolSeries)" />
+																</listitem>
+															</template>
+														</listbox>
+													</bandpopup>
+												</bandbox>
+											</hlayout>
+										</cell>
+									</row>
+									<row>
+										<cell colspan="6">
+											<hlayout>
+												${labels.incomingProtocol.incomingProtocolNumber}
+												<textbox
+													value="@bind(vm.incomingProtocolNumber)" width="100px" />
+												${labels.incomingProtocol.incomingDate}
+												(${labels.from })
+												<datebox compact="true"
+													showTodayLink="true" lenient="false" format="dd/MM/yyyy"
+													value="@bind(vm.searchIncomingDateFrom)" />
+												(${labels.to })
+												<datebox compact="true"
+													showTodayLink="true" lenient="false" format="dd/MM/yyyy"
+													value="@bind(vm.searchIncomingDateTo)" />
+												<!-- Document type -->
+												${labels.documentType.$}
+												<bandbox
+													value="@load(vm.searchProtocolDocumentTypeSelection.selectedEntity) @converter('gr.scriptum.eprotocol.converter.DocumentTypeStringConverter')"
+													hflex="1"
+													onChanging="@command('searchProtocolDocumentTypes')"
+													open="@load(not empty vm.searchProtocolDocumentTypeSelection.entites)"
+													onOpen="@command('listProtocolDocumentTypes')"
+													onBlur="@command('clearProtocolDocumentTypes')"
+													constraint="no empty">
+													<bandpopup
+														width="600px" height="100%">
+														<paging
+															pageSize="@load(vm.searchProtocolDocumentTypeSelection.pageSize )"
+															totalSize="@load(vm.searchProtocolDocumentTypeSelection.totalSize)"
+															activePage="@bind(vm.searchProtocolDocumentTypeSelection.activePage)"
+															onPaging="@command('pageProtocolDocumentTypes')" />
+														<listbox
+															model="@load(vm.searchProtocolDocumentTypeSelection.entites)"
+															selectedItem="@bind(vm.searchProtocolDocumentTypeSelection.selectedEntity)"
+															onSelect="@command('selectProtocolDocumentType')">
+															<listhead>
+																<listheader
+																	label="${labels.documentType.code }" hflex="1" />
+																<listheader
+																	label="${labels.documentType.name }" hflex="4" />
+																<listheader
+																	label="${labels.documentType.applicableTo }" hflex="2" />
+															</listhead>
+															<template
+																name="model">
+																<listitem>
+																	<listcell
+																		label="@load(each.code)" />
+																	<listcell
+																		label="@load(each.name)" />
+																	<listcell
+																		label="@load(each.applicableTo) @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+																</listitem>
+															</template>
+														</listbox>
+													</bandpopup>
+												</bandbox>
+											</hlayout>
+										</cell>
+									</row>
+									<row>
+										<cell colspan="3">
+											<hlayout>
+												${c:l('indexPage.search.subject')}
+												<textbox hflex="1"
+													value="@bind(vm.subject)" />
+											</hlayout>
+										</cell>
+										<cell colspan="3">
+											<hlayout>
+												${labels.incomingProtocol.comments}
+												<textbox hflex="1"
+													value="@bind(vm.comments)" />
+											</hlayout>
+										</cell>
+									</row>
+									<row>
+										${c:l('distributionMethod')}
+										<cell colspan="5">
+											<hlayout>
+												<combobox
+													id="distributionMethodCbx" width="90%"
+													model="@load(vm.distributionMethods)"
+													selectedItem="@bind(vm.distributionMethod)" autodrop="true"
+													disabled="@load(not vm.searchIncoming)">
+													<template
+														name="model">
+														<comboitem
+															label="@load(each.description)" />
+													</template>
+												</combobox>
+												<label
+													value="${labels.incomingPage.distributionMethoDetails }" />
+												<textbox
+													value="@bind(vm.distributionMethodDetails)" width="90%"
+													disabled="@load(vm.distributionMethod.requiresDescription eq false or empty vm.distributionMethod)" />
+											</hlayout>
+										</cell>
+									</row>
+									<row>
+										${labels.incomingPage.attached.$}
+										<cell colspan="5">
+											<hlayout>
+												${labels.incomingPage.attached.number}
+												<intbox
+													value="@bind(vm.attachedNumber)"
+													constraint="no negative,no zero" />
+												${labels.incomingPage.attached.description}
+												<textbox
+													value="@bind(vm.attachedDescription)" />
+											</hlayout>
+										</cell>
+									</row>
+									<!-- Sender -->
+									<row>
+										${labels.incomingPage.sender.$}
+										<cell colspan="5">
+											<hlayout>
+												${labels.incomingPage.sender.type}
+												<combobox
+													model="@load(vm.searchSenderRecipientTypes)" width="200px"
+													selectedItem="@bind(vm.searchSenderType)"
+													onChange="@command('clearSearchSender')">
+													<template
+														name="model">
+														<comboitem
+															label="@load(each)  @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+													</template>
+												</combobox>
+												${labels.incomingPage.sender.value}
+												<!-- Sender type: free text -->
+												<textbox
+													value="@bind(vm.searchSenderText)"
+													visible="@load(vm.searchSenderType eq 'FREE')"
+													width="400px" />
+												<!-- Sender type: Active/inactive member -->
+												<bandbox
+													value="@load(vm.searchSender)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')"
+													width="400px"
+													onChanging="@command('searchSearchSendersByTerm')"
+													open="@load(not empty vm.searchSenderSelection.entites)"
+													onOpen="@command('listSearchSenders')"
+													onBlur="@command('clearSearchSenders')"
+													visible="@load(vm.searchSenderType eq 'ACTIVE_MEMBER' or vm.searchSenderType eq 'INACTIVE_MEMBER')">
+													<bandpopup
+														width="600px" height="100%">
+														<paging
+															pageSize="@load(vm.searchSenderSelection.pageSize)"
+															totalSize="@load(vm.searchSenderSelection.totalSize)"
+															activePage="@bind(vm.searchSenderSelection.activePage)"
+															onPaging="@command('pageSearchSenders')" />
+														<listbox
+															model="@load(vm.searchSenderType eq 'ACTIVE_MEMBER' or vm.searchSenderType eq 'INACTIVE_MEMBER' ? vm.searchSenderSelection.entites : null)"
+															selectedItem="@bind(vm.searchSenderSelection.selectedEntity)"
+															onSelect="@command('selectSearchSender')">
+															<listhead>
+																<listheader
+																	label="${labels.protocolCorrespondent.code}" hflex="1" />
+																<listheader
+																	label="${labels.protocolCorrespondent.description}"
+																	hflex="3" />
+															</listhead>
+															<template
+																name="model">
+																<listitem>
+																	<listcell
+																		label="@load(each.code)" />
+																	<listcell
+																		label="@load(each.description)" />
+																</listitem>
+															</template>
+														</listbox>
+													</bandpopup>
+												</bandbox>
+												<!-- Sender type: Contact -->
+												<bandbox
+													value="@load(vm.searchSender)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')"
+													width="400px"
+													onChanging="@command('searchSearchSendersByTerm')"
+													open="@load(not empty vm.searchSenderSelection.entites)"
+													onOpen="@command('listSearchSenders')"
+													onBlur="@command('clearSearchSenders')"
+													visible="@load(vm.searchSenderType  eq 'CONTACT')">
+													<bandpopup
+														width="600px" height="100%">
+														<paging
+															pageSize="@load(vm.searchSenderSelection.pageSize)"
+															totalSize="@load(vm.searchSenderSelection.totalSize)"
+															activePage="@bind(vm.searchSenderSelection.activePage)"
+															onPaging="@command('pageSearchSenders')" />
+														<listbox
+															model="@load(vm.searchSenderType  eq 'CONTACT' ? vm.searchSenderSelection.entites : null)"
+															selectedItem="@bind(vm.searchSenderSelection.selectedEntity)"
+															onSelect="@command('selectSearchSender')">
+															<listhead>
+																<listheader
+																	label="${c:l('contact.name')}" hflex="2" />
+																<listheader
+																	label="${c:l('contact.surname')}" hflex="3" />
+															</listhead>
+															<template
+																name="model">
+																<listitem>
+																	<listcell
+																		label="@load(each.name)" />
+																	<listcell
+																		label="@load(each.surname)" />
+																</listitem>
+															</template>
+														</listbox>
+													</bandpopup>
+												</bandbox>
+												<!-- Sender type: Employee -->
+												<bandbox
+													value="@load(vm.searchSender)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')"
+													width="400px"
+													onChanging="@command('searchSearchSendersByTerm')"
+													open="@load(not empty vm.searchSenderSelection.entites)"
+													onOpen="@command('listSearchSenders')"
+													onBlur="@command('clearSearchSenders')"
+													visible="@load(vm.searchSenderType  eq 'EMPLOYEE')">
+													<bandpopup
+														width="600px" height="100%">
+														<paging
+															pageSize="@load(vm.searchSenderSelection.pageSize)"
+															totalSize="@load(vm.searchSenderSelection.totalSize)"
+															activePage="@bind(vm.searchSenderSelection.activePage)"
+															onPaging="@command('pageSearchSenders')" />
+														<listbox
+															model="@load(vm.searchSenderType  eq 'EMPLOYEE' ? vm.searchSenderSelection.entites : null)"
+															selectedItem="@bind(vm.searchSenderSelection.selectedEntity)"
+															onSelect="@command('selectSearchSender')">
+															<listhead>
+																<listheader
+																	label="${c:l('contact.name')}" hflex="1" />
+																<listheader
+																	label="${c:l('contact.surname')}" hflex="2" />
+																<listheader
+																	label="${labels.contact.code }" hflex="1" />
+																<listheader
+																	label="${labels.department.$ }" hflex="1" />
+															</listhead>
+															<template
+																name="model">
+																<listitem>
+																	<listcell
+																		label="@load(each.contact.name)" />
+																	<listcell
+																		label="@load(each.contact.surname)" />
+																	<listcell
+																		label="@load(each.contact.code)" />
+																	<listcell
+																		label="@load(each.department.code)" />
+																</listitem>
+															</template>
+														</listbox>
+													</bandpopup>
+												</bandbox>
+												<!-- Sender type: Department -->
+												<bandbox
+													value="@load(vm.searchSender)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')"
+													width="400px"
+													onChanging="@command('searchSearchSendersByTerm')"
+													open="@load(not empty vm.searchSenderSelection.entites)"
+													onOpen="@command('listSearchSenders')"
+													onBlur="@command('clearSearchSenders')"
+													visible="@load(vm.searchSenderType eq 'DEPARTMENT')">
+													<bandpopup
+														width="900px" height="100%">
+														<paging
+															pageSize="@load(vm.searchSenderSelection.pageSize)"
+															totalSize="@load(vm.searchSenderSelection.totalSize)"
+															activePage="@bind(vm.searchSenderSelection.activePage)"
+															onPaging="@command('pageSearchSenders')" />
+														<listbox
+															model="@load(vm.searchSenderType  eq 'DEPARTMENT' ? vm.searchSenderSelection.entites : null)"
+															selectedItem="@bind(vm.searchSenderSelection.selectedEntity)"
+															onSelect="@command('selectSearchSender')">
+															<listhead>
+																<listheader
+																	label="${c:l('department.code')}" hflex="2" />
+																<listheader
+																	label="${c:l('department.name')}" hflex="8" />
+															</listhead>
+															<template
+																name="model">
+																<listitem>
+																	<listcell
+																		label="@load(each.code)" />
+																	<listcell
+																		label="@load(each.name)" />
+																</listitem>
+															</template>
+														</listbox>
+													</bandpopup>
+												</bandbox>
+												<!-- Sender type: Company -->
+												<bandbox
+													value="@load(vm.searchSender)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')"
+													width="400px"
+													onChanging="@command('searchSearchSendersByTerm')"
+													open="@load(not empty vm.searchSenderSelection.entites)"
+													onOpen="@command('listSearchSenders')"
+													onBlur="@command('clearSearchSenders')"
+													visible="@load(vm.searchSenderType eq 'COMPANY')">
+													<bandpopup
+														width="600px" height="100%">
+														<paging
+															pageSize="@load(vm.searchSenderSelection.pageSize)"
+															totalSize="@load(vm.searchSenderSelection.totalSize)"
+															activePage="@bind(vm.searchSenderSelection.activePage)"
+															onPaging="@command('pageSearchSenders')" />
+														<listbox
+															model="@load(vm.searchSenderType  eq 'COMPANY' ? vm.searchSenderSelection.entites : null)"
+															selectedItem="@bind(vm.searchSenderSelection.selectedEntity)"
+															onSelect="@command('selectSearchSender')">
+															<listhead>
+																<listheader
+																	label="${c:l('company.code')}" hflex="1" />
+																<listheader
+																	label="${c:l('company.name')}" hflex="4" />
+																<listheader
+																	label="${c:l('companyType.name')}" hflex="2" />
+															</listhead>
+															<template
+																name="model">
+																<listitem>
+																	<listcell
+																		label="@load(each.code)" />
+																	<listcell
+																		label="@load(each.name)" />
+																	<listcell
+																		label="@load(each.companyType.name)" />
+																</listitem>
+															</template>
+														</listbox>
+													</bandpopup>
+												</bandbox>
+												<!-- Sender type: Other -->
+												<bandbox
+													value="@load(vm.searchSender)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')"
+													width="400px"
+													onChanging="@command('searchSearchSendersByTerm')"
+													open="@load(not empty vm.searchSenderSelection.entites)"
+													onOpen="@command('listSearchSenders')"
+													onBlur="@command('clearSearchSenders')"
+													visible="@load(vm.searchSenderType eq 'OTHER')">
+													<bandpopup
+														width="400px" height="100%">
+														<paging
+															pageSize="@load(vm.searchSenderSelection.pageSize)"
+															totalSize="@load(vm.searchSenderSelection.totalSize)"
+															activePage="@bind(vm.searchSenderSelection.activePage)"
+															onPaging="@command('pageSearchSenders')" />
+														<listbox
+															model="@load(vm.searchSenderType  eq 'OTHER' ? vm.searchSenderSelection.entites : null)"
+															selectedItem="@bind(vm.searchSenderSelection.selectedEntity)"
+															onSelect="@command('selectSearchSender')">
+															<listhead>
+																<listheader
+																	label="${labels.protocolCorrespondent.description}" />
+															</listhead>
+															<template
+																name="model">
+																<listitem>
+																	<listcell
+																		label="@load(each.description)" />
+																</listitem>
+															</template>
+														</listbox>
+													</bandpopup>
+												</bandbox>
+											</hlayout>
+										</cell>
+									</row>
+
+									<!-- Recipient -->
+									<row>
+										${labels.indexPage.search.recipient.$}
+										<cell colspan="5">
+											<hlayout>
+												${labels.indexPage.search.recipient.type}
+												<combobox
+													model="@load(vm.searchSenderRecipientTypes)" width="200px"
+													selectedItem="@bind(vm.searchRecipientType)"
+													onChange="@command('clearSearchRecipient')">
+													<template
+														name="model">
+														<comboitem
+															label="@load(each)  @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+													</template>
+												</combobox>
+												${labels.indexPage.search.recipient.value}
+												<!-- Recipient type: free text -->
+												<textbox
+													value="@bind(vm.searchRecipientText)"
+													visible="@load(vm.searchRecipientType eq 'FREE')"
+													width="400px" />
+												<!-- Recipient type: Active/inactive member -->
+												<bandbox
+													value="@load(vm.searchRecipient)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')"
+													width="400px"
+													onChanging="@command('searchSearchRecipientsByTerm')"
+													open="@load(not empty vm.searchRecipientSelection.entites)"
+													onOpen="@command('listSearchRecipients')"
+													onBlur="@command('clearSearchRecipients')"
+													visible="@load(vm.searchRecipientType eq 'ACTIVE_MEMBER' or vm.searchRecipientType eq 'INACTIVE_MEMBER')">
+													<bandpopup
+														width="600px" height="100%">
+														<paging
+															pageSize="@load(vm.searchRecipientSelection.pageSize)"
+															totalSize="@load(vm.searchRecipientSelection.totalSize)"
+															activePage="@bind(vm.searchRecipientSelection.activePage)"
+															onPaging="@command('pageSearchRecipients')" />
+														<listbox
+															model="@load(vm.searchRecipientSelection eq 'ACTIVE_MEMBER' or vm.searchRecipientSelection eq 'INACTIVE_MEMBER' ? vm.searchRecipientSelection.entites : null)"
+															selectedItem="@bind(vm.searchRecipientSelection.selectedEntity)"
+															onSelect="@command('selectSearchRecipient')">
+															<listhead>
+																<listheader
+																	label="${labels.protocolCorrespondent.code}" hflex="1" />
+																<listheader
+																	label="${labels.protocolCorrespondent.description}"
+																	hflex="3" />
+															</listhead>
+															<template
+																name="model">
+																<listitem>
+																	<listcell
+																		label="@load(each.code)" />
+																	<listcell
+																		label="@load(each.description)" />
+																</listitem>
+															</template>
+														</listbox>
+													</bandpopup>
+												</bandbox>
+												<!-- Recipient type: Contact -->
+												<bandbox
+													value="@load(vm.searchRecipient)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')"
+													width="400px"
+													onChanging="@command('searchSearchRecipientsByTerm')"
+													open="@load(not empty vm.searchRecipientSelection.entites)"
+													onOpen="@command('listSearchRecipients')"
+													onBlur="@command('clearSearchRecipients')"
+													visible="@load(vm.searchRecipientType  eq 'CONTACT')">
+													<bandpopup
+														width="600px" height="100%">
+														<paging
+															pageSize="@load(vm.searchRecipientSelection.pageSize)"
+															totalSize="@load(vm.searchRecipientSelection.totalSize)"
+															activePage="@bind(vm.searchRecipientSelection.activePage)"
+															onPaging="@command('pageSearchRecipients')" />
+														<listbox
+															model="@load(vm.searchRecipientType  eq 'CONTACT' ? vm.searchRecipientSelection.entites : null)"
+															selectedItem="@bind(vm.searchRecipientSelection.selectedEntity)"
+															onSelect="@command('selectSearchRecipient')">
+															<listhead>
+																<listheader
+																	label="${c:l('contact.name')}" hflex="2" />
+																<listheader
+																	label="${c:l('contact.surname')}" hflex="3" />
+															</listhead>
+															<template
+																name="model">
+																<listitem>
+																	<listcell
+																		label="@load(each.name)" />
+																	<listcell
+																		label="@load(each.surname)" />
+																</listitem>
+															</template>
+														</listbox>
+													</bandpopup>
+												</bandbox>
+												<!-- Recipient type: Employee -->
+												<bandbox
+													value="@load(vm.searchRecipient)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')"
+													width="400px"
+													onChanging="@command('searchSearchRecipientsByTerm')"
+													open="@load(not empty vm.searchRecipientSelection.entites)"
+													onOpen="@command('listSearchRecipients')"
+													onBlur="@command('clearSearchRecipients')"
+													visible="@load(vm.searchRecipientType  eq 'EMPLOYEE')">
+													<bandpopup
+														width="600px" height="100%">
+														<paging
+															pageSize="@load(vm.searchRecipientSelection.pageSize)"
+															totalSize="@load(vm.searchRecipientSelection.totalSize)"
+															activePage="@bind(vm.searchRecipientSelection.activePage)"
+															onPaging="@command('pageSearchRecipients')" />
+														<listbox
+															model="@load(vm.searchRecipientType  eq 'EMPLOYEE' ? vm.searchRecipientSelection.entites : null)"
+															selectedItem="@bind(vm.searchRecipientSelection.selectedEntity)"
+															onSelect="@command('selectSearchRecipient')">
+															<listhead>
+																<listheader
+																	label="${c:l('contact.name')}" hflex="1" />
+																<listheader
+																	label="${c:l('contact.surname')}" hflex="2" />
+																<listheader
+																	label="${labels.contact.code }" hflex="1" />
+																<listheader
+																	label="${labels.department.$ }" hflex="1" />
+															</listhead>
+															<template
+																name="model">
+																<listitem>
+																	<listcell
+																		label="@load(each.contact.name)" />
+																	<listcell
+																		label="@load(each.contact.surname)" />
+																	<listcell
+																		label="@load(each.contact.code)" />
+																	<listcell
+																		label="@load(each.department.code)" />
+																</listitem>
+															</template>
+														</listbox>
+													</bandpopup>
+												</bandbox>
+												<!-- Recipient type: Department -->
+												<bandbox
+													value="@load(vm.searchRecipient)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')"
+													width="400px"
+													onChanging="@command('searchSearchRecipientsByTerm')"
+													open="@load(not empty vm.searchRecipientSelection.entites)"
+													onOpen="@command('listSearchRecipients')"
+													onBlur="@command('clearSearchRecipients')"
+													visible="@load(vm.searchRecipientType eq 'DEPARTMENT')">
+													<bandpopup
+														width="900px" height="100%">
+														<paging
+															pageSize="@load(vm.searchRecipientSelection.pageSize)"
+															totalSize="@load(vm.searchRecipientSelection.totalSize)"
+															activePage="@bind(vm.searchRecipientSelection.activePage)"
+															onPaging="@command('pageSearchRecipients')" />
+														<listbox
+															model="@load(vm.searchRecipientType  eq 'DEPARTMENT' ? vm.searchRecipientSelection.entites : null)"
+															selectedItem="@bind(vm.searchRecipientSelection.selectedEntity)"
+															onSelect="@command('selectSearchRecipient')">
+															<listhead>
+																<listheader
+																	label="${c:l('department.code')}" hflex="2" />
+																<listheader
+																	label="${c:l('department.name')}" hflex="8" />
+															</listhead>
+															<template
+																name="model">
+																<listitem>
+																	<listcell
+																		label="@load(each.code)" />
+																	<listcell
+																		label="@load(each.name)" />
+																</listitem>
+															</template>
+														</listbox>
+													</bandpopup>
+												</bandbox>
+												<!-- Recipient type: Company -->
+												<bandbox
+													value="@load(vm.searchRecipient)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')"
+													width="400px"
+													onChanging="@command('searchSearchRecipientsByTerm')"
+													open="@load(not empty vm.searchRecipientSelection.entites)"
+													onOpen="@command('listSearchRecipients')"
+													onBlur="@command('clearSearchRecipients')"
+													visible="@load(vm.searchRecipientType eq 'COMPANY')">
+													<bandpopup
+														width="600px" height="100%">
+														<paging
+															pageSize="@load(vm.searchRecipientSelection.pageSize)"
+															totalSize="@load(vm.searchRecipientSelection.totalSize)"
+															activePage="@bind(vm.searchRecipientSelection.activePage)"
+															onPaging="@command('pageSearchRecipients')" />
+														<listbox
+															model="@load(vm.searchRecipientType  eq 'COMPANY' ? vm.searchRecipientSelection.entites : null)"
+															selectedItem="@bind(vm.searchRecipientSelection.selectedEntity)"
+															onSelect="@command('selectSearchRecipient')">
+															<listhead>
+																<listheader
+																	label="${c:l('company.code')}" hflex="1" />
+																<listheader
+																	label="${c:l('company.name')}" hflex="4" />
+																<listheader
+																	label="${c:l('companyType.name')}" hflex="2" />
+															</listhead>
+															<template
+																name="model">
+																<listitem>
+																	<listcell
+																		label="@load(each.code)" />
+																	<listcell
+																		label="@load(each.name)" />
+																	<listcell
+																		label="@load(each.companyType.name)" />
+																</listitem>
+															</template>
+														</listbox>
+													</bandpopup>
+												</bandbox>
+												<!-- Recipient type: Other -->
+												<bandbox
+													value="@load(vm.searchRecipient)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')"
+													width="400px"
+													onChanging="@command('searchSearchRecipientsByTerm')"
+													open="@load(not empty vm.searchRecipientSelection.entites)"
+													onOpen="@command('listSearchRecipients')"
+													onBlur="@command('clearSearchRecipients')"
+													visible="@load(vm.searchRecipientType eq 'OTHER')">
+													<bandpopup
+														width="400px" height="100%">
+														<paging
+															pageSize="@load(vm.searchRecipientSelection.pageSize)"
+															totalSize="@load(vm.searchRecipientSelection.totalSize)"
+															activePage="@bind(vm.searchRecipientSelection.activePage)"
+															onPaging="@command('pageSearchRecipients')" />
+														<listbox
+															model="@load(vm.searchRecipientType  eq 'OTHER' ? vm.searchRecipientSelection.entites : null)"
+															selectedItem="@bind(vm.searchRecipientSelection.selectedEntity)"
+															onSelect="@command('selectSearchRecipient')">
+															<listhead>
+																<listheader
+																	label="${labels.protocolCorrespondent.description}" />
+															</listhead>
+															<template
+																name="model">
+																<listitem>
+																	<listcell
+																		label="@load(each.description)" />
+																</listitem>
+															</template>
+														</listbox>
+													</bandpopup>
+												</bandbox>
+											</hlayout>
+										</cell>
+									</row>
+
+									<!-- Transactor -->
+									<row>
+										${labels.indexPage.search.transactor.$}
+										<cell colspan="5">
+											<hlayout>
+												${labels.indexPage.search.transactor.type}
+												<combobox
+													model="@load(vm.searchTransactorTypes)" width="200px"
+													selectedItem="@bind(vm.searchTransactorType)"
+													onChange="@command('clearSearchTransactor')">
+													<template
+														name="model">
+														<comboitem
+															label="@load(each)  @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+													</template>
+												</combobox>
+												${labels.indexPage.search.transactor.value}
+												<!-- Transactor type: free text -->
+												<textbox
+													value="@bind(vm.searchTransactorText)"
+													visible="@load(vm.searchTransactorType eq 'FREE')"
+													width="400px" />
+												<!-- Transactor type: Active/inactive member -->
+												<bandbox
+													value="@load(vm.searchTransactor)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')"
+													width="400px"
+													onChanging="@command('searchSearchTransactorsByTerm')"
+													open="@load(not empty vm.searchTransactorSelection.entites)"
+													onOpen="@command('listSearchTransactors')"
+													onBlur="@command('clearSearchTransactors')"
+													visible="@load(vm.searchTransactorType eq 'ACTIVE_MEMBER' or vm.searchTransactorType eq 'INACTIVE_MEMBER')">
+													<bandpopup
+														width="600px" height="100%">
+														<paging
+															pageSize="@load(vm.searchTransactorSelection.pageSize)"
+															totalSize="@load(vm.searchTransactorSelection.totalSize)"
+															activePage="@bind(vm.searchTransactorSelection.activePage)"
+															onPaging="@command('pageSearchTransactors')" />
+														<listbox
+															model="@load(vm.searchTransactorType eq 'ACTIVE_MEMBER' or vm.searchTransactorType eq 'INACTIVE_MEMBER' ? vm.searchTransactorSelection.entites : null)"
+															selectedItem="@bind(vm.searchTransactorSelection.selectedEntity)"
+															onSelect="@command('selectSearchTransactor')">
+															<listhead>
+																<listheader
+																	label="${labels.protocolCorrespondent.code}" hflex="1" />
+																<listheader
+																	label="${labels.protocolCorrespondent.description}"
+																	hflex="3" />
+															</listhead>
+															<template
+																name="model">
+																<listitem>
+																	<listcell
+																		label="@load(each.code)" />
+																	<listcell
+																		label="@load(each.description)" />
+																</listitem>
+															</template>
+														</listbox>
+													</bandpopup>
+												</bandbox>
+											</hlayout>
+										</cell>
+									</row>
+
+									<row>
+										<!-- Routing Date -->
+										${labels.protocolCorrespondent.routingDate}
+										<cell colspan="4">
+											<hlayout>
+												<datebox width="90%"
+													compact="true" showTodayLink="true" lenient="false"
+													format="dd/MM/yyyy" value="@bind(vm.searchRoutingDate)" />
+												<!-- Delivery Date -->
+												${labels.protocolCorrespondent.deliveryDate}
+												<datebox width="90%"
+													compact="true" showTodayLink="true" lenient="false"
+													format="dd/MM/yyyy" value="@bind(vm.searchDeliveryDate)" />
+												<!-- Keywords -->
+												${c:l('indexPage.search.keywords')}
+												<textbox width="90%"
+													tooltiptext="${labels.indexPage.search.keywords.tooltip }"
+													value="@bind(vm.keywords)" />
+											</hlayout>
+										</cell>
+									</row>
+									<row
+										visible="@load(vm.isDocumentUploadFunctionalityEnabled)">
+										<label
+											value="${labels.indexPage.search.content }" />
+										<cell colspan="5">
+											<textbox width="90%"
+												value="@bind(vm.content)" />
+										</cell>
+									</row>
+									<row>
+										<label
+											value="${c:l('functions')}" />
+										<cell colspan="5">
+											<hlayout>
+												<button id="searchBtn"
+													label="${c:l('search')}"
+													onClick="@command('searchProtocols')"
+													disabled="@load(not vm.searchEnabled)" />
+												<button id="clearBtn"
+													label="${c:l('clear')}" onClick="@command('clearSearch')" />
+											</hlayout>
+										</cell>
+									</row>
+								</rows>
+							</grid>
+						</south>
+						<center>
+							<vlayout height="100%">
+								<listbox id="searchProtocolsLstbx"
+									vflex="10" model="@load(vm.searchProtocols)"
+									selectedItem="@bind(vm.selectedSearchProtocol)"
+									onSelect="@command('selectSearchProtocol')">
+									<listhead>
+										<listheader
+											label="${c:l('incomingProtocol.protocolNumber')}" sort="auto"
+											value="protocolNumber,protocolSeries,protocolYear"
+											onSort="@command('sortSearchProtocols')"
+											sortDirection="descending" width="8%" />
+										<listheader
+											label="${c:l('incomingProtocol.protocolYear')}" sort="auto"
+											value="protocolYear,protocolNumber"
+											onSort="@command('sortSearchProtocols')" width="5%" />
+										<listheader
+											label="${c:l('incomingProtocol.protocolBook')}" sort="auto"
+											value="protocolBook" onSort="@command('sortSearchProtocols')"
+											width="7%" />
+										<listheader width="10%"
+											label="${c:l('protocol.direction')}" sort="auto"
+											value="direction" onSort="@command('sortSearchProtocols')" />
+										<listheader
+											label="${c:l('incomingProtocol.dossier')}" sort="auto"
+											value="dossier" onSort="@command('sortSearchProtocols')"
+											visible="@load(vm.isDossierFunctionalityEnabled)" />
+										<listheader
+											label="${c:l('incomingProtocol.protocolDate')}" sort="auto"
+											value="protocolDate" onSort="@command('sortSearchProtocols')"
+											width="15%" />
+										<listheader width="30%"
+											label="${c:l('incomingProtocol.subject')}" sort="auto"
+											value="subject" onSort="@command('sortSearchProtocols')" />
+										<listheader
+											label="${c:l('incomingProtocol.contact')}" />
+										<listheader
+											label="${c:l('distributionMethod')}" />
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell>
+												<label
+													value="@load(each.fullNumber)" />
+												<label
+													value="${c:l('incomingProtocol.isDeleted')}"
+													visible="@load(each.isDeleted)" sclass="deleted" />
+											</listcell>
+											<listcell>
+												<label
+													value="@load(each.protocolYear)" />
+											</listcell>
+											<listcell
+												label="@load(each.protocolBook.protocolSeries)  @converter('gr.scriptum.eprotocol.converter.SummaryConverter', words=2)" />
+											<listcell
+												label="@load(each.direction) @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+											<listcell
+												visible="@load(vm.isDossierFunctionalityEnabled)">
+												<label
+													value="@load(each.dossier.id)" />
+												-
+												<label
+													value="@load(each.dossier.name)" />
+											</listcell>
+											<listcell
+												label="@load(each.protocolDate)@converter('formattedDate', format='dd/MM/yyyy HH:mm:ss')" />
+											<listcell
+												label="@load(each.subject) @converter('gr.scriptum.eprotocol.converter.SummaryConverter', words=10)" />
+											<listcell
+												label="@load(each.sender)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter', summary=true, words=2)" />
+											<listcell
+												label="@load(each.distributionMethod.description)" />
+										</listitem>
+									</template>
+								</listbox>
+								<paging id="searchPgng" vflex="1"
+									pageSize="@load(vm.searchProtocolsPageSize)"
+									totalSize="@load(vm.searchProtocolsTotalSize)"
+									activePage="@bind(vm.searchProtocolsActivePage)"
+									onPaging="@command('pageSearchProtocols')" />
+							</vlayout>
+						</center>
+					</borderlayout>
+
+
+					<!-- 					<listbox id="searchDocumentsLstbx" rows="5"
+						model="@{IndexController.searchProtocolDocuments}"
+						selectedItem="@{IndexController.searchSelectedProtocolDocument}"
+						visible="false" mold="paging" pageSize="5"
+						pagingPosition="bottom">
+						<listhead>
+						<listheader
+						label="${c:l('protocolDocument.documentNumber')}" width="5%" />
+						<listheader
+						label="${c:l('protocolDocument.documentName')}" width="40%" />
+						<listheader
+						label="${c:l('protocolDocument.documentSize')}" width="15%" />
+						<listheader label="${c:l('documentType')}"
+						width="20%" />
+						<listheader
+						label="${c:l('protocolDocument.incomingProtocol')}" width="10%" />
+						<listheader
+						label="${c:l('protocolDocument.outgoingProtocol')}" width="10%" />
+						</listhead>
+						<listitem self="@{each='documentRow'}">
+						<listcell
+						label="@{documentRow.documentNumber}" />
+						<listcell
+						label="@{documentRow.documentName}" />
+						<listcell
+						label="@{documentRow.documentSize}" />
+						<listcell
+						label="@{documentRow.documentType.name}" />
+						<listcell
+						label="@{documentRow.incomingProtocol.id}" />
+						<listcell
+						label="@{documentRow.outgoingProtocol.id}" />
+						</listitem>
+						</listbox>
+					-->
+
+
+				</tabpanel>
+
+				<!-- Batch Routing -->
+				<tabpanel id="batchRouteTbPnl">
+
+					<listbox id="batchRouteProtocolsLstbx"
+						height="300px" model="@load(vm.batchRouteProtocols)"
+						multiple="true" checkmark="true"
+						selectedItems="@bind(vm.selectedBatchRouteProtocols)">
+						<listhead>
+							<listheader
+								label="${c:l('incomingProtocol.protocolNumber')}" sort="auto"
+								value="protocolYear,protocolNumber"
+								onSort="@command('sortBatchRouteProtocols')" width="5%"
+								sortDirection="descending" />
+							<listheader
+								label="${c:l('incomingProtocol.protocolYear')}" sort="auto"
+								value="protocolYear,protocolNumber"
+								onSort="@command('sortBatchRouteProtocols')" width="5%" />
+							<listheader
+								label="${c:l('incomingProtocol.protocolBook')}" sort="auto"
+								value="protocolBook"
+								onSort="@command('sortBatchRouteProtocols')" width="7%" />
+							<listheader
+								label="${c:l('incomingProtocol.dossier')}" sort="auto"
+								value="dossier" onSort="@command('sortBatchRouteProtocols')"
+								width="10%" visible="@load(vm.isDossierFunctionalityEnabled)" />
+							<listheader
+								label="${labels.protocol.direction }" sort="auto"
+								value="direction" onSort="@command('sortBatchRouteProtocols')"
+								width="10%" />
+							<listheader
+								label="${c:l('incomingProtocol.subject')}" sort="auto"
+								value="subject" onSort="@command('sortBatchRouteProtocols')"
+								width="25%" />
+							<listheader
+								label="${c:l('incomingProtocol.contact')}" width="10%" />
+							<listheader
+								label="${c:l('distributionMethod')}" width="10%" />
+							<listheader
+								label="${c:l('incomingProtocol.updateTs')}" sort="auto"
+								value="updateTs" onSort="@command('sortBatchRouteProtocols')"
+								width="10%" />
+						</listhead>
+						<template name="model">
+							<listitem>
+								<listcell label="@load(each.fullNumber)"
+									onClick="@command('selectBatchRouteProtocol', protocol=each)" />
+								<listcell>
+									<label
+										value="@load(each.protocolYear)"
+										onClick="@command('selectBatchRouteProtocol', protocol=each)" />
+								</listcell>
+								<listcell
+									label="@load(each.protocolBook.protocolSeries)  @converter('gr.scriptum.eprotocol.converter.SummaryConverter', words=2)"
+									onClick="@command('selectBatchRouteProtocol', protocol=each)" />
+								<listcell
+									visible="@load(vm.isDossierFunctionalityEnabled)"
+									onClick="@command('selectBatchRouteProtocol', protocol=each)">
+									<label
+										value="@load(each.dossier.id)" />
+									-
+									<label
+										value="@load(each.dossier.name)" />
+								</listcell>
+								<listcell
+									label="@load(each.direction) @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')"
+									onClick="@command('selectBatchRouteProtocol', protocol=each)" />
+								<listcell
+									label="@load(each.subject) @converter('gr.scriptum.eprotocol.converter.SummaryConverter', words=10)"
+									onClick="@command('selectBatchRouteProtocol', protocol=each)" />
+								<listcell
+									label="@load(each.sender)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter', summary=true, words=2)"
+									onClick="@command('selectBatchRouteProtocol', protocol=each)" />
+								<listcell
+									label="@load(each.distributionMethod) @converter('gr.scriptum.eprotocol.converter.DistributionMethodStringConverter')"
+									onClick="@command('selectBatchRouteProtocol', protocol=each)" />
+								<listcell
+									label="@load(each.updateTs) @converter('formattedDate', format='dd/MM/yyyy')"
+									onClick="@command('selectBatchRouteProtocol', protocol=each)" />
+							</listitem>
+						</template>
+					</listbox>
+					<paging
+						pageSize="@load(vm.batchRouteProtocolsPageSize)"
+						totalSize="@load(vm.batchRouteProtocolsTotalSize)"
+						activePage="@bind(vm.batchRouteProtocolsActivePage)"
+						onPaging="@command('pageBatchRouteProtocols')" />
+
+					<grid>
+						<columns>
+							<column width="30%" />
+						</columns>
+						<rows>
+							<row>
+								${labels.protocol.direction}
+								<hbox>
+									<checkbox label="${labels.INCOMING}"
+										checked="@bind(vm.batchRouteIncoming)" />
+									<checkbox label="${labels.OUTGOING}"
+										checked="@bind(vm.batchRouteOutgoing)" />
+								</hbox>
+							</row>
+							<row>
+								${labels.indexPage.batchRoute.recipient}
+								<bandbox
+									value="@load(vm.batchRouteDepartment)  @converter('gr.scriptum.eprotocol.converter.DepartmentStringConverter')"
+									width="400px"
+									onChanging="@command('searchBatchRouteDepartmentsByTerm')"
+									open="@load(not empty vm.batchRouteDepartments)"
+									onOpen="@command('listBatchRouteDepartments')"
+									onBlur="@command('clearBatchRouteDepartments')">
+									<bandpopup width="900px" height="100%">
+										<paging
+											pageSize="@load(vm.batchRouteDepartmentsPageSize)"
+											totalSize="@load(vm.batchRouteDepartmentsTotalSize)"
+											activePage="@bind(vm.batchRouteDepartmentsActivePage)"
+											onPaging="@command('pageBatchRouteDepartments')" />
+										<listbox
+											model="@load(vm.batchRouteDepartments)"
+											selectedItem="@bind(vm.batchRouteDepartment)"
+											onSelect="@command('selectBatchRouteDepartment')">
+											<listhead>
+												<listheader
+													label="${c:l('department.code')}" hflex="2" />
+												<listheader
+													label="${c:l('department.name')}" hflex="8" />
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell
+														label="@load(each.code)" />
+													<listcell
+														label="@load(each.name)" />
+												</listitem>
+											</template>
+										</listbox>
+									</bandpopup>
+								</bandbox>
+							</row>
+							<row>
+								<label value="${c:l('functions')}" />
+								<hbox>
+									<button label="${c:l('search')}"
+										onClick="@command('searchBatchRouteProtocols')" />
+									<button label="${c:l('clear')}"
+										onClick="@command('clearBatchRouteProtocolsSearch')" />
+									<button
+										label="${labels.indexPage.batchRoute.route }"
+										onClick="@command('batchRouteProtocols')"
+										disabled="@load(empty vm.selectedBatchRouteProtocols)" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
+
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

@@ -1,0 +1,85 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('booksPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('booksPage.title')}"
+		width="100%"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.ProtocolBooksVM')">
+
+		<listbox id="entitiesLstbx" rows="@load(vm.pageSize)"
+			model="@load(vm.entities)" selectedItem="@bind(vm.selected)"
+			onSelect="@command('selectEntity')">
+			<listhead>
+				<listheader label="${c:l('protocolBook.id')}"
+					sort="auto" value="id" onSort="@command('sort')"
+					sortDirection="ascending" />
+				<listheader
+					label="${c:l('protocolBook.protocolSeries')}" sort="auto"
+					value="protocolSeries" onSort="@command('sort')" />
+				<listheader label="${c:l('protocolBook.type')}"
+					sort="auto" value="type" onSort="@command('sort')" />
+<!-- 				<listheader label="${c:l('protocolBook.isActive')}"
+					sort="auto" value="isActive" onSort="@command('sort')" />
+ --><!-- 				<listheader label="${c:l('protocolBook.isPreferred')}"
+					sort="auto" value="isPreferred" onSort="@command('sort')" />
+ -->			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="@load(each.id)" />
+					<listcell label="@load(each.protocolSeries)" />
+					<listcell label="@load(each.type) @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')"/>
+<!-- 					<listcell>
+						<checkbox
+							checked="@load(each.isActive) @converter('gr.scriptum.eprotocol.converter.IntegerBooleanConverter')"
+							disabled="true" />
+					</listcell>
+ --><!-- 					<listcell>
+						<checkbox
+							checked="@load(each.isPreferred)  @converter('gr.scriptum.eprotocol.converter.IntegerBooleanConverter')"
+							disabled="true" />
+					</listcell>
+ -->				</listitem>
+			</template>
+		</listbox>
+		<paging id="pgng" pageSize="@load(vm.pageSize)"
+			totalSize="@load(vm.totalSize)" activePage="@bind(vm.activePage)"
+			onPaging="@command('page')" />
+		
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row>
+					${c:l('protocolBook.protocolSeries')}
+					<textbox width="300px"
+						value="@bind(vm.entity.protocolSeries)" />
+				</row>
+				<row>
+					${labels.protocolBook.type }
+					<combobox model="@load(vm.types)"
+						selectedItem="@bind(vm.entity.type)" autodrop="true">
+						<template name="model">
+							<comboitem
+								label="@load(each) @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+						</template>
+					</combobox>
+				</row>
+				<row>
+					<label value="${c:l('functions')}" />
+					<hbox>
+						<button id="searchBtn" label="${c:l('search')}"
+							onClick="@command('searchEntities')" />
+						<button id="clearBtn" label="${c:l('clear')}"
+							onClick="@command('clearSearch')" />
+						<button id="newBtn" label="${c:l('new')}"
+							onClick="@command('addNewEntity')" />
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

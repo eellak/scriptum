@@ -1,0 +1,23 @@
+body {
+	background: rgb(242, 242, 242);
+}
+
+.z-window, .z-window-content {
+	background: rgb(242, 242, 242);
+}
+
+.z-row .z-row-inner, .z-row .z-cell {
+	background: rgb(242, 242, 242);
+}
+
+tbody>tr.z-row:hover>td.z-row-inner {
+	background: rgb(242, 242, 242);
+}
+
+tbody tr.z-row:hover>td.z-row-inner>div.z-row-content {
+	color: #555;
+}
+
+.z-grid {
+	border: none;
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<server>
+
+	<mbean code="gr.scriptum.eprotocol.mailclients.MailDaemon" name=".mailclients.uit.gr:service=MailDaemon">
+	</mbean>
+
+
+<!--  
+	<mbean code="org.jboss.varia.scheduler.Scheduler" name="com.ontelecomms:service=JBossSchedulerService">
+
+		<attribute name="StartAtStartup">false</attribute>
+		<attribute name="SchedulableClass">
+			com.ontelecomms.JBossSchedulerService 
+  </attribute>
+		<attribute name="SchedulableArguments">
+		</attribute>
+		<attribute name="SchedulableArgumentTypes">
+		</attribute>
+		<attribute name="InitialStartDate">NOW</attribute>
+		<attribute name="SchedulePeriod">60000</attribute>
+		<attribute name="InitialRepetitions">3</attribute>
+		<depends>com.ontelecomms:service=JBossSchedulerService</depends>
+	</mbean>
+-->
+</server>

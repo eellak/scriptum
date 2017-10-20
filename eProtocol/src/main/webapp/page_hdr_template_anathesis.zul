@@ -1,0 +1,17 @@
+<?page title="Page Header" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<hbox spacing="10px" 
+		style="background:#BDE0F7;border: 1px solid grey" valign="center"
+		width="1024px">
+		<image src="img/logo.png" />
+		<html
+			style="font-family:arial;color:#183682;font-size:45px;text-align:justify;text-valign:center"
+			content="Σύστημα Αναθέσεων" width="100%"/>
+	</hbox>
+	<separator bar="true" width="1024px" />
+
+	<div align="right">
+		<label id="clockLbl" width="1024px" value="Χρήστης : mountrakis, Συνδέθηκατε στις 23-01-2011 13:30"/>
+	</div>
+	<separator bar="true" width="1024px" />
+</zk>

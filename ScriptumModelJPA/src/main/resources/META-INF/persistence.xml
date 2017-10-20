@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="ScriptumModelJPA" transaction-type="RESOURCE_LOCAL">
+	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+<!-- 	<non-jta-data-source>java:/comp/env/jdbc/ScriptumDS</non-jta-data-source>
+ -->		<class>gr.scriptum.domain.ApplicationLog</class>
+		<class>gr.scriptum.domain.ApplicationParameter</class>
+		<class>gr.scriptum.domain.Company</class>
+		<class>gr.scriptum.domain.CompanyType</class>
+		<class>gr.scriptum.domain.Contact</class>
+		<class>gr.scriptum.domain.Department</class>
+		<class>gr.scriptum.domain.DiavgeiaDecisionType</class>
+		<class>gr.scriptum.domain.DiavgeiaSubjectGroup</class>
+		<class>gr.scriptum.domain.DistributionMethod</class>
+		<class>gr.scriptum.domain.DocumentType</class>
+		<class>gr.scriptum.domain.Dossier</class>
+		<class>gr.scriptum.domain.Parameter</class>
+		<class>gr.scriptum.domain.Permission</class>
+		<class>gr.scriptum.domain.Project</class>
+		<class>gr.scriptum.domain.ProjectTask</class>
+		<class>gr.scriptum.domain.ProjectUser</class>
+		<class>gr.scriptum.domain.ProjectUserId</class>
+		<class>gr.scriptum.domain.Protocol</class>
+		<class>gr.scriptum.domain.ProtocolBook</class>
+		<class>gr.scriptum.domain.ProtocolDependency</class>
+		<class>gr.scriptum.domain.ProtocolDocument</class>
+		<class>gr.scriptum.domain.ProtocolNumber</class>
+		<class>gr.scriptum.domain.ProtocolCorrespondent</class>
+		<class>gr.scriptum.domain.ProtocolRelation</class>
+		<class>gr.scriptum.domain.Resource</class>
+		<class>gr.scriptum.domain.Role</class>
+		<class>gr.scriptum.domain.Subject</class>
+		<class>gr.scriptum.domain.TaskDocument</class>
+		<class>gr.scriptum.domain.TaskMessage</class>
+		<class>gr.scriptum.domain.TaskPriority</class>
+		<class>gr.scriptum.domain.TaskResult</class>
+		<class>gr.scriptum.domain.TaskState</class>
+		<class>gr.scriptum.domain.TaskType</class>
+		<class>gr.scriptum.domain.UserHierarchy</class>
+		<class>gr.scriptum.domain.Users</class>
+		
+		<!-- 2nd level cache related (disabled at the moment) -->
+		<!-- <shared-cache-mode>ALL</shared-cache-mode> -->
+
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/scriptum?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF8&amp;useSSL=false" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="root" />
+
+ 			<property name="javax.persistence.validation.mode" value="none" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+			<!-- <property name="hibernate.hbm2ddl.auto" value="create" /> -->
+			<!-- <property name="hibernate.hbm2ddl.auto" value="validate" /> -->
+			<!-- <property name="hibernate.hbm2ddl.auto" value="update" /> -->
+			<!-- <property name="hibernate.hbm2ddl.import_files" value="/post_create_operations.sql" 
+				/> -->
+<!-- 			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="false" />
+ -->			<property name="hibernate.temp.use_jdbc_metadata_defaults"
+				value="false" />
+				<!-- 2nd level cache related (disabled at the moment) -->
+<!-- 				<property name="hibernate.cache.use_second_level_cache"
+				value="true" />
+				<property name="hibernate.cache.use_query_cache"
+				value="true" />
+				<property name="hibernate.cache.use_structured_entries"
+				value="true" />
+				<property name="hibernate.cache.region.factory_class"
+				value="org.hibernate.cache.ehcache.EhCacheRegionFactory" />
+ -->		</properties>
+		
+	</persistence-unit>
+</persistence>

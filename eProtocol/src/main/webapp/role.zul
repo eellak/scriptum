@@ -1,0 +1,97 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('rolePage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<window id="entityWin" title="${c:l('rolePage.title')}"
+		border="normal" width="90%"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.RoleVM')">
+
+		<grid>
+			<columns>
+				<column width="15%" />
+			</columns>
+			<rows>
+				<row visible="@load(vm.entityCreated)">
+					${labels.role.id}
+					<label id="idLbl" value="@load(vm.entity.id)" />
+				</row>
+				<row>
+					${labels.role.name}
+					<textbox id="usernameTxb"
+						value="@bind(vm.entity.name)" width="300px" constraint="no empty" maxlength="256"/>
+				</row>
+				<row>
+					${labels.role.description}
+					<textbox id="descriptionTxb"
+						value="@bind(vm.entity.description)" width="300px" maxlength="512"/>
+				</row>
+
+				<row>
+					${labels.Permission.$ }
+					<hlayout>
+						<vlayout hflex="1">
+							<listbox model="@load(vm.permissions)"
+								multiple="true" checkmark="true" mold="paging" pageSize="@load(vm.pageSize)"
+								selectedItems="@bind(vm.selectedPermissions)">
+								<listhead>
+									<listheader
+										label="${labels.Permission.$}" />
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell
+											label="@load(each.name)">
+										</listcell>
+									</listitem>
+								</template>
+							</listbox>
+						</vlayout>
+						<vbox pack="center" align="center" vflex="1">
+							<button label="${labels.add}"
+								onClick="@command('addPermissions')"
+								disabled="@load(empty vm.selectedPermissions)">
+							</button>
+							<button label="${labels.remove}"
+								onClick="@command('removePermissions')"
+								disabled="@load(empty vm.userPermissions)">
+							</button>
+						</vbox>
+						<vlayout hflex="1">
+							<listbox
+								model="@load(vm.entity.permissions)" multiple="true"
+								checkmark="true" mold="paging" pageSize="@load(vm.pageSize)"
+								selectedItems="@bind(vm.userPermissions)">
+								<listhead>
+									<listheader
+										label="${labels.Permission.$}">
+									</listheader>
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell>
+											<label
+												value="@load(each.name)">
+											</label>
+										</listcell>
+									</listitem>
+								</template>
+							</listbox>
+						</vlayout>
+					</hlayout>
+				</row>
+				<row>
+					${labels.functions }
+					<hbox>
+						<button id="newBtn" label="${labels.addNew}"
+							onClick="@command('addNewEntity')" />
+						<button id="saveBtn" label="${labels.save.$}"
+							disabled="@load(vm.locked)" onClick="@command('saveEntity')" />
+						<button id="deleteBtn"
+							label="${labels.delete.$}" disabled="@load(vm.entityNotCreated)"
+							onClick="@command('deleteEntity')" />
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

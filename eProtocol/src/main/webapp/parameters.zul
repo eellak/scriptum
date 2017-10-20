@@ -1,0 +1,95 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('parametersPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('parametersPage.title')}" width="100%"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.ParametersVM')">
+
+		<listbox id="entitiesLstbx" 
+			model="@load(vm.entities)" selectedItem="@bind(vm.selected)"
+			onSelect="@command('selectEntity')">
+			<listhead>
+				<listheader label="${c:l('parameter.id')}" sort="auto"
+					value="id" onSort="@command('sort')" sortDirection="ascending" hflex="1"/>
+				<listheader label="${c:l('parameter.name')}" sort="auto"
+					value="name" onSort="@command('sort')" hflex="2"/>
+				<listheader label="${c:l('parameter.area')}" sort="auto"
+					value="area" onSort="@command('sort')" hflex="1"/>
+				<listheader label="${c:l('parameter.type')}" sort="auto"
+					value="type" onSort="@command('sort')" hflex="1"/>
+				<listheader label="${c:l('parameter.description')}"
+					sort="auto" value="description" onSort="@command('sort')" hflex="5"/>
+<!-- 				<listheader label="${c:l('parameter.initialValue')}"
+					sort="auto" value="initialValue" onSort="@command('sort')" />
+ -->				<listheader label="${c:l('parameter.value')}"
+					sort="auto" value="value" onSort="@command('sort')" hflex="1" />
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="@load(each.id)" />
+					<listcell label="@load(each.name)" />
+					<listcell label="@load(each.area)" />
+					<listcell label="@load(each.type)" />
+					<listcell label="@load(each.description)" />
+<!-- 					<listcell label="@load(each.initialValue)" />
+ -->					<listcell label="@load(each.value)" />
+				</listitem>
+			</template>
+		</listbox>
+		<paging id="pgng" pageSize="@load(vm.pageSize)"
+			totalSize="@load(vm.totalSize)" activePage="@bind(vm.activePage)"
+			onPaging="@command('page')" />
+
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row>
+					${c:l('parameter.name')}
+					<textbox width="300px"
+						value="@bind(vm.entity.name)" />
+				</row>
+				<row>
+					${c:l('parameter.area')}
+					<textbox width="300px"
+						value="@bind(vm.entity.area)" />
+				</row>
+				<row>
+					${c:l('parameter.type')}
+					<textbox width="300px"
+						value="@bind(vm.entity.type)" />
+				</row>
+				<row>
+					${c:l('parameter.initialValue')}
+					<textbox width="300px"
+						value="@bind(vm.entity.initialValue)" />
+				</row>
+				<row>
+					${c:l('parameter.value')}
+					<textbox width="300px"
+						value="@bind(vm.entity.value)" />
+				</row>
+				<row>
+					<label value="${c:l('functions')}" />
+					<hbox>
+						<button id="searchBtn" label="${c:l('search')}"
+							onClick="@command('searchEntities')" />
+						<button id="clearBtn" label="${c:l('clear')}"
+							onClick="@command('clearSearch')" />
+						<button id="newBtn" label="${c:l('new')}"
+							onClick="@command('addNewEntity')" />
+						<!-- <button id="uploadBtn"
+							label="${c:l('importFile')}" />
+							<button id="downloadBtn"
+							label="${c:l('exportFile')}" />
+						-->
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

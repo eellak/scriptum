@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>gr.scriptum</groupId>
+	<artifactId>webserviceclient</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+
+	<name>webserviceclient</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jdk.version>1.8</jdk.version>
+		<junit.version>4.12</junit.version>
+	</properties>
+
+	<dependencies>
+
+		<!-- <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> 
+			<version>${junit.version}</version> <scope>test</scope> </dependency> -->
+	</dependencies>
+	<profiles>
+		<profile>
+			<id>connected</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>jaxws-maven-plugin</artifactId>
+						<version>1.12</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>wsimport</goal>
+								</goals>
+								<configuration>
+									<wsdlUrls>
+										<wsdlUrl>http://localhost:8081/eProtocolWebService/ProtocolWebService?wsdl</wsdlUrl>
+									</wsdlUrls>
+									<keep>true</keep>
+									<packageName>gr.scriptum.webservice.client</packageName>
+									<sourceDestDir>${basedir}/src/main/java</sourceDestDir>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>offline</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build></build>
+		</profile>
+
+	</profiles>
+	<build>
+		<!-- <finalName>scriptumwsclient</finalName> -->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.12</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${basedir}/src/main/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

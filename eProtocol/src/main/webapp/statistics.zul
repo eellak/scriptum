@@ -1,0 +1,9 @@
+<zk>
+   <label multiline="true">
+      Active Desktops: ${desktop.webApp.configuration.monitor.activeDesktopCount}
+      Active Sessions: ${desktop.webApp.configuration.monitor.activeSessionCount}
+ 
+      Total Desktops: ${desktop.webApp.configuration.monitor.totalDesktopCount}
+      Total Sessions: ${desktop.webApp.configuration.monitor.totalSessionCount}
+   </label>
+</zk>

@@ -1,0 +1,173 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="/WEB-INF/security.tld" prefix="sec"?>
+<?page title="${c:l('outgoingPrintPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<style src="stylePrint.css" />
+	<window id="printWin" title="${c:l('outgoingPrintPage.title')}"
+		border="normal" width="1024px"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.OutgoingVM')">
+		<grid width="100%">
+			<columns>
+				<column width="20%" />
+			</columns>
+			<rows>
+				<row>
+					${labels.protocolPage.organization}
+					<label value="@load(vm.organization)" />
+				</row>
+				<row>
+					${labels.protocolPage.department}
+					<label
+						value="@load(vm.department) @converter('gr.scriptum.eprotocol.converter.DepartmentStringConverter')" />
+				</row>
+				<row>
+					${c:l('outgoingProtocol.protocolNumber')}
+					<hbox>
+						<label id="protocolNumberLbl"
+							value="@load(vm.protocol.fullNumber)" />
+						<label
+							value="${c:l('outgoingProtocol.isDeleted')}" style="color:red"
+							visible="@load(vm.protocolDeleted)" />
+					</hbox>
+				</row>
+				<row>
+					${c:l('outgoingProtocol.protocolDate')}
+					<label
+						value="@load(vm.protocol.protocolDate) @converter('formattedDate', format='dd/MM/yyyy HH:mm:ss')" />
+				</row>
+				<row>
+					${labels.documentType.$}
+					<label
+						value="@load(vm.protocol.documentType) @converter('gr.scriptum.eprotocol.converter.DocumentTypeStringConverter')" />
+				</row>
+				<row>
+					${c:l('outgoingProtocol.subject')}
+					<label value="@load(vm.protocol.subject)" />
+				</row>
+				<row>
+					${c:l('outgoingProtocol.author')}
+					<label
+						value="@load(vm.protocol.author)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')" />
+				</row>
+				<row>
+					${c:l('outgoingProtocol.outgoingProtocolNumber')}
+					<label
+						value="@load(vm.protocol.incomingProtocolNumber)" />
+				</row>
+				<row>
+					${c:l('incomingProtocol.incomingDate')}
+					<label
+						value="@load(vm.protocol.incomingDate) @converter('formattedDate', format='dd/MM/yyyy')" />
+				</row>
+				<row>
+					${labels.incomingPage.attached.$ }
+					(${labels.incomingPage.attached.number })
+					<label value="@load(vm.protocol.attachedNumber)" />
+				</row>
+				<row>
+					${labels.incomingPage.attached.$ }
+					(${labels.incomingPage.attached.description })
+					<label
+						value="@load(vm.protocol.attachedDescription)" />
+				</row>
+				<row>
+					${labels.outgoingPage.recipients.$ }
+					<listbox width="99%" sclass="listbox-noscroll"
+						model="@load(vm.recipients)" selectedItem="@bind(vm.recipient)">
+						<auxhead>
+							<auxheader colspan="3"></auxheader>
+							<auxheader></auxheader>
+						</auxhead>
+						<listhead>
+							<listheader
+								label="${labels.protocolCorrespondent.direction.recipient}"
+								hflex="2" />
+							<listheader
+								label="${labels.protocolCorrespondent.type}" hflex="1" />
+							<listheader
+								label="${labels.protocolCorrespondent.action}" hflex="2" />
+							<listheader hflex="3">
+								<hlayout>
+									<label
+										value="${labels.protocolCorrespondent.distributionMethod}"
+										width="30%" />
+									<combobox width="50%"
+										model="@load(vm.distributionMethods)"
+										selectedItem="@bind(vm.distributionMethod)"
+										visible="@load(not vm.protocolSubmitted)"
+										onSelect="@command('selectRecipientsDistributionMethod')">
+										<template name="model"
+											var="distributionMethod">
+											<comboitem
+												label="@load(distributionMethod) @converter('gr.scriptum.eprotocol.converter.DistributionMethodStringConverter')" />
+										</template>
+									</combobox>
+								</hlayout>
+							</listheader>
+							<listheader
+								label="${labels.protocolCorrespondent.dispatchDate}" hflex="2" />
+							<listheader
+								label="${labels.protocolCorrespondent.routingDate}" hflex="2" />
+							<listheader
+								label="${labels.protocolCorrespondent.deliveryDate}" hflex="2" />
+							<listheader
+								label="${labels.protocolCorrespondent.attachedDeliveryDate}"
+								hflex="2" />
+						</listhead>
+						<template name="model">
+							<listitem>
+								<listcell
+									label="@load(each)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')" />
+								<listcell
+									label="@load(each.type)  @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+								<listcell
+									label="@load(each.action) @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+								<listcell
+									label="@load(each.distributionMethod) @converter('gr.scriptum.eprotocol.converter.DistributionMethodStringConverter')" />
+								<listcell
+									label="@load(each.dispatchDate) @converter('formattedDate', format='dd/MM/yyyy')" />
+								<listcell
+									label="@load(each.routingDate) @converter('formattedDate', format='dd/MM/yyyy')" />
+								<listcell
+									label="@load(each.deliveryDate) @converter('formattedDate', format='dd/MM/yyyy')" />
+								<listcell
+									label="@load(each.attachedDeliveryDate) @converter('formattedDate', format='dd/MM/yyyy')" />
+							</listitem>
+						</template>
+					</listbox>
+
+				</row>
+				<row visible="false">
+					${c:l('outgoingPage.documents')}
+					<vbox width="100%">
+						<grid id="documentsGrd" width="100%"
+							model="@{OutgoingController.protocolDocuments}">
+							<columns>
+								<column
+									label="${c:l('protocolDocument.documentNumber')}" />
+								<column
+									label="${c:l('protocolDocument.documentName')}" />
+								<column
+									label="${c:l('protocolDocument.documentSize')}" />
+								<column label="${c:l('documentType')}" />
+							</columns>
+							<rows>
+								<row self="@{each='documentRow'}">
+									<label
+										value="@{documentRow.documentNumber}" />
+									<label
+										value="@{documentRow.documentName}" />
+									<label
+										value="@{documentRow.documentSize}" />
+									<label
+										value="@{documentRow.documentType.name}" />
+								</row>
+							</rows>
+						</grid>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

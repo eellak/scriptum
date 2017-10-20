@@ -1,0 +1,75 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('distributionMethodsPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('distributionMethodsPage.title')}"
+		width="100%"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.DistributionMethodsVM')">
+
+		<listbox id="entitiesLstbx" rows="@load(vm.pageSize)"
+			model="@load(vm.entities)" selectedItem="@bind(vm.selected)"
+			onSelect="@command('selectEntity')">
+			<listhead>
+<!-- 				<listheader label="${c:l('distributionMethod.id')}"
+					sort="auto" value="id" onSort="@command('sort')"
+					sortDirection="ascending" />
+ -->				<listheader label="${c:l('distributionMethod.code')}"
+					sort="auto" value="code" onSort="@command('sort')"
+					sortDirection="ascending" />
+				<listheader
+					label="${c:l('distributionMethod.description')}" sort="auto"
+					value="description" onSort="@command('sort')" />
+				<listheader
+					label="${labels.distributionMethod.requiresDescription }"
+					sort="auto" value="requiresDescription" onSort="@command('sort')" />
+				<listheader
+					label="${labels.distributionMethod.autoFillRoutingDate }"
+					sort="auto" value="autoFillRoutingDate" onSort="@command('sort')" />
+			</listhead>
+			<template name="model">
+				<listitem>
+					<!-- <listcell label="@load(each.id)" /> -->
+					<listcell label="@load(each.code)" />
+					<listcell label="@load(each.description)" />
+					<listcell label="@load(each.requiresDescription) @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+					<listcell label="@load(each.autoFillRoutingDate) @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+				</listitem>
+			</template>
+		</listbox>
+		<paging id="pgng" pageSize="@load(vm.pageSize)"
+			totalSize="@load(vm.totalSize)" activePage="@bind(vm.activePage)"
+			onPaging="@command('page')" />
+
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row>
+					${c:l('distributionMethod.description')}
+					<textbox width="300px"
+						value="@bind(vm.entity.description)" />
+				</row>
+				<row>
+					<label value="${c:l('functions')}" />
+					<hbox>
+						<button id="searchBtn" label="${c:l('search')}"
+							onClick="@command('searchEntities')" />
+						<button id="clearBtn" label="${c:l('clear')}"
+							onClick="@command('clearSearch')" />
+						<button id="newBtn" label="${c:l('new')}"
+							onClick="@command('addNewEntity')" />
+						<!--
+							<button id="uploadBtn" label="${c:l('importFile')}" />
+							<button id="downloadBtn"
+							label="${c:l('exportFile')}" />
+						-->
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

@@ -1,0 +1,26 @@
+<?page title="Σχετικά με την Εφαρμογή" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<!-- <style>img{margin-top:5px;margin-bottom:5px}</style> -->
+	<include id="ph" sclass="header" src="header.zul"/>
+	<window title="Σχετικά με την Εφαρμογή" border="normal" width="100%">
+		<vbox width="99%" align="center">
+			<label value="Η εφαρμογή Ηλεκτρονικού Πρωτοκόλλου Scriptum υλοποιήθηκε από την " />
+			<a href="http://www.infili.com/" target="_blank">
+				<image src="img/infili_logo.png" width="400px" style="margin-top:10px;margin-bottom:-30px"/>
+			</a>
+			<separator bar="true" />
+			<label
+				value="Η 1η έκδοση υλοποιήθηκε από την" />
+			<a href="http://www.uit.gr/" target="_blank">
+				<image src="img/uit_logo.png" width="50px" style="margin-top:5px;margin-bottom:5px"/>
+			</a>
+			<label
+				value="Σε συνεργασία με την Εταιρεία Ελεύθερου Λογισμικού " />
+			<a href="http://www.ellak.gr/" target="_blank">
+				<image src="img/ellak_logo.png" width="120px" style="margin-top:5px;margin-bottom:15px"/>
+			</a>
+		</vbox>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

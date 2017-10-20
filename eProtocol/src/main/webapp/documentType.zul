@@ -1,0 +1,83 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="/WEB-INF/security.tld" prefix="sec"?>
+<?page title="${c:l('documentTypePage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<window id="entityWin" title="${c:l('documentTypePage.title')}"
+		border="normal" width="70%"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.DocumentTypeVM')">
+
+		<grid>
+			<columns>
+				<column width="20%" />
+			</columns>
+			<rows>
+				<row visible="@load(vm.entityCreated)">
+					${c:l('documentType.id')}
+					<label id="idLbl" value="@load(vm.entity.id)" />
+				</row>
+				<row>
+					${c:l('documentType.code')}
+					<textbox value="@bind(vm.entity.code)" constraint="no empty" />
+				</row>
+				<row>
+					${c:l('documentType.name')}
+					<textbox id="nameTxb" value="@bind(vm.entity.name)"
+						width="300px" constraint="no empty" />
+				</row>
+				<row>
+					${labels.documentType.protocolBooks }
+					<listbox model="@load(vm.protocolBooks)"
+						multiple="true" checkmark="true"
+						selectedItems="@bind(vm.entity.protocolBooks)">
+						<listhead>
+							<listheader
+								label="${c:l('protocolBook.id')}" />
+							<listheader
+								label="${c:l('protocolBook.protocolSeries')}" />
+						</listhead>
+						<template name="model">
+							<listitem>
+								<listcell label="@load(each.id)" />
+								<listcell
+									label="@load(each.protocolSeries)" />
+							</listitem>
+						</template>
+					</listbox>
+				</row>
+				<row>
+					${labels.documentType.applicableTo }
+					<combobox model="@load(vm.applicableTypes)"
+						selectedItem="@bind(vm.entity.applicableTo)" width="90%"
+						constraint="no empty">
+						<template name="model">
+							<comboitem
+								label="@load(each) @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')">
+							</comboitem>
+						</template>
+					</combobox>
+				</row>
+				<row
+					visible="@load(vm.entity.applicableTo eq 'INCOMING')">
+					${labels.documentType.allowOutgoingFromIncoming}
+					<checkbox
+						checked="@bind(vm.entity.allowOutgoingFromIncoming)"
+						disabled="@load(vm.entity.applicableTo ne 'INCOMING')" />
+				</row>
+				<row>
+					${c:l('functions')}
+					<hbox>
+						<button id="newBtn" label="${c:l('new')}"
+							onClick="@command('addNewEntity')" />
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@load(vm.locked)" onClick="@command('saveEntity')" />
+						<button id="deleteBtn" label="${c:l('delete')}"
+							disabled="@load(vm.entityNotCreated)"
+							onClick="@command('deleteEntity')" />
+					</hbox>
+				</row>
+
+			</rows>
+		</grid>
+	</window>
+</zk>

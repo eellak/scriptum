@@ -1,0 +1,182 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('userPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+
+	<window id="entityWin" title="${c:l('userPage.title')}"
+		border="normal" width="100%"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.UserVM')">
+
+		<grid>
+			<columns>
+				<column width="10%" />
+			</columns>
+			<rows>
+				<row spans="2">
+					<grid>
+						<rows>
+							<row>
+								${c:l('users.id')}
+								<label value="@load(vm.entity.id)"
+									visible="@load(vm.entityCreated)" />
+								${c:l('users.username')}
+								<textbox
+									value="@bind(vm.entity.username)" constraint="no empty,/^[a-z0-9]{4,30}$/: ${c:l('userPage.invalidUsername')}" maxlength="30" />
+								${c:l('users.password')}
+								<textbox type="password"
+									value="@bind(vm.entity.password)" constraint="/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[_\W]).{4,30}$/: ${c:l('userPage.invalidPassword')}"/>
+								${labels.users.createDt }
+								<label
+									value="@load(vm.entity.createDt) @converter('formattedDate', format='dd/MM/yyyy')" />
+							</row>
+							<row>
+								${c:l('users.surname')}
+								<textbox
+									value="@bind(vm.entity.surname)" constraint="no empty" />
+								${c:l('users.name')}
+								<textbox value="@bind(vm.entity.name)"
+									width="300px" constraint="no empty" />
+								${c:l('users.middleName')}
+								<textbox
+									value="@bind(vm.entity.middleName)" />
+								${c:l('users.code')}
+								<textbox value="@bind(vm.entity.code)"
+									constraint="no empty,/^.{6,50}$/" maxlength="50"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					${labels.userPage.protocolBookAssignments }
+					<listbox model="@load(vm.protocolBookAssignments)"
+						mold="paging" pageSize="@load(vm.pageSize)">
+						<listhead>
+							<listheader
+								label="${labels.protocolBook.$}">
+							</listheader>
+							<listheader
+								label="${labels.Permission.$}">
+							</listheader>
+						</listhead>
+						<template name="model">
+							<listitem>
+								<listcell
+									label="@load(each.resource) @converter('gr.scriptum.eprotocol.converter.ResourceStringConverter')" />
+								<listcell
+									label="@load(each.permission.name)" />
+							</listitem>
+						</template>
+					</listbox>
+				</row>
+				<row>
+					${labels.users.roles }
+					<vbox>
+						<hbox>
+							<combobox id="roleCbx" width="300px"
+								model="@load(vm.roles)" selectedItem="@bind(vm.role)">
+								<template name="model">
+									<comboitem label="@load(each.name)" />
+								</template>
+							</combobox>
+							<button id="addRoleBtn"
+								label="${c:l('add')}" disabled="@load(empty vm.role)"
+								onClick="@command('addRole')" />
+						</hbox>
+						<listbox id="userRolesLstbx" width="99%"
+							model="@load(vm.entity.roles)"
+							selectedItem="@bind(vm.userRole)">
+							<listhead>
+								<listheader label="${c:l('role.name')}"
+									hflex="1" />
+								<listheader
+									label="${c:l('role.description')}" hflex="1" />
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell label="@load(each.name)" />
+									<listcell
+										label="@load(each.description)" />
+								</listitem>
+							</template>
+						</listbox>
+						<hbox>
+							<button id="removeRoleBtn"
+								label="${c:l('remove')}" disabled="@load(empty vm.userRole)"
+								onClick="@command('removeRole')" />
+						</hbox>
+					</vbox>
+				</row>
+				<row>
+					${labels.users.userAssignments }
+					<hlayout>
+						<vlayout hflex="1">
+							<listbox model="@load(vm.permissions)"
+								multiple="true" checkmark="true" mold="paging"
+								pageSize="@load(vm.pageSize)"
+								selectedItems="@bind(vm.selectedPermissions)">
+								<listhead>
+									<listheader
+										label="${labels.Permission.$}" />
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell
+											label="@load(each.name)">
+										</listcell>
+									</listitem>
+								</template>
+							</listbox>
+						</vlayout>
+						<vbox pack="center" align="center" vflex="1">
+							<button label="${labels.add}"
+								onClick="@command('addPermissions')"
+								disabled="@load(empty vm.selectedPermissions)">
+							</button>
+							<button label="${labels.remove}"
+								onClick="@command('removePermissions')"
+								disabled="@load(empty vm.selectedUserAssignments)">
+							</button>
+						</vbox>
+						<vlayout hflex="1">
+							<listbox model="@load(vm.userAssignments)"
+								multiple="true" checkmark="true" mold="paging"
+								pageSize="@load(vm.pageSize)"
+								selectedItems="@bind(vm.selectedUserAssignments)">
+								<listhead>
+									<listheader
+										label="${labels.UserToRole.permission}">
+									</listheader>
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell
+											label="@load(each.permission.name)">
+										</listcell>
+									</listitem>
+								</template>
+							</listbox>
+						</vlayout>
+					</hlayout>
+				</row>
+				<row>
+					${c:l('users.isDisabled')}
+					<checkbox id="isDisabledChkbx"
+						checked="@bind(vm.entity.isDisabled)" />
+				</row>
+				<row>
+					${c:l('functions')}
+					<hbox>
+						<button id="newBtn" label="${c:l('new')}"
+							onClick="@command('addNewEntity')" />
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@load(vm.locked)" onClick="@command('saveEntity')" />
+						<button id="deleteBtn" label="${c:l('delete')}"
+							disabled="@load(vm.entityNotCreated)"
+							onClick="@command('deleteEntity')" />
+					</hbox>
+				</row>
+
+			</rows>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,50 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('loginPage.title')}"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<style src="style_login.css" />
+	<window id="loginWin" border="normal" width="450px"
+		title="${c:l('loginPage.title') }" mode="overlapped"
+		position="center,center" draggable="false">
+		<h:form id="f" name="f" action="login" method="POST"
+			xmlns:h="http://www.w3.org/1999/xhtml">
+			<grid>
+				<rows>
+					<row>
+						${c:l('users.username')}
+						<textbox id="u" name="username" focus="true" />
+					</row>
+					<row>
+						${c:l('users.password')}
+						<textbox id="p" type="password" name="password" />
+					</row>
+					<!--
+						<row>
+						<checkbox id="r"
+						name="_spring_security_remember_me" />
+						Don't ask for my password for two weeks
+						</row>
+					-->
+					<row spans="2">
+						<vlayout>
+							<div style="text-align:center">
+								<button type="submit"
+									label="${c:l('login') }" />
+							</div>
+							<div style="text-align:center">
+								<a href="passwordChange.zul"
+									label="${labels.loginPage.changePassword }" />
+							</div>
+						</vlayout>
+					</row>
+					<row spans="2" align="center"
+						if="${not empty param.error}">
+						<html style="color:red;">
+							${c:l(SPRING_SECURITY_LAST_EXCEPTION.message)}
+						</html>
+					</row>
+				</rows>
+			</grid>
+		</h:form>
+	</window>
+</zk>

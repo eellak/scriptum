@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<http use-expressions="true">
+		<custom-filter position="CONCURRENT_SESSION_FILTER" ref="concurrencyFilter" />
+
+		<csrf disabled="true" />
+		<headers>
+			<frame-options policy="SAMEORIGIN" />
+		</headers>
+
+		<session-management
+			session-authentication-strategy-ref="sas" />
+
+		<intercept-url pattern="/companyTypes.zul" access="hasAuthority('ADMINISTER')" />
+		<intercept-url pattern="/companyType.zul" access="hasAuthority('ADMINISTER')" />
+		<intercept-url pattern="/distributionMethods.zul"
+			access="hasAuthority('ADMINISTER')" />
+		<intercept-url pattern="/distributionMethod.zul" access="hasAuthority('ADMINISTER')" />
+		<intercept-url pattern="/parameters.zul" access="hasAuthority('ADMINISTER')" />
+		<intercept-url pattern="/parameter.zul" access="hasAuthority('ADMINISTER')" />
+		<intercept-url pattern="/roles.zul" access="hasAuthority('ADMINISTER')" />
+		<intercept-url pattern="/role.zul" access="hasAuthority('ADMINISTER')" />
+		<intercept-url pattern="/users.zul" access="hasAuthority('ADMINISTER')" />
+		<intercept-url pattern="/user.zul" access="hasAuthority('ADMINISTER')" />
+		<intercept-url pattern="/books.zul" access="hasAuthority('ADMINISTER')" />
+		<intercept-url pattern="/book.zul" access="hasAuthority('ADMINISTER')" />
+		<intercept-url pattern="/structure.zul" access="hasAuthority('ADMINISTER')" />
+		<intercept-url pattern="/correspondentGroups.zul"
+			access="hasAuthority('ADMINISTER')" />
+		<intercept-url pattern="/correspondentGroup.zul" access="hasAuthority('ADMINISTER')" />
+		<intercept-url pattern="/documentTypes.zul" access="hasAuthority('ADMINISTER')" />
+		<intercept-url pattern="/documentType.zul" access="hasAuthority('ADMINISTER')" />
+		<!-- <intercept-url pattern="/dossiers.zul" access="isAuthenticated()" 
+			/> <intercept-url pattern="/dossier.zul" access="isAuthenticated()" /> -->
+		<intercept-url pattern="/about.zul" access="isAuthenticated()" />
+		<intercept-url pattern="/batchRoute.zul" access="isAuthenticated()" />
+		<intercept-url pattern="/companies.zul"
+			access="hasAnyAuthority('ADD_COMPANY','EDIT_COMPANY')" />
+		<intercept-url pattern="/company.zul"
+			access="hasAnyAuthority('ADD_COMPANY','EDIT_COMPANY')" />
+		<intercept-url pattern="/contacts.zul" access="isAuthenticated()" />
+		<intercept-url pattern="/contact.zul" access="isAuthenticated()" />
+		<intercept-url pattern="/footer.zul" access="isAuthenticated()" />
+		<intercept-url pattern="/header.zul" access="isAuthenticated()" />
+		<intercept-url pattern="/incoming.zul" access="isAuthenticated()" />
+		<intercept-url pattern="/incomingPrint.zul" access="isAuthenticated()" />
+		<intercept-url pattern="/index.zul" access="isAuthenticated()" />
+		<intercept-url pattern="/links.zul" access="isAuthenticated()" />
+		<intercept-url pattern="/outgoing.zul" access="isAuthenticated()" />
+		<intercept-url pattern="/outgoingPrint.zul" access="isAuthenticated()" />
+		<intercept-url pattern="/reception.zul" access="isAuthenticated()" />
+		<intercept-url pattern="/reports.zul" access="isAuthenticated()" />
+		<intercept-url pattern="/upload.zul" access="isAuthenticated()" />
+		<intercept-url pattern="/scanning.zul" access="isAuthenticated()" />
+
+		<intercept-url pattern="/index.html" access="permitAll" />
+		<intercept-url pattern="/login.zul" access="permitAll" />
+		<intercept-url pattern="/noaccess.zul" access="permitAll" />
+		<intercept-url pattern="/login" access="permitAll" />
+		<intercept-url pattern="/zkau/**" access="permitAll" />
+		<intercept-url pattern="/timeout.zul" access="permitAll" />
+		<!-- <intercept-url pattern="/**" access="isAuthenticated()" /> -->
+		<intercept-url pattern="/**" access="permitAll" />
+
+		<form-login login-page="/login.zul"
+			authentication-failure-url="/login.zul?error=true"
+			authentication-success-handler-ref="scriptumAuthenticationSuccessHandler" />
+
+		<logout invalidate-session="true" logout-success-url="/"
+			delete-cookies="JSESSIONID" />
+	</http>
+
+	<authentication-manager>
+		<authentication-provider ref="scriptumAuthenticationProvider" />
+	</authentication-manager>
+
+	<beans:bean id="concurrencyFilter"
+		class="org.springframework.security.web.session.ConcurrentSessionFilter">
+		<beans:constructor-arg ref="sessionRegistry" />
+		<beans:constructor-arg value="/timeout.zul" />
+	</beans:bean>
+
+	<beans:bean id="sas"
+		class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy">
+		<beans:constructor-arg>
+			<beans:list>
+				<beans:bean
+					class="gr.scriptum.eprotocol.security.ScriptumAuthenticationStrategy">
+					<beans:constructor-arg ref="sessionRegistry" />
+					<beans:property name="maximumSessions" value="1" />
+					<beans:property name="maximumUsers" value="1005" />
+				</beans:bean>
+				<beans:bean
+					class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy" />
+				<beans:bean
+					class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">
+					<beans:constructor-arg ref="sessionRegistry" />
+				</beans:bean>
+			</beans:list>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<beans:bean id="sessionRegistry"
+		class="org.springframework.security.core.session.SessionRegistryImpl" />
+</beans:beans>

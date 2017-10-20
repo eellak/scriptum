@@ -1,0 +1,214 @@
+<window title="${c:l('receptionPage.title')}"
+	border="normal" width="100%" position="center,center"
+	viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.ReceptionVM')"
+	onClose="@command('cancelReception')">
+	<grid>
+		<columns>
+			<column width="10%" />
+			<column />
+		</columns>
+		<rows>
+			<row visible="@load(not empty vm.recipients)">
+				${labels.receptionPage.recipients }
+				<vlayout>
+					<listbox width="100%" sclass="listbox-noscroll"
+						model="@load(vm.recipients)" mold="paging"
+						pageSize="@load(vm.recipientsPageSize)">
+						<listhead>
+							<listheader label="${labels.protocol.$}"
+								hflex="1" />
+							<listheader
+								label="${labels.protocol.direction}" hflex="1" />
+							<listheader
+								label="${labels.protocolCorrespondent.action}" hflex="1" />
+							<listheader
+								label="${labels.protocolCorrespondent.distributionMethod}"
+								hflex="2" />
+							<listheader
+								label="${labels.protocolCorrespondent.dispatchDate}" hflex="1" />
+							<listheader
+								label="${labels.protocolCorrespondent.routingDate}" hflex="1" />
+							<listheader
+								label="${labels.protocolCorrespondent.deliveryDate}" hflex="2" />
+							<listheader
+								label="${labels.protocolCorrespondent.attachedDeliveryDate}"
+								hflex="2" />
+						</listhead>
+						<template name="model">
+							<listitem>
+								<listcell
+									label="@load(each.protocol.fullNumber)" />
+								<listcell
+									label="@load(each.protocol.direction) @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+								<listcell
+									label="@load(each.action) @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+								<listcell
+									label="@load(each.distributionMethod) @converter('gr.scriptum.eprotocol.converter.DistributionMethodStringConverter')" />
+								<listcell
+									label="@load(each.dispatchDate) @converter('formattedDate', format='dd/MM/yyyy')" />
+								<listcell
+									label="@load(each.routingDate) @converter('formattedDate', format='dd/MM/yyyy')" />
+								<listcell>
+									<datebox width="100%" compact="true"
+										showTodayLink="true" buttonVisible="true" lenient="false"
+										format="dd/MM/yyyy" value="@bind(each.deliveryDate)"
+										disabled="true" readonly="true" />
+								</listcell>
+								<listcell>
+									<hlayout>
+										<datebox width="100%"
+											compact="true" showTodayLink="true" lenient="false"
+											format="dd/MM/yyyy" value="@bind(each.attachedDeliveryDate)"
+											disabled="true" readonly="true"
+											visible="@load(not empty each.protocol.attachedNumber)" />
+										<label
+											value="${labels.receptionPage.noAttached}"
+											visible="@load(empty each.protocol.attachedNumber)" />
+									</hlayout>
+								</listcell>
+							</listitem>
+						</template>
+						<listfoot>
+							<listfooter span="6"></listfooter>
+							<listfooter style="text-align:center">
+								<button width="90%"
+									label="${labels.receptionPage.setDate }"
+									onClick="@command('setRecipientsDate')"
+									disabled="@load(not vm.receptionEnabled)" />
+							</listfooter>
+							<listfooter style="text-align:center">
+								<button width="90%"
+									label="${labels.receptionPage.setAttachedDate }"
+									onClick="@command('setRecipientsAttachedDate')"
+									disabled="@load(not vm.attachedReceptionEnabled)" />
+							</listfooter>
+						</listfoot>
+					</listbox>
+				</vlayout>
+			</row>
+			<row>
+				${labels.receptionPage.assignees.$ }
+				<vlayout>
+					<hlayout>
+						${labels.receptionPage.assignees.type }
+						<combobox model="@load(vm.assigneeTypes)"
+							width="200px" selectedItem="@bind(vm.assigneeType)"
+							onChange="@command('clearAssignee')" disabled="@load(not vm.editAssigneesEnabled)">
+							<template name="model">
+								<comboitem
+									label="@load(each)  @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+							</template>
+						</combobox>
+						${labels.receptionPage.assignees.value }
+						<!-- Assignee type: Employee -->
+						<bandbox width="400px"
+							onChanging="@command('searchEmployeesByTerm')"
+							open="@load(not empty vm.employees)"
+							onOpen="@command('listEmployees')"
+							onBlur="@command('clearEmployees')"
+							visible="@load(vm.assigneeType eq 'EMPLOYEE')"
+							disabled="@load(vm.assigneeType ne 'EMPLOYEE' or not vm.editAssigneesEnabled)">
+							<bandpopup width="600px">
+								<paging
+									pageSize="@load(vm.employeesPageSize)"
+									totalSize="@load(vm.employeesTotalSize)"
+									activePage="@bind(vm.employeesActivePage)"
+									onPaging="@command('pageEmployees')" />
+								<listbox model="@load(vm.employees)"
+									selectedItem="@bind(vm.employee)"
+									onSelect="@command('selectEmployee')">
+									<listhead>
+										<listheader
+											label="${c:l('contact.name')}" hflex="1" />
+										<listheader
+											label="${c:l('contact.surname')}" hflex="2" />
+										<listheader
+											label="${labels.contact.code }" hflex="1" />
+										<listheader
+											label="${labels.department.$ }" hflex="1" />
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell
+												label="@load(each.contact.name)" />
+											<listcell
+												label="@load(each.contact.surname)" />
+											<listcell
+												label="@load(each.contact.code)" />
+											<listcell
+												label="@load(each.department.code)" />
+										</listitem>
+									</template>
+								</listbox>
+							</bandpopup>
+						</bandbox>
+						<!-- Assignee type: Department -->
+						<bandbox width="400px"
+							onChanging="@command('searchDepartmentsByTerm')"
+							open="@load(not empty vm.departments)"
+							onOpen="@command('listDepartments')"
+							onBlur="@command('clearDepartments')"
+							visible="@load(vm.assigneeType eq 'DEPARTMENT')"
+							disabled="@load(vm.assigneeType ne 'DEPARTMENT' or not vm.editAssigneesEnabled)">
+							<bandpopup width="900px">
+								<paging
+									pageSize="@load(vm.departmentsPageSize)"
+									totalSize="@load(vm.departmentsTotalSize)"
+									activePage="@bind(vm.departmentsActivePage)"
+									onPaging="@command('pageDepartments')" />
+								<listbox model="@load(vm.departments)"
+									selectedItem="@bind(vm.department)"
+									onSelect="@command('selectDepartment')">
+									<listhead>
+										<listheader
+											label="${c:l('department.code')}" hflex="2" />
+										<listheader
+											label="${c:l('department.name')}" hflex="8" />
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell
+												label="@load(each.code)" />
+											<listcell
+												label="@load(each.name)" />
+										</listitem>
+									</template>
+								</listbox>
+							</bandpopup>
+						</bandbox>
+					</hlayout>
+					<listbox width="100%" sclass="listbox-noscroll"
+						model="@load(vm.assignees)" selectedItem="@bind(vm.assignee)">
+						<listhead>
+							<listheader
+								label="${labels.receptionPage.assignees.description}" hflex="2" />
+							<listheader
+								label="${labels.protocolCorrespondent.type}" hflex="1" />
+						</listhead>
+						<template name="model">
+							<listitem>
+								<listcell
+									label="@load(each)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')" />
+								<listcell
+									label="@load(each.type)  @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+							</listitem>
+						</template>
+					</listbox>
+					<div align="right">
+						<button label="${c:l('remove')}"
+							disabled="@load(empty vm.assignee)"
+							onClick="@command('removeAssignee')" />
+					</div>
+				</vlayout>
+			</row>
+			<row>
+				${labels.functions }
+				<hlayout>
+					<button id="confirmBtn" label="${c:l('confirm')}"
+						onClick="@command('confirmReception')"
+						disabled="@load(not vm.confirmReceptionEnabled)" />
+				</hlayout>
+			</row>
+		</rows>
+	</grid>
+</window>

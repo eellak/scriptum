@@ -1,0 +1,45 @@
+<?page title="Σύνδεσμοι" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+
+	<window title="Σύνδεσμοι" width="100%">
+		<listbox rows="10">
+			<listhead>
+				<listheader label="Σύνδεσμος" />
+				<listheader label="Περιγραφή" />
+			</listhead>
+			<listitem>
+				<listcell>
+					<a href="http://www.infili.com/">
+						http://www.infili.com
+					</a>
+				</listcell>
+				<listcell label="Infili Ltd - Information Intelligence" />
+			</listitem>
+			<listitem>
+				<listcell>
+					<a href="http://www.scriptum.gr/">
+						http://www.scriptum.gr/
+					</a>
+				</listcell>
+				<listcell label="SCRIPTUM" />
+			</listitem>
+			<listitem>
+				<listcell>
+					<a href="http://www.ellak.gr/">
+						http://www.ellak.gr/
+					</a>
+				</listcell>
+				<listcell label="ΕΛΛΑΚ Α.Ε" />
+			</listitem>
+			<listitem>
+				<listcell>
+					<a href="http://www.uit.gr/">http://www.uit.gr/</a>
+				</listcell>
+				<listcell label="Unified Technology Systems" />
+			</listitem>
+		</listbox>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

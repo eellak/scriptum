@@ -1,0 +1,20 @@
+<?page title="Σφάλμα Εφαρμογής" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<style src="style_login.css" />
+	<window width="80%" title="Σφάλμα Εφαρμογής" border="normal" 
+		mode="overlapped" position="center,center" draggable="false" style="padding:50px">
+			<div>
+				Η εφαρμογή παρουσίασε σφάλμα κατά τη λειτουργία της.
+			</div>
+			<div>
+				<div>
+					Παρακαλούμε συνδεθείτε ξανά στην εφαρμογή, κάνοντας
+					κλικ
+					<a href="/login.zul">εδώ</a>
+					. Εάν το πρόβλημα συνεχιστεί, επικοινωνήστε με το
+					διαχειριστή του συστήματος.
+				</div>
+			</div>
+	</window>
+</zk>

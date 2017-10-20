@@ -1,0 +1,17 @@
+.z-label, .z-radio-content, .z-checkbox-content {
+	font-size: 16px;
+}
+
+.z-window-header, .z-row-content {
+	color: black;
+}
+
+.z-listbox-header, .z-listhead, .z-listheader, .z-listheader-content {
+	background: none !important;
+	color: black !important;
+}
+
+.z-listcell>.z-listcell-content {
+	font-size: 16px;
+	color: black !important;
+}

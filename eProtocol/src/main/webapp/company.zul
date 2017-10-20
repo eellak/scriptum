@@ -1,0 +1,124 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('companyPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<window id="entityWin" title="${c:l('companyPage.title')}"
+		border="normal" width="80%"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.CompanyVM')">
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row visible="@load(vm.entityCreated)">
+					${c:l('company.id')}
+					<label id="idLbl" value="@load(vm.entity.id)" />
+				</row>
+				<row>
+					${c:l('company.code')}
+					<textbox value="@bind(vm.entity.code)"
+						width="300px"/>
+				</row>
+				<row>
+					${c:l('company.name')}
+					<textbox id="nameTxb" value="@bind(vm.entity.name)"
+						width="300px" constraint="no empty" />
+				</row>
+				<row>
+					${c:l('companyType')}
+					<combobox id="companyTypeCbx" width="300px"
+						model="@load(vm.companyTypes)"
+						selectedItem="@bind(vm.entity.companyType)">
+						<template name="model">
+							<comboitem label="@load(each.name)" />
+						</template>
+					</combobox>
+				</row>
+
+				<row>
+					${c:l('company.vatNo')}
+					<textbox id="vatNoTxb"
+						value="@bind(vm.entity.vatNo)" width="300px" />
+				</row>
+				<row>
+					${c:l('company.irs')}
+					<textbox id="irsTxb" value="@bind(vm.entity.irs)"
+						width="300px" />
+				</row>
+				<row>
+					${c:l('company.street')}
+					<textbox id="streetTxb"
+						value="@bind(vm.entity.street)" width="300px" />
+				</row>
+				<row>
+					${c:l('company.streetNo')}
+					<textbox id="streetNoTxb"
+						value="@bind(vm.entity.streetNo)" width="300px" />
+				</row>
+				<row>
+					${c:l('company.city')}
+					<textbox id="cityCbx" value="@bind(vm.entity.city)"
+						width="300px" />
+				</row>
+				<row>
+					${c:l('company.prefecture')}
+					<textbox id="prefectureNoTxb"
+						value="@bind(vm.entity.prefecture)" width="300px" />
+				</row>
+				<row>
+					${c:l('company.postcode')}
+					<textbox id="postcodeTxb"
+						value="@bind(vm.entity.postcode)" width="300px" />
+				</row>
+				<row>
+					${c:l('company.telephone')}
+					<textbox id="telephoneTxb"
+						value="@bind(vm.entity.telephone)" width="300px" />
+				</row>
+				<row>
+					${c:l('company.mobile')}
+					<textbox id="mobileTxb"
+						value="@bind(vm.entity.mobile)" width="300px" />
+				</row>
+				<row>
+					${c:l('company.fax')}
+					<textbox id="faxTxb"
+						value="@bind(vm.entity.fax)" width="300px" />
+				</row>
+				<row>
+					${c:l('company.email')}
+					<textbox id="emailTxb"
+						value="@bind(vm.entity.email)" width="300px" />
+				</row>
+				<row>
+					${c:l('company.web')}
+					<textbox value="@bind(vm.entity.web)"
+						width="300px" />
+				</row>
+				<row>
+					${c:l('company.webService')}
+					<textbox
+						value="@bind(vm.entity.webService)" width="300px" />
+				</row>
+				<row>
+					${c:l('company.isGoverment')}
+					<checkbox id="isGovermentChkbx" checked="@bind(vm.entity.isGoverment)"/>
+				</row>
+				<row>
+					${c:l('functions')}
+					<hbox>
+						<button id="newBtn" label="${c:l('new')}"
+							onClick="@command('addNewEntity')" disabled="${sec:isNoneGranted('ADD_COMPANY')}"/>
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@load(not vm.saveEnabled)" onClick="@command('saveEntity')" />
+						<button id="deleteBtn" label="${c:l('delete')}"
+							disabled="@load(not vm.deleteEnabled)"
+							onClick="@command('deleteEntity')" />
+					</hbox>
+				</row>
+
+			</rows>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,130 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="/WEB-INF/security.tld" prefix="sec"?>
+<?page title="${c:l('contactPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<window title="${c:l('contactPage.title')}"
+		border="normal" width="80%" 
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.ContactVM')">
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row visible="@load(vm.entityCreated)">
+					${c:l('contact.id')}
+					<label id="idLbl" value="@load(vm.entity.id)" />
+				</row>
+				<row>
+					${labels.contact.code}
+					<textbox value="@bind(vm.entity.code)"
+						width="300px" />
+				</row>
+				<row>
+					${c:l('contact.surname')}
+					<textbox id="surnameTxb"
+						value="@bind(vm.entity.surname)" width="300px"
+						constraint="no empty" />
+				</row>
+				<row>
+					${c:l('contact.name')}
+					<textbox id="nameTxb" value="@bind(vm.entity.name)"
+						width="300px" constraint="no empty" />
+				</row>
+				<row>
+					${c:l('contact.middlename')}
+					<textbox value="@bind(vm.entity.middlename)"
+						width="300px" />
+				</row>
+				<row>
+					${labels.contact.description}
+					<textbox value="@bind(vm.entity.description)"
+						width="300px" />
+				</row>
+				<row>
+					${c:l('company')}
+					<combobox id="companyCbx" width="300px"
+						model="@load(vm.companies)"
+						selectedItem="@bind(vm.entity.company)">
+						<template name="model">
+							<comboitem label="@load(each.name)" />
+						</template>
+					</combobox>
+				</row>
+				<row>
+					${c:l('contact.street')}
+					<textbox value="@bind(vm.entity.street)"
+						width="300px" />
+				</row>
+				<row>
+					${c:l('contact.streetNo')}
+					<textbox value="@bind(vm.entity.streetNo)"
+						width="300px" />
+				</row>
+				<row>
+					${c:l('contact.city')}
+					<combobox id="cityCbx" value="@bind(vm.entity.city)"
+						width="300px">
+						<comboitem label="Αθήνα" />
+					</combobox>
+				</row>
+				<row>
+					${c:l('contact.prefecture')}
+					<textbox value="@bind(vm.entity.prefecture)"
+						width="300px" />
+				</row>
+				<row>
+					${c:l('contact.postcode')}
+					<textbox id="postcodeTxb"
+						value="@bind(vm.entity.postcode)" width="300px" />
+				</row>
+				<row>
+					${c:l('contact.telephone')}
+					<textbox id="telephoneTxb"
+						value="@bind(vm.entity.telephone)" width="300px" />
+				</row>
+				<row>
+					${c:l('contact.mobile')}
+					<textbox id="mobileTxb"
+						value="@bind(vm.entity.mobile)" width="300px" />
+				</row>
+				<row>
+					${c:l('contact.fax')}
+					<textbox id="faxTxb" value="@bind(vm.entity.fax)"
+						width="300px" />
+				</row>
+				<row>
+					${c:l('contact.email')}
+					<textbox id="emailTxb"
+						value="@bind(vm.entity.email)" width="300px" />
+				</row>
+				<row>
+					${c:l('contact.web')}
+					<textbox value="@bind(vm.entity.web)" width="300px" />
+				</row>
+				<row>
+					${labels.contact.vatNumber}
+					<textbox value="@bind(vm.entity.vatNumber)"
+						width="300px" />
+				</row>
+				<row>
+					${labels.contact.ssn}
+					<textbox value="@bind(vm.entity.ssn)" width="300px" />
+				</row>
+				<row>
+					${c:l('functions')}
+					<hbox>
+						<button id="newBtn" label="${c:l('new')}"
+							onClick="@command('addNewEntity')" disabled="${sec:isNoneGranted('ADD_CONTACT')}"/>
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@load(not vm.saveEnabled)" onClick="@command('saveEntity')" />
+						<button id="deleteBtn" label="${c:l('delete')}"
+							disabled="@load(not vm.deleteEnabled)"
+							onClick="@command('deleteEntity')" />
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,70 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('rolesPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${labels.rolesPage.title}" 
+		width="100%"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.RolesVM')">
+
+		<listbox id="entitiesLstbx" rows="@load(vm.pageSize)"
+			model="@load(vm.entities)" selectedItem="@bind(vm.selected)"
+			onSelect="@command('selectEntity')">
+			<listhead>
+				<listheader label="${labels.role.id}" sort="auto" hflex="1"
+					value="id" onSort="@command('sort')" sortDirection="ascending" />
+				<listheader label="${labels.role.name}" sort="auto" hflex="4"
+					value="name" onSort="@command('sort')" />
+				<listheader label="${labels.role.description}" hflex="4"
+					sort="auto" value="description" onSort="@command('sort')" />
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="@load(each.id)" />
+					<listcell label="@load(each.name)" />
+					<listcell label="@load(each.description)" />
+				</listitem>
+			</template>
+		</listbox>
+		<paging id="pgng" pageSize="@load(vm.pageSize)"
+			totalSize="@load(vm.totalSize)" activePage="@bind(vm.activePage)"
+			onPaging="@command('page')" />
+		
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row>
+					${labels.role.name}
+					<textbox width="300px"
+						value="@bind(vm.entity.name)" />
+				</row>
+				<row>
+					${labels.role.description}
+					<textbox width="300px"
+						value="@bind(vm.entity.description)" />
+				</row>
+				<row>
+					${labels.functions }
+					<hbox>
+						<button id="searchBtn"
+							label="${labels.search.$}" onClick="@command('searchEntities')" />
+						<button id="clearBtn" label="${labels.clear}"
+							onClick="@command('clearSearch')" />
+						<button id="newBtn" label="${labels.addNew}"
+							onClick="@command('addNewEntity')" />
+
+						<!--
+							<button id="uploadBtn" label="${c:l('importFile')}" />
+							<button id="downloadBtn"
+							label="${c:l('exportFile')}" />
+						-->
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

@@ -1,0 +1,106 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('contactsPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+	<window id="win" title="${c:l('usersPage.title')}" border="none"
+		width="100%"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.UsersVM')">
+
+		<listbox id="entitiesLstbx" rows="@load(vm.pageSize)"
+			model="@load(vm.entities)" selectedItem="@bind(vm.selected)"
+			onSelect="@command('selectEntity')">
+			<listhead>
+				<listheader label="${c:l('users.id')}" sort="auto"
+					value="id" onSort="@command('sort')" sortDirection="ascending"
+					hflex="1" />
+				<listheader label="${c:l('users.username')}" sort="auto"
+					value="username" onSort="@command('sort')" hflex="2" />
+				<listheader label="${c:l('users.code')}" sort="auto"
+					value="code" onSort="@command('sort')" hflex="1" />
+				<listheader label="${c:l('users.surname')}" sort="auto"
+					value="surname" onSort="@command('sort')" hflex="2" />
+				<listheader label="${c:l('users.name')}" sort="auto"
+					value="name" onSort="@command('sort')" hflex="2" />
+				<listheader label="${c:l('users.middleName')}"
+					sort="auto" value="middleName" onSort="@command('sort')" hflex="2" />
+				<listheader label="${c:l('users.isDisabled')}"
+					sort="auto" value="isDisabled" onSort="@command('sort')" hflex="1" />
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell>
+						<label value="@load(each.id)" />
+						<label value="${c:l('usersPage.disabled')}"
+							visible="@load(each.isDisabled)" style="color:red;" />
+					</listcell>
+					<listcell label="@load(each.username)" />
+					<listcell label="@load(each.code)" />
+					<listcell label="@load(each.surname)" />
+					<listcell label="@load(each.name)" />
+					<listcell label="@load(each.middleName)" />
+					<listcell
+						label="@load(each.isDisabled) @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+				</listitem>
+			</template>
+		</listbox>
+		<paging id="pgng" pageSize="@load(vm.pageSize)"
+			totalSize="@load(vm.totalSize)" activePage="@bind(vm.activePage)"
+			onPaging="@command('page')" />
+
+
+		<grid width="75%">
+			<columns>
+				<column width="10%" />
+				<column width="20%" />
+				<column width="10%" />
+				<column width="20%" />
+				<column width="10%" />
+				<column width="20%" />
+			</columns>
+			<rows>
+				<row>
+					${c:l('users.username')}
+					<textbox value="@bind(vm.entity.username)" />
+					${labels.users.code}
+					<textbox value="@bind(vm.entity.code)" />
+					${c:l('usersPage.statusFilter')}
+					<hlayout>
+						<checkbox
+							label="${labels.usersPage.statusFilter.enabled}"
+							checked="@bind(vm.enabled)" />
+						<checkbox
+							label="${labels.usersPage.statusFilter.disabled}"
+							checked="@bind(vm.disabled)" />
+					</hlayout>
+				</row>
+				<row>
+					${c:l('users.surname')}
+					<textbox value="@bind(vm.entity.surname)" />
+					${c:l('users.name')}
+					<textbox value="@bind(vm.entity.name)" />
+				</row>
+				<row>
+					<label value="${c:l('functions')}" />
+					<cell colspan="5">
+						<hbox>
+							<button id="searchBtn"
+								label="${c:l('search')}" onClick="@command('searchEntities')" />
+							<button id="clearBtn"
+								label="${c:l('clear')}" onClick="@command('clearSearch')" />
+							<button id="newBtn" label="${c:l('new')}"
+								onClick="@command('addNewEntity')" />
+
+							<!--
+								<button id="uploadBtn" label="${c:l('importFile')}" />
+								<button id="downloadBtn"
+								label="${c:l('exportFile')}" />
+							-->
+						</hbox>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>

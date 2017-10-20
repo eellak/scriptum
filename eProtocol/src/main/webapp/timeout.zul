@@ -1,0 +1,18 @@
+<?page title="Λήξη της Σύνδεσης" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<style src="style_login.css" />
+	<window width="80%" title="Λήξη της Σύνδεσης" border="normal"
+		mode="overlapped" position="center,center" draggable="false" style="padding:50px">
+			<div>
+				Η Σελίδα που ζητάτε δεν έιναι διαθέσιμη αυτή τη στιγμή.
+				Αυτό λογικά είναι επειδή έληξε η σύνδεση σας ή γιατί ο διακομιστής είναι
+				σε κατάσταση επανεκκινησης.
+			</div>
+			<div>
+				Παρακαλούμε συνδεθείτε ξανά στην εφαρμογή, κάνοντας κλικ
+				<a href="/login.zul">εδώ</a>
+				.
+			</div>
+	</window>
+</zk>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!-- Purpose: Defines methods and actions for ZK Spring Security Description: 
+	Custom version, compatible with Spring Security 4.x -->
+
+<taglib>
+	<description>
+		Methods and actions for ZK Spring Security (compatible
+		with Spring Security 4.x)
+	</description>
+
+	<!-- -->
+	<!-- Functions -->
+	<!-- -->
+	<function>
+		<name>isAccessible</name>
+		<function-class>gr.scriptum.eprotocol.security.SecurityUtil
+		</function-class>
+		<function-signature>
+			boolean isAccessible(java.lang.String
+			hasPermission, java.lang.Object
+			domainObject);
+		</function-signature>
+		<description>
+			Return true if the current Authentication has one of the
+			specified
+			permissions to the presented domain object instance.
+		</description>
+	</function>
+
+	<function>
+		<name>isNoneGranted</name>
+		<function-class>gr.scriptum.eprotocol.security.SecurityUtil
+		</function-class>
+		<function-signature>
+			boolean isNoneGranted(java.lang.String
+			authorities) {
+		</function-signature>
+		<description>
+			Return true if the authenticated principal is granted
+			authorities
+			of NONE the specified roles.
+		</description>
+	</function>
+
+	<function>
+		<name>isAllGranted</name>
+		<function-class>gr.scriptum.eprotocol.security.SecurityUtil
+		</function-class>
+		<function-signature>
+			boolean isAllGranted(java.lang.String authorities)
+			{
+		</function-signature>
+		<description>
+			Return true if the authenticated principal is granted
+			authorities
+			of ALL the specified roles.
+		</description>
+	</function>
+
+	<function>
+		<name>isAnyGranted</name>
+		<function-class>gr.scriptum.eprotocol.security.SecurityUtil
+		</function-class>
+		<function-signature>
+			boolean isAnyGranted(java.lang.String authorities)
+			{
+		</function-signature>
+		<description>
+			Return true if the authenticated principal is granted
+			authorities
+			of ANY the specified roles.
+		</description>
+	</function>
+
+	<function>
+		<name>getAuthentication</name>
+		<function-class>gr.scriptum.eprotocol.security.SecurityUtil
+		</function-class>
+		<function-signature>
+			java.lang.Object
+			getAuthentication(java.lang.String property) {
+		</function-signature>
+		<description>
+			Return the evaluated result of the current Authentication
+			object per the
+			given property.
+		</description>
+	</function>
+</taglib>

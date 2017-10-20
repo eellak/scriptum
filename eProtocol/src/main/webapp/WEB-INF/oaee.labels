@@ -1,0 +1,21 @@
+#Sender types
+ACTIVE_MEMBER=Ασφαλισμένος
+INACTIVE_MEMBER=Συνταξιούχος
+EMPLOYEE=Υπάλληλος
+DEPARTMENT=Μονάδα
+COMPANY=Φορέας
+CONTACT=Επαφή
+OTHER=Άλλο
+ASSIGNEE=Αρμόδιος
+FREE=Κείμενο
+
+#DepartmentTypes
+CENTRAL_PROTOCOL=Κεντρικό Πρωτόκολλο
+CENTRAL=Κεντρική Υπηρεσία
+REGIONAL=Περιφερειακή Διεύθυνση
+BRANCH=Περιφερειακό Τμήμα
+UNIT_DEPARTMENT=Τμήμα Μονάδας
+
+#Active Member
+activeMember.id=Αριθμός Μητρώου
+activeMember.name=Ονοματεπώνυμο

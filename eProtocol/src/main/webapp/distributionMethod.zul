@@ -1,0 +1,56 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('distributionMethodPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<window id="entityWin"
+		title="${c:l('distributionMethodPage.title')}" border="normal"
+		width="80%"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.DistributionMethodVM')">
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+<!-- 				<row visible="@load(vm.entityCreated)">
+					${c:l('distributionMethod.id')}
+					<label id="idLbl" value="@load(vm.entity.id)" />
+				</row>
+ -->				<row>
+					${labels.distributionMethod.code}
+					<textbox
+						value="@bind(vm.entity.code)" width="100px" constraint="no empty"/>
+				</row>
+				<row>
+					${c:l('distributionMethod.description')}
+					<textbox id="descriptionTxb"
+						value="@bind(vm.entity.description)" width="300px"
+						constraint="no empty" />
+				</row>
+				<row>
+					${labels.distributionMethod.requiresDescription }
+					<checkbox 
+						checked="@bind(vm.entity.requiresDescription)" />
+				</row>
+				<row>
+					${labels.distributionMethod.autoFillRoutingDate }
+					<checkbox 
+						checked="@bind(vm.entity.autoFillRoutingDate)" />
+				</row>
+				<row>
+					${c:l('functions')}
+					<hbox>
+						<button id="newBtn" label="${c:l('new')}"
+							onClick="@command('addNewEntity')" />
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@load(vm.locked)" onClick="@command('saveEntity')" />
+						<button id="deleteBtn" label="${c:l('delete')}"
+							disabled="@load(vm.entityNotCreated)"
+							onClick="@command('deleteEntity')" />
+					</hbox>
+				</row>
+
+			</rows>
+		</grid>
+	</window>
+</zk>

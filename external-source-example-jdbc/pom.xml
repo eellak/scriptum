@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>gr.scriptum</groupId>
+		<artifactId>scriptum</artifactId>
+		<version>1.0</version>
+	</parent>
+	<artifactId>external-source-example-jdbc</artifactId>
+	<name>External source API JDBC example</name>
+	<dependencies>
+		<dependency>
+			<groupId>gr.scriptum</groupId>
+			<artifactId>external-sources-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4.1208.jre7</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+			<scope>provided</scope>
+		</dependency>
+<!--		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>classes12</artifactId>
+			<version>10.2.0.4</version>
+		</dependency>
+		-->
+	</dependencies>
+</project>

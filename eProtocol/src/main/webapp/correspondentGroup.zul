@@ -1,0 +1,261 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('correspondentGroupPage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<window title="${labels.correspondentGroupPage.title}" border="normal"
+	width="100%"
+	viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.CorrespondentGroupVM')">
+
+	<grid>
+		<columns>
+			<column width="15%" />
+		</columns>
+		<rows>
+			<row visible="@load(vm.entityCreated)">
+				${labels.correspondentGroup.id}
+				<label value="@load(vm.entity.id)" />
+			</row>
+			<row>
+				${labels.correspondentGroup.name}
+				<textbox value="@bind(vm.entity.name)" width="300px"
+					constraint="no empty" />
+			</row>
+			<row>
+				${labels.correspondentGroup.code}
+				<textbox value="@bind(vm.entity.code)" width="100px"
+					constraint="no empty" />
+			</row>
+			<row>
+				${labels.correspondentGroup.applicableTo}
+				<combobox model="@load(vm.correspondentDirections)"
+					selectedItem="@bind(vm.entity.applicableTo)" constraint="no empty"
+					onChange="@command('initCorrespondentTypes')"
+					disabled="@load(vm.entityCreated)">
+					<template name="model">
+						<comboitem
+							label="@load(each)  @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+					</template>
+				</combobox>
+			</row>
+			<row>
+				${labels.correspondentGroup.active}
+				<checkbox checked="@bind(vm.entity.active)" />
+			</row>
+			<!-- Group Members -->
+			<row>
+				${labels.correspondentGroupPage.protocolCorrespondents.$}
+				<cell>
+					<vbox width="100%">
+						<hbox>
+							${labels.correspondentGroupPage.protocolCorrespondents.type}
+							<combobox
+								model="@load(vm.correspondentTypes)" width="200px"
+								selectedItem="@bind(vm.correspondentType)">
+								<template name="model">
+									<comboitem
+										label="@load(each)  @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+								</template>
+							</combobox>
+							${labels.correspondentGroupPage.protocolCorrespondents.value}
+							<!-- Member type: Contact -->
+							<hbox
+								visible="@load(vm.correspondentType eq 'CONTACT')">
+								<bandbox width="400px"
+									value="@bind(vm.entitySelection.term)"
+									onChanging="@command('searchEntitiesByTerm')"
+									open="@load(not empty vm.entitySelection.entites)"
+									onOpen="@command('listEntities')"
+									onBlur="@command('clearEntities')"
+									disabled="@load(vm.correspondentType ne 'CONTACT')">
+									<bandpopup width="600px" height="100%">
+										<paging
+											pageSize="@load(vm.entitySelection.pageSize)"
+											totalSize="@load(vm.entitySelection.totalSize)"
+											activePage="@bind(vm.entitySelection.activePage)"
+											onPaging="@command('pageEntities')" />
+										<listbox
+											model="@load(vm.correspondentType eq 'CONTACT' ? vm.entitySelection.entites : null)"
+											selectedItem="@bind(vm.entitySelection.selectedEntity)"
+											onSelect="@command('selectEntity')">
+											<listhead>
+												<listheader
+													label="${c:l('contact.name')}" hflex="2" />
+												<listheader
+													label="${c:l('contact.surname')}" hflex="3" />
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell
+														label="@load(each.name)" />
+													<listcell
+														label="@load(each.surname)" />
+												</listitem>
+											</template>
+										</listbox>
+									</bandpopup>
+								</bandbox>
+								<button id="newContactBtn"
+									label="${c:l('new')}" onClick="@command('addContact')" />
+							</hbox>
+							<!-- Member type: Employee -->
+							<bandbox width="400px"
+								value="@bind(vm.entitySelection.term)"
+								onChanging="@command('searchEntitiesByTerm')"
+								open="@load(not empty vm.entitySelection.entites)"
+								onOpen="@command('listEntities')"
+								onBlur="@command('clearEntities')"
+								visible="@load(vm.correspondentType eq 'EMPLOYEE')"
+								disabled="@load(vm.correspondentType ne 'EMPLOYEE')">
+								<bandpopup width="600px" height="100%">
+									<paging
+										pageSize="@load(vm.entitySelection.pageSize)"
+										totalSize="@load(vm.entitySelection.totalSize)"
+										activePage="@bind(vm.entitySelection.activePage)"
+										onPaging="@command('pageEntities')" />
+									<listbox
+										model="@load(vm.correspondentType eq 'EMPLOYEE' ? vm.entitySelection.entites : null)"
+										selectedItem="@bind(vm.entitySelection.selectedEntity)"
+										onSelect="@command('selectEntity')">
+										<listhead>
+											<listheader
+												label="${c:l('contact.name')}" hflex="1" />
+											<listheader
+												label="${c:l('contact.surname')}" hflex="2" />
+											<listheader
+												label="${labels.contact.code }" hflex="1" />
+											<listheader
+												label="${labels.department.$ }" hflex="1" />
+										</listhead>
+										<template name="model">
+											<listitem>
+												<listcell
+													label="@load(each.contact.name)" />
+												<listcell
+													label="@load(each.contact.surname)" />
+												<listcell
+													label="@load(each.contact.code)" />
+												<listcell
+													label="@load(each.department.code)" />
+											</listitem>
+										</template>
+									</listbox>
+								</bandpopup>
+							</bandbox>
+							<!-- Member type: Department -->
+							<bandbox width="400px"
+								value="@bind(vm.entitySelection.term)"
+								onChanging="@command('searchEntitiesByTerm')"
+								open="@load(not empty vm.entitySelection.entites)"
+								onOpen="@command('listEntities')"
+								onBlur="@command('clearEntities')"
+								visible="@load(vm.correspondentType eq 'DEPARTMENT')"
+								disabled="@load(vm.correspondentType ne 'DEPARTMENT')">
+								<bandpopup width="900px" height="100%">
+									<paging
+										pageSize="@load(vm.entitySelection.pageSize)"
+										totalSize="@load(vm.entitySelection.totalSize)"
+										activePage="@bind(vm.entitySelection.activePage)"
+										onPaging="@command('pageEntities')" />
+									<listbox
+										model="@load(vm.correspondentType eq 'DEPARTMENT' ? vm.entitySelection.entites : null)"
+										selectedItem="@bind(vm.entitySelection.selectedEntity)"
+										onSelect="@command('selectEntity')">
+										<listhead>
+											<listheader
+												label="${c:l('department.code')}" hflex="2" />
+											<listheader
+												label="${c:l('department.name')}" hflex="8" />
+										</listhead>
+										<template name="model">
+											<listitem>
+												<listcell
+													label="@load(each.code)" />
+												<listcell
+													label="@load(each.name)" />
+											</listitem>
+										</template>
+									</listbox>
+								</bandpopup>
+							</bandbox>
+							<!-- Member type: Company -->
+							<hbox
+								visible="@load(vm.correspondentType eq 'COMPANY')">
+								<bandbox width="400px"
+									value="@bind(vm.entitySelection.term)"
+									onChanging="@command('searchEntitiesByTerm')"
+									open="@load(not empty vm.entitySelection.entites)"
+									onOpen="@command('listEntities')"
+									onBlur="@command('clearEntities')"
+									disabled="@load(vm.correspondentType ne 'COMPANY')">
+									<bandpopup width="600px" height="100%">
+										<paging
+											pageSize="@load(vm.entitySelection.pageSize)"
+											totalSize="@load(vm.entitySelection.totalSize)"
+											activePage="@bind(vm.entitySelection.activePage)"
+											onPaging="@command('pageEntities')" />
+										<listbox
+											model="@load(vm.correspondentType eq 'COMPANY' ? vm.entitySelection.entites : null)"
+											selectedItem="@bind(vm.entitySelection.selectedEntity)"
+											onSelect="@command('selectEntity')">
+											<listhead>
+												<listheader
+													label="${c:l('company.name')}" hflex="3" />
+												<listheader
+													label="${c:l('companyType.name')}" hflex="1" />
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell
+														label="@load(each.name)" />
+													<listcell
+														label="@load(each.companyType.name)" />
+												</listitem>
+											</template>
+										</listbox>
+									</bandpopup>
+								</bandbox>
+								<button label="${c:l('new')}"
+									onClick="@command('addCompany')" />
+							</hbox>
+						</hbox>
+						<!-- Members list -->
+						<listbox width="99%" sclass="listbox-noscroll"
+							model="@load(vm.entity.protocolCorrespondents)"
+							selectedItem="@bind(vm.protocolCorrespondent)">
+							<listhead>
+								<listheader
+									label="${labels.correspondentGroupPage.protocolCorrespondent}"
+									hflex="2" />
+								<listheader
+									label="${labels.protocolCorrespondent.type}" hflex="1" />
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell
+										label="@load(each)  @converter('gr.scriptum.eprotocol.converter.ProtocolCorrespondentStringConverter')" />
+									<listcell
+										label="@load(each.type)  @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+								</listitem>
+							</template>
+						</listbox>
+						<button label="${c:l('remove')}"
+							disabled="@load(empty vm.protocolCorrespondent)"
+							onClick="@command('removeProtocolCorrespondent')" />
+					</vbox>
+				</cell>
+			</row>
+			<row>
+				${c:l('functions')}
+				<hbox>
+					<button id="newBtn" label="${c:l('new')}"
+						onClick="@command('addNewEntity')" />
+					<button id="saveBtn" label="${c:l('save')}"
+						disabled="@load(vm.locked)" onClick="@command('saveEntity')" />
+					<button id="deleteBtn" label="${c:l('delete')}"
+						disabled="@load(vm.entityNotCreated)"
+						onClick="@command('deleteEntity')" />
+				</hbox>
+			</row>
+
+		</rows>
+	</grid>
+</window>

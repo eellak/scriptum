@@ -1,0 +1,44 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="${c:l('companyTypePage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<window id="entityWin" title="${c:l('companyTypePage.title')}"
+		border="normal" width="80%" 
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.CompanyTypeVM')">
+
+		<grid>
+			<columns>
+				<column width="30%" />
+			</columns>
+			<rows>
+				<row visible="@load(vm.entityCreated)">
+					${c:l('companyType.id')}
+					<label id="idLbl" value="@load(vm.entity.id)" />
+				</row>
+				<row>
+					${c:l('companyType.name')}
+					<textbox id="nameTxb" value="@bind(vm.entity.name)"
+						width="300px" constraint="no empty" />
+				</row>
+				<row>
+					${c:l('companyType.description')}
+					<textbox id="descriptionTxb"
+						value="@bind(vm.entity.description)" width="300px" />
+				</row>
+				<row>
+					${c:l('functions')}
+					<hbox>
+						<button id="newBtn" label="${c:l('new')}"
+							onClick="@command('addNewEntity')" />
+						<button id="saveBtn" label="${c:l('save')}"
+							disabled="@load(vm.locked)" onClick="@command('saveEntity')" />
+						<button id="deleteBtn" label="${c:l('delete')}"
+							disabled="@load(vm.entityNotCreated)"
+							onClick="@command('deleteEntity')" />
+					</hbox>
+				</row>
+
+			</rows>
+		</grid>
+	</window>
+</zk>

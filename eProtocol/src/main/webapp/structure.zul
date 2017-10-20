@@ -1,0 +1,314 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
+<?page title="${c:l('structurePage.title')}" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="img/eprotocol.ico"?>
+<zk>
+	<include id="ph" sclass="header" src="header.zul" />
+
+	<window id="departmentsWin" title="${c:l('structurePage.title')}"
+		width="100%" height="850px"
+		viewModel="@id('vm') @init('gr.scriptum.eprotocol.vm.StructureVM')">
+		<borderlayout>
+			<west title="${c:l('structurePage.tree')}" size="100%"
+				splittable="true" collapsible="true" autoscroll="true"
+				open="@bind(vm.departmentSelectionEnabled)">
+				<tree vflex="true" model="@bind(vm.treeModel)"
+					id="departmentsTree" selectedItem="@bind(vm.selectedNode)"
+					onSelect="@command('selectDepartment')" mold="paging">
+					<treecols>
+						<treecol label="${labels.department.$}"
+							hflex="1" />
+					</treecols>
+					<template name="model">
+						<treeitem>
+							<treerow>
+								<treecell>
+									<label
+										value="@load(each.data.code)" />
+									-
+									<label
+										value="@load(each.data.name)" />
+								</treecell>
+							</treerow>
+						</treeitem>
+					</template>
+				</tree>
+			</west>
+			<center title="${c:l('department')}" autoscroll="true">
+				<div>
+					<grid>
+						<columns>
+							<column hflex="1" />
+							<column hflex="5" />
+							<column hflex="1" />
+							<column hflex="5" />
+						</columns>
+						<rows>
+							<row
+								visible="@load(not empty vm.department.id)">
+								${c:l('department.id')}
+								<label id="idLbl"
+									value="@load(vm.department.id)" />
+							</row>
+							<row>
+								${labels.department.code}
+								<cell colspan="3">
+									<hlayout>
+										<textbox
+											value="@bind(vm.department.code)" width="300px"
+											constraint="no empty" />
+										${c:l('department.name')}
+										<textbox id="nameTxb" hflex="1"
+											value="@bind(vm.department.name)" constraint="no empty" />
+									</hlayout>
+								</cell>
+							</row>
+							<row>
+								${c:l('department.departmentType')}
+								<cell colspan="3">
+									<hlayout>
+										<combobox width="300px"
+											model="@load(vm.departmentTypes)"
+											selectedItem="@bind(vm.department.departmentType)"
+											constraint="no empty">
+											<template name="model">
+												<comboitem
+													label="@load(each.name) @converter('gr.scriptum.eprotocol.converter.LabelStringConverter')" />
+											</template>
+										</combobox>
+										${c:l('department.description')}
+										<textbox id="descriptionTxb" hflex="1"
+											value="@bind(vm.department.description)" />
+									</hlayout>
+								</cell>
+							</row>
+							<row>
+								${c:l('department.department')}
+								<cell colspan="3">
+									<bandbox 
+										value="@load(vm.parentDepartmentSelection.selectedEntity)  @converter('gr.scriptum.eprotocol.converter.DepartmentStringConverter')"
+										onChanging="@command('searchParentDepartments')"
+										open="@bind(vm.parentDepartmentSelection.active)"
+										onOpen="@command('listParentDepartments')"
+										onBlur="@command('clearParentDepartments')" width="80%">
+										<bandpopup width="900px" height="100%">
+											<paging
+												pageSize="@load(vm.parentDepartmentSelection.pageSize)"
+												totalSize="@load(vm.parentDepartmentSelection.totalSize)"
+												activePage="@bind(vm.parentDepartmentSelection.activePage)"
+												onPaging="@command('pageParentDepartments')" />
+											<listbox
+												model="@load(vm.parentDepartmentSelection.entites)"
+												selectedItem="@bind(vm.parentDepartmentSelection.selectedEntity)"
+												onSelect="@command('selectParentDepartment')">
+												<listhead>
+													<listheader
+														label="${c:l('department.code')}" hflex="2" />
+													<listheader
+														label="${c:l('department.name')}" hflex="8" />
+												</listhead>
+												<template
+													name="model">
+													<listitem>
+														<listcell
+															label="@load(each.code)" />
+														<listcell
+															label="@load(each.name)" />
+													</listitem>
+												</template>
+											</listbox>
+										</bandpopup>
+									</bandbox>
+								</cell>
+							</row>
+							<row>
+								${labels.structurePage.userAssignment.$}
+								<cell colspan="3">
+									<hlayout>
+										<vlayout hflex="1">
+											<hlayout>
+												<label
+													value="${labels.structurePage.userAssignment.filter}" />
+												<textbox
+													value="@bind(vm.usersTerm)"
+													onChanging="@command('searchUsers')" />
+											</hlayout>
+											<listbox
+												model="@load(vm.users)" multiple="true" checkmark="true"
+												selectedItems="@bind(vm.selectedUsers)">
+												<listhead>
+													<listheader
+														label="${labels.users.code}" />
+													<listheader
+														label="${labels.users.name}" />
+													<listheader
+														label="${labels.users.surname}" />
+												</listhead>
+												<template
+													name="model">
+													<listitem>
+														<listcell
+															label="@load(each.code)" />
+														<listcell
+															label="@load(each.name)" />
+														<listcell
+															label="@load(each.surname)" />
+													</listitem>
+												</template>
+											</listbox>
+											<paging
+												pageSize="@load(vm.usersPageSize)"
+												totalSize="@load(vm.usersTotalSize)"
+												activePage="@bind(vm.usersActivePage)"
+												onPaging="@command('pageUsers')" />
+										</vlayout>
+										<vbox pack="center"
+											align="center" vflex="1">
+											<button
+												label="${labels.add}"
+												onClick="@command('addUsersToDepartment')"
+												disabled="@load(empty vm.selectedUsers)">
+											</button>
+											<button
+												label="${labels.remove}"
+												onClick="@command('removeUsersFromDepartment')"
+												disabled="@load(empty vm.selectedUserHierarchies)">
+											</button>
+										</vbox>
+										<vlayout hflex="1">
+											<listbox
+												model="@load(vm.userHierarchies)" multiple="true"
+												checkmark="true" mold="paging" pageSize="@load(vm.pageSize)"
+												selectedItems="@bind(vm.selectedUserHierarchies)"
+												rows="@load(vm.pageSize)">
+												<listhead>
+													<listheader
+														label="${labels.users.code}" />
+													<listheader
+														label="${labels.users.name}" />
+													<listheader
+														label="${labels.users.surname}" />
+												</listhead>
+												<template
+													name="model">
+													<listitem>
+														<listcell
+															label="@load(each.user.code)" />
+														<listcell
+															label="@load(each.user.name)" />
+														<listcell
+															label="@load(each.user.surname)" />
+													</listitem>
+												</template>
+											</listbox>
+										</vlayout>
+									</hlayout>
+								</cell>
+							</row>
+							<!-- Employee assignment -->
+							<row>
+								${labels.structurePage.contactAssignment}
+								<cell colspan="3">
+									<hlayout>
+										<vlayout hflex="1">
+											<listbox
+												model="@load(vm.contacts)" multiple="true" checkmark="true"
+												mold="paging" pageSize="@load(vm.pageSize)"
+												selectedItems="@bind(vm.selectedContacts)"
+												rows="@load(vm.pageSize)">
+												<listhead>
+													<listheader
+														label="${labels.contact.code}">
+													</listheader>
+													<listheader
+														label="${labels.contact.name}">
+													</listheader>
+													<listheader
+														label="${labels.contact.surname}">
+													</listheader>
+												</listhead>
+												<template
+													name="model">
+													<listitem>
+														<listcell
+															label="@load(each.code)">
+														</listcell>
+														<listcell
+															label="@load(each.name)">
+														</listcell>
+														<listcell
+															label="@load(each.surname)">
+														</listcell>
+													</listitem>
+												</template>
+											</listbox>
+										</vlayout>
+										<vbox pack="center"
+											align="center" vflex="1">
+											<button
+												label="${labels.add}"
+												onClick="@command('addContactsToDepartment')"
+												disabled="@load(empty vm.selectedContacts)">
+											</button>
+											<button
+												label="${labels.remove}"
+												onClick="@command('removeContactsFromDepartment')"
+												disabled="@load(empty vm.selectedContactHierarchies)">
+											</button>
+										</vbox>
+										<vlayout hflex="1">
+											<listbox
+												model="@load(vm.contactHierarchies)" multiple="true"
+												checkmark="true" mold="paging" pageSize="@load(vm.pageSize)"
+												selectedItems="@bind(vm.selectedContactHierarchies)"
+												rows="@load(vm.pageSize)">
+												<listhead>
+													<listheader
+														label="${labels.contact.code}">
+													</listheader>
+													<listheader
+														label="${labels.contact.name}">
+													</listheader>
+													<listheader
+														label="${labels.contact.surname}">
+													</listheader>
+												</listhead>
+												<template
+													name="model">
+													<listitem>
+														<listcell
+															label="@load(each.contact.code)" />
+														<listcell
+															label="@load(each.contact.name)" />
+														<listcell
+															label="@load(each.contact.surname)" />
+													</listitem>
+												</template>
+											</listbox>
+										</vlayout>
+									</hlayout>
+								</cell>
+							</row>
+							<row>
+								${c:l('functions')}
+								<hbox>
+									<button id="newBtn"
+										label="${c:l('new')}" onClick="@command('addNewDepartment')" />
+									<button id="saveBtn"
+										label="${c:l('save')}" disabled="@load(empty vm.department)"
+										onClick="@command('saveDepartment')" />
+									<button id="deleteBtn"
+										label="${c:l('delete')}"
+										onClick="@command('deleteDepartment')"
+										disabled="@load(empty vm.department.id)" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+				</div>
+			</center>
+		</borderlayout>
+
+	</window>
+	<include id="footer" sclass="footer" src="footer.zul" />
+</zk>
