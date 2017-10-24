@@ -524,7 +524,7 @@ public class OutgoingVM extends ProtocolVM {
 		callback = (Callback) arg.get(IConstants.PARAM_CALLBACK);
 
 		if (arg.containsKey(PARAM_DISPLAY_ONLY)) {
-			displayOnly = (boolean) arg.get(PARAM_DISPLAY_ONLY);
+			displayOnly = (Boolean) arg.get(PARAM_DISPLAY_ONLY);
 		}
 
 		DistributionMethodDAO distributionMethodDAO = SpringUtil.getApplicationContext()
